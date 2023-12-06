@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Home",
+    "url": "/",
+    "element": "<home-tab></home-tab>"
+  },
+  {
+    "name": "About",
+    "url": "/about",
+    "element": "<about-tab></about-tab>"
+  },
+  {
+    "name": "Contact",
+    "url": "/contact",
+    "element": "<contact-tab></contact-tab>"
+  },
+  {
+    "name": "Schedule",
+    "url": "/schedule",
+    "element": "<schedule-tab></schedule-tab>"
+  }
+]

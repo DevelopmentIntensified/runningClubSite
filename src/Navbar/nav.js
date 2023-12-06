@@ -9,8 +9,10 @@ export class Navbar extends HTMLElement {
     const nav = document.createElement('nav');
 
     nav.innerHTML = `
-      <a href="https://vitejs.dev" target="_blank">test</a>`;
+      <ul>
 
+      <ul>
+    `
     const style = document.createElement('style');
 
     style.textContent = `
