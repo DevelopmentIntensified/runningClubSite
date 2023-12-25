@@ -1,4 +1,11 @@
+/** dependencies
+  * routes: array of { name: string, path: string, component: string }
+  * this is a very long sentence
+*/
+
 export class Navbar extends HTMLElement {
+  static observedAttributes = ['routes'];
+  
   constructor() {
     super();
   }
@@ -7,13 +14,15 @@ export class Navbar extends HTMLElement {
     const shadow = this.attachShadow({ mode: 'open' });
     const headerElement = document.createElement('header');
     const nav = document.createElement('nav');
-
-    nav.innerHTML = `
-      <ul>
-
-      <ul>
-    `
+    const routes = this.getAttribute('routes');
+    const activeTab = this.getAttribute('active-tab');
     const style = document.createElement('style');
+
+    routes.forEach(route => {
+      const tab = document.createElement('li', { is: 'custom-tab' });
+      tab.innerText = route.name;
+      nav.appendChild(tab);
+    })
 
     style.textContent = `
       nav {
