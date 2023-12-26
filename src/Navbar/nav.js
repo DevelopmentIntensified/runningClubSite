@@ -1,3 +1,5 @@
+import { routes } from "../../data/routes";
+
 export class Navbar extends HTMLElement {
   constructor() {
     super();
@@ -7,20 +9,26 @@ export class Navbar extends HTMLElement {
     const shadow = this.attachShadow({ mode: 'open' });
     const headerElement = document.createElement('header');
     const nav = document.createElement('nav');
-
-    nav.innerHTML = `
-      <ul>
-
-      <ul>
-    `
+    const linkList = document.createElement('ul');
     const style = document.createElement('style');
+
+    routes.forEach((route) => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.textContent = route.name;
+      a.href = route.path;
+      li.appendChild(a);
+      linkList.appendChild(li);
+    })
+
+    nav.appendChild(linkList);
+    nav.classList.add('not-mobile');
 
     style.textContent = `
       nav {
-        align-items: center;
-        justify-content: space-between;
         background-color: #941b1b;
         color: white;
+height: 2.5em;
       }
       header {
         display:block;
@@ -30,8 +38,20 @@ export class Navbar extends HTMLElement {
         color: white;
         text-decoration: none;
         font-size: 1.5rem;
-        padding: 1rem;
-      }`
+height: 100%;
+padding: 0px 1rem;
+      }
+      a:hover {
+        background-color: #bd2828;
+      }
+     ul {
+       display: flex;
+       list-style: none;
+       margin: 0;
+       justify-content: center;
+       flex-direction: row;
+     }`
+
     shadow.appendChild(style);
     shadow.appendChild(headerElement);
     headerElement.appendChild(nav);
