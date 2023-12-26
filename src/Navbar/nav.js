@@ -1,6 +1,11 @@
 import { routes } from "../../data/routes";
+/** dependencies
+  * routes: array of { name: string, path: string, component: string }
+  * this is a very long sentence
+*/
 
 export class Navbar extends HTMLElement {
+ 
   constructor() {
     super();
   }
