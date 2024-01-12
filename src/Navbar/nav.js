@@ -1,4 +1,6 @@
 import { routes } from "../../data/routes";
+import navcss from "./nav.css?raw"
+import logoSrc from "./logo.png"
 /** dependencies
   * routes: array of { name: string, path: string, component: string }
   * this is a very long sentence
@@ -16,6 +18,10 @@ export class Navbar extends HTMLElement {
     const nav = document.createElement('nav');
     const linkList = document.createElement('ul');
     const style = document.createElement('style');
+    const logo = document.createElement('img');
+
+    logo.src = logoSrc
+    style.innerHTML = navcss
 
     routes.forEach((route) => {
       const li = document.createElement('li');
@@ -26,36 +32,9 @@ export class Navbar extends HTMLElement {
       linkList.appendChild(li);
     })
 
+    nav.appendChild(logo);
     nav.appendChild(linkList);
     nav.classList.add('not-mobile');
-
-    style.textContent = `
-      nav {
-        background-color: #941b1b;
-        color: white;
-height: 2.5em;
-      }
-      header {
-        display:block;
-        width: 100%;
-      }
-      a {
-        color: white;
-        text-decoration: none;
-        font-size: 1.5rem;
-height: 100%;
-padding: 0px 1rem;
-      }
-      a:hover {
-        background-color: #bd2828;
-      }
-     ul {
-       display: flex;
-       list-style: none;
-       margin: 0;
-       justify-content: center;
-       flex-direction: row;
-     }`
 
     shadow.appendChild(style);
     shadow.appendChild(headerElement);
