@@ -7,7 +7,7 @@ import logoSrc from "./logo.png"
 */
 
 export class Navbar extends HTMLElement {
- 
+
   constructor() {
     super();
   }
@@ -19,8 +19,11 @@ export class Navbar extends HTMLElement {
     const linkList = document.createElement('ul');
     const style = document.createElement('style');
     const logo = document.createElement('img');
+    const logoLink = document.createElement('a');
 
     logo.src = logoSrc
+    logoLink.href = "https:\\www.liberty.edu"
+    logoLink.className = "logoLink"
     style.innerHTML = navcss
 
     routes.forEach((route) => {
@@ -28,11 +31,16 @@ export class Navbar extends HTMLElement {
       const a = document.createElement('a');
       a.textContent = route.name;
       a.href = route.path;
+      a.className = "tab"
+      a.onclick = function(e) {
+        history.pushState(route.path,"")
+      }
       li.appendChild(a);
       linkList.appendChild(li);
     })
 
-    nav.appendChild(logo);
+    logoLink.appendChild(logo)
+    nav.appendChild(logoLink);
     nav.appendChild(linkList);
     nav.classList.add('not-mobile');
 

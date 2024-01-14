@@ -13,10 +13,16 @@ export class Router extends HTMLElement {
         const currentPath = window.location.pathname;
         const route = routes.find(route => route.path === currentPath);
 
+
         console.log(route);
 
-        const currentElement = document.createElement("div", { is: route.component });
-        
+        const currentElement = document.createElement("div");
+        currentElement.className = "currentPage";
+
+        currentElement.innerHTML = `
+            <${route.component}></${route.component}>
+        `
+
         shadow.appendChild(style);
         shadow.appendChild(currentElement);
     }

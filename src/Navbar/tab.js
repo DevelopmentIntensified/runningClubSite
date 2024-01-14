@@ -1,6 +1,6 @@
 let self;
 
-export class Tab extends HTMLLIElement {
+export class Tab extends HTMLElement {
 
   constructor() {
     self = super();

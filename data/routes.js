@@ -2,26 +2,26 @@ export const routes = [
   {
     path: '/',
     name: 'Home',
-    component: "home-tab"
+    component: "home-page"
   }, 
   {
     path: '/about',
     name: 'About',
-    component: "about-tab"
+    component: "about-page"
   },
   {
     path: '/contact',
     name: 'Contact',
-    component: "contact-tab"
+    component: "contact-page"
   },
   {
     path: '/schedule',
     name: 'Schedule',
-    component: "schedule-tab"
+    component: "schedule-page"
   },
   {
     path: '/leadership',
     name: 'Leadership', 
-    component: "leadership-tab"
+    component: "leadership-page"
   }
 ]
