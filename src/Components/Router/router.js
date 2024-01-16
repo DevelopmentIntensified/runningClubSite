@@ -1,4 +1,5 @@
 import { routes } from "../../../data/routes";
+import routercss from "./router.css?raw";
 
 export class Router extends HTMLElement {
     constructor() {
@@ -13,6 +14,7 @@ export class Router extends HTMLElement {
         const currentPath = window.location.pathname;
         const route = routes.find(route => route.path === currentPath);
 
+        style.innerHTML = routercss
 
         console.log(route);
 
