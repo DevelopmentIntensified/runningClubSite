@@ -1,3 +1,21 @@
 div {
     text-align: center;
 }
+
+.landing-welcome {
+    overflow-y:hidden;
+}
+
+.landing-welcome h1 {
+    color: white;
+    font-size: 3rem;
+}
+
+#landing-welcome-box {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 2rem;
+}

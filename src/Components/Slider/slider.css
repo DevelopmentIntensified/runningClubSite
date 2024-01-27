@@ -1,6 +1,7 @@
 .slider-container {
     width: 100%;
     overflow: hidden;
+    max-height: 96vh;
 }
 
 .slider {
@@ -18,6 +19,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    min-width: 1300px;
     /* padding: 1rem; */
     background-color: #f0f0f0;
 }
@@ -41,7 +43,7 @@
 /* Media queries to adjust the slider's layout based on the viewport width */
 @media (max-width: 1024px) {
     .slide {
-        flex: 0 0 calc(100% / 2);
+        flex: 0 0 calc(100% / 1);
     }
 }
 

@@ -17,7 +17,7 @@ export class Slider extends HTMLElement {
         const sliderEl = slider.getElementsByClassName("slider").item(0)
         console.log(sliderEl)
         console.log(images)
-        for (let i = 0; i < images.length; i++) {
+        for (let i = 0; i < 1/* images.length */; i++) {
             const image = images[i];
             const imageWrapperEl = document.createElement("div")
             const imageEl = document.createElement("img")
