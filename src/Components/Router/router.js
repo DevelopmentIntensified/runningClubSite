@@ -12,7 +12,7 @@ export class Router extends HTMLElement {
         const style = document.createElement('style');
 
         const currentPath = window.location.pathname;
-        const route = routes.find(route => route.path === currentPath);
+        const route = routes.find(route => route.path === currentPath ||( route.path === '/home' && currentPath === "/" ));
 
         style.innerHTML = routercss
 
