@@ -19,3 +19,21 @@ div {
     background-color: rgba(0, 0, 0, 0.5);
     padding: 2rem;
 }
+
+.button-container {
+    display: flex;
+    justify-content: center;
+}
+
+a {
+    background-color: #941b1b;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 36px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
