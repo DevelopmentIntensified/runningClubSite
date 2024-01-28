@@ -24,6 +24,7 @@ export class Navbar extends HTMLElement {
     logo.src = logoSrc
     logoLink.href = "https:\\www.liberty.edu"
     logoLink.className = "logoLink"
+    logoLink.rel = "external"
     style.innerHTML = navcss
 
     routes.forEach((route) => {
