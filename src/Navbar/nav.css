@@ -1,5 +1,5 @@
 nav {
-    background-color: #941b1b;
+    background-color: #B72025;
     color: white;
     height: 3.5em;
     width: 100%;
@@ -68,7 +68,7 @@ ul {
 
 .mobile-sidebar {
     display: none;
-    background-color: #bd2828;
+    background-color: #B72025;
     height: 100%;
     width: 360px;
     z-index: 1;

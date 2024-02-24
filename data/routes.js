@@ -23,5 +23,20 @@ export const routes = [
     path: '/leadership',
     name: 'Leadership', 
     component: "leadership-page"
+  },
+  {
+    path: '/alumni',
+    name: 'Alumni',
+    component: "alumni-page"
+  },
+  {
+    path: '/records',
+    name: 'Records',
+    component: "records-page"
+  }, 
+  {
+    path: '/localroutes',
+    name: 'Local Routes',
+    component: "localroutes-page"
   }
 ]
