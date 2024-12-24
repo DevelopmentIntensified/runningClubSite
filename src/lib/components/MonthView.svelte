@@ -14,8 +14,22 @@
 
 	$: days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
 	$: emptyDays = Array.from({ length: firstDayOfMonth }, (_, i) => i);
+
+	const colors = {
+	 "NIRCA"	:"bg-red-200",
+	 "NCAA"	:"bg-blue-200",
+	 "Social"	:"bg-purple-200",
+	 "Trail"	:"bg-green-200",
+	}
+
 </script>
 
+	<div>
+		<span class="rounded bg-red-200 p-1">NIRCA Meet</span>
+		<span class="rounded bg-blue-200 p-1">NCAA Meet</span>
+		<span class="rounded bg-purple-200 p-1">Social Event</span>
+		<span class="rounded bg-green-200 p-1">Trail Race</span>
+	</div>
 <div class="grid grid-cols-7 gap-1 sm:gap-2">
 	{#each ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] as day}
 		<div
@@ -36,9 +50,10 @@
 			<div class="font-medium text-gray-700 dark:text-gray-300">{day}</div>
 			<div class="space-y-1">
 				{#each dayEvents as event}
+					{@const color = Object.keys(colors).filter((key) => event.type.includes(key))[0] }
 					<a href="/schedule/event/{event.id}" class="block">
 						<div
-							class="flex items-center justify-between rounded bg-blue-100 p-1 text-xs text-blue-800 sm:text-sm dark:bg-blue-900 dark:text-blue-200"
+							class="flex items-center justify-between rounded {colors[color]|| "bg-blue-200"} p-1 text-xs sm:text-sm"
 						>
 							<span class="truncate">{event.title}</span>
 							<!-- <button -->

@@ -19,6 +19,15 @@
 </script>
 
 <div class="space-y-4">
+	{#if filteredEvents.length === 0}
+		<div
+			class="rounded-lg border border-gray-200 bg-white p-4 w-full shadow-sm dark:border-gray-700 dark:bg-gray-800"
+		>
+			<div class="mb-2 w-full items-center justify-between text-center font-bold">
+				There are no events this month.
+			</div>
+		</div>
+	{/if}
 	{#each filteredEvents as event}
 		<a href="/schedule/event/{event.id}" class="block">
 			<div

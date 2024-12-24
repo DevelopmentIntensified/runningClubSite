@@ -16,7 +16,7 @@
 	{/key}
 </div>
 
-<footer class="mt-12 bg-gray-100 py-4 text-center">
+<footer class="bg-gray-100 py-4 text-center">
 	<p>&copy; {new Date().getFullYear()} Liberty Running Club. All rights reserved.</p>
 </footer>
 

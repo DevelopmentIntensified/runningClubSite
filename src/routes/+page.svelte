@@ -5,6 +5,8 @@
 	import runningImg from '$lib/assets/images/nirca/nircacoleracing.jpeg';
 	import flamesFlagImg from '$lib/assets/images/nirca/flamesflag.jpeg';
 	import halfImg from '$lib/assets/images/otherraces/deephollow.jpeg';
+	import InstagramIcon from '$lib/components/InstagramIcon.svelte';
+	import GroupmeIcon from '$lib/components/GroupmeIcon.svelte';
 
 	let currentSlide = 0;
 	const slides = [
@@ -52,22 +54,22 @@
 			Learn More
 		</a>
 
-		<div class="mt-12 flex space-x-4">
-			<a
-				href="https://instagram.com/libertyrunningclub"
-				target="_blank"
-				rel="noopener noreferrer"
-				class="text-white transition duration-300 hover:text-red-400"
-			>
-				Instagram
-			</a>
+		<div class="mt-8 flex space-x-4">
+				<a
+					href="https://instagram.com/libertyrunningclub"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="text-gray-800 transition duration-300 hover:text-primary-600"
+				>
+					<InstagramIcon class="h-10 w-10" />
+				</a>
 			<a
 				href="https://groupme.com/join_group/12345678/abcdefgh"
 				target="_blank"
 				rel="noopener noreferrer"
 				class="text-white transition duration-300 hover:text-red-400"
 			>
-				GroupMe
+					<GroupmeIcon class="h-10 w-10" />
 			</a>
 		</div>
 	</div>
