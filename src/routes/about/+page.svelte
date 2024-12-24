@@ -19,21 +19,21 @@
 			image: presidentImg,
 			position: 'Club President',
 			description:
-				"John is a senior majoring in Exercise Science. He's been running competitively for 8 years and loves to encourage others in their faith and running journey."
+				""
 		},
 		{
 			name: 'Kyle Moore',
 			image: vicePresidentImg,
 			position: 'Vice President',
 			description:
-				"Jane is a junior studying Biology. She specializes in long-distance running and has completed three marathons. She's passionate about combining faith and athletics."
+				""
 		},
 		{
 			name: 'Leah kelley',
 			image: treasurerImg,
 			position: 'Treasurer',
 			description:
-				"Mike is a sophomore in Business Administration. He manages the club's finances and organizes fundraising events. He's also an avid trail runner."
+				""
 		},
 		{
 			name: 'Collin Rose',
@@ -46,35 +46,35 @@
 			name: 'Joshua Harden',
 			image: coachImg,
 			position: 'Coach',
-			description: 'blah blah blah'
+			description: ''
 		},
 		{
 			name: 'Jesse Harrell',
 			image: chaplainImg,
 			position: 'Club Chaplain',
 			description:
-				"David is a senior in Biblical Studies. He leads the club's devotionals and prayer meetings. He believes in the power of running as a form of worship."
+				""
 		},
 		{
 			name: 'Jadyn Talley',
 			image: eventCoordinatorImg,
 			position: 'Team Mom/Female Captain/Event Coordinator',
 			description:
-				"David is a senior in Biblical Studies. He leads the club's devotionals and prayer meetings. He believes in the power of running as a form of worship."
+				""
 		},
 		{
 			name: 'Skylar Waechter',
 			image: advisorImg,
 			position: 'Advisory Board Member',
 			description:
-				"David is a senior in Biblical Studies. He leads the club's devotionals and prayer meetings. He believes in the power of running as a form of worship."
+				""
 		},
 		{
 			name: 'Matthew Petke',
 			image: headOfLogisticsImg,
 			position: 'Head of Logistics',
 			description:
-				"David is a senior in Biblical Studies. He leads the club's devotionals and prayer meetings. He believes in the power of running as a form of worship."
+				""
 		},
 		{
 			name: 'George Crowder',
