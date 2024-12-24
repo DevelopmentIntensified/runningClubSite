@@ -1,4 +1,4 @@
-import type { Handle } from '@sveltejs/kit';
+import { error, type Handle } from '@sveltejs/kit';
 import * as auth from '$lib/server/auth.js';
 
 const handleAuth: Handle = async ({ event, resolve }) => {
@@ -6,6 +6,9 @@ const handleAuth: Handle = async ({ event, resolve }) => {
 	if (!sessionToken) {
 		event.locals.user = null;
 		event.locals.session = null;
+		if (event.url.pathname.includes('/admin')) {
+			return error(403, "Unauthorized");
+		}
 		return resolve(event);
 	}
 
@@ -19,9 +22,10 @@ const handleAuth: Handle = async ({ event, resolve }) => {
 	event.locals.user = user;
 	event.locals.session = session;
 
-	if (event.url.pathname.startsWith('/admin')) {
+	console.log('test')
+	if (event.url.pathname.includes('/admin')) {
 		if (!session || !user.isAdmin) {
-			return new Response('Unauthorized', { status: 403 });
+			return error(403, "Unauthorized");
 		}
 	}
 	return resolve(event);

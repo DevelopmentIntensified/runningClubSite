@@ -5,13 +5,24 @@
 			description:
 				"A network of trails on Liberty University's campus, offering various terrains and distances.",
 			mapUrl:
-				'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3165.3586853264544!2d-79.18069668469528!3d37.352355779836535!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89b2e28b2dcf2d49%3A0x71778d02b600c10e!2sLiberty%20Mountain%20Trail%20System!5e0!3m2!1sen!2sus!4v1620764429548!5m2!1sen!2sus'
+				'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1585.798820218466!2d-79.16962468129637!3d37.35203335529011!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89b2db49886b96b7%3A0x3328587c67529cad!2sLiberty%20Mtn%20Trail%20System%20-%20Lake%20Trail%20Trailhead!5e0!3m2!1sen!2sus!4v1734642444821!5m2!1sen!2sus',
+			link: 'https://maps.app.goo.gl/V73pK3Lwgn7kvdxW9'
 		},
 		{
-			name: 'Blackwater Creek Trail',
-			description: 'A paved trail along Blackwater Creek, perfect for long runs and recovery jogs.',
+			name: 'Blackwater Creek Trail - Depot Grille Lot Entrance',
+			description:
+				'One of the three entrances to the trail that we use. A paved, flat trail along the James River, perfect for long runs and recovery jogs.',
 			mapUrl:
-				'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3165.011762626522!2d-79.15699468469504!3d37.41141927982709!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89b2d1f14f87c1e7%3A0x3df28a505dbf9a76!2sBlackwater%20Creek%20Trail!5e0!3m2!1sen!2sus!4v1620764507175!5m2!1sen!2sus'
+				'https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d1856.7660504285147!2d-79.14125560369953!3d37.41629399148936!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sBlackwater%20Creek%20Trail%2C%20Lynchburg%2C%20VA!5e1!3m2!1sen!2sus!4v1734642698310!5m2!1sen!2sus',
+			link: 'https://maps.app.goo.gl/AkiaJJPZRMheYgbx6'
+		},
+		{
+			name: 'Blackwater Creek Trail - Greek Orthodox Entrance',
+			description:
+				'One of the three entrances to the trail that we use. A paved, flat trail along the James River, perfect for long runs and recovery jogs.',
+			mapUrl:
+				'https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d1856.7660504285147!2d-79.14125560369953!3d37.41629399148936!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sBlackwater%20Creek%20Trail%2C%20Lynchburg%2C%20VA!5e1!3m2!1sen!2sus!4v1734642698310!5m2!1sen!2sus',
+			link: 'https://maps.app.goo.gl/AkiaJJPZRMheYgbx6'
 		},
 		{
 			name: 'Peaks View Park',

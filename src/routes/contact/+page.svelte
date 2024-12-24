@@ -1,5 +1,8 @@
-<script>
+<script lang="ts">
 	import { enhance } from '$app/forms';
+	import type { PageData, ActionData } from './$types'
+
+	let { data, form }: { data: PageData, form: ActionData } = $props();
 
 	let formData = {
 		name: '',
@@ -7,13 +10,6 @@
 		message: ''
 	};
 
-	let submitted = false;
-
-	function handleSubmit() {
-		// Here you would typically send the form data to your server
-		// For now, we'll just simulate a successful submission
-		submitted = true;
-	}
 </script>
 
 <svelte:head>
@@ -23,7 +19,7 @@
 <div class="container mx-auto px-4 py-12">
 	<h1 class="mb-8 text-center text-4xl font-bold">Contact Us</h1>
 
-	{#if submitted}
+	{#if form?.success}
 		<div
 			class="relative mb-4 rounded border border-green-400 bg-green-100 px-4 py-3 text-green-700"
 			role="alert"
@@ -32,13 +28,14 @@
 			<span class="block sm:inline"> Your message has been sent. We'll get back to you soon.</span>
 		</div>
 	{:else}
-		<form on:submit|preventDefault={handleSubmit} use:enhance class="mx-auto max-w-lg">
+		<form method="post" use:enhance class="mx-auto max-w-lg">
 			<div class="mb-4">
 				<label for="name" class="mb-2 block text-sm font-bold text-gray-700">Name</label>
 				<input
 					type="text"
 					id="name"
 					bind:value={formData.name}
+					name="name"
 					required
 					class="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
 				/>
@@ -48,6 +45,7 @@
 				<input
 					type="email"
 					id="email"
+					name="email"
 					bind:value={formData.email}
 					required
 					class="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
@@ -57,6 +55,7 @@
 				<label for="message" class="mb-2 block text-sm font-bold text-gray-700">Message</label>
 				<textarea
 					id="message"
+					name="message"
 					bind:value={formData.message}
 					required
 					rows="5"

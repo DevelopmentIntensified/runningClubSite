@@ -1,18 +1,25 @@
 <script>
 	import { onMount } from 'svelte';
+	import formalImg from '$lib/assets/images/social/formal.jpeg';
+	import nircaImg from '$lib/assets/images/nirca/nircameet.jpeg';
+	import runningImg from '$lib/assets/images/nirca/nircacoleracing.jpeg';
+	import flamesFlagImg from '$lib/assets/images/nirca/flamesflag.jpeg';
+	import halfImg from '$lib/assets/images/otherraces/deephollow.jpeg';
 
 	let currentSlide = 0;
 	const slides = [
-		{ image: '/images/runner1.jpg', alt: 'Runner at sunset' },
-		{ image: '/images/runner2.jpg', alt: 'Group running together' },
-		{ image: '/images/runner3.jpg', alt: 'Runner crossing finish line' }
+		{ image: nircaImg, alt: 'runners in line for team picture' },
+		{ image: flamesFlagImg, alt: 'Runner with team flag' },
+		{ image: runningImg, alt: 'runner running in race' },
+		{ image: formalImg, alt: 'formal team picture' },
+		{ image: halfImg, alt: 'runners team picture after half marathon' },
 	];
 
 	onMount(() => {
 		const interval = setInterval(() => {
 			currentSlide = (currentSlide + 1) % slides.length;
 			console.log(currentSlide);
-		}, 3000);
+		}, 3500);
 
 		return () => clearInterval(interval);
 	});

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { POST as loginHandler } from '../../src/routes/api/login/+server';
-import { POST as registerHandler } from '../../src/routes/api/register/+server';
+import { POST as loginHandler } from '../../inactive/api/login/+server';
+import { POST as registerHandler } from '../../inactive/api/register/+server';
 import { auth } from '$lib/server/lucia';
 import { db } from '$lib/db';
 

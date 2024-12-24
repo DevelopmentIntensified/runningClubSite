@@ -1,147 +1,171 @@
-<script>
-	const crossCountryRecords = {
-		male: [
-			{ distance: '5K', name: 'John Doe', time: '14:32', year: 2022 },
-			{ distance: '8K', name: 'Mike Smith', time: '24:15', year: 2021 },
-			{ distance: '10K', name: 'Chris Johnson', time: '30:45', year: 2023 }
-		],
-		female: [
-			{ distance: '5K', name: 'Jane Doe', time: '16:45', year: 2022 },
-			{ distance: '6K', name: 'Sarah Williams', time: '20:30', year: 2021 },
-			{ distance: '8K', name: 'Emily Brown', time: '28:20', year: 2023 }
-		]
-	};
+<script lang="ts">
+  import { slide } from 'svelte/transition';
+  import type { PageData } from './$types';
+	import womensImg from "$lib/assets/images/nirca/boysgolrcgirls.jpeg"
+	import mensImg from "$lib/assets/images/nirca/girlsgolrcboys.jpeg"
 
-	const trackRecords = {
-		male: [
-			{ event: '100m', name: 'Tom Speed', time: '10.21', year: 2022 },
-			{ event: '200m', name: 'Mike Quick', time: '20.54', year: 2021 },
-			{ event: '400m', name: 'John Fast', time: '45.67', year: 2023 },
-			{ event: '800m', name: 'Chris Middle', time: '1:48.32', year: 2022 },
-			{ event: '1500m', name: 'Paul Miler', time: '3:38.45', year: 2021 },
-			{ event: '5000m', name: 'David Long', time: '13:24.56', year: 2023 },
-			{ event: '10000m', name: 'Mark Marathon', time: '28:32.45', year: 2022 }
-		],
-		female: [
-			{ event: '100m', name: 'Lisa Bolt', time: '11.24', year: 2022 },
-			{ event: '200m', name: 'Sarah Dash', time: '22.67', year: 2021 },
-			{ event: '400m', name: 'Emma Lap', time: '51.23', year: 2023 },
-			{ event: '800m', name: 'Olivia Half', time: '2:01.45', year: 2022 },
-			{ event: '1500m', name: 'Sophie Metric', time: '4:02.34', year: 2021 },
-			{ event: '5000m', name: 'Rachel Distance', time: '15:12.67', year: 2023 },
-			{ event: '10000m', name: 'Kate Endurance', time: '31:45.89', year: 2022 }
-		]
-	};
+  export let data: PageData;
+
+  let activeSection = 'men';
+  let activeType = 'cross_country';
+
+  $: menRecords = data.records.filter(record => record.gender === 'male');
+  $: womenRecords = data.records.filter(record => record.gender === 'female');
+
+  $: filteredMenRecords = menRecords.filter(record => record.type === activeType);
+  $: filteredWomenRecords = womenRecords.filter(record => record.type === activeType);
+
+  function setActiveType(type: string) {
+    activeType = type;
+  }
+
+  function setActiveSection(section: string) {
+    activeSection = section;
+  }
 </script>
 
 <svelte:head>
-	<title>Club Records - Liberty Running Club</title>
+  <title>Club Records - Liberty Running Club</title>
 </svelte:head>
 
 <div class="container mx-auto px-4 py-12">
-	<h1 class="mb-8 text-center text-4xl font-bold">Club Records</h1>
+  <h1 class="text-4xl font-bold mb-8 text-center">Club Records</h1>
 
-	<div class="mb-12">
-		<h2 class="mb-4 text-3xl font-semibold">Cross Country Records</h2>
-		<div class="grid gap-8 md:grid-cols-2">
-			<div>
-				<h3 class="mb-2 text-2xl font-semibold">Male</h3>
-				<table class="w-full">
-					<thead>
-						<tr>
-							<th class="text-left">Distance</th>
-							<th class="text-left">Name</th>
-							<th class="text-left">Time</th>
-							<th class="text-left">Year</th>
-						</tr>
-					</thead>
-					<tbody>
-						{#each crossCountryRecords.male as record}
-							<tr>
-								<td>{record.distance}</td>
-								<td>{record.name}</td>
-								<td>{record.time}</td>
-								<td>{record.year}</td>
-							</tr>
-						{/each}
-					</tbody>
-				</table>
-			</div>
-			<div>
-				<h3 class="mb-2 text-2xl font-semibold">Female</h3>
-				<table class="w-full">
-					<thead>
-						<tr>
-							<th class="text-left">Distance</th>
-							<th class="text-left">Name</th>
-							<th class="text-left">Time</th>
-							<th class="text-left">Year</th>
-						</tr>
-					</thead>
-					<tbody>
-						{#each crossCountryRecords.female as record}
-							<tr>
-								<td>{record.distance}</td>
-								<td>{record.name}</td>
-								<td>{record.time}</td>
-								<td>{record.year}</td>
-							</tr>
-						{/each}
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</div>
+  <div class="flex justify-center space-x-4 mb-8">
+    <button
+      class="px-4 py-2 rounded-full {activeSection === 'men' ? 'bg-primary-600 text-white' : 'bg-gray-200 text-gray-800'}"
+      on:click={() => setActiveSection('men')}
+    >
+      Men's Records
+    </button>
+    <button
+      class="px-4 py-2 rounded-full {activeSection === 'women' ? 'bg-primary-600 text-white' : 'bg-gray-200 text-gray-800'}"
+      on:click={() => setActiveSection('women')}
+    >
+      Women's Records
+    </button>
+  </div>
 
-	<div>
-		<h2 class="mb-4 text-3xl font-semibold">Track Records</h2>
-		<div class="grid gap-8 md:grid-cols-2">
-			<div>
-				<h3 class="mb-2 text-2xl font-semibold">Male</h3>
-				<table class="w-full">
-					<thead>
-						<tr>
-							<th class="text-left">Event</th>
-							<th class="text-left">Name</th>
-							<th class="text-left">Time</th>
-							<th class="text-left">Year</th>
-						</tr>
-					</thead>
-					<tbody>
-						{#each trackRecords.male as record}
-							<tr>
-								<td>{record.event}</td>
-								<td>{record.name}</td>
-								<td>{record.time}</td>
-								<td>{record.year}</td>
-							</tr>
-						{/each}
-					</tbody>
-				</table>
-			</div>
-			<div>
-				<h3 class="mb-2 text-2xl font-semibold">Female</h3>
-				<table class="w-full">
-					<thead>
-						<tr>
-							<th class="text-left">Event</th>
-							<th class="text-left">Name</th>
-							<th class="text-left">Time</th>
-							<th class="text-left">Year</th>
-						</tr>
-					</thead>
-					<tbody>
-						{#each trackRecords.female as record}
-							<tr>
-								<td>{record.event}</td>
-								<td>{record.name}</td>
-								<td>{record.time}</td>
-								<td>{record.year}</td>
-							</tr>
-						{/each}
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</div>
+  {#if activeSection === 'men'}
+    <div transition:slide>
+      <div class="relative mb-8">
+        <img src={mensImg} alt="Go LRC Boys" class="w-full h-96 object-cover rounded-lg shadow-lg">
+        <h2 class="absolute bottom-4 left-4 text-3xl font-bold text-white shadow-text">Men's Records</h2>
+      </div>
+
+      <div class="flex justify-center space-x-4 mb-8">
+        <button
+          class="px-4 py-2 rounded-full {activeType === 'cross_country' ? 'bg-secondary-600 text-white' : 'bg-gray-200 text-gray-800'}"
+          on:click={() => setActiveType('cross_country')}
+        >
+          Cross Country
+        </button>
+        <button
+          class="px-4 py-2 rounded-full {activeType === 'track' ? 'bg-secondary-600 text-white' : 'bg-gray-200 text-gray-800'}"
+          on:click={() => setActiveType('track')}
+        >
+          Track
+        </button>
+        <button
+          class="px-4 py-2 rounded-full {activeType === 'field' ? 'bg-secondary-600 text-white' : 'bg-gray-200 text-gray-800'}"
+          on:click={() => setActiveType('field')}
+        >
+          Field
+        </button>
+      </div>
+
+      <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+        <table class="w-full">
+          <thead class="bg-gray-100">
+            <tr>
+              <th class="px-4 py-2 text-left">Event</th>
+              <th class="px-4 py-2 text-left">Name</th>
+              <th class="px-4 py-2 text-left">Time/Mark</th>
+              <th class="px-4 py-2 text-left">Year</th>
+            </tr>
+          </thead>
+          <tbody>
+            {#each filteredMenRecords as record}
+              <tr class="border-b">
+                <td class="px-4 py-2">{record.event}</td>
+                <td class="px-4 py-2">
+                  {#if record.link}
+                    <a href={record.link} target="_blank" rel="noopener noreferrer" class="text-primary-600 hover:underline">{record.name}</a>
+                  {:else}
+                    {record.name}
+                  {/if}
+                </td>
+                <td class="px-4 py-2">{record.time}</td>
+                <td class="px-4 py-2">{record.year || 'N/A'}</td>
+              </tr>
+            {/each}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  {:else}
+    <div transition:slide>
+      <div class="relative mb-8">
+        <img src={womensImg} alt="Women's Team" class="w-full h-96 object-cover rounded-lg shadow-lg">
+        <h2 class="absolute bottom-4 left-4 text-3xl font-bold text-white shadow-text">Women's Records</h2>
+      </div>
+
+      <div class="flex justify-center space-x-4 mb-8">
+        <button
+          class="px-4 py-2 rounded-full {activeType === 'cross_country' ? 'bg-secondary-600 text-white' : 'bg-gray-200 text-gray-800'}"
+          on:click={() => setActiveType('cross_country')}
+        >
+          Cross Country
+        </button>
+        <button
+          class="px-4 py-2 rounded-full {activeType === 'track' ? 'bg-secondary-600 text-white' : 'bg-gray-200 text-gray-800'}"
+          on:click={() => setActiveType('track')}
+        >
+          Track
+        </button>
+        <button
+          class="px-4 py-2 rounded-full {activeType === 'field' ? 'bg-secondary-600 text-white' : 'bg-gray-200 text-gray-800'}"
+          on:click={() => setActiveType('field')}
+        >
+          Field
+        </button>
+      </div>
+
+      <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+        <table class="w-full">
+          <thead class="bg-gray-100">
+            <tr>
+              <th class="px-4 py-2 text-left">Event</th>
+              <th class="px-4 py-2 text-left">Name</th>
+              <th class="px-4 py-2 text-left">Time/Mark</th>
+              <th class="px-4 py-2 text-left">Year</th>
+            </tr>
+          </thead>
+          <tbody>
+            {#each filteredWomenRecords as record}
+              <tr class="border-b">
+                <td class="px-4 py-2">{record.event}</td>
+                <td class="px-4 py-2">
+                  {#if record.link}
+                    <a href={record.link} target="_blank" rel="noopener noreferrer" class="text-primary-600 hover:underline">{record.name}</a>
+                  {:else}
+                    {record.name}
+                  {/if}
+                </td>
+                <td class="px-4 py-2">{record.time}</td>
+                <td class="px-4 py-2">{record.year || 'N/A'}</td>
+              </tr>
+            {/each}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  {/if}
 </div>
+
+<style>
+  .shadow-text {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+</style>
+
