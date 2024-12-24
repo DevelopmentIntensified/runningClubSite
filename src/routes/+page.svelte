@@ -43,7 +43,7 @@
 	{/each}
 
 	<div
-		class="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-50 text-white"
+		class="absolute text-center inset-0 flex flex-col items-center justify-center bg-black bg-opacity-50 text-white"
 	>
 		<h1 class="mb-4 text-5xl font-bold">Liberty Running Club</h1>
 		<p class="mb-8 text-2xl">Running and Glorifying God through every step</p>
