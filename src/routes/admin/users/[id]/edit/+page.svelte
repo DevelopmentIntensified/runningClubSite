@@ -4,7 +4,7 @@
 
   export let data: PageData;
 
-  let { user } = data;
+  let { User } = data;
   let error = '';
 </script>
 
@@ -22,15 +22,15 @@
       </div>
       <div class="p-6 sm:p-8">
         <form action="?/updateuser" method="POST" use:enhance class="space-y-6">
-          <input type="hidden" name="id" value={user.id}>
+          <input type="hidden" name="id" value={User.id}>
           <div>
             <label for="email" class="block text-sm font-medium text-gray-700">email</label>
-            <input type="email" id="email" name="email" value={user.email} required
+            <input type="email" id="email" name="email" value={User.email} required
                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm" />
           </div>
           <div>
             <label for="isAdmin" class="block text-sm font-medium text-gray-700">isAdmin</label>
-            <input type="text" id="isAdmin" name="isAdmin" value={user.isAdmin} required
+            <input type="text" id="isAdmin" name="isAdmin" value={User.isAdmin} required
                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm" />
           </div>
           {#if error}
