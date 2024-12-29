@@ -3,7 +3,7 @@ import { alumni,type Alumni } from '$lib/server/db/schema';
 import { eq } from 'drizzle-orm';
 
 export async function getAlumni() {
-  return await db.select().from(alumni).orderBy(alumni.graduation_year);
+  return await db.select().from(alumni).orderBy(alumni.graduationYear);
 }
 
 export async function getAlumnus(id: number) {

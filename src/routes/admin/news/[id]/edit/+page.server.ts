@@ -14,6 +14,7 @@ export const actions: Actions = {
   updateNews: async ({ request, params }) => {
     const formData = await request.formData();
     const title = formData.get('title');
+    const imageUrl = formData.get('imageUrl');
     const content = formData.get('content');
 
     if (!title || !content) {
@@ -22,6 +23,7 @@ export const actions: Actions = {
 
     const updatedNews = await updateNews(parseInt(params.id), {
       title: title.toString(),
+      imageUrl: imageUrl.toString(),
       content: content.toString(),
     });
 

@@ -24,6 +24,7 @@ export const news = pgTable('news', {
   id: serial('id').primaryKey(),
   title: text('title').notNull(),
   content: text('content').notNull(),
+  imageUrl: text('imageUrl').notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   userId: integer('user_id')
     .notNull()
@@ -33,20 +34,20 @@ export const news = pgTable('news', {
 export const alumni = pgTable('alumni', {
   id: serial('id').primaryKey(),
   name: text('name').notNull(),
-  image_url: text('image_url').notNull(),
-  graduation_year: integer('graduation_year').notNull(),
+  imageUrl: text('imageUrl').notNull(),
+  graduationYear: integer('graduationYear').notNull(),
   major: text('major').notNull(),
   achievements: text('achievements').notNull(),
-  current_occupation: text('current_occupation').notNull(),
+  currentOccupation: text('currentOccupation').notNull(),
   created_at: timestamp('created_at').defaultNow().notNull()
 });
 
 export const leaders = pgTable('leaders', {
   id: serial('id').primaryKey(),
   name: text('name').notNull(),
-  image_url: text('imageUrl').notNull(),
+  imageUrl: text('imageUrl').notNull(),
   position: text('position').notNull(),
-  description: text('description').notNull(),
+  bio: text('bio').notNull(),
   created_at: timestamp('created_at').defaultNow().notNull()
 });
 

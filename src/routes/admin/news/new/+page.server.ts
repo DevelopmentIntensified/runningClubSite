@@ -3,9 +3,10 @@ import { fail, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
 
 export const actions: Actions = {
-  createNews: async ({ request }) => {
+  createNews: async ({ request, locals}) => {
     const formData = await request.formData();
     const title = formData.get('title');
+    const imageUrl = formData.get('imageUrl');
     const content = formData.get('content');
 
     if (!title || !content) {
@@ -14,8 +15,9 @@ export const actions: Actions = {
 
     const newNews = await createNews({
       title: title.toString(),
+      imageUrl: imageUrl.toString(),
       content: content.toString(),
-      userId: 'admin', // Replace with actual user ID when authentication is implemented
+      userId: locals.user?.id, // Replace with actual user ID when authentication is implemented
     });
 
     if (newNews) {

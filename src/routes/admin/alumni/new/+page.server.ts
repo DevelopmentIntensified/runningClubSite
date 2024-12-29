@@ -6,6 +6,7 @@ export const actions: Actions = {
   createAlumnus: async ({ request }) => {
     const formData = await request.formData();
     const name = formData.get('name');
+    const major = formData.get('major');
     const graduationYear = formData.get('graduationYear');
     const achievements = formData.get('achievements');
     const currentOccupation = formData.get('currentOccupation');
@@ -17,6 +18,7 @@ export const actions: Actions = {
 
     const newAlumnus = await createAlumnus({
       name: name.toString(),
+      major: major?.toString(),
       graduationYear: parseInt(graduationYear.toString()),
       achievements: achievements?.toString() || null,
       currentOccupation: currentOccupation?.toString() || null,

@@ -15,10 +15,10 @@
     { href: '/about', label: 'About' },
     { href: '/schedule', label: 'Schedule' },
     { href: '/locations', label: 'Locations' },
-    // { href: '/alumni', label: 'Alumni' },
+    { href: '/alumni', label: 'Alumni' },
     { href: '/records', label: 'Records' },
-    { href: '/contact', label: 'Contact' }
-    // { href: '/news', label: 'News' }
+    { href: '/contact', label: 'Contact' },
+    { href: '/news', label: 'News' }
   ];
 
   if(isLoggedIn){

@@ -33,6 +33,11 @@
             <textarea id="content" name="content" rows="6" required
                       class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm">{newsItem.content}</textarea>
           </div>
+          <div>
+            <label for="imageUrl" class="block text-sm font-medium text-gray-700">Image URL</label>
+            <input type="url" id="imageUrl" name="imageUrl" value={newsItem.imageUrl}
+                   class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm" />
+          </div>
           {#if error}
             <div class="text-red-500 text-sm">{error}</div>
           {/if}
