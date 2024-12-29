@@ -9,6 +9,15 @@
     <ul class="flex space-x-4">
       <li>
         <a
+          href="/admin/users"
+          class="text-blue-500 hover:underline"
+          class:font-bold={$page.url.pathname.startsWith('/admin/users')}
+        >
+          Manage users
+        </a>
+      </li>
+      <li>
+        <a
           href="/admin/news"
           class="text-blue-500 hover:underline"
           class:font-bold={$page.url.pathname.startsWith('/admin/news')}
