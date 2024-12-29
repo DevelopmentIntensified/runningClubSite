@@ -1,12 +1,18 @@
-// See https://svelte.dev/docs/kit/types#app.d.ts
+// See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
+/// <reference types="@auth/sveltekit" />
 declare global {
 	namespace App {
+		// interface Error {}
 		interface Locals {
-			user: import('$lib/server/auth').SessionValidationResult['user'];
-			session: import('$lib/server/auth').SessionValidationResult['session'];
+			user: import('lucia').User | null;
+			session: import('lucia').Session | null;
 		}
+		// interface PageData {}
+		// interface PageState {}
+		// interface Platform {}
 	}
 }
 
 export {};
+

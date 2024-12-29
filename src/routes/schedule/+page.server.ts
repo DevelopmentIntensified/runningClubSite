@@ -7,11 +7,9 @@ export const load: PageServerLoad = async () => {
   const eventsData = await db.select().from(events).orderBy(events.start);
 
   return {
-    events: eventsData.map(e => ({
+    events: eventsData.map((e) => ({
       date: e.start,
       ...e
     }))
   };
 };
-
-
