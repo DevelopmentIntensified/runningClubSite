@@ -6,6 +6,6 @@ export function getUrl() {
   } else if (process.env.ENV === 'test') {
     return 'https://running-club-site-git-test-developmentintensifieds-projects.vercel.app/';
   } else {
-    return "https://running-club-site-developmentintensifieds-projects.vercel.app/"
+    return 'https://running-club-site-developmentintensifieds-projects.vercel.app/';
   }
 }

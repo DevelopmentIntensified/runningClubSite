@@ -17,14 +17,10 @@ export async function createNews(data: Omit<News, 'id' | 'createdAt'>) {
 }
 
 export async function updateNews(id: number, data: Partial<Omit<News, 'id' | 'createdAt'>>) {
-  const [updatedNews] = await db.update(news)
-    .set(data)
-    .where(eq(news.id, id))
-    .returning();
+  const [updatedNews] = await db.update(news).set(data).where(eq(news.id, id)).returning();
   return updatedNews;
 }
 
 export async function deleteNews(id: number) {
   await db.delete(news).where(eq(news.id, id));
 }
-

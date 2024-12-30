@@ -24,7 +24,7 @@ export const actions: Actions = {
     const updatedNews = await updateNews(parseInt(params.id), {
       title: title.toString(),
       imageUrl: imageUrl.toString(),
-      content: content.toString(),
+      content: content.toString()
     });
 
     if (updatedNews) {
@@ -34,4 +34,3 @@ export const actions: Actions = {
     }
   }
 };
-

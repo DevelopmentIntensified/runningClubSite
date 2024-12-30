@@ -5,4 +5,3 @@ export const load: PageServerLoad = async () => {
   const news = await getNews();
   return { news };
 };
-

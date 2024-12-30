@@ -5,5 +5,3 @@ export const load: PageServerLoad = async () => {
   const locations = await getLocations();
   return { locations };
 };
-
-

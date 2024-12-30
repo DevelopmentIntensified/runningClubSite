@@ -17,14 +17,10 @@ export async function createUser(data: Omit<User, 'id'>) {
 }
 
 export async function updateUser(id: number, data: Partial<Omit<User, 'id'>>) {
-  const [updatedUser] = await db.update(users)
-    .set(data)
-    .where(eq(users.id, id))
-    .returning();
+  const [updatedUser] = await db.update(users).set(data).where(eq(users.id, id)).returning();
   return updatedUser;
 }
 
 export async function deleteUser(id: number) {
   await db.delete(users).where(eq(users.id, id));
 }
-

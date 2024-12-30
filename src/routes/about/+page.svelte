@@ -1,81 +1,10 @@
-<script>
+<script lang="ts">
   import teamPhoto from '$lib/assets/images/social/shraptop.jpeg';
   import InstagramIcon from '$lib/components/InstagramIcon.svelte';
-  import eventCoordinatorImg from '$lib/assets/images/leaders/eventCoordinator.jpeg';
-  import nircaDirectorImg from '$lib/assets/images/leaders/nircaDirector.jpeg';
-  import coachImg from '$lib/assets/images/leaders/coach.jpeg';
-  import presidentImg from '$lib/assets/images/leaders/president.jpeg';
-  import vicePresidentImg from '$lib/assets/images/leaders/vicePresident.jpeg';
-  import treasurerImg from '$lib/assets/images/leaders/treasurer.jpeg';
-  import mediaManagerImg from '$lib/assets/images/leaders/mediaManager.jpeg';
-  import chaplainImg from '$lib/assets/images/leaders/chaplain.jpeg';
-  import advisorImg from '$lib/assets/images/leaders/advisor.jpeg';
-  import headOfLogisticsImg from '$lib/assets/images/leaders/headOfLogistics.jpeg';
 
-  const leaders = [
-    {
-      name: 'Cole Schwartz',
-      image: presidentImg,
-      position: 'Club President',
-      description: ''
-    },
-    {
-      name: 'Kyle Moore',
-      image: vicePresidentImg,
-      position: 'Vice President',
-      description: ''
-    },
-    {
-      name: 'Leah kelley',
-      image: treasurerImg,
-      position: 'Treasurer',
-      description: ''
-    },
-    {
-      name: 'Collin Rose',
-      image: mediaManagerImg,
-      position: 'Social Media Coordinator',
-      description:
-        'Collin is a second-year student from Sunny Orlando, Florida, who loves middle and long-distance events, is a running shoe connoisseur, and a master on the Aux.'
-    },
-    {
-      name: 'Joshua Harden',
-      image: coachImg,
-      position: 'Coach',
-      description: ''
-    },
-    {
-      name: 'Jesse Harrell',
-      image: chaplainImg,
-      position: 'Club Chaplain',
-      description: ''
-    },
-    {
-      name: 'Jadyn Talley',
-      image: eventCoordinatorImg,
-      position: 'Team Mom/Female Captain/Event Coordinator',
-      description: ''
-    },
-    {
-      name: 'Skylar Waechter',
-      image: advisorImg,
-      position: 'Advisory Board Member',
-      description: ''
-    },
-    {
-      name: 'Matthew Petke',
-      image: headOfLogisticsImg,
-      position: 'Head of Logistics',
-      description: ''
-    },
-    {
-      name: 'George Crowder',
-      image: nircaDirectorImg,
-      position: 'NIRCA Coordinator',
-      description:
-        'George Crowder is a first-year student at Liberty University from Winchester, Virginia. He is pursuing a degree in strength and conditioning with a concentration on coaching. George loves middle-distance events and enjoys mountain biking, rock climbing, caving and hiking.'
-    }
-  ];
+  import type { PageData } from './$types';
+  export let data: PageData;
+  const leaders = data.leaders
 </script>
 
 <svelte:head>
@@ -137,11 +66,11 @@
   <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
     {#each leaders as leader}
       <div class="overflow-hidden rounded-lg bg-white shadow-lg">
-        <img src={leader.image} alt={leader.name} class="h-64 w-full object-cover" />
+        <img src={leader.imageUrl} alt={leader.name} class="h-72 w-full object-cover" />
         <div class="p-6">
           <h3 class="mb-2 text-xl font-semibold">{leader.name}</h3>
           <p class="mb-2 text-primary-600">{leader.position}</p>
-          <p class="text-gray-700">{leader.description}</p>
+          <p class="text-gray-700">{leader.bio}</p>
         </div>
       </div>
     {/each}

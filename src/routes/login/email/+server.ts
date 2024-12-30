@@ -73,7 +73,7 @@ or if you would rather, here is a link for loggin in: <a href="${signInUrl.toStr
         expiresAt: new Date(Date.now() + 60 * 1000 * 15),
         email
       }
-    ])
+    ]);
 
     return new Response(JSON.stringify({ success: true }), { status: 200 });
   }

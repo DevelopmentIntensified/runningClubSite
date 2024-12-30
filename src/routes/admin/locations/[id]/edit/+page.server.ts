@@ -24,7 +24,7 @@ export const actions: Actions = {
     const updatedLocation = await updateLocation(parseInt(params.id), {
       name: name.toString(),
       description: description.toString(),
-      link: link.toString(),
+      link: link.toString()
     });
 
     if (updatedLocation) {
@@ -34,4 +34,3 @@ export const actions: Actions = {
     }
   }
 };
-

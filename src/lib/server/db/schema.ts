@@ -17,7 +17,7 @@ export const sessions = pgTable('session', {
 export const codes = pgTable('codes', {
   code: text('code').notNull().unique(),
   expiresAt: timestamp('expiresAt', { withTimezone: true, mode: 'date' }).notNull(),
-  email: text('email'),
+  email: text('email')
 });
 
 export const news = pgTable('news', {
@@ -48,6 +48,7 @@ export const leaders = pgTable('leaders', {
   imageUrl: text('imageUrl').notNull(),
   position: text('position').notNull(),
   bio: text('bio').notNull(),
+  order: integer('order').notNull(),
   created_at: timestamp('created_at').defaultNow().notNull()
 });
 
@@ -66,7 +67,7 @@ export const locations = pgTable('locations', {
   id: serial('id').primaryKey(),
   name: text('name').notNull(),
   description: text('description'),
-  link: text("link").notNull()
+  link: text('link').notNull()
 });
 
 export const records = pgTable('records', {
@@ -88,5 +89,6 @@ export type User = typeof users.$inferSelect;
 export type Location = typeof locations.$inferSelect;
 export type CalendarEvent = typeof events.$inferSelect;
 export type Alumni = typeof alumni.$inferSelect;
+export type Code = typeof codes.$inferSelect;
 export type News = typeof news.$inferSelect;
 export type Leader = typeof leaders.$inferSelect;

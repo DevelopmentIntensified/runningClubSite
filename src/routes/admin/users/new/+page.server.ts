@@ -18,7 +18,7 @@ export const actions: Actions = {
       name: name.toString(),
       position: position.toString(),
       bio: bio?.toString() || null,
-      imageUrl: imageUrl?.toString() || null,
+      imageUrl: imageUrl?.toString() || null
     });
 
     if (newuser) {
@@ -28,4 +28,3 @@ export const actions: Actions = {
     }
   }
 };
-

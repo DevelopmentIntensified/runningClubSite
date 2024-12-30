@@ -17,14 +17,10 @@ export async function createEvent(data: Omit<CalendarEvent, 'id' | 'created_at'>
 }
 
 export async function updateEvent(id: number, data: Partial<Omit<CalendarEvent, 'id'>>) {
-  const [updatedEvent] = await db.update(events)
-    .set(data)
-    .where(eq(events.id, id))
-    .returning();
+  const [updatedEvent] = await db.update(events).set(data).where(eq(events.id, id)).returning();
   return updatedEvent;
 }
 
 export async function deleteEvent(id: number) {
   await db.delete(events).where(eq(events.id, id));
 }
-

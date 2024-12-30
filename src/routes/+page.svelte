@@ -1,10 +1,12 @@
-<script>
+<script lang="ts">
   import { onMount } from 'svelte';
   import formalImg from '$lib/assets/images/social/formal.jpeg';
   import nircaImg from '$lib/assets/images/nirca/nircameet.jpeg';
   import runningImg from '$lib/assets/images/nirca/nircacoleracing.jpeg';
   import flamesFlagImg from '$lib/assets/images/nirca/flamesflag.jpeg';
   import halfImg from '$lib/assets/images/otherraces/deephollow.jpeg';
+  import type { PageData } from './$types';
+  export let data: PageData;
 
   let currentSlide = 0;
   const slides = [
@@ -52,13 +54,12 @@
       Learn More
     </a>
     <a
-      href="/login"
-      class="rounded mt-3 bg-red-600 px-4 py-2 font-bold text-white transition duration-300 hover:bg-red-700"
+      href={data.isLoggedIn ? "/groupme" : "/login"}
+      class="mt-3 rounded bg-red-600 px-4 py-2 font-bold text-white transition duration-300 hover:bg-red-700"
     >
       Join Us
     </a>
 
-    <div class="mt-5 flex space-x-4">
-    </div>
+    <div class="mt-5 flex space-x-4"></div>
   </div>
 </div>
