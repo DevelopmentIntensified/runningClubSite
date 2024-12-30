@@ -9,7 +9,11 @@ import { insertMensRecords } from './insertMensRecords';
 import { insertWomensRecords } from './insertWomensRecords';
 import { insertEvents } from './insertEvents';
 import { insertLocations } from './insertLocations';
+import { insertLeaders } from './insertLeaders';
 
+if (false) {
+  insertLeaders();
+}
 if (false) {
   insertLocations();
 }

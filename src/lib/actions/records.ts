@@ -17,15 +17,10 @@ export async function createRecord(data: Omit<Records, 'id'>) {
 }
 
 export async function updateRecord(id: number, data: Partial<Omit<Records, 'id'>>) {
-  const [updatedRecord] = await db.update(records)
-    .set(data)
-    .where(eq(records.id, id))
-    .returning();
+  const [updatedRecord] = await db.update(records).set(data).where(eq(records.id, id)).returning();
   return updatedRecord;
 }
 
 export async function deleteRecord(id: number) {
   await db.delete(records).where(eq(records.id, id));
 }
-
-

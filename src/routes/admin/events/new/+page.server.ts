@@ -22,7 +22,7 @@ export const actions: Actions = {
       start: new Date(start.toString()),
       end: new Date(end.toString()),
       location: location.toString(),
-      type: type.toString(),
+      type: type.toString()
     });
 
     if (newEvent) {
@@ -32,5 +32,3 @@ export const actions: Actions = {
     }
   }
 };
-
-

@@ -1,6 +1,6 @@
 import { db } from '$lib/server/db';
 import { events } from '$lib/server/db/schema';
-import { getEvents, deleteEvent } from '$lib/server/db/events';
+import { getEvents, deleteEvent } from '$lib/actions/events';
 import { fail } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
 
@@ -28,5 +28,3 @@ export const actions: Actions = {
     return { success: true };
   }
 };
-
-
