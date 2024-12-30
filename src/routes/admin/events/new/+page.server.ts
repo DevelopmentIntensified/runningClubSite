@@ -1,4 +1,4 @@
-import { createEvent } from '$lib/server/db/events';
+import { createEvent } from '$lib/actions/events';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
 

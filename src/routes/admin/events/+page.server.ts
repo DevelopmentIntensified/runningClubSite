@@ -1,6 +1,6 @@
 import { db } from '$lib/server/db';
 import { events } from '$lib/server/db/schema';
-import { getEvents, deleteEvent } from '$lib/actions/events';
+import { deleteEvent } from '$lib/actions/events';
 import { fail } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
 

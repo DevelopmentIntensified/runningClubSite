@@ -1,4 +1,4 @@
-import { getEvent, updateEvent } from '$lib/server/db/events';
+import { getEvent, updateEvent } from '$lib/actions/events';
 import { fail, redirect } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from '../$types';
 
