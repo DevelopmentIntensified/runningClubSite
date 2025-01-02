@@ -65,7 +65,7 @@
             ></textarea>
           </div>
           <div>
-            <label for="image" class="block text-sm font-medium text-gray-700">Image</label>
+            <label for="image" class="block text-sm font-medium text-gray-700">Image (Accepts png, gif, jpeg, jpg)</label>
             <input
               type="file"
               accept="image/png, image/gif, image/jpeg, image/jpg"

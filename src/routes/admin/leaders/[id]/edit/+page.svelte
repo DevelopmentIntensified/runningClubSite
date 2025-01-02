@@ -70,7 +70,7 @@
               value={leader.imageUrl}
               class="sr-only"
             />
-            <label for="image" class="block text-sm font-medium text-gray-700">Image</label>
+            <label for="image" class="block text-sm font-medium text-gray-700">Image (Accepts png, gif, jpeg, jpg)</label>
             <img src={leader.imageUrl} alt={leader.name} class="h-64 w-full object-cover" />
             <input
               type="file"
