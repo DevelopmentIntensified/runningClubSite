@@ -19,7 +19,7 @@
         <h2 class="text-center text-3xl font-extrabold text-white">Edit user</h2>
       </div>
       <div class="p-6 sm:p-8">
-        <form action="?/updateuser" method="POST" use:enhance class="space-y-6">
+        <form action="?/updateUser" method="POST" use:enhance class="space-y-6">
           <input type="hidden" name="id" value={User.id} />
           <div>
             <label for="email" class="block text-sm font-medium text-gray-700">email</label>
