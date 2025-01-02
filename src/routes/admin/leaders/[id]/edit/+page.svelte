@@ -74,7 +74,7 @@
             <img src={leader.imageUrl} alt={leader.name} class="h-64 w-full object-cover" />
             <input
               type="file"
-              accept="image/png, image/gif, image/jpeg"
+              accept="image/png, image/gif, image/jpeg, image/jpg"
               id="image"
               alt="leader"
               name="image"

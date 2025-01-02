@@ -68,7 +68,7 @@
             <label for="image" class="block text-sm font-medium text-gray-700">Image</label>
             <input
               type="file"
-              accept="image/png, image/gif, image/jpeg"
+              accept="image/png, image/gif, image/jpeg, image/jpg"
               alt="leader"
               id="image"
               name="image"
