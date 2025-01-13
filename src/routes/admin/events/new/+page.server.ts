@@ -1,4 +1,4 @@
-import { createEvent } from '$lib/server/db/events';
+import { createEvent } from '$lib/actions/events';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
 
@@ -22,7 +22,7 @@ export const actions: Actions = {
       start: new Date(start.toString()),
       end: new Date(end.toString()),
       location: location.toString(),
-      type: type.toString(),
+      type: type.toString()
     });
 
     if (newEvent) {
@@ -32,5 +32,3 @@ export const actions: Actions = {
     }
   }
 };
-
-

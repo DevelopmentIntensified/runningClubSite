@@ -8,7 +8,7 @@ import { users, type User } from '$lib/server/db/schema';
 import { db } from '$lib/server/db/';
 import { eq } from 'drizzle-orm';
 
-export const GET: RequestHandler = async function(event) {
+export const GET: RequestHandler = async function (event) {
   const requestUrl = new URL(event.url);
   const siteUrl = getUrl();
   const redirectUrl = new URL(siteUrl + '/login');
@@ -69,19 +69,17 @@ export const GET: RequestHandler = async function(event) {
 
   try {
     const { email } = payload;
-    let userAccount: User[] = await db
-      .select()
-      .from(users)
-      .where(eq(users.email, email));
+    let userAccount: User[] = await db.select().from(users).where(eq(users.email, email));
 
     if (userAccount.length === 0) {
-      let ids = await db.insert(users).values({
-        email,
-        isAdmin: false
-      }).returning({ id: users.id })
-      userAccount = [
-        { id: ids[0].id, email, isAdmin:false }
-      ]
+      let ids = await db
+        .insert(users)
+        .values({
+          email,
+          isAdmin: false
+        })
+        .returning({ id: users.id });
+      userAccount = [{ id: ids[0].id, email, isAdmin: false }];
     }
 
     const session = await lucia.createSession(userAccount[0].id.toString(), {});

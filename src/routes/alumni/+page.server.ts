@@ -5,4 +5,3 @@ export const load: PageServerLoad = async () => {
   const alumni = await getAlumni();
   return { alumni };
 };
-

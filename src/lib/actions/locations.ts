@@ -17,7 +17,8 @@ export async function createLocation(data: Omit<Location, 'id'>) {
 }
 
 export async function updateLocation(id: number, data: Partial<Omit<Location, 'id'>>) {
-  const [updatedLocation] = await db.update(locations)
+  const [updatedLocation] = await db
+    .update(locations)
     .set(data)
     .where(eq(locations.id, id))
     .returning();
@@ -27,5 +28,3 @@ export async function updateLocation(id: number, data: Partial<Omit<Location, 'i
 export async function deleteLocation(id: number) {
   await db.delete(locations).where(eq(locations.id, id));
 }
-
-

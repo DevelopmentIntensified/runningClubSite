@@ -9,14 +9,14 @@
 </svelte:head>
 
 <div class="container mx-auto px-4 py-12">
-  <h1 class="text-4xl font-bold mb-8 text-center">Latest News</h1>
+  <h1 class="mb-8 text-center text-4xl font-bold">Latest News</h1>
 
   <div class="space-y-8">
     {#each data.news as newsItem}
-      <div class="bg-white shadow-md rounded-lg overflow-hidden">
+      <div class="overflow-hidden rounded-lg bg-white shadow-md">
         <div class="p-6">
-          <h2 class="text-2xl font-semibold mb-2">{newsItem.title}</h2>
-          <p class="text-gray-500 mb-4">{new Date(newsItem.createdAt).toLocaleDateString()}</p>
+          <h2 class="mb-2 text-2xl font-semibold">{newsItem.title}</h2>
+          <p class="mb-4 text-gray-500">{new Date(newsItem.createdAt).toLocaleDateString()}</p>
           <div class="prose max-w-none">
             {@html newsItem.content}
           </div>
@@ -25,4 +25,3 @@
     {/each}
   </div>
 </div>
-

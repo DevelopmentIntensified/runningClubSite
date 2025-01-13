@@ -1,107 +1,67 @@
-import { parseJWT, validateJWT } from 'oslo/jwt';
 import type { RequestHandler } from './$types';
 import { getUrl } from '$lib/utils/getUrl';
-import { EMAILSECRET } from '$env/static/private';
-import type { EmailTokenPayload } from '../+server';
 import { lucia } from '$lib/server/auth';
 import { users } from '$lib/server/db/schema';
 import { db } from '$lib/server/db/';
 import { eq } from 'drizzle-orm';
+import { deleteCode, deleteDeadCodes, getCode } from '$lib/actions/codes';
 
-export const GET: RequestHandler = async function(event) {
-  const requestUrl = new URL(event.url);
+export const POST: RequestHandler = async function(event) {
   const siteUrl = getUrl();
   const redirectUrl = new URL(siteUrl + '/login');
-  const token = requestUrl.searchParams.get('token') as string;
-  const secret = new TextEncoder().encode(EMAILSECRET);
+  redirectUrl.searchParams.set('error', 'The code incorrect. Please try again');
+  const code = (await event.request.json()).code
+  console.warn("DEBUGPRINT[1]: +server.ts:14: code=", code)
 
-  redirectUrl.searchParams.set('error', 'The token provided was not valid, please try again.');
+  await deleteDeadCodes()
 
-  if (!requestUrl.searchParams.has('token')) {
-    return new Response(null, {
-      status: 302,
-      headers: {
-        Location: redirectUrl.toString()
-      }
-    });
+  const codeToCheck = await getCode(code)
+  if (!codeToCheck) {
+    return new Response(
+      JSON.stringify({ success: false, error: 'Unexpected error, please try again' }),
+      { status: 500 }
+    );
   }
 
   try {
-    await validateJWT('HS256', secret, token);
-  } catch (error) {
-    console.log(error);
-    return new Response(null, {
-      status: 302,
-      headers: {
-        Location: redirectUrl.toString()
-      }
-    });
-  }
-
-  const parcedToken = parseJWT(token);
-  if (!parcedToken) {
-    return new Response(null, {
-      status: 302,
-      headers: {
-        Location: redirectUrl.toString()
-      }
-    });
-  }
-  const payload: EmailTokenPayload = parcedToken?.payload as EmailTokenPayload;
-
-  if (!payload) {
-    return new Response(null, {
-      status: 302,
-      headers: {
-        Location: redirectUrl.toString()
-      }
-    });
-  }
-
-  if (!!event.locals.user) {
-    return new Response(null, {
-      status: 302,
-      headers: {
-        Location: redirectUrl.toString()
-      }
-    });
-  }
-
-  try {
-    const { userId, email } = payload;
-    const userAccount = await db
-      .select()
-      .from(users)
-      .where(eq(users.email, email));
+    const email = codeToCheck.email
+    if (!email) {
+      return new Response(
+        JSON.stringify({ success: false, error: 'Unexpected error, please try again' }),
+        { status: 500 }
+      );
+    }
+    let userAccount = await db.select().from(users).where(eq(users.email, email));
     if (userAccount.length === 0) {
-      return new Response(null, {
-        status: 302,
-        headers: {
-          Location: redirectUrl.toString()
-        }
-      });
+      let ids = await db
+        .insert(users)
+        .values({
+          email,
+          isAdmin: false
+        })
+        .returning({ id: users.id });
+      userAccount = [{ id: ids[0].id, email, isAdmin: false }];
     }
 
-    const session = await lucia.createSession(userId, {});
+    const session = await lucia.createSession(userAccount[0].id.toString(), {});
     const sessionCookie = lucia.createSessionCookie(session.id);
 
     let headers = new Headers();
     headers.append('Set-Cookie', sessionCookie.serialize());
-    headers.append('Location', siteUrl + '/user/');
 
     let result = new Response(null, {
-      status: 302,
+      status: 200,
       headers
     });
+
+    await deleteCode(code)
 
     return result;
   } catch (error) {
     console.log(error);
-    return new Response(null, {
-      status: 302,
-      headers: {
-        Location: redirectUrl.toString()
-      }
-    });
+    return new Response(
+      JSON.stringify({ success: false, error: 'Unexpected error, please try again' }),
+      { status: 500 }
+    );
   }
 };

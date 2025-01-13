@@ -6,7 +6,7 @@
   export let isAdmin: boolean;
   export let isLoggedIn: boolean;
 
-  console.warn("DEBUGPRINT[2]: Navbar.svelte:7: isAdmin=", isAdmin)
+  console.warn('DEBUGPRINT[2]: Navbar.svelte:7: isAdmin=', isAdmin);
 
   let isOpen = false;
 
@@ -21,14 +21,14 @@
     { href: '/news', label: 'News' }
   ];
 
-  if(isLoggedIn){
+  if (isLoggedIn) {
     navItems.push({
-      href : "/groupme",
-      label: "Groupme Link"
-    })
+      href: '/groupme',
+      label: 'Groupme Link'
+    });
   }
 
-  const adminItems = [{ href: '/admin/news', label: 'Admin' }];
+  const adminItems = [{ href: '/admin/users', label: 'Admin' }];
 
   function toggleMenu() {
     isOpen = !isOpen;

@@ -10,14 +10,14 @@ export const actions: Actions = {
     const link = formData.get('link');
 
     if (!name || !description || !link) {
-    console.warn("DEBUGPRINT[2]: +page.server.ts:6: request=", formData)
+      console.warn('DEBUGPRINT[2]: +page.server.ts:6: request=', formData);
       return fail(400, { message: 'All fields are required' });
     }
 
     const newLocation = await createLocation({
       name: name.toString(),
       description: description.toString(),
-      link: link.toString(),
+      link: link.toString()
     });
 
     if (newLocation) {
@@ -27,4 +27,3 @@ export const actions: Actions = {
     }
   }
 };
-

@@ -22,7 +22,7 @@ export const actions: Actions = {
       graduationYear: parseInt(graduationYear.toString()),
       achievements: achievements?.toString() || null,
       currentOccupation: currentOccupation?.toString() || null,
-      imageUrl: imageUrl?.toString() || null,
+      imageUrl: imageUrl?.toString() || null
     });
 
     if (newAlumnus) {
@@ -32,4 +32,3 @@ export const actions: Actions = {
     }
   }
 };
-

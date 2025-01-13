@@ -3,7 +3,7 @@ import { fail, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
 
 export const actions: Actions = {
-  createNews: async ({ request, locals}) => {
+  createNews: async ({ request, locals }) => {
     const formData = await request.formData();
     const title = formData.get('title');
     const imageUrl = formData.get('imageUrl');
@@ -17,7 +17,7 @@ export const actions: Actions = {
       title: title.toString(),
       imageUrl: imageUrl.toString(),
       content: content.toString(),
-      userId: locals.user?.id, // Replace with actual user ID when authentication is implemented
+      userId: locals.user?.id // Replace with actual user ID when authentication is implemented
     });
 
     if (newNews) {
@@ -27,4 +27,3 @@ export const actions: Actions = {
     }
   }
 };
-

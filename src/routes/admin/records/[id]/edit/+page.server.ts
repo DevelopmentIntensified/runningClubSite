@@ -30,7 +30,7 @@ export const actions: Actions = {
       time: time.toString(),
       year: parseInt(year.toString()),
       gender: gender.toString(),
-      type: type.toString(),
+      type: type.toString()
     });
 
     if (updatedRecord) {
@@ -40,4 +40,3 @@ export const actions: Actions = {
     }
   }
 };
-

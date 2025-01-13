@@ -24,7 +24,7 @@ export const actions: Actions = {
 
     const updatedUser = await updateUser(parseInt(params.id), {
       email: email.toString(),
-      isAdmin: isAdmin === "true",
+      isAdmin: isAdmin === 'true'
     });
 
     if (updatedUser) {
@@ -34,4 +34,3 @@ export const actions: Actions = {
     }
   }
 };
-
