@@ -95,6 +95,9 @@
             class="ring-offset-background focus-visible:ring-ring text-primary-foreground mb-5 inline-flex h-10 w-full items-center justify-center whitespace-nowrap rounded-md bg-secondary px-4 py-2 text-sm font-medium transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
             on:click={handleSubmit}>Resend Email</button
           >
+        <h4 class="mt-2 text-center">
+            If you don't see it in your inbox check in the junk folder.
+        </h4>
           <input
             id="code-address"
             name="code"

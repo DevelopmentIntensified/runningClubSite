@@ -15,10 +15,10 @@
     { href: '/about', label: 'About' },
     { href: '/schedule', label: 'Schedule' },
     { href: '/locations', label: 'Locations' },
-    { href: '/alumni', label: 'Alumni' },
+    // { href: '/alumni', label: 'Alumni' },
     { href: '/records', label: 'Records' },
     { href: '/contact', label: 'Contact' },
-    { href: '/news', label: 'News' }
+    // { href: '/news', label: 'News' }
   ];
 
   if (isLoggedIn) {
@@ -85,6 +85,12 @@
               >
             </form>
           {:else}
+            <a
+              href={'/login'}
+              class="rounded bg-secondary-800 px-4 py-2 font-bold text-white transition duration-300 hover:bg-red-700"
+            >
+              Join Us
+            </a>
             <!-- <a href="/login" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-primary-700">Login</a> -->
             <!-- <a href="/register" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-primary-700">Register</a> -->
           {/if}
