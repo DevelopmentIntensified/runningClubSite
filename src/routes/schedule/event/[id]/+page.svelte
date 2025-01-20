@@ -24,24 +24,24 @@
     >
     Back to Calendar
   </button>
-  <div class="rounded-lg bg-white p-6 shadow-lg dark:bg-gray-800">
-    <h1 class="mb-4 text-3xl font-bold text-gray-800 dark:text-gray-100">{event.title}</h1>
+  <div class="rounded-lg bg-white p-6 shadow-lg ">
+    <h1 class="mb-4 text-3xl font-bold text-gray-800 ">{event.title}</h1>
     <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
       <div>
-        <p class="text-gray-600 dark:text-gray-400"><strong>Date:</strong> {event.date}</p>
-        <p class="text-gray-600 dark:text-gray-400">
+        <p class="text-gray-600 "><strong>Date:</strong> {event.date.toLocaleDateString()}</p>
+        <p class="text-gray-600 ">
           <strong>Time:</strong>
           {event.start.toLocaleTimeString()} - {event.end.toLocaleTimeString()}
         </p>
-        <p class="text-gray-600 dark:text-gray-400"><strong>Location:</strong> {event.location}</p>
-        <p class="text-gray-600 dark:text-gray-400"><strong>Type:</strong> {event.type}</p>
+        <p class="text-gray-600 "><strong>Location:</strong> {event.location}</p>
+        <p class="text-gray-600 "><strong>Type:</strong> {event.type}</p>
       </div>
       <div>
-        <h2 class="mb-2 text-xl font-semibold text-gray-800 dark:text-gray-200">Description</h2>
-        <p class="mb-2 text-gray-700 dark:text-gray-300">{event.description}</p>
+        <h2 class="mb-2 text-xl font-semibold text-gray-800 ">Description</h2>
+        <p class="mb-2 text-gray-700 ">{event.description}</p>
         {#if event.type.includes('Indoor')}
           <span class="rounded bg-orange-300 p-1">Indoor Race</span>
-        {:else if !event.type.includes('Social')}
+        {:else if !event.type.includes('Social') && !event.type.includes('Practice')}
           <span class="rounded bg-yellow-300 p-1">Outdoor Race</span>
         {/if}
         {#if event.type.includes('NIRCA')}

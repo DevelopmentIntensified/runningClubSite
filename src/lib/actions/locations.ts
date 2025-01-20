@@ -1,9 +1,13 @@
 import { db } from '$lib/server/db';
-import { locations, type Location } from '$lib/server/db/schema';
-import { eq } from 'drizzle-orm';
+import { leaders, locations, type Location } from '$lib/server/db/schema';
+import { count, eq } from 'drizzle-orm';
+
+export async function getLocationsCount() {
+  return await db.select({ count: count() }).from(locations)
+}
 
 export async function getLocations() {
-  return await db.select().from(locations);
+  return await db.select().from(locations).orderBy(locations.order);
 }
 
 export async function getLocation(id: number) {

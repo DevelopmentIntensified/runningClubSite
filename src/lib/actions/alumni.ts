@@ -1,6 +1,10 @@
 import { db } from '$lib/server/db';
 import { alumni, type Alumni } from '$lib/server/db/schema';
-import { eq } from 'drizzle-orm';
+import { count, eq } from 'drizzle-orm';
+
+export async function getAlumniCount() {
+  return await db.select({ count: count() }).from(alumni)
+}
 
 export async function getAlumni() {
   return await db.select().from(alumni).orderBy(alumni.graduationYear);

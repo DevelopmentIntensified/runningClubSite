@@ -19,11 +19,13 @@
     NIRCA: 'bg-red-200',
     NCAA: 'bg-blue-200',
     Social: 'bg-purple-200',
-    Trail: 'bg-green-200'
+    Trail: 'bg-green-200',
+    Practice: 'bg-yellow-200'
   };
 </script>
 
 <div>
+  <span class="rounded bg-yellow-200 p-1">Practice</span>
   <span class="rounded bg-red-200 p-1">NIRCA Meet</span>
   <span class="rounded bg-blue-200 p-1">NCAA Meet</span>
   <span class="rounded bg-purple-200 p-1">Social Event</span>
@@ -32,7 +34,7 @@
 <div class="grid grid-cols-7 gap-1 sm:gap-2">
   {#each ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] as day}
     <div
-      class="p-1 text-center text-sm font-semibold text-gray-600 sm:p-2 sm:text-base dark:text-gray-400"
+      class="p-1 text-center text-sm font-semibold text-gray-600 sm:p-2 sm:text-base "
     >
       {day}
     </div>
@@ -44,9 +46,9 @@
     {@const date = formatDate(new Date(year, month, day))}
     {@const dayEvents = events.filter((event) => formatDate(event.date) === date)}
     <div
-      class="min-h-[80px] rounded-md border border-gray-200 p-1 sm:min-h-[100px] sm:p-2 dark:border-gray-700"
+      class="min-h-[80px] rounded-md border border-gray-200 p-1 sm:min-h-[100px] sm:p-2 "
     >
-      <div class="font-medium text-gray-700 dark:text-gray-300">{day}</div>
+      <div class="font-medium text-gray-700 ">{day}</div>
       <div class="space-y-1">
         {#each dayEvents as event}
           {@const color = Object.keys(colors).filter((key) => event.type.includes(key))[0]}

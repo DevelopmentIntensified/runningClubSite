@@ -5,6 +5,8 @@
 
   export let isAdmin: boolean;
   export let isLoggedIn: boolean;
+  export let displayNews: boolean;
+  export let displayAlumni: boolean;
 
   console.warn('DEBUGPRINT[2]: Navbar.svelte:7: isAdmin=', isAdmin);
 
@@ -15,13 +17,30 @@
     { href: '/about', label: 'About' },
     { href: '/schedule', label: 'Schedule' },
     { href: '/locations', label: 'Locations' },
-    // { href: '/alumni', label: 'Alumni' },
     { href: '/records', label: 'Records' },
-    { href: '/contact', label: 'Contact' },
+    { href: '/contact', label: 'Contact' }
     // { href: '/news', label: 'News' }
   ];
 
+  if (displayAlumni) {
+    navItems.push({
+      href: '/alumni',
+      label: 'Alumni'
+    });
+  }
+
+  if (displayNews) {
+    navItems.push({
+      href: '/news',
+      label: 'News'
+    });
+  }
+
   if (isLoggedIn) {
+    navItems.push({
+      href: '/trainingplan',
+      label: 'Training Plan'
+    });
     navItems.push({
       href: '/groupme',
       label: 'Groupme Link'
@@ -40,8 +59,8 @@
 </script>
 
 <nav class="bg-primary-600 text-white">
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="flex h-16 items-center justify-between">
+  <div class="max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="flex h-16 items-center justify-start ">
       <div class="flex items-center">
         <a href="/" class="flex-shrink-0">
           <img class="h-16 w-16" src={logoUrl} alt="Liberty Running Club" />
@@ -78,18 +97,18 @@
       <div class="hidden md:block">
         <div class="ml-4 flex items-center md:ml-6">
           {#if isLoggedIn}
-            <form action="/api/logout" method="POST">
+            <form action="/api/logout" class="absolute right-5" method="POST">
               <button
                 type="submit"
-                class="rounded-md px-3 py-2 text-sm font-medium hover:bg-primary-700">Logout</button
+                class="rounded-md px-3 py-2 text-sm font-medium hover:bg-primary-700 ">Logout</button
               >
             </form>
           {:else}
             <a
               href={'/login'}
-              class="rounded bg-secondary-800 px-4 py-2 font-bold text-white transition duration-300 hover:bg-red-700"
+              class="rounded bg-primary-600 px-4 py-2 font-bold text-white transition duration-300 hover:bg-primary-700 absolute right-5"
             >
-              Join Us
+              Login
             </a>
             <!-- <a href="/login" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-primary-700">Login</a> -->
             <!-- <a href="/register" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-primary-700">Register</a> -->
@@ -145,20 +164,11 @@
           <a
             href={item.href}
             on:click={closeMenu}
-            class="block rounded-md px-3 py-2 text-base font-medium hover:bg-primary-700 {$page.url
-              .pathname === item.href
+            class="block rounded-md px-3 py-2 text-center text-base font-medium hover:bg-primary-700 {$page
+              .url.pathname === item.href
               ? 'bg-primary-700'
               : ''}"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="mr-2 inline-block h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={item.icon} />
-            </svg>
             {item.label}
           </a>
         {/each}
@@ -167,25 +177,11 @@
             <a
               href={item.href}
               on:click={closeMenu}
-              class="block rounded-md px-3 py-2 text-base font-medium hover:bg-primary-700 {$page
+              class="block rounded-md px-3 py-2 text-center text-base font-medium hover:bg-primary-700 {$page
                 .url.pathname === item.href
                 ? 'bg-primary-700'
                 : ''}"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="mr-2 inline-block h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d={item.icon}
-                />
-              </svg>
               {item.label}
             </a>
           {/each}
@@ -200,6 +196,16 @@
             >
           </form>
         {:else}
+          <a
+            href={'/login'}
+            on:click={closeMenu}
+            class="block rounded-md bg-primary-600 px-3 py-2 text-center text-base font-medium hover:bg-primary-700 {$page
+              .url.pathname === '/login'
+              ? 'bg-primary-700'
+              : ''}"
+          >
+            Join Us
+          </a>
           <!-- <a href="/login" on:click={closeMenu} class="block px-3 py-2 rounded-md text-base font-medium hover:bg-primary-700">Login</a> -->
           <!-- <a href="/register" on:click={closeMenu} class="block px-3 py-2 rounded-md text-base font-medium hover:bg-primary-700">Register</a> -->
         {/if}

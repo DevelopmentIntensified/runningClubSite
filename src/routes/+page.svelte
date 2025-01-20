@@ -5,6 +5,8 @@
   import runningImg from '$lib/assets/images/nirca/nircacoleracing.jpeg';
   import flamesFlagImg from '$lib/assets/images/nirca/flamesflag.jpeg';
   import halfImg from '$lib/assets/images/otherraces/deephollow.jpeg';
+  import runningtocamImg from '$lib/assets/images/training/running.jpeg';
+  import feetImg from '$lib/assets/images/training/feet.jpeg';
   import type { PageData } from './$types';
   export let data: PageData;
 
@@ -13,8 +15,11 @@
     { image: nircaImg, alt: 'runners in line for team picture' },
     { image: flamesFlagImg, alt: 'Runner with team flag' },
     { image: runningImg, alt: 'runner running in race' },
+    { image: feetImg, alt: 'Runners standing' },
     { image: formalImg, alt: 'formal team picture' },
-    { image: halfImg, alt: 'runners team picture after half marathon' }
+    { image: runningtocamImg, alt: 'runners running toward the camera' },
+    { image: halfImg, alt: 'runners team picture after half marathon' },
+
   ];
 
   onMount(() => {
@@ -55,7 +60,7 @@
     </a>
     <a
       href={data.isLoggedIn ? "/groupme" : "/login"}
-      class="mt-3 rounded bg-red-600 px-4 py-2 font-bold text-white transition duration-300 hover:bg-red-700"
+      class="mt-3 rounded bg-secondary px-4 py-2 font-bold text-white transition duration-300 hover:bg-secondary-900"
     >
       Join Us
     </a>

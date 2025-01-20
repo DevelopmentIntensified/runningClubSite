@@ -36,6 +36,11 @@
                 <th
                   scope="col"
                   class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+                  >Order</th
+                >
+                <th
+                  scope="col"
+                  class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
                   >Description</th
                 >
                 <th
@@ -51,6 +56,7 @@
                   <td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900"
                     >{location.name}</td
                   >
+                  <td class="px-6 py-4 text-sm text-gray-500">{location.order}</td>
                   <td class="px-6 py-4 text-sm text-gray-500">{location.description}</td>
                   <td class="whitespace-nowrap px-6 py-4 text-sm font-medium">
                     <a
