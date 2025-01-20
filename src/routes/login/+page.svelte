@@ -63,7 +63,7 @@
         {#if !emailSent}
           Please use your Liberty Email for verification.
         {:else}
-          We've sent a code to your email. Please enter it below.
+          We've sent a code to your email. Please enter it below. If you don't see it, check your spam folder and mark it as not spam.
         {/if}
       </p>
     </div>
