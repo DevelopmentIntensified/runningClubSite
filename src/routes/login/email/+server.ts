@@ -63,8 +63,8 @@ export const POST = async (event: RequestEvent) => {
     from: 'login@libertyrunningclub.com',
     subject: 'Liberty Running Club Email Confirmation for ' + email,
     html: `<h1>Here is the code to use for logging in: ${code}</h1>
-or if you would rather, here is a link for loggin in: <a href="${signInUrl.toString()}"> link </a>
 `
+// or if you would rather, here is a link for loggin in: <a href="${signInUrl.toString()}"> link </a>
   });
 
   if (success) {
