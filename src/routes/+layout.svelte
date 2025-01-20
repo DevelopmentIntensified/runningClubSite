@@ -10,7 +10,7 @@
 </script>
 
 <div class="flex min-h-screen flex-col">
-  <Navbar isAdmin={data.user?.isAdmin} isLoggedIn={data.isLoggedIn} />
+  <Navbar isAdmin={data.user?.isAdmin} isLoggedIn={data.isLoggedIn} displayNews={data.displayNews} displayAlumni={data.displayAlumni}/>
   {#key pathname}
     <main class="flex-grow" in:fade={{ duration: 300, delay: 200 }} out:fade={{ duration: 100 }}>
       <slot />

@@ -1,6 +1,10 @@
 import { db } from '$lib/server/db';
 import { news, type News } from '$lib/server/db/schema';
-import { eq } from 'drizzle-orm';
+import { count, eq } from 'drizzle-orm';
+
+export async function getNewsCount() {
+  return await db.select({ count: count() }).from(news)
+}
 
 export async function getNews() {
   return await db.select().from(news).orderBy(news.createdAt);

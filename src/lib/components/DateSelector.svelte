@@ -14,7 +14,7 @@
 
 <div class="flex items-center space-x-4">
   <button
-    class="rounded-full bg-gray-200 p-2 text-gray-800 dark:bg-gray-700 dark:text-gray-200"
+    class="rounded-full bg-gray-200 p-2 text-gray-800 "
     on:click={prevMonth}
   >
     <svg
@@ -28,11 +28,11 @@
       stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg
     >
   </button>
-  <h2 class="text-xl font-bold text-gray-800 dark:text-gray-200">
+  <h2 class="text-xl font-bold text-gray-800 ">
     {$currentDate.toLocaleString('default', { month: 'long', year: 'numeric' })}
   </h2>
   <button
-    class="rounded-full bg-gray-200 p-2 text-gray-800 dark:bg-gray-700 dark:text-gray-200"
+    class="rounded-full bg-gray-200 p-2 text-gray-800 "
     on:click={nextMonth}
   >
     <svg

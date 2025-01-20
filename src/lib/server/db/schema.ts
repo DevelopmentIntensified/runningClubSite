@@ -55,8 +55,12 @@ export const leaders = pgTable('leaders', {
 export const events = pgTable('events', {
   id: serial('id').primaryKey(),
   title: text('title').notNull(),
-  start: timestamp('start').notNull(),
-  end: timestamp('end').notNull(),
+  start: timestamp('start', {
+    withTimezone: true
+  }).notNull(),
+  end: timestamp('end', {
+    withTimezone: true
+  }).notNull(),
   description: text('description'),
   location: text('location'),
   created_at: timestamp('created_at').defaultNow().notNull(),
@@ -67,7 +71,8 @@ export const locations = pgTable('locations', {
   id: serial('id').primaryKey(),
   name: text('name').notNull(),
   description: text('description'),
-  link: text('link').notNull()
+  link: text('link').notNull(),
+  order: integer('order'),
 });
 
 export const records = pgTable('records', {

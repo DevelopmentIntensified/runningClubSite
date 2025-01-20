@@ -1,13 +1,20 @@
-import { createLocation } from '$lib/actions/locations';
+import { createLocation, getLocationsCount } from '$lib/actions/locations';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
+import type { PageServerLoad } from './$types';
+
+export const load: PageServerLoad = async () => {
+  const locationsCount = await getLocationsCount();
+  return { locationsCount };
+};
 
 export const actions: Actions = {
   createLocation: async ({ request }) => {
     const formData = await request.formData();
-    const name = formData.get('name');
-    const description = formData.get('description');
-    const link = formData.get('link');
+    const name = formData.get('name') as string;
+    const description = formData.get('description') as string;
+    const link = formData.get('link') as string;
+    const order = formData.get('order') as string;
 
     if (!name || !description || !link) {
       console.warn('DEBUGPRINT[2]: +page.server.ts:6: request=', formData);
@@ -15,9 +22,10 @@ export const actions: Actions = {
     }
 
     const newLocation = await createLocation({
-      name: name.toString(),
-      description: description.toString(),
-      link: link.toString()
+      name: name,
+      order: parseInt(order),
+      description: description,
+      link: link
     });
 
     if (newLocation) {
