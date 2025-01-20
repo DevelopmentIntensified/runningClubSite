@@ -11,6 +11,7 @@ export const actions: Actions = {
     const year = formData.get('year');
     const gender = formData.get('gender');
     const type = formData.get('type');
+    const link = formData.get('link') as string;
 
     if (!event || !name || !time || !year || !gender || !type) {
       return fail(400, { message: 'All fields are required' });
@@ -22,7 +23,8 @@ export const actions: Actions = {
       time: time.toString(),
       year: parseInt(year.toString()),
       gender: gender.toString(),
-      type: type.toString()
+      type: type.toString(),
+      link
     });
 
     if (newRecord) {
