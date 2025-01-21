@@ -1,5 +1,6 @@
 <script lang="ts">
   import teamPhoto from '$lib/assets/images/social/shraptop.jpeg';
+  import FacebookIcon from '$lib/components/FacebookIcon.svelte';
   import InstagramIcon from '$lib/components/InstagramIcon.svelte';
   import LinkedInIcon from '$lib/components/LinkedInIcon.svelte';
 
@@ -70,6 +71,14 @@
           class="text-gray-800 transition duration-300 hover:text-primary-600"
         >
           <InstagramIcon class="h-16 w-16" />
+        </a>
+        <a
+          href="https://m.facebook.com/profile.php?id=61557970186364&name=xhp_nt__fb__action__open_user"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-gray-800 transition duration-300 hover:text-primary-600"
+        >
+          <FacebookIcon class="h-16 w-16" />
         </a>
         <a
           href="https://www.linkedin.com/company/liberty-running-club"
