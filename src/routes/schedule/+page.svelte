@@ -1,7 +1,7 @@
 <script lang="ts">
   import logo from '$lib/assets/images/logos/redLogo.png';
   export let data;
-  console.warn('DEBUGPRINT[1]: +page.svelte:9: data=', data);
+  // console.warn('DEBUGPRINT[1]: +page.svelte:9: data=', data);
 
   import { writable } from 'svelte/store';
   import Calendar from '$lib/components/Calendar.svelte';

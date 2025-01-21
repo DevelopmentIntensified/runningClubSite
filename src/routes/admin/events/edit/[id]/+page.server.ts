@@ -22,11 +22,13 @@ export const actions: Actions = {
     if (!title || !start || !end || !location || !type) {
       return fail(400, { message: 'All fields are required' });
     }
+    
+    const offset = new Date().getTimezoneOffset()/60
 
     const updatedEvent = await updateEvent(parseInt(params.id), {
       title: title.toString(),
-      start: new Date(start.toString()),
-      end: new Date(end.toString()),
+      start: start.toString() + ":00.000-0"+offset+":00",
+      end: end.toString() + ":00.000-0"+offset+":00",
       location: location.toString(),
       type: type.toString()
     });

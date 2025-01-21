@@ -7,7 +7,8 @@ export const getFirstDayOfMonth = (year: number, month: number) => {
 };
 
 export const formatDate = (date: Date) => {
-  return date.toISOString().split('T')[0];
+  console.log(date)
+  return date.toLocaleString('sv').split(' ')[0];
 };
 
 export const parseDate = (dateString: string) => {

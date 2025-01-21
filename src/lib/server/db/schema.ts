@@ -56,10 +56,12 @@ export const events = pgTable('events', {
   id: serial('id').primaryKey(),
   title: text('title').notNull(),
   start: timestamp('start', {
-    withTimezone: true
+    withTimezone: true,
+    mode: "string"
   }).notNull(),
   end: timestamp('end', {
-    withTimezone: true
+    withTimezone: true,
+    mode: "string"
   }).notNull(),
   description: text('description'),
   location: text('location'),

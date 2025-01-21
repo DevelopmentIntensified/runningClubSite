@@ -8,7 +8,9 @@
   let error = '';
 
   function formatDateForInput(date: Date): string {
-    return date.toISOString().slice(0, 16);
+    console.log(date.toLocaleString('sv'))
+    console.log(date)
+    return date.toLocaleString('sv').slice(0, 16);
   }
 </script>
 
@@ -81,7 +83,7 @@
               class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
             >
               <option value="Social">Social</option>
-              <option value="training">Training</option>
+              <option value="Practice">Practice</option>
               <option value="Trail Race">Trail Race</option>
               <option value="NIRCA Outdoor Race">NIRCA Outdoor Race</option>
               <option value="NIRCA Indoor Race">NIRCA Indoor Race</option>
