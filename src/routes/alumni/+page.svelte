@@ -19,7 +19,7 @@
     {#each data.alumni as alumnus}
       <div class="overflow-hidden rounded-lg bg-white shadow-lg">
         {#if alumnus.imageUrl}
-          <img src={alumnus.imageUrl} alt={alumnus.name} class="h-48 w-full object-cover" />
+          <img src={alumnus.imageUrl} alt={alumnus.name} class="h-96 w-full object-cover" />
         {:else}
           <div class="flex h-48 w-full items-center justify-center bg-gray-300">
             <span class="text-2xl text-gray-500">No Image</span>
