@@ -43,6 +43,7 @@
           <!-- </button> -->
         </div>
         <p class="mb-2 text-sm text-gray-600 ">{event.date.toLocaleString()}</p>
+        <p class="mb-2 text-sm text-gray-600 ">{event.location}</p>
         <p class="mb-2 text-gray-700 ">{event.description}</p>
         {#if event.type.includes('Indoor')}
           <span class="rounded bg-orange-300 p-1">Indoor Race</span>
