@@ -102,6 +102,7 @@
               Update Event
             </button>
           </div>
+          <input type="hidden" class="hidden h-0 m-0 p-0" name="offset" value={new Date().getTimezoneOffset()/60} />
         </form>
       </div>
     </div>

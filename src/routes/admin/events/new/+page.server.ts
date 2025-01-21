@@ -15,7 +15,7 @@ export const actions: Actions = {
     if (!title || !start || !end || !location || !type) {
       return fail(400, { message: 'All fields are required' });
     }
-    const offset = new Date().getTimezoneOffset()/60
+    const offset = formData.get("offset") as string
 
     const newEvent = await createEvent({
       description: description,

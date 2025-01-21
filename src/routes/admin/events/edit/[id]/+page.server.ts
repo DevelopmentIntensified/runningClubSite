@@ -18,13 +18,12 @@ export const actions: Actions = {
     const end = formData.get('end');
     const location = formData.get('location');
     const type = formData.get('type');
+    const offset = formData.get('offset');
 
     if (!title || !start || !end || !location || !type) {
       return fail(400, { message: 'All fields are required' });
     }
     
-    const offset = new Date().getTimezoneOffset()/60
-
     const updatedEvent = await updateEvent(parseInt(params.id), {
       title: title.toString(),
       start: start.toString() + ":00.000-0"+offset+":00",
