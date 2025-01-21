@@ -38,7 +38,6 @@
               type="text"
               id="major"
               name="major"
-              required
               value={alumnus.major}
               class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
             />
@@ -52,7 +51,6 @@
               id="graduationYear"
               name="graduationYear"
               value={alumnus.graduationYear}
-              required
               class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
             />
           </div>
