@@ -34,11 +34,11 @@ export const news = pgTable('news', {
 export const alumni = pgTable('alumni', {
   id: serial('id').primaryKey(),
   name: text('name').notNull(),
-  imageUrl: text('imageUrl').notNull(),
-  graduationYear: integer('graduationYear').notNull(),
-  major: text('major').notNull(),
-  achievements: text('achievements').notNull(),
-  currentOccupation: text('currentOccupation').notNull(),
+  imageUrl: text('imageUrl'),
+  graduationYear: integer('graduationYear'),
+  major: text('major'),
+  achievements: text('achievements'),
+  currentOccupation: text('currentOccupation'),
   created_at: timestamp('created_at').defaultNow().notNull()
 });
 
