@@ -1,6 +1,7 @@
 import { createEvent } from '$lib/actions/events';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
+import { DateTime } from 'luxon';
 
 export const actions: Actions = {
   createEvent: async ({ request }) => {
@@ -17,11 +18,14 @@ export const actions: Actions = {
     }
     const offset = formData.get("offset") as string
 
+    let start2 = DateTime.fromISO(start.replace(" ", "T")).setZone('America/New_York')
+    let end2 = DateTime.fromISO(end.replace(" ", "T")).setZone('America/New_York')
+
     const newEvent = await createEvent({
       description: description,
       title: title.toString(),
-      start: start.toString() + ":00.000-0"+offset+":00",
-      end: end.toString() + ":00.000-0"+offset+":00",
+      start: start2.toString(),
+      end: end2.toString(),
       location: location.toString(),
       type: type.toString()
     });

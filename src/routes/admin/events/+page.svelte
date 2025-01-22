@@ -1,5 +1,6 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
+  import { DateTime } from 'luxon';
   import type { PageData } from './$types';
 
   export let data: PageData;
@@ -62,7 +63,7 @@
                     >{event.title}</td
                   >
                   <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500"
-                    >{new Date(event.start).toLocaleString()}</td
+                    >{DateTime.fromISO(event.start.replace(" ", "T")).setZone('America/New_York').toLocaleString(DateTime.DATETIME_MED)}</td
                   >
                   <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{event.location}</td
                   >

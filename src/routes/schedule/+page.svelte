@@ -6,9 +6,17 @@
   import { writable } from 'svelte/store';
   import Calendar from '$lib/components/Calendar.svelte';
   import type { CalendarEvent } from '$lib/server/db/schema.js';
+  import { DateTime } from 'luxon';
 
-  const currentDate = writable(new Date());
-  const events: CalendarEvent[] = data.events;
+  const currentDate = writable(DateTime.now().setZone('America/New_York'));
+  let events: CalendarEvent[] = data.events;
+  events = events.map(e => ({
+    ...e,
+    date: DateTime.fromJSDate(e.date),
+    start: DateTime.fromJSDate(e.start),
+    end: DateTime.fromJSDate(e.end),
+  }))
+  console.log(events)
 </script>
 
 <svelte:head>

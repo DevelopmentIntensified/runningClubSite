@@ -1,5 +1,6 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
+  import { DateTime } from 'luxon';
   import type { PageData } from './$types';
 
   export let data: PageData;
@@ -7,10 +8,9 @@
   let { event } = data;
   let error = '';
 
-  function formatDateForInput(date: Date): string {
-    console.log(date.toLocaleString('sv'))
-    console.log(date)
-    return date.toLocaleString('sv').slice(0, 16);
+  function formatDateForInput(date: string): string {
+
+    return DateTime.fromISO(date.replace(" ", "T")).setZone('America/New_York').toString().slice(0, 16);
   }
 </script>
 
@@ -45,7 +45,7 @@
               type="datetime-local"
               id="start"
               name="start"
-              value={formatDateForInput(new Date(event.start))}
+              value={formatDateForInput(event.start)}
               required
               class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
             />
@@ -58,7 +58,7 @@
               type="datetime-local"
               id="end"
               name="end"
-              value={formatDateForInput(new Date(event.end))}
+              value={formatDateForInput(event.end)}
               required
               class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
             />

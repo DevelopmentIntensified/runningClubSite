@@ -1,5 +1,6 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
+  import { DateTime } from 'luxon';
 
   export let data;
   // In a real application, you would fetch the event data from an API
@@ -28,10 +29,10 @@
     <h1 class="mb-4 text-3xl font-bold text-gray-800 ">{event.title}</h1>
     <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
       <div>
-        <p class="text-gray-600 "><strong>Date:</strong> {event.date.toLocaleDateString()}</p>
+        <p class="text-gray-600 "><strong>Date:</strong> {DateTime.fromJSDate(event.date).setZone('America/New_York').toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)}</p>
         <p class="text-gray-600 ">
           <strong>Time:</strong>
-          {event.start.toLocaleTimeString()} - {event.end.toLocaleTimeString()}
+          {DateTime.fromJSDate(event.start).setZone('America/New_York').toLocaleString(DateTime.TIME_SIMPLE)} - {DateTime.fromJSDate(event.end).setZone('America/New_York').toLocaleString(DateTime.TIME_SIMPLE)}
         </p>
         <p class="text-gray-600 "><strong>Location:</strong> {event.location}</p>
         <p class="text-gray-600 "><strong>Type:</strong> {event.type}</p>
