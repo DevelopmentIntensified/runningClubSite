@@ -41,8 +41,9 @@
       <h2 class="mb-4 text-2xl font-semibold">Competition</h2>
       <p class="mb-4">
         We compete in several local races including several comunity 5ks and trail races along with
-        a few NCAA meets. Our main competitions are the <a href="#nirca">NIRCA</a> races. Please see
-        that section for more details
+        a few NCAA meets. Our main competitions are the <a class="text-blue-500" href="#nirca"
+          >NIRCA</a
+        > races. Please see that section for more details
       </p>
       <h2 class="mb-4 text-2xl font-semibold">Join Us</h2>
       <p class="mb-4">
@@ -52,14 +53,15 @@
 
       <h2 class="mb-4 text-2xl font-semibold" id="nirca">What is NIRCA?</h2>
       <p class="mb-4">
-        The National Intercollegiate Running Club Association (NIRCA) connects running clubs
-        nationwide through friendly competitions. NIRCA hosts a full cross-country season, a Cross
-        Country Championship Series, the Road and Track Nationals, and all-club conferences.
-        Athletes may participate in as many or as few meets as they wish. Race fees are paid on race
-        day and refunded at the end of the season. If you wish to participate in NIRCA and have not
-        already been onboarded, please fill out <a href="https://forms.gle/39mTeUgKqwdDUCDW9"
-          >this form</a
+        <a class="text-blue-500" href="https://clubrunning.org/">
+          The National Intercollegiate Running Club Association (NIRCA)</a
         >
+        connects running clubs nationwide through friendly competitions. NIRCA hosts a full
+        cross-country season, a Cross Country Championship Series, the Road and Track Nationals, and
+        all-club conferences. Athletes may participate in as many or as few meets as they wish. Race
+        fees are paid on race day and refunded at the end of the season. If you wish to participate
+        in NIRCA and have not already been onboarded, please fill out
+        <a class="text-blue-500" href="https://forms.gle/39mTeUgKqwdDUCDW9">this form</a>
       </p>
 
       <h2 class="mb-4 text-2xl font-semibold" id="nirca">Our Socials</h2>
