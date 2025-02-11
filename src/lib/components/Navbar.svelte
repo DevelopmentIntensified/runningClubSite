@@ -21,7 +21,6 @@
     { href: '/contact', label: 'Contact' }
     // { href: '/news', label: 'News' }
   ];
-
   if (displayAlumni) {
     navItems.push({
       href: '/alumni',
@@ -59,13 +58,13 @@
 </script>
 
 <nav class="bg-primary-600 text-white">
-  <div class="max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="flex h-16 items-center justify-start ">
+  <div class="max-w-7xl px-4 md:px-6 lg:px-8">
+    <div class="flex h-16 items-center justify-start">
       <div class="flex items-center">
         <a href="/" class="flex-shrink-0">
           <img class="h-16 w-16" src={logoUrl} alt="Liberty Running Club" />
         </a>
-        <div class="hidden md:block">
+        <div class="hidden lg:block">
           <div class="ml-10 flex items-baseline space-x-4">
             {#each navItems as item}
               <a
@@ -94,19 +93,19 @@
           </div>
         </div>
       </div>
-      <div class="hidden md:block">
-        <div class="ml-4 flex items-center md:ml-6">
+      <div class="hidden lg:block">
+        <div class="ml-4 flex items-center lg:ml-6">
           {#if isLoggedIn}
             <form action="/api/logout" class="absolute right-5" method="POST">
               <button
                 type="submit"
-                class="rounded-md px-3 py-2 text-sm font-medium hover:bg-primary-700 ">Logout</button
+                class="rounded-md px-3 py-2 text-sm font-medium hover:bg-primary-700">Logout</button
               >
             </form>
           {:else}
             <a
               href={'/login'}
-              class="rounded bg-primary-600 px-4 py-2 font-bold text-white transition duration-300 hover:bg-primary-700 absolute right-5"
+              class="absolute right-5 rounded bg-primary-600 px-4 py-2 font-bold text-white transition duration-300 hover:bg-primary-700"
             >
               Login
             </a>
@@ -115,10 +114,10 @@
           {/if}
         </div>
       </div>
-      <div class="md:hidden">
+      <div class="w-full lg:hidden">
         <button
           on:click={toggleMenu}
-          class="inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+          class="absolute right-5 top-3 inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
         >
           <span class="sr-only">Open main menu</span>
           {#if isOpen}
@@ -158,8 +157,8 @@
   </div>
 
   {#if isOpen}
-    <div transition:slide={{ duration: 300 }} class="md:hidden">
-      <div class="space-y-1 px-2 pb-3 pt-2 sm:px-3">
+    <div transition:slide={{ duration: 300 }} class="lg:hidden">
+      <div class="space-y-1 px-2 pb-3 pt-2 lg:px-3">
         {#each navItems as item}
           <a
             href={item.href}
@@ -191,7 +190,7 @@
             <button
               type="submit"
               on:click={closeMenu}
-              class="w-full rounded-md px-3 py-2 text-left text-base font-medium hover:bg-primary-700"
+              class="w-full rounded-md px-3 py-2 text-center text-base font-medium hover:bg-primary-700"
               >Logout</button
             >
           </form>

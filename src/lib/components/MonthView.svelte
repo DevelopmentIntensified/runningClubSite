@@ -2,13 +2,14 @@
   import { getDaysInMonth, getFirstDayOfMonth, formatDate } from '$lib/utils/dateUtils';
   import type { Event } from '$lib/types';
   import type { Writable } from 'svelte/store';
+  import { DateTime } from 'luxon';
 
-  export let currentDate: Writable<Date>;
+  export let currentDate: Writable<DateTime>;
   export let events: Event[];
   export let removeEvent: (id: string) => void;
 
-  $: year = $currentDate.getFullYear();
-  $: month = $currentDate.getMonth();
+  $: year = $currentDate.year;
+  $: month = $currentDate.month;
   $: daysInMonth = getDaysInMonth(year, month);
   $: firstDayOfMonth = getFirstDayOfMonth(year, month);
 
@@ -43,7 +44,7 @@
     <div class="p-1 sm:p-2"></div>
   {/each}
   {#each days as day}
-    {@const date = formatDate(new Date(year, month, day))}
+    {@const date = formatDate(DateTime.fromObject({year, month, day}, {zone: "America/New_York"}))}
     {@const dayEvents = events.filter((event) => formatDate(event.date) === date)}
     <div
       class="min-h-[80px] rounded-md border border-gray-200 p-1 sm:min-h-[100px] sm:p-2 "

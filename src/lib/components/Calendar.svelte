@@ -4,15 +4,12 @@
   import ListView from './ListView.svelte';
   import DateSelector from './DateSelector.svelte';
   import type { CalendarEvent } from '$lib/server/db/schema';
+  import type { DateTime } from 'luxon';
 
-  export let currentDate: Writable<Date>;
+  export let currentDate: Writable<DateTime>;
   export let events: CalendarEvent[];
 
   let view: 'month' | 'list' = 'list';
-
-  function removeEvent(id: string) {
-    events = events.filter((event) => event.id !== id);
-  }
 </script>
 
 <div class="mb-8 bg-white p-6">
@@ -38,8 +35,8 @@
     </div>
   </div>
   {#if view === 'month'}
-    <MonthView {currentDate} {events} {removeEvent} />
+    <MonthView {currentDate} {events} />
   {:else}
-    <ListView {currentDate} {events} {removeEvent} />
+    <ListView {currentDate} {events} />
   {/if}
 </div>

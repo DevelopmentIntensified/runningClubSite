@@ -12,8 +12,10 @@ export const load: PageServerLoad = async (e) => {
 
   return {
     event: eventsData.map((e) => ({
-      date: e.start,
-      ...e
+      date: new Date(e.start),
+      ...e,
+      start: new Date(e.start),
+      end: new Date(e.end),
     }))[0]
   };
 };

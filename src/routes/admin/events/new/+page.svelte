@@ -80,7 +80,7 @@
               class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
             >
               <option value="Social">Social</option>
-              <option value="training">Training</option>
+              <option value="Practice">Practice</option>
               <option value="Trail Race">Trail Race</option>
               <option value="NIRCA Outdoor Race">NIRCA Outdoor Race</option>
               <option value="NIRCA Indoor Race">NIRCA Indoor Race</option>
@@ -99,6 +99,7 @@
               Create Event
             </button>
           </div>
+          <input type="hidden" class="hidden h-0 m-0 p-0" name="offset" value={new Date().getTimezoneOffset()/60} />
         </form>
       </div>
     </div>

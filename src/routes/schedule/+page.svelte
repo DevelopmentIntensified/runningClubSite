@@ -1,14 +1,22 @@
 <script lang="ts">
   import logo from '$lib/assets/images/logos/redLogo.png';
   export let data;
-  console.warn('DEBUGPRINT[1]: +page.svelte:9: data=', data);
+  // console.warn('DEBUGPRINT[1]: +page.svelte:9: data=', data);
 
   import { writable } from 'svelte/store';
   import Calendar from '$lib/components/Calendar.svelte';
   import type { CalendarEvent } from '$lib/server/db/schema.js';
+  import { DateTime } from 'luxon';
 
-  const currentDate = writable(new Date());
-  const events: CalendarEvent[] = data.events;
+  const currentDate = writable(DateTime.now().setZone('America/New_York'));
+  let events: CalendarEvent[] = data.events;
+  events = events.map(e => ({
+    ...e,
+    date: DateTime.fromJSDate(e.date),
+    start: DateTime.fromJSDate(e.start),
+    end: DateTime.fromJSDate(e.end),
+  }))
+  console.log(events)
 </script>
 
 <svelte:head>
@@ -21,7 +29,7 @@
       <img src={logo} alt="Runners training" class="absolute inset-0 h-full w-full object-cover" />
       <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
         <h2 class="px-4 text-center text-3xl font-bold text-white sm:text-4xl md:text-5xl">
-          Club Schdule
+          Club Schedule
         </h2>
       </div>
     </div>

@@ -1,21 +1,29 @@
 <script lang="ts">
-  import type { Event } from '$lib/types';
-  import { parseDate } from '$lib/utils/dateUtils';
+  import { DateTime } from 'luxon';
   import type { Writable } from 'svelte/store';
 
-  export let currentDate: Writable<Date>;
-  export let events: Event[];
+  export let currentDate: Writable<DateTime>;
+  export let events: {
+    start: DateTime,
+    end: DateTime,
+    date: DateTime,
+    title: string,
+    location: string,
+    type: string,
+    description:string,
+  }[];
   export let removeEvent: (id: string) => void;
 
-  $: year = $currentDate.getFullYear();
-  $: month = $currentDate.getMonth();
+  $: year = $currentDate.year;
+  $: month = $currentDate.month;
 
+  console.log(events)
   $: filteredEvents = events
     .filter((event) => {
       const eventDate = event.date;
-      return eventDate.getFullYear() === year && eventDate.getMonth() === month;
+      return eventDate.year === year && eventDate.month === month;
     })
-    .sort((a, b) => a.date.getTime() - b.date.getTime());
+    .sort((a, b) => a.date.toUnixInteger() - b.date.toUnixInteger());
 </script>
 
 <div class="space-y-4">
@@ -42,7 +50,8 @@
           <!--   <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> -->
           <!-- </button> -->
         </div>
-        <p class="mb-2 text-sm text-gray-600 ">{event.date.toLocaleString()}</p>
+        <p class="mb-2 text-sm text-gray-600 ">{event.date.setZone('America/New_York').toLocaleString(DateTime.DATETIME_SHORT)}</p>
+        <p class="mb-2 text-sm text-gray-600 ">{event.location}</p>
         <p class="mb-2 text-gray-700 ">{event.description}</p>
         {#if event.type.includes('Indoor')}
           <span class="rounded bg-orange-300 p-1">Indoor Race</span>
