@@ -1,4 +1,4 @@
-import { error, type Handle } from '@sveltejs/kit';
+import { error, redirect, type Handle } from '@sveltejs/kit';
 import { lucia } from '$lib/server/auth';
 
 export const handle: Handle = async ({ event, resolve }) => {
@@ -7,7 +7,8 @@ export const handle: Handle = async ({ event, resolve }) => {
     event.locals.user = null;
     event.locals.session = null;
     if (event.url.pathname.includes('/admin') || event.url.pathname.includes('/groupme') || event.url.pathname.includes('/trainingplan')) {
-      return error(403, 'Unauthorized');
+      throw redirect(302, '/login');
+      // return error(403, 'Unauthorized');
     }
     return resolve(event);
   }
