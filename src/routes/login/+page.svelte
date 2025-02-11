@@ -21,6 +21,7 @@
       error = json.error;
     } else {
       await goto('/groupme');
+      location.reload()
     }
     waiting = false;
   }

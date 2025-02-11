@@ -21,7 +21,6 @@
     { href: '/contact', label: 'Contact' }
     // { href: '/news', label: 'News' }
   ];
-
   if (displayAlumni) {
     navItems.push({
       href: '/alumni',
@@ -60,7 +59,7 @@
 
 <nav class="bg-primary-600 text-white">
   <div class="max-w-7xl px-4 md:px-6 lg:px-8">
-    <div class="flex h-16 items-center justify-start ">
+    <div class="flex h-16 items-center justify-start">
       <div class="flex items-center">
         <a href="/" class="flex-shrink-0">
           <img class="h-16 w-16" src={logoUrl} alt="Liberty Running Club" />
@@ -100,13 +99,13 @@
             <form action="/api/logout" class="absolute right-5" method="POST">
               <button
                 type="submit"
-                class="rounded-md px-3 py-2 text-sm font-medium hover:bg-primary-700 ">Logout</button
+                class="rounded-md px-3 py-2 text-sm font-medium hover:bg-primary-700">Logout</button
               >
             </form>
           {:else}
             <a
               href={'/login'}
-              class="rounded bg-primary-600 px-4 py-2 font-bold text-white transition duration-300 hover:bg-primary-700 absolute right-5"
+              class="absolute right-5 rounded bg-primary-600 px-4 py-2 font-bold text-white transition duration-300 hover:bg-primary-700"
             >
               Login
             </a>
@@ -115,10 +114,10 @@
           {/if}
         </div>
       </div>
-      <div class="lg:hidden w-full">
+      <div class="w-full lg:hidden">
         <button
           on:click={toggleMenu}
-          class="inline-flex absolute right-5 top-3 items-center justify-center rounded-md p-2 text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+          class="absolute right-5 top-3 inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
         >
           <span class="sr-only">Open main menu</span>
           {#if isOpen}
