@@ -38,7 +38,7 @@
   if (isLoggedIn) {
     navItems.push({
       href: '/trainingplan',
-      label: 'Training Plan'
+      label: 'Training'
     });
     navItems.push({
       href: '/groupme',
