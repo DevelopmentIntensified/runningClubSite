@@ -6,22 +6,22 @@
 </script>
 
 <svelte:head>
-  <title>Manage Alumni - Liberty Running Club</title>
+  <title>Manage Slideshow Images - Liberty Running Club</title>
 </svelte:head>
 
 <div class="min-h-screen bg-gray-100 px-4 py-12 sm:px-6 lg:px-8">
   <div class="mx-auto max-w-7xl">
     <div class="overflow-hidden rounded-lg bg-white shadow-xl">
       <div class="bg-primary-600 px-4 py-6 sm:px-6">
-        <h2 class="text-center text-3xl font-extrabold text-white">Manage Alumni</h2>
+        <h2 class="text-center text-3xl font-extrabold text-white">Manage Slideshow Images</h2>
       </div>
       <div class="p-6 sm:p-8">
         <div class="mb-6">
           <a
-            href="/admin/alumni/new"
+            href="/admin/slideshow/new"
             class="inline-flex items-center rounded-md border border-transparent bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
           >
-            Add New Alumnus
+            Add New Image
           </a>
         </div>
         <div class="overflow-x-auto">
@@ -31,22 +31,17 @@
                 <th
                   scope="col"
                   class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                  >Image</th
+                  >Preview</th
                 >
                 <th
                   scope="col"
                   class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                  >Name</th
+                  >Title</th
                 >
                 <th
                   scope="col"
                   class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                  >Graduation Year</th
-                >
-                <th
-                  scope="col"
-                  class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                  >Current Occupation</th
+                  >Order</th
                 >
                 <th
                   scope="col"
@@ -56,31 +51,27 @@
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-200 bg-white">
-              {#each data.alumni as alumnus (alumnus.id)}
+              {#each data.slideshowImages as image (image.id)}
                 <tr>
                   <td class="whitespace-nowrap px-6 py-4">
                     <img
-                      src={alumnus.imageUrl}
-                      alt={alumnus.name}
+                      src={image.imageUrl}
+                      alt={image.title}
                       class="h-16 w-24 object-cover rounded"
                     />
                   </td>
                   <td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900"
-                    >{alumnus.name}</td
+                    >{image.title}</td
                   >
-                  <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500"
-                    >{alumnus.graduationYear}</td
-                  >
-                  <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500"
-                    >{alumnus.currentOccupation}</td
-                  >
+                  <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{image.order}</td>
                   <td class="whitespace-nowrap px-6 py-4 text-sm font-medium">
                     <a
-                      href="/admin/alumni/{alumnus.id}/edit"
+                      href="/admin/slideshow/edit/{image.id}"
                       class="mr-4 text-primary-600 hover:text-primary-900">Edit</a
                     >
-                    <form action="?/deleteAlumnus" method="POST" use:enhance class="inline">
-                      <input type="hidden" name="id" value={alumnus.id} />
+                    <form action="?/deleteImage" method="POST" use:enhance class="inline">
+                      <input type="hidden" name="id" value={image.id} />
+                      <input type="hidden" name="imageUrl" value={image.imageUrl} />
                       <button type="submit" class="text-red-600 hover:text-red-900">Delete</button>
                     </form>
                   </td>
@@ -92,4 +83,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> 

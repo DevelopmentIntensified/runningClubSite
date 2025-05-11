@@ -3,7 +3,7 @@
  * @returns {Promise<Response>}
  */
 import { Resend } from 'resend';
-import type { Actions } from './$types';
+import type { Actions } from '../contact/$types';
 import { RESENDAPIKEY, CLUBEMAIL } from '$env/static/private';
 const resend = new Resend(RESENDAPIKEY);
 

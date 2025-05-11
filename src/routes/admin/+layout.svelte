@@ -61,6 +61,15 @@
           Manage records
         </a>
       </li>
+       <li>
+        <a
+          href="/admin/slideshow"
+          class="text-blue-500 hover:underline"
+          class:font-bold={$page.url.pathname.startsWith('/admin/slideshow')}
+        >
+          Manage Slideshow
+        </a>
+      </li>
       <li>
         <a
           href="/admin/locations"

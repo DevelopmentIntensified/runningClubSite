@@ -18,7 +18,7 @@
     { href: '/schedule', label: 'Schedule' },
     { href: '/locations', label: 'Locations' },
     { href: '/records', label: 'Records' },
-    { href: '/contact', label: 'Contact' }
+    { href: '/contact1', label: 'Contact' }
     // { href: '/news', label: 'News' }
   ];
   if (displayAlumni) {

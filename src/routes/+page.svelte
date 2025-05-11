@@ -1,27 +1,10 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import formalImg from '$lib/assets/images/social/formal.jpeg';
-  import nircaImg from '$lib/assets/images/nirca/nircameet.jpeg';
-  import runningImg from '$lib/assets/images/nirca/nircacoleracing.jpeg';
-  import flamesFlagImg from '$lib/assets/images/nirca/flamesflag.jpeg';
-  import halfImg from '$lib/assets/images/otherraces/deephollow.jpeg';
-  import runningtocamImg from '$lib/assets/images/training/running.jpeg';
-  import feetImg from '$lib/assets/images/training/feet.jpeg';
   import type { PageData } from './$types';
   export let data: PageData;
 
   let currentSlide = 0;
-  const slides = [
-    { image: nircaImg, alt: 'runners in line for team picture' },
-    { image: flamesFlagImg, alt: 'Runner with team flag' },
-    { image: runningImg, alt: 'runner running in race' },
-    { image: feetImg, alt: 'Runners standing' },
-    { image: formalImg, alt: 'formal team picture' },
-    { image: runningtocamImg, alt: 'runners running toward the camera' },
-    { image: halfImg, alt: 'runners team picture after half marathon' },
-
-  ];
-
+  const slides = data.slides;
   onMount(() => {
     const interval = setInterval(() => {
       currentSlide = (currentSlide + 1) % slides.length;
@@ -59,7 +42,7 @@
       Learn More
     </a>
     <a
-      href={data.isLoggedIn ? "/groupme" : "/login"}
+      href={data.isLoggedIn ? '/groupme' : '/login'}
       class="mt-3 rounded bg-secondary px-4 py-2 font-bold text-white transition duration-300 hover:bg-secondary-900"
     >
       Join Us
