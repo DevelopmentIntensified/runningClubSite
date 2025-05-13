@@ -26,17 +26,13 @@ export const actions: Actions = {
         title: title.toString(),
         imageUrl: url,
         content: content.toString(),
-        userId: locals.user?.id || 1 // Default to user ID 1 if not authenticated
+        createdBy: locals.user?.id
       });
 
-      if (newNews) {
-        throw redirect(302, '/admin/news');
-      } else {
-        return fail(500, { message: 'Failed to create news item' });
-      }
     } catch (error) {
       console.error('Error creating news item:', error);
       return fail(500, { message: 'Failed to create news item' });
     }
+    throw redirect(302, '/admin/news');
   }
 };

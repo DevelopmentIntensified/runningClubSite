@@ -58,6 +58,8 @@
     "luxon": "^3.5.0",
     "oslo": "^1.2.1",
     "postgres": "^3.4.4",
-    "resend": "^4.0.1"
+    "quill": "^2.0.3",
+    "resend": "^4.0.1",
+    "svelte-quill": "^1.2.0"
   }
 }

@@ -3,7 +3,14 @@ import { fail } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
 
 export const load: PageServerLoad = async () => {
-  const records = await getRecords();
+  let records = await getRecords();
+  records = records.map((record) => {
+    return {
+      ...record,
+      year: record.year ? new Date(record.year).getFullYear() : "",
+    }
+  })
+
   return { records };
 };
 

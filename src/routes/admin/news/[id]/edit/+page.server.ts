@@ -47,14 +47,10 @@ export const actions: Actions = {
         content: content.toString()
       });
 
-      if (updatedNews) {
-        throw redirect(302, '/admin/news');
-      } else {
-        return fail(500, { message: 'Failed to update news item' });
-      }
     } catch (error) {
       console.error('Error updating news item:', error);
       return fail(500, { message: 'Failed to update news item' });
     }
+        throw redirect(302, '/admin/news');
   }
 };
