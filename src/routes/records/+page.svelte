@@ -31,6 +31,10 @@
 <div class="container mx-auto px-4 py-12">
   <h1 class="mb-8 text-center text-4xl font-bold">Club Records</h1>
 
+  <a href="https://www.google.com/url?q=https://www.nationalrunningclubdatabase.com/teams/142/&sa=D&source=docs&ust=1747172634418288&usg=AOvVaw2uoLUw_ZmsjKOiUcmCmpxm" class="block text-center text-primary-600 hover:underline mb-8">
+    National Running Club Database
+  </a>
+
   <div class="mb-8 flex justify-center space-x-4">
     <button
       class="rounded-full px-4 py-2 {activeSection === 'men'
