@@ -64,6 +64,16 @@
               class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
             ></textarea>
           </div>
+          <div class="flex items-center">
+            <input
+              type="checkbox"
+              id="active"
+              name="active"
+              checked={true}
+              class="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+            />
+            <label for="active" class="ml-2 block text-sm text-gray-900">Active</label>
+          </div>
           <div>
             <label for="image" class="block text-sm font-medium text-gray-700">Image (Accepts png, gif, jpeg, jpg)</label>
             <input

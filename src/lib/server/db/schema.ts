@@ -26,7 +26,7 @@ export const news = pgTable('news', {
   content: text('content').notNull(),
   imageUrl: text('imageUrl').notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
-  userId: integer('user_id')
+  createdBy: integer('created_by')
     .notNull()
     .references(() => users.id)
 });
@@ -44,7 +44,8 @@ export const seasonImageLinks = pgTable('seasonImageLinks', {
   title: text('title').notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   link: text('link').notNull(),
-})
+  season: text('season').notNull()
+});
 
 export const pageImages = pgTable('pageImages', {
   id: serial('id').primaryKey(),
@@ -73,7 +74,7 @@ export const leaders = pgTable('leaders', {
   bio: text('bio').notNull(),
   order: integer('order').notNull(),
   created_at: timestamp('created_at').defaultNow().notNull(),
-  hidden: boolean('hidden').default(false).notNull()
+  active: boolean('active').default(true).notNull()
 });
 
 export const events = pgTable('events', {

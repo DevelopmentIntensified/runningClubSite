@@ -54,8 +54,8 @@
     <div transition:slide>
       <div class="relative mb-8">
         <img
-          src={mensImg}
-          alt="Go LRC Boys"
+          src={data.boysImage.imageUrl}
+          alt={data.boysImage.alt}
           class="h-96 w-full rounded-lg object-cover shadow-lg"
         />
         <h2 class="shadow-text absolute bottom-4 left-4 text-3xl font-bold text-white">
@@ -128,8 +128,8 @@
     <div transition:slide>
       <div class="relative mb-8">
         <img
-          src={womensImg}
-          alt="Women's Team"
+          src={data.girlsImage.imageUrl}
+          alt={data.girlsImage.alt}
           class="h-96 w-full rounded-lg object-cover shadow-lg"
         />
         <h2 class="shadow-text absolute bottom-4 left-4 text-3xl font-bold text-white">

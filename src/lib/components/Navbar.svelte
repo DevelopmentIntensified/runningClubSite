@@ -18,9 +18,10 @@
     { href: '/schedule', label: 'Schedule' },
     { href: '/locations', label: 'Locations' },
     { href: '/records', label: 'Records' },
-    { href: '/contact1', label: 'Contact' }
-    // { href: '/news', label: 'News' }
+    { href: '/contact1', label: 'Contact' },
+    { href: '/news', label: 'News' }
   ];
+
   if (displayAlumni) {
     navItems.push({
       href: '/alumni',
@@ -28,12 +29,12 @@
     });
   }
 
-  if (displayNews) {
-    navItems.push({
-      href: '/news',
-      label: 'News'
-    });
-  }
+  // if (displayNews) {
+  //   navItems.push({
+  //     href: '/news',
+  //     label: 'News'
+  //   });
+  // }
 
   if (isLoggedIn) {
     navItems.push({
@@ -43,6 +44,10 @@
     navItems.push({
       href: '/groupme',
       label: 'Groupme Link'
+    });
+    navItems.push({
+      href: '/season-photos',
+      label: 'Season Photos'
     });
   }
 

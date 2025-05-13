@@ -62,6 +62,16 @@
               >{leader.bio || ''}</textarea
             >
           </div>
+          <div class="flex items-center">
+            <input
+              type="checkbox"
+              id="active"
+              name="active"
+              checked={leader.active}
+              class="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+            />
+            <label for="active" class="ml-2 block text-sm text-gray-900">Active</label>
+          </div>
           <div>
             <input
               type="hidden"

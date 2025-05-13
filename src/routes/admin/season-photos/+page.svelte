@@ -6,42 +6,42 @@
 </script>
 
 <svelte:head>
-  <title>Manage Locations - Liberty Running Club</title>
+  <title>Manage Season Photos - Liberty Running Club</title>
 </svelte:head>
 
 <div class="min-h-screen bg-gray-100 px-4 py-12 sm:px-6 lg:px-8">
   <div class="mx-auto max-w-7xl">
     <div class="overflow-hidden rounded-lg bg-white shadow-xl">
       <div class="bg-primary-600 px-4 py-6 sm:px-6">
-        <h2 class="text-center text-3xl font-extrabold text-white">Manage Locations</h2>
+        <h2 class="text-center text-3xl font-extrabold text-white">Manage Season Photos</h2>
       </div>
       <div class="p-6 sm:p-8">
         <div class="mb-6">
           <a
-            href="/admin/locations/new"
+            href="/admin/season-photos/new"
             class="inline-flex items-center rounded-md border border-transparent bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
           >
-            Add New Location
+            Add New Photo Album
           </a>
         </div>
         <div class="overflow-x-auto">
-          <table class="min-w-full divide-gray-200">
+          <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
               <tr>
                 <th
                   scope="col"
                   class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                  >Name</th
+                  >Title</th
                 >
                 <th
                   scope="col"
                   class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                  >Order</th
+                  >Season</th
                 >
                 <th
                   scope="col"
                   class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                  >Description</th
+                  >Link</th
                 >
                 <th
                   scope="col"
@@ -50,21 +50,29 @@
                 >
               </tr>
             </thead>
-            <tbody class="divide-gray-200 bg-white">
-              {#each data.locations as location (location.id)}
+            <tbody class="divide-y divide-gray-200 bg-white">
+              {#each data.links as link}
                 <tr>
-                  <td class="max-w-60 px-6 py-4 text-sm font-medium text-gray-900 truncate w-4"
-                    >{location.name}</td
+                  <td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900"
+                    >{link.title}</td
                   >
-                  <td class="px-6 py-4 text-sm text-gray-500">{location.order}</td>
-                  <td class="px-6 truncate max-w-96 py-4 text-sm text-gray-500">{location.description}</td>
+                  <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{link.season}</td>
+                  <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                    <a
+                      href={link.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="text-primary-600 hover:text-primary-900"
+                      >{link.link}</a
+                    >
+                  </td>
                   <td class="whitespace-nowrap px-6 py-4 text-sm font-medium">
                     <a
-                      href="/admin/locations/{location.id}/edit"
+                      href="/admin/season-photos/{link.id}/edit"
                       class="mr-4 text-primary-600 hover:text-primary-900">Edit</a
                     >
-                    <form action="?/deleteLocation" method="POST" use:enhance class="inline">
-                      <input type="hidden" name="id" value={location.id} />
+                    <form action="?/deleteLink" method="POST" use:enhance class="inline">
+                      <input type="hidden" name="id" value={link.id} />
                       <button type="submit" class="text-red-600 hover:text-red-900">Delete</button>
                     </form>
                   </td>
@@ -76,4 +84,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> 

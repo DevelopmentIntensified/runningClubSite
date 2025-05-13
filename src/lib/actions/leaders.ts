@@ -7,7 +7,8 @@ export async function getLeadersCount() {
 }
 
 export async function getLeaders() {
-  return await db.select().from(leaders).orderBy(leaders.order);
+  return await db.select().from(leaders)
+    .orderBy(leaders.order);
 }
 
 export async function getLeader(id: number) {

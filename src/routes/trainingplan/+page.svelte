@@ -1,5 +1,8 @@
 <script lang="ts">
-  import trainingImg from '$lib/assets/images/training/runnerstapracticeunderlights.png';
+  import type { PageData } from './$types';
+
+  export let data: PageData;
+  const trainingImg = data.image.imageUrl;
 </script>
 
 <svelte:head>
@@ -13,7 +16,7 @@
     <div class="relative h-64 sm:h-80 md:h-96">
       <img
         src={trainingImg}
-        alt="Runners training"
+        alt={data.image.alt}
         class="absolute inset-0 h-full w-full object-cover"
       />
       <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
@@ -28,7 +31,7 @@
         We’re excited to offer personalized summer training plans tailored to your goals! Whether
         you are:
       </p>
-      <ol class="mb-8 text-lg list-inside list-disc">
+      <ol class="mb-8 list-inside list-disc text-lg">
         <li>A former NCAA athlete who wants to continue competing</li>
         <li>Just Starting to run</li>
         <li>Training for a marathon, half marathon, or any other distance</li>

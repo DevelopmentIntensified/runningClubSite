@@ -17,6 +17,7 @@ export const actions: Actions = {
     const bio = formData.get('bio') as string;
     const image = formData.get('image') as File;
     const order = formData.get('order') as string;
+    const active = formData.get('active') === 'on';
 
     if (!name || !position) {
       return fail(400, { message: 'Name and position are required' });
@@ -31,7 +32,8 @@ export const actions: Actions = {
       position,
       order: parseInt(order),
       bio,
-      imageUrl: url
+      imageUrl: url,
+      active
     });
 
     if (newLeader) {
