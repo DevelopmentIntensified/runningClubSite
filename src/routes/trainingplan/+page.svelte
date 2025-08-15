@@ -28,9 +28,8 @@
 
     <div class="p-6 sm:p-8 md:p-10">
       <p class="mb-6 text-lg">
-        We’re excited to offer personalized summer training plans tailored to your goals! Whether
-        you are:
-      </p>
+We’re excited to offer training for the upcoming XC season! Whether you are:
+            </p>
       <ol class="mb-8 list-inside list-disc text-lg">
         <li>A former NCAA athlete who wants to continue competing</li>
         <li>Just Starting to run</li>
@@ -41,18 +40,16 @@
         <li>Trying to walk on to the NCAA team</li>
       </ol>
       <p class="mb-6 text-lg">
-        Our program is designed for both incoming and current students. Fill out the form below, and
-        we’ll reach out to craft a training plan that’s just right for you. Let’s make this summer
-        your best yet!
-      </p>
+       Click the link below to get started if you have any questions, DM George Crowder, Jill Crunkilton, or Evan O’Connor on groupme!
+            </p>
       <div class="mt-3 w-full text-center">
         <a
-          href="https://forms.gle/B9qgi4gzaJUuzEqs5"
+          href="https://docs.google.com/spreadsheets/d/1fx53SWI4L8bhY-5AUIqFKhHssEc8_RXw/edit?usp=sharing&ouid=103574296355760746415&rtpof=true&sd=true"
           target="_blank"
           rel="noopener noreferrer"
           class="inline-flex items-center rounded-md border border-transparent bg-primary-600 px-6 py-3 text-base font-medium text-white transition duration-150 ease-in-out hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
         >
-          Form Link
+                    Fall Semester Training Plan
         </a>
       </div>
     </div>
