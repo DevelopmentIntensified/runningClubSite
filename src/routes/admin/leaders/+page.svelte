@@ -3,6 +3,15 @@
   import type { PageData } from './$types';
 
   export let data: PageData;
+
+  let searchTerm = '';
+
+  $: filteredLeaders = data.leaders
+    .filter((leader) => 
+      leader.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      leader.position.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+    .sort((a, b) => a.order - b.order);
 </script>
 
 <svelte:head>
@@ -16,7 +25,15 @@
         <h2 class="text-center text-3xl font-extrabold text-white">Manage Leaders</h2>
       </div>
       <div class="p-6 sm:p-8">
-        <div class="mb-6">
+        <div class="mb-6 flex justify-between items-center">
+          <input
+            type="text"
+            name="search"
+            id="search"
+            bind:value={searchTerm}
+            placeholder="Search by name or position"
+            class="mt-1 block w-64 rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+          />
           <a
             href="/admin/leaders/new"
             class="inline-flex items-center rounded-md border border-transparent bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
@@ -46,12 +63,17 @@
                 <th
                   scope="col"
                   class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+                  >Status</th
+                >
+                <th
+                  scope="col"
+                  class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
                   >Actions</th
                 >
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-200 bg-white">
-              {#each data.leaders as leader (leader.id)}
+              {#each filteredLeaders as leader (leader.id)}
                 <tr>
                   <td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900"
                     >{leader.name}</td
@@ -62,6 +84,11 @@
                   <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500"
                     >{leader.position}</td
                   >
+                  <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                    <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium {leader.active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+                      {leader.active ? 'Active' : 'Inactive'}
+                    </span>
+                  </td>
                   <td class="whitespace-nowrap px-6 py-4 text-sm font-medium">
                     <a
                       href="/admin/leaders/{leader.id}/edit"

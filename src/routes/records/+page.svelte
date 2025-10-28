@@ -31,6 +31,10 @@
 <div class="container mx-auto px-4 py-12">
   <h1 class="mb-8 text-center text-4xl font-bold">Club Records</h1>
 
+  <a href="https://www.nationalrunningclubdatabase.com/teams/142" class="block text-center text-primary-600 hover:underline mb-8">
+    National Running Club Database
+  </a>
+
   <div class="mb-8 flex justify-center space-x-4">
     <button
       class="rounded-full px-4 py-2 {activeSection === 'men'
@@ -54,8 +58,8 @@
     <div transition:slide>
       <div class="relative mb-8">
         <img
-          src={mensImg}
-          alt="Go LRC Boys"
+          src={data.boysImage.imageUrl}
+          alt={data.boysImage.alt}
           class="h-96 w-full rounded-lg object-cover shadow-lg"
         />
         <h2 class="shadow-text absolute bottom-4 left-4 text-3xl font-bold text-white">
@@ -128,8 +132,8 @@
     <div transition:slide>
       <div class="relative mb-8">
         <img
-          src={womensImg}
-          alt="Women's Team"
+          src={data.girlsImage.imageUrl}
+          alt={data.girlsImage.alt}
           class="h-96 w-full rounded-lg object-cover shadow-lg"
         />
         <h2 class="shadow-text absolute bottom-4 left-4 text-3xl font-bold text-white">

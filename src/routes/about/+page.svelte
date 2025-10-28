@@ -18,11 +18,18 @@
 
   <div class="mb-12 grid gap-12 md:grid-cols-2">
     <div>
-      <img
-        src={teamPhoto}
-        alt="Liberty Running Club Team"
-        class="h-auto w-full rounded-lg shadow-lg"
-      />
+      <div class="relative h-64 sm:h-80 md:h-96">
+        <img
+          src={data.image.imageUrl}
+          alt={data.image.alt}
+          class="absolute inset-0 h-full w-full object-cover"
+        />
+        <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <h2 class="px-4 text-center text-3xl font-bold text-white sm:text-4xl md:text-5xl">
+            What We Do
+          </h2>
+        </div>
+      </div>
     </div>
     <div>
       <h2 class="mb-4 text-2xl font-semibold">Our Mission</h2>

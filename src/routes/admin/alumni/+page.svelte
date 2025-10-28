@@ -3,6 +3,16 @@
   import type { PageData } from './$types';
 
   export let data: PageData;
+
+  let searchTerm = '';
+
+  $: filteredAlumni = data.alumni
+    .filter((alumnus) => 
+      alumnus.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      alumnus.currentOccupation?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      alumnus.graduationYear?.toString().includes(searchTerm)
+    )
+    .sort((a, b) => b.graduationYear - a.graduationYear);
 </script>
 
 <svelte:head>
@@ -16,7 +26,15 @@
         <h2 class="text-center text-3xl font-extrabold text-white">Manage Alumni</h2>
       </div>
       <div class="p-6 sm:p-8">
-        <div class="mb-6">
+        <div class="mb-6 flex justify-between items-center">
+          <input
+            type="text"
+            name="search"
+            id="search"
+            bind:value={searchTerm}
+            placeholder="Search by name, occupation, or graduation year"
+            class="mt-1 block w-96 rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+          />
           <a
             href="/admin/alumni/new"
             class="inline-flex items-center rounded-md border border-transparent bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
@@ -28,6 +46,11 @@
           <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
               <tr>
+                <th
+                  scope="col"
+                  class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+                  >Image</th
+                >
                 <th
                   scope="col"
                   class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
@@ -51,8 +74,15 @@
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-200 bg-white">
-              {#each data.alumni as alumnus (alumnus.id)}
+              {#each filteredAlumni as alumnus (alumnus.id)}
                 <tr>
+                  <td class="whitespace-nowrap px-6 py-4">
+                    <img
+                      src={alumnus.imageUrl}
+                      alt={alumnus.name}
+                      class="h-16 w-24 object-cover rounded"
+                    />
+                  </td>
                   <td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900"
                     >{alumnus.name}</td
                   >

@@ -13,8 +13,8 @@
   <div class="overflow-hidden rounded-lg bg-white shadow-xl">
     <div class="relative h-64 sm:h-80 md:h-96">
       <img
-        src={trainingImg}
-        alt="Runners training"
+        src={data.image.imageUrl}
+        alt={data.image.alt}
         class="absolute inset-0 h-full w-full object-cover"
       />
       <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">

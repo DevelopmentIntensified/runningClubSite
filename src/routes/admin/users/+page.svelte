@@ -3,6 +3,18 @@
   import type { PageData } from './$types';
 
   export let data: PageData;
+
+  let searchTerm = '';
+
+  let { users } = data;
+
+  let page = 1;
+  let pageSize = 25;
+
+  $: filteredUsers = users
+    .filter((user) => user.email.toLowerCase().includes(searchTerm.toLowerCase()))
+    .slice((page - 1) * pageSize, page * pageSize)
+    .sort((a, b) => a.email.localeCompare(b.email));
 </script>
 
 <svelte:head>
@@ -17,9 +29,14 @@
       </div>
       <div class="p-6 sm:p-8">
         <div class="mb-6">
-          <!-- <a href="/admin/users/new" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"> -->
-          <!--   Add New user -->
-          <!-- </a> -->
+          <input
+            type="text"
+            name="search"
+            id="search"
+            bind:value={searchTerm}
+            placeholder="Search by email"
+            class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+          />
         </div>
         <div class="overflow-x-auto">
           <table class="min-w-full divide-y divide-gray-200">
@@ -32,7 +49,7 @@
                 >
                 <th
                   scope="col"
-                  class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+                  class="px-6 py-3 text-xs font-medium uppercase text-center tracking-wider text-gray-500"
                   >isAdmin</th
                 >
                 <th
@@ -43,12 +60,14 @@
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-200 bg-white">
-              {#each data.users as user (user.id)}
+              {#each filteredUsers as user (user.id)}
                 <tr>
                   <td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900"
                     >{user.email}</td
                   >
-                  <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{user.isAdmin}</td>
+                  <td class="whitespace-nowrap px-6 py-4 text-sm text-center {user.isAdmin ? 'text-green-500' : 'text-grey-500'}">
+                    {user.isAdmin ? 'Yes' : 'No'}
+                  </td>
                   <td class="whitespace-nowrap px-6 py-4 text-sm font-medium">
                     <a
                       href="/admin/users/{user.id}/edit"
@@ -63,6 +82,23 @@
               {/each}
             </tbody>
           </table>
+          {#if page > 1}
+            <button
+              class="mr-4 rounded-md px-3 py-2 text-sm font-medium text-primary-600 hover:text-primary-900"
+              on:click={() => {
+                page--;
+              }}>Previous Page</button
+            >
+          {/if}
+          {#if page * pageSize < users.length}
+             <!-- content here -->
+          <button
+            class="rounded-md px-3 py-2 text-sm font-medium text-primary-600 hover:text-primary-900 float-right after:float-none"
+            on:click={() => {
+              page++;
+            }}>Next Page</button
+          >
+          {/if}
         </div>
       </div>
     </div>

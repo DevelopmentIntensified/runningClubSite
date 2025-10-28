@@ -26,10 +26,34 @@ export const news = pgTable('news', {
   content: text('content').notNull(),
   imageUrl: text('imageUrl').notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
-  userId: integer('user_id')
+  createdBy: integer('created_by')
     .notNull()
     .references(() => users.id)
 });
+
+export const slideShowImages = pgTable('slideShowImages', {
+  id: serial('id').primaryKey(),
+  title: text('title').notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  imageUrl: text('imageUrl').notNull(),
+  order: integer('order').notNull()
+});
+
+export const seasonImageLinks = pgTable('seasonImageLinks', {
+  id: serial('id').primaryKey(),
+  title: text('title').notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  link: text('link').notNull(),
+  season: text('season').notNull()
+});
+
+export const pageImages = pgTable('pageImages', {
+  id: serial('id').primaryKey(),
+  alt: text('alt').notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  imageUrl: text('imageUrl').notNull(),
+  locationName: text('locationName').notNull()
+})
 
 export const alumni = pgTable('alumni', {
   id: serial('id').primaryKey(),
@@ -49,7 +73,8 @@ export const leaders = pgTable('leaders', {
   position: text('position').notNull(),
   bio: text('bio').notNull(),
   order: integer('order').notNull(),
-  created_at: timestamp('created_at').defaultNow().notNull()
+  created_at: timestamp('created_at').defaultNow().notNull(),
+  active: boolean('active').default(true).notNull()
 });
 
 export const events = pgTable('events', {

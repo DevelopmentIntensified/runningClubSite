@@ -18,9 +18,10 @@
     { href: '/schedule', label: 'Schedule' },
     { href: '/locations', label: 'Locations' },
     { href: '/records', label: 'Records' },
-    { href: '/contact', label: 'Contact' }
+    { href: '/contact1', label: 'Contact' },
     // { href: '/news', label: 'News' }
   ];
+
   if (displayAlumni) {
     navItems.push({
       href: '/alumni',
@@ -35,16 +36,20 @@
     });
   }
 
-  if (isLoggedIn) {
+  // if (isLoggedIn) {
     navItems.push({
       href: '/trainingplan',
-      label: 'Training Plan'
+      label: 'Training'
     });
     navItems.push({
       href: '/groupme',
       label: 'Groupme Link'
     });
-  }
+    navItems.push({
+      href: '/season-photos',
+      label: 'Season Photos'
+    });
+  // }
 
   const adminItems = [{ href: '/admin/users', label: 'Admin' }];
 
@@ -107,7 +112,7 @@
               href={'/login'}
               class="absolute right-5 rounded bg-primary-600 px-4 py-2 font-bold text-white transition duration-300 hover:bg-primary-700"
             >
-              Login
+              Sign Up/Login
             </a>
             <!-- <a href="/login" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-primary-700">Login</a> -->
             <!-- <a href="/register" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-primary-700">Register</a> -->
@@ -203,7 +208,7 @@
               ? 'bg-primary-700'
               : ''}"
           >
-            Join Us
+            Sign Up/Login
           </a>
           <!-- <a href="/login" on:click={closeMenu} class="block px-3 py-2 rounded-md text-base font-medium hover:bg-primary-700">Login</a> -->
           <!-- <a href="/register" on:click={closeMenu} class="block px-3 py-2 rounded-md text-base font-medium hover:bg-primary-700">Register</a> -->

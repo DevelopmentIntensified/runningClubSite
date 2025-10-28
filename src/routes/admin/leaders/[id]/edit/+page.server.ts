@@ -20,6 +20,7 @@ export const actions: Actions = {
     const bio = formData.get('bio') as string;
     const order = formData.get('order') as string;
     const image = formData.get('image') as File;
+    const active = formData.get('active') === 'on';
     let imageUrl = formData.get('imageUrl') as string;
     console.log(image,imageUrl)
     console.log(bio)
@@ -41,7 +42,8 @@ export const actions: Actions = {
       position,
       order: parseInt(order),
       bio,
-      imageUrl
+      imageUrl,
+      active
     });
 
     if (updatedLeader) {

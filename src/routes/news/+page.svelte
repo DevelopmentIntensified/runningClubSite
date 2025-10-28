@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { DateTime } from 'luxon';
   import type { PageData } from './$types';
 
   export let data: PageData;
@@ -11,17 +12,30 @@
 <div class="container mx-auto px-4 py-12">
   <h1 class="mb-8 text-center text-4xl font-bold">Latest News</h1>
 
-  <div class="space-y-8">
+  <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
     {#each data.news as newsItem}
-      <div class="overflow-hidden rounded-lg bg-white shadow-md">
-        <div class="p-6">
-          <h2 class="mb-2 text-2xl font-semibold">{newsItem.title}</h2>
-          <p class="mb-4 text-gray-500">{new Date(newsItem.createdAt).toLocaleDateString()}</p>
-          <div class="prose max-w-none">
-            {@html newsItem.content}
+      <a
+        href="/news/{newsItem.id}"
+        class="group block overflow-hidden rounded-lg bg-white shadow-md transition-shadow hover:shadow-lg"
+      >
+        {#if newsItem.imageUrl}
+          <div class="aspect-w-16 aspect-h-9">
+            <img
+              src={newsItem.imageUrl}
+              alt={newsItem.title}
+              class="h-full w-full object-cover"
+            />
           </div>
+        {/if}
+        <div class="p-6">
+          <h2 class="mb-2 text-xl font-semibold text-gray-900 group-hover:text-primary-600">
+            {newsItem.title}
+          </h2>
+          <p class="mb-4 text-sm text-gray-500">
+            {new DateTime(newsItem.createdAt).toLocaleString(DateTime.DATE_MED)}
+          </p>
         </div>
-      </div>
+      </a>
     {/each}
   </div>
 </div>

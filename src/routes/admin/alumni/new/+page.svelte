@@ -69,11 +69,13 @@
             />
           </div>
           <div>
-            <label for="imageUrl" class="block text-sm font-medium text-gray-700">Image URL</label>
+            <label for="image" class="block text-sm font-medium text-gray-700">Image (Accepts png, gif, jpeg, jpg)</label>
             <input
-              type="url"
-              id="imageUrl"
-              name="imageUrl"
+              type="file"
+              accept="image/png, image/gif, image/jpeg, image/jpg"
+              alt="leader"
+              id="image"
+              name="image"
               class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
             />
           </div>
