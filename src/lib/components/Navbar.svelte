@@ -36,7 +36,7 @@
     });
   }
 
-  if (isLoggedIn) {
+  // if (isLoggedIn) {
     navItems.push({
       href: '/trainingplan',
       label: 'Training'
@@ -49,7 +49,7 @@
       href: '/season-photos',
       label: 'Season Photos'
     });
-  }
+  // }
 
   const adminItems = [{ href: '/admin/users', label: 'Admin' }];
 
