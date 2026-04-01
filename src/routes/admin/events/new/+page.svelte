@@ -82,6 +82,7 @@
               <option value="Social">Social</option>
               <option value="Practice">Practice</option>
               <option value="Trail Race">Trail Race</option>
+              <option value="Road Race">Road Race</option>
               <option value="NIRCA Outdoor Race">NIRCA Outdoor Race</option>
               <option value="NIRCA Indoor Race">NIRCA Indoor Race</option>
               <option value="NCAA Outdoor Race">NCAA Outdoor Race</option>

@@ -1,13 +1,13 @@
-import { DateTime } from "luxon";
+import { DateTime } from 'luxon';
 
-export const getDaysInMonth = (year: number, month: number) => {
-  return DateTime.fromObject({ year, month }, { zone: 'America/New_York' }).daysInMonth
+export const getDaysInMonth = (year: number, month: number): number => {
+  return DateTime.fromObject({ year, month }, { zone: 'America/New_York' }).daysInMonth ?? 31;
 };
 
-export const getFirstDayOfMonth = (year: number, month: number) => {
-  console.log(year, month)
-  console.log(DateTime.fromObject({ year, month, day: 1, }, { zone: 'America/New_York' }))
-  return DateTime.fromObject({ year, month, day: 1 }, { zone: 'America/New_York' }).weekday
+/** Leading empty cells for a Sunday-first row (Luxon: Mon=1 … Sun=7). */
+export const getFirstDayOfMonth = (year: number, month: number): number => {
+  const wd = DateTime.fromObject({ year, month, day: 1 }, { zone: 'America/New_York' }).weekday;
+  return wd === 7 ? 0 : wd;
 };
 
 export const formatDate = (date: DateTime) => {
@@ -15,6 +15,6 @@ export const formatDate = (date: DateTime) => {
 };
 
 export const parseDate = (dateString: string) => {
-  const [year, month, day] = dateString.split('-').map(Number);
-  return new Date(year, month - 1, day);
+  const [y, m, d] = dateString.split('-').map(Number);
+  return new Date(y, m - 1, d);
 };

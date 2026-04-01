@@ -60,7 +60,7 @@
         <img
           src={data.boysImage.imageUrl}
           alt={data.boysImage.alt}
-          class="h-96 w-full rounded-lg object-cover shadow-lg"
+          class="h-48 w-full rounded-lg object-cover shadow-lg sm:h-64 md:h-80"
         />
         <h2 class="shadow-text absolute bottom-4 left-4 text-3xl font-bold text-white">
           Men's Records
@@ -150,7 +150,7 @@
         <img
           src={data.girlsImage.imageUrl}
           alt={data.girlsImage.alt}
-          class="h-96 w-full rounded-lg object-cover shadow-lg"
+          class="h-48 w-full rounded-lg object-cover shadow-lg sm:h-64 md:h-80"
         />
         <h2 class="shadow-text absolute bottom-4 left-4 text-3xl font-bold text-white">
           Women's Records

@@ -19,7 +19,7 @@
   <title>Liberty Running Club - Running for God's Glory</title>
 </svelte:head>
 
-<div class="relative h-screen">
+<div class="relative h-48 sm:h-64 md:h-80">
   {#each slides as slide, i}
     <div
       class="absolute inset-0 transition-opacity duration-1000 ease-in-out"

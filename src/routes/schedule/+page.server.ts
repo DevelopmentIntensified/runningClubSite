@@ -30,8 +30,6 @@ export const load: PageServerLoad = async () => {
 
     return days
   })
-  console.log(events2)
-
   const [image] = await db.select().from(pageImages).where(eq(pageImages.locationName, 'Schedule'));
 
   return {
