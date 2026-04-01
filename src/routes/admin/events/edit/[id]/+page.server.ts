@@ -1,6 +1,6 @@
 import { getEvent, updateEvent } from '$lib/actions/events';
 import { fail, redirect } from '@sveltejs/kit';
-import type { PageServerLoad, Actions } from '../$types';
+import type { PageServerLoad, Actions } from './$types';
 import { DateTime } from 'luxon';
 
 export const load: PageServerLoad = async ({ params }) => {
@@ -14,26 +14,27 @@ export const load: PageServerLoad = async ({ params }) => {
 export const actions: Actions = {
   updateEvent: async ({ request, params }) => {
     const formData = await request.formData();
-    const title = formData.get('title');
-    const start = formData.get('start');
-    const end = formData.get('end');
-    const location = formData.get('location');
-    const type = formData.get('type');
-    const offset = formData.get('offset');
+    const title = formData.get('title') as string;
+    const start = formData.get('start') as string;
+    const end = formData.get('end') as string;
+    const location = formData.get('location') as string;
+    const type = formData.get('type') as string;
+    const description = formData.get('description') as string;
 
     if (!title || !start || !end || !location || !type) {
       return fail(400, { message: 'All fields are required' });
     }
 
-    let start2 = DateTime.fromISO(start.replace(" ", "T")).setZone('America/New_York')
-    let end2 = DateTime.fromISO(end.replace(" ", "T")).setZone('America/New_York')
-    
+    let start2 = DateTime.fromISO(start.replace(' ', 'T'), { zone: 'America/New_York' });
+    let end2 = DateTime.fromISO(end.replace(' ', 'T'), { zone: 'America/New_York' });
+
     const updatedEvent = await updateEvent(parseInt(params.id), {
-      title: title.toString(),
+      title,
       start: start2.toString(),
       end: end2.toString(),
-      location: location.toString(),
-      type: type.toString()
+      location,
+      description,
+      type
     });
 
     if (updatedEvent) {

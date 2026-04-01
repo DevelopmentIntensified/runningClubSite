@@ -1,17 +1,17 @@
-import { DateTime } from "luxon";
+import { DateTime } from 'luxon';
 
 export const getDaysInMonth = (year: number, month: number) => {
-  return DateTime.fromObject({ year, month }, { zone: 'America/New_York' }).daysInMonth
+  return DateTime.fromObject({ year, month }, { zone: 'America/New_York' }).daysInMonth;
 };
 
 export const getFirstDayOfMonth = (year: number, month: number) => {
-  console.log(year, month)
-  console.log(DateTime.fromObject({ year, month, day: 1, }, { zone: 'America/New_York' }))
-  return DateTime.fromObject({ year, month, day: 1 }, { zone: 'America/New_York' }).weekday
+  console.log(year, month);
+  console.log(DateTime.fromObject({ year, month, day: 1 }, { zone: 'America/New_York' }));
+  return DateTime.fromObject({ year, month, day: 1 }, { zone: 'America/New_York' }).weekday;
 };
 
 export const formatDate = (date: DateTime) => {
-  return date.setZone('America/New_York').toFormat('MM-dd-yyyy');
+  return date.setZone('America/New_York').toFormat('yyyy-MM-dd');
 };
 
 export const parseDate = (dateString: string) => {

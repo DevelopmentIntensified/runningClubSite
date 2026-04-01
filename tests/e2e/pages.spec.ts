@@ -49,19 +49,17 @@ test.describe('Page tests', () => {
     await expect(page.getByText('Sign in to your account')).toBeVisible();
     await expect(page.getByLabel('Email address')).toBeVisible();
     await expect(page.getByLabel('Password')).toBeVisible();
-  });
-
-  test('Register page', async ({ page }) => {
-    await page.goto('/register');
-    await expect(page.getByText('Create your account')).toBeVisible();
-    await expect(page.getByLabel('Email address')).toBeVisible();
-    await expect(page.getByLabel('Password')).toBeVisible();
-    await expect(page.getByLabel('Confirm Password')).toBeVisible();
+    await expect(page.getByText('Privacy Policy')).toBeVisible();
   });
 
   test('Admin news page (unauthenticated)', async ({ page }) => {
     await page.goto('/admin/news');
     // Assuming unauthenticated users are redirected to login page
     await expect(page.getByText('Sign in to your account')).toBeVisible();
+  });
+
+  test('Privacy page', async ({ page }) => {
+    await page.goto('/privacy');
+    await expect(page.getByText('Privacy Policy')).toBeVisible();
   });
 });

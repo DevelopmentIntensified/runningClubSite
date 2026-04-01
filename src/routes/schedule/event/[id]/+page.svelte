@@ -57,6 +57,9 @@
         {#if event.type.includes('Trail Race')}
           <span class="rounded bg-green-300 p-1">{event.type}</span>
         {/if}
+        {#if event.type.includes('Road Race')}
+          <span class="rounded bg-teal-300 p-1">{event.type}</span>
+        {/if}
       </div>
     </div>
   </div>

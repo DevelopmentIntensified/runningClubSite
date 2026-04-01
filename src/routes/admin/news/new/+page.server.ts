@@ -26,7 +26,7 @@ export const actions: Actions = {
         title: title.toString(),
         imageUrl: url,
         content: content.toString(),
-        createdBy: locals.user?.id
+        createdBy: locals.user?.id ?? 0
       });
 
     } catch (error) {

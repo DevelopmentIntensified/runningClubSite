@@ -1,55 +1,90 @@
 import { db } from '../db';
 import { events, locations } from '../db/schema';
-import { sql, eq, and } from 'drizzle-orm';
+import { eq, and } from 'drizzle-orm';
+
+function toNYString(date: Date): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  const seconds = String(date.getSeconds()).padStart(2, '0');
+  return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.000-04:00`;
+}
+
+function isDuringSpringBreak(date: Date): boolean {
+  const springBreakStart = new Date('2026-03-13T00:00:00-04:00');
+  const springBreakEnd = new Date('2026-03-22T23:59:59-04:00');
+  return date >= springBreakStart && date <= springBreakEnd;
+}
 
 export async function insertRecurringEvents() {
-  const startDate = new Date();
-  startDate.setHours(0, 0, 0, 0); // Set to beginning of the day
+  const now = new Date();
+  const startDate = new Date('2026-01-12T00:00:00-05:00'); // Third week of January
 
   const allLocations = await db.select().from(locations);
 
-  for (let week = 0; week < 16; week++) {
+  for (let week = 0; week < 22; week++) {
     const weekStart = new Date(startDate);
-    weekStart.setDate(startDate.getDate() + week * 7 - startDate.getDay());
+    weekStart.setDate(startDate.getDate() + week * 7);
 
-    const offset = new Date().getTimezoneOffset() / 60
-    // Tuesday night practice
-    await insertEventIfNotExists({
-      title: 'Tuesday Practice',
-      start: new Date(weekStart.getTime() + (2 * 24 + 19) * 60 * 60 * 1000).toLocaleString("sv") + ".000-0" + offset + ":00", // Tuesday 7 PM
-      end: new Date(weekStart.getTime() + (2 * 24 + 21) * 60 * 60 * 1000).toLocaleString("sv") + ".000-0" + offset + ":00", // Tuesday 9 PM
-      location: 'Outdoor Track',
-      type: 'Practice',
-      description: 'Our Regular Practice out on the track at 7pm under the lights.'
-    });
+    // Tuesday night practice (Tuesday = day 2)
+    const tuesdayStart = new Date(weekStart.getTime() + (2 * 24 + 19) * 60 * 60 * 1000);
+    const tuesdayEnd = new Date(weekStart.getTime() + (2 * 24 + 21) * 60 * 60 * 1000);
+    if (tuesdayStart >= now && !isDuringSpringBreak(tuesdayStart)) {
+      await insertEventIfNotExists({
+        title: 'Tuesday Practice',
+        start: toNYString(tuesdayStart),
+        end: toNYString(tuesdayEnd),
+        location: 'Outdoor Track',
+        type: 'Practice',
+        description: 'Our Regular Practice out on the track at 7pm under the lights.'
+      });
+    }
 
-    // // Thursday evening practice
-    // const thursdayLocation = 'Snowflex Parking lot';
-    // await insertEventIfNotExists({
-    //   title: 'Easy Run',
-    //   start: new Date(weekStart.getTime() + (4 * 24 + 17) * 60 * 60 * 1000), // Thursday 5 PM
-    //   end: new Date(weekStart.getTime() + (4 * 24 + 19) * 60 * 60 * 1000), // Thursday 7 PM
-    //   location: thursdayLocation,
-    //   type: 'Practice',
-    //   description: ""
-    // });
-    //
-    // // Saturday morning run
-    // if (allLocations.length > 0) {
-    //   const randomLocation = allLocations[Math.floor(Math.random() * allLocations.length)];
-    //   await insertEventIfNotExists({
-    //     title: 'Long Run',
-    //     start: new Date(weekStart.getTime() + (6 * 24 + 9) * 60 * 60 * 1000), // Saturday 9 AM
-    //     end: new Date(weekStart.getTime() + (6 * 24 + 11) * 60 * 60 * 1000), // Saturday 11 AM
-    //     location: randomLocation.name,
-    //     type: 'Practice'
-    //   });
-    // }
+    // Thursday evening practice (Thursday = day 4)
+    const thursdayStart = new Date(weekStart.getTime() + (4 * 24 + 17) * 60 * 60 * 1000);
+    const thursdayEnd = new Date(weekStart.getTime() + (4 * 24 + 19) * 60 * 60 * 1000);
+    if (thursdayStart >= now && !isDuringSpringBreak(thursdayStart)) {
+      await insertEventIfNotExists({
+        title: 'Easy Run',
+        start: toNYString(thursdayStart),
+        end: toNYString(thursdayEnd),
+        location: 'Snowflex Parking lot',
+        type: 'Practice',
+        description: ''
+      });
+    }
+
+    // Saturday morning run (Saturday = day 6)
+    if (allLocations.length > 0) {
+      const saturdayStart = new Date(weekStart.getTime() + (6 * 24 + 9) * 60 * 60 * 1000);
+      const saturdayEnd = new Date(weekStart.getTime() + (6 * 24 + 11) * 60 * 60 * 1000);
+      if (saturdayStart >= now && !isDuringSpringBreak(saturdayStart)) {
+        const randomLocation = allLocations[Math.floor(Math.random() * allLocations.length)];
+        await insertEventIfNotExists({
+          title: 'Long Run',
+          start: toNYString(saturdayStart),
+          end: toNYString(saturdayEnd),
+          location: randomLocation.name,
+          type: 'Practice',
+          description: ''
+        });
+      }
+    }
   }
 }
 
-export async function insertEventIfNotExists(eventData) {
-  const existingEvent = await db.select()
+export async function insertEventIfNotExists(eventData: {
+  title: string;
+  start: string;
+  end: string;
+  location: string;
+  type: string;
+  description: string;
+}) {
+  const existingEvent = await db
+    .select()
     .from(events)
     .where(
       and(
@@ -63,8 +98,5 @@ export async function insertEventIfNotExists(eventData) {
   if (existingEvent.length === 0) {
     await db.insert(events).values(eventData);
     console.log(`Inserted event: ${eventData.title} on ${eventData.start}`);
-  } else {
-    console.log(`Event already exists: ${eventData.title} on ${eventData.start}`);
   }
 }
-

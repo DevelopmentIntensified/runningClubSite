@@ -18,7 +18,7 @@
 
   <div class="mb-12 grid gap-12 md:grid-cols-2">
     <div>
-      <div class="relative h-64 sm:h-80 md:h-96">
+      <div class="relative h-32 sm:h-40 md:h-48">
         <img
           src={data.image.imageUrl}
           alt={data.image.alt}

@@ -23,7 +23,7 @@
             <img
               src={newsItem.imageUrl}
               alt={newsItem.title}
-              class="h-full w-full object-cover"
+              class="h-full w-full object-cover max-h-96 max-w-[500px]"
             />
           </div>
         {/if}
@@ -32,7 +32,7 @@
             {newsItem.title}
           </h2>
           <p class="mb-4 text-sm text-gray-500">
-            {new DateTime(newsItem.createdAt).toLocaleString(DateTime.DATE_MED)}
+            {DateTime.fromJSDate(newsItem.createdAt).toLocaleString(DateTime.DATE_MED)}
           </p>
         </div>
       </a>

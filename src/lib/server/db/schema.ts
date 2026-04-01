@@ -28,7 +28,7 @@ export const news = pgTable('news', {
   createdAt: timestamp('created_at').defaultNow().notNull(),
   createdBy: integer('created_by')
     .notNull()
-    .references(() => users.id)
+    .references(() => users.id, { onDelete: 'no action' })
 });
 
 export const slideShowImages = pgTable('slideShowImages', {
@@ -53,7 +53,7 @@ export const pageImages = pgTable('pageImages', {
   createdAt: timestamp('created_at').defaultNow().notNull(),
   imageUrl: text('imageUrl').notNull(),
   locationName: text('locationName').notNull()
-})
+});
 
 export const alumni = pgTable('alumni', {
   id: serial('id').primaryKey(),
@@ -82,11 +82,11 @@ export const events = pgTable('events', {
   title: text('title').notNull(),
   start: timestamp('start', {
     withTimezone: true,
-    mode: "string"
+    mode: 'string'
   }).notNull(),
   end: timestamp('end', {
     withTimezone: true,
-    mode: "string"
+    mode: 'string'
   }).notNull(),
   description: text('description'),
   location: text('location'),
@@ -99,7 +99,7 @@ export const locations = pgTable('locations', {
   name: text('name').notNull(),
   description: text('description'),
   link: text('link').notNull(),
-  order: integer('order'),
+  order: integer('order')
 });
 
 export const records = pgTable('records', {
@@ -109,7 +109,7 @@ export const records = pgTable('records', {
   time: text('time').notNull(),
   year: integer('year'),
   gender: text('gender').notNull(),
-  type: text('type').notNull(), // 'track', 'cross_country', 'field'
+  type: text('type').notNull(), // 'track', 'cross_country', 'field', 'trail_5k', 'trail_10k', 'trail_half_marathon', 'trail_marathon'
   link: text('link'),
   created_at: timestamp('created_at').defaultNow().notNull()
 });

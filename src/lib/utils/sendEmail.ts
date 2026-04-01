@@ -6,7 +6,7 @@ import { Resend } from 'resend';
 import { RESENDAPIKEY, CLUBEMAIL } from '$env/static/private';
 const resend = new Resend(RESENDAPIKEY);
 
-export const sendEmail = async (data: { to; from; subject; html }) => {
+export const sendEmail = async (data: { to: string; from: string; subject: string; html: string }) => {
   const res = await resend.emails.send(data);
   console.log(res.error);
 

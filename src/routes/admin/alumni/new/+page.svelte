@@ -15,7 +15,13 @@
         <h2 class="text-center text-3xl font-extrabold text-white">Add New Alumnus</h2>
       </div>
       <div class="p-6 sm:p-8">
-        <form action="?/createAlumnus" method="POST" use:enhance class="space-y-6">
+        <form
+          action="?/createAlumnus"
+          method="POST"
+          use:enhance
+          class="space-y-6"
+          enctype="multipart/form-data"
+        >
           <div>
             <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
             <input
@@ -69,7 +75,9 @@
             />
           </div>
           <div>
-            <label for="image" class="block text-sm font-medium text-gray-700">Image (Accepts png, gif, jpeg, jpg)</label>
+            <label for="image" class="block text-sm font-medium text-gray-700"
+              >Image (Accepts png, gif, jpeg, jpg)</label
+            >
             <input
               type="file"
               accept="image/png, image/gif, image/jpeg, image/jpg"

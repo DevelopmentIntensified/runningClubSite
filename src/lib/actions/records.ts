@@ -11,8 +11,11 @@ export async function getRecord(id: number) {
   return record;
 }
 
-export async function createRecord(data: Omit<Records, 'id'>) {
-  const [createdRecord] = await db.insert(records).values(data).returning();
+export async function createRecord(data: Omit<Records, 'id' | 'created_at'>) {
+  const [createdRecord] = await db.insert(records).values({
+    ...data,
+    created_at: new Date()
+  }).returning();
   return createdRecord;
 }
 

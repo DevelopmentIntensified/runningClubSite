@@ -46,7 +46,7 @@ export const actions: Actions = {
       const { url } = await put(image.name, image, { access: "public", token: BLOB_READ_WRITE_TOKEN });
       if (imageUrl !== null && imageUrl !== '') {
         console.log(imageUrl);
-        del(imageUrl, { token: BLOB_READ_WRITE_TOKEN });
+        await del(imageUrl, { token: BLOB_READ_WRITE_TOKEN });
       }
       updateData.imageUrl = url;
     }

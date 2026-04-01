@@ -11,6 +11,7 @@ import { insertEvents } from './insertEvents';
 import { insertLocations } from './insertLocations';
 import { insertLeaders } from './insertLeaders';
 import { insertRecurringEvents } from './insertRecurringEvents';
+import { cleanupDuplicateSaturdayRuns } from './cleanupEvents';
 
 if (false) {
   insertLeaders();
@@ -29,9 +30,16 @@ if (false) {
 }
 if (false) {
   await insertRecurringEvents()
-    .then(() => console.log('All recurring events for 16 weeks inserted successfully'))
-    .catch(error => console.error('Error inserting recurring events:', error))
+    .then(() => console.log('All recurring events for 22 weeks inserted successfully'))
+    .catch((error) => console.error('Error inserting recurring events:', error));
 
-  // Log the current date for reference
   console.log('Script run date:', new Date().toISOString());
+}
+if (false) {
+  await cleanupDuplicateSaturdayRuns();
+}
+if (false) {
+  await insertEvents()
+    .then(() => console.log('All events inserted successfully'))
+    .catch((error) => console.error('Error inserting events:', error));
 }

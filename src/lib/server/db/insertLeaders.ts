@@ -16,71 +16,77 @@ const leadersData = [
     name: 'Cole Schwartz',
     imageUrl: presidentImg,
     position: 'Club President',
-    bio: ''
+    bio: '',
+    order: 0
   },
   {
     name: 'Kyle Moore',
     imageUrl: vicePresidentImg,
     position: 'Vice President',
-    bio: ''
+    bio: '',
+    order: 1
   },
   {
     name: 'Leah kelley',
     imageUrl: treasurerImg,
     position: 'Treasurer',
-    bio: ''
+    bio: '',
+    order: 2
   },
   {
     name: 'Collin Rose',
     imageUrl: mediaManagerImg,
     position: 'Social Media Coordinator',
     bio:
-      'Collin is a second-year student from Sunny Orlando, Florida, who loves middle and long-distance events, is a running shoe connoisseur, and a master on the Aux.'
+      'Collin is a second-year student from Sunny Orlando, Florida, who loves middle and long-distance events, is a running shoe connoisseur, and a master on the Aux.',
+    order: 3
   },
   {
     name: 'Joshua Harden',
     imageUrl: coachImg,
     position: 'Coach',
-    bio: ''
+    bio: '',
+    order: 4
   },
   {
     name: 'Jesse Harrell',
     imageUrl: chaplainImg,
     position: 'Club Chaplain',
-    bio: ''
+    bio: '',
+    order: 5
   },
   {
     name: 'Jadyn Talley',
     imageUrl: eventCoordinatorImg,
     position: 'Team Mom/Female Captain/Event Coordinator',
-    bio: ''
+    bio: '',
+    order: 6
   },
   {
     name: 'Skylar Waechter',
     imageUrl: advisorImg,
     position: 'Advisory Board Member',
-    bio: ''
+    bio: '',
+    order: 7
   },
   {
     name: 'Matthew Petke',
     imageUrl: headOfLogisticsImg,
     position: 'Head of Logistics',
-    bio: ''
+    bio: '',
+    order: 8
   },
   {
     name: 'George Crowder',
     imageUrl: nircaDirectorImg,
     position: 'NIRCA Coordinator',
     bio:
-      'George Crowder is a first-year student at Liberty University from Winchester, Virginia. He is pursuing a degree in strength and conditioning with a concentration on coaching. George loves middle-distance events and enjoys mountain biking, rock climbing, caving and hiking.'
+      'George Crowder is a first-year student at Liberty University from Winchester, Virginia. He is pursuing a degree in strength and conditioning with a concentration on coaching. George loves middle-distance events and enjoys mountain biking, rock climbing, caving and hiking.',
+    order: 9
   }
 ];
 
 export async function insertLeaders() {
-  for (let index = 0; index < leadersData.length; index++) {
-    const leader = leadersData[index];
-    leader.order = index;
-  }
   try {
     const result = await db.insert(leaders).values(leadersData);
     console.log('Events inserted successfully:', result);

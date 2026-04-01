@@ -8,7 +8,7 @@ export const load: PageServerLoad = async () => {
 };
 
 export const actions: Actions = {
-  deleteUser: async ({ request }) => {
+  deleteuser: async ({ request }) => {
     const formData = await request.formData();
     const id = formData.get('id');
 
