@@ -21,7 +21,7 @@
     NCAA: 'bg-blue-100 text-blue-900 ring-blue-200/80',
     Social: 'bg-purple-100 text-purple-900 ring-purple-200/80',
     Trail: 'bg-emerald-100 text-emerald-900 ring-emerald-200/80',
-    Road: 'bg-amber-100 text-amber-900 ring-amber-200/80',
+    Road: 'bg-teal-100 text-teal-900 ring-teal-200/80',
     Practice: 'bg-yellow-100 text-yellow-900 ring-yellow-200/80'
   };
 
@@ -37,7 +37,7 @@
   <span class="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-1 font-medium text-blue-900 ring-1 ring-blue-200/80">NCAA</span>
   <span class="inline-flex items-center rounded-full bg-purple-100 px-2.5 py-1 font-medium text-purple-900 ring-1 ring-purple-200/80">Social</span>
   <span class="inline-flex items-center rounded-full bg-emerald-100 px-2.5 py-1 font-medium text-emerald-900 ring-1 ring-emerald-200/80">Trail Race</span>
-  <span class="inline-flex items-center rounded-full bg-amber-100 px-2.5 py-1 font-medium text-amber-900 ring-1 ring-amber-200/80">Road Race</span>
+  <span class="inline-flex items-center rounded-full bg-teal-100 px-2.5 py-1 font-medium text-teal-900 ring-1 ring-teal-200/80">Road Race</span>
 </div>
 
 <div class="overflow-x-auto rounded-xl ring-1 ring-slate-200/80">
