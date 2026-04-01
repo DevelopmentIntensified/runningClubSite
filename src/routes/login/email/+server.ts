@@ -68,8 +68,6 @@ export const POST = async (event: RequestEvent) => {
     '',
     'This code expires in 15 minutes. If you did not request this email, you can ignore it.',
     '',
-    `Sign-in link (optional): ${signInUrl.toString()}`,
-    '',
     '— Liberty Running Club',
     'This message was sent because someone requested access with your Liberty email.',
     'Club updates may be sent to this address; see our Privacy Policy at your site /privacy'
