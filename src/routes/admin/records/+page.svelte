@@ -7,26 +7,13 @@
   let searchTerm = $state('');
 
   let trackRecords = $derived.by(() => {
-    let result = data.records.filter(r => r.type === 'track' || r.type === 'field');
+    let result = data.records.filter(r => r.type === 'track');
     if (searchTerm) {
       result = result.filter(r => 
         r.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         r.event.toLowerCase().includes(searchTerm.toLowerCase()) ||
         r.time.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (r.year?.toString() ?? '').includes(searchTerm)
-      );
-    }
-    return result;
-  });
-
-  let roadRecords = $derived.by(() => {
-    let result = data.records.filter(r => r.type === 'road');
-    if (searchTerm) {
-      result = result.filter(r => 
-        r.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        r.event.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        r.time.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (r.year?.toString() ?? '').includes(searchTerm)
+        r.year.toString().includes(searchTerm)
       );
     }
     return result;
@@ -39,7 +26,7 @@
         r.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         r.event.toLowerCase().includes(searchTerm.toLowerCase()) ||
         r.time.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (r.year?.toString() ?? '').includes(searchTerm)
+        r.year.toString().includes(searchTerm)
       );
     }
     return result;
@@ -52,7 +39,20 @@
         r.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         r.event.toLowerCase().includes(searchTerm.toLowerCase()) ||
         r.time.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (r.year?.toString() ?? '').includes(searchTerm)
+        r.year.toString().includes(searchTerm)
+      );
+    }
+    return result;
+  });
+
+  let roadRecords = $derived.by(() => {
+    let result = data.records.filter(r => r.type === 'road');
+    if (searchTerm) {
+      result = result.filter(r => 
+        r.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        r.event.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        r.time.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        r.year.toString().includes(searchTerm)
       );
     }
     return result;
@@ -120,7 +120,7 @@
                   <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.event}</td>
                   <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.name}</td>
                   <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.time}</td>
-                  <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.year ?? '-'}</td>
+                  <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.year}</td>
                   <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.gender}</td>
                   <td class="whitespace-nowrap px-4 py-3 text-sm">
                     <div class="flex items-center gap-2">
@@ -165,7 +165,7 @@
                   <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.event}</td>
                   <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.name}</td>
                   <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.time}</td>
-                  <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.year ?? '-'}</td>
+                  <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.year}</td>
                   <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.gender}</td>
                   <td class="whitespace-nowrap px-4 py-3 text-sm">
                     <div class="flex items-center gap-2">
@@ -210,7 +210,7 @@
                   <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.event}</td>
                   <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.name}</td>
                   <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.time}</td>
-                  <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.year ?? '-'}</td>
+                  <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.year}</td>
                   <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.gender}</td>
                   <td class="whitespace-nowrap px-4 py-3 text-sm">
                     <div class="flex items-center gap-2">
@@ -255,7 +255,7 @@
                   <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.event}</td>
                   <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.name}</td>
                   <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.time}</td>
-                  <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.year ?? '-'}</td>
+                  <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.year}</td>
                   <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.gender}</td>
                   <td class="whitespace-nowrap px-4 py-3 text-sm">
                     <div class="flex items-center gap-2">

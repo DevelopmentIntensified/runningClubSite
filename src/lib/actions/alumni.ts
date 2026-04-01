@@ -15,11 +15,8 @@ export async function getAlumnus(id: number) {
   return alumnus;
 }
 
-export async function createAlumnus(data: Omit<Alumni, 'id' | 'created_at'>) {
-  const [createdAlumnus] = await db.insert(alumni).values({
-    ...data,
-    created_at: new Date()
-  }).returning();
+export async function createAlumnus(data: Omit<Alumni, 'id'>) {
+  const [createdAlumnus] = await db.insert(alumni).values(data).returning();
   return createdAlumnus;
 }
 

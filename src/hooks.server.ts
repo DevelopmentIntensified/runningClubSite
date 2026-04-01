@@ -36,7 +36,7 @@ export const handle: Handle = async ({ event, resolve }) => {
   }
   event.locals.user = user;
   event.locals.session = session;
-
+  console.log(user);
   if (event.url.pathname.includes('/admin')) {
     if (!session || !user.isAdmin) {
       return error(403, 'Unauthorized');

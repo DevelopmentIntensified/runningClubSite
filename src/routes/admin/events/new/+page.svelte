@@ -1,22 +1,7 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
-  import type { PageData } from './$types';
-  import { DateTime } from 'luxon';
-
-  export let data: PageData;
 
   let error = '';
-  let startValue = '';
-  let endValue = '';
-
-  if (data.defaultDate) {
-    const startDefault = DateTime.fromFormat(data.defaultDate, 'yyyy-MM-dd', {
-      zone: 'America/New_York'
-    }).set({ hour: 9, minute: 0 });
-    const endDefault = startDefault.plus({ hours: 1 });
-    startValue = startDefault.toFormat("yyyy-MM-dd'T'HH:mm");
-    endValue = endDefault.toFormat("yyyy-MM-dd'T'HH:mm");
-  }
 </script>
 
 <svelte:head>
@@ -49,7 +34,6 @@
               type="datetime-local"
               id="start"
               name="start"
-              value={startValue}
               required
               class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
             />
@@ -62,7 +46,6 @@
               type="datetime-local"
               id="end"
               name="end"
-              value={endValue}
               required
               class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
             />
@@ -99,7 +82,6 @@
               <option value="Social">Social</option>
               <option value="Practice">Practice</option>
               <option value="Trail Race">Trail Race</option>
-              <option value="Road Race">Road Race</option>
               <option value="NIRCA Outdoor Race">NIRCA Outdoor Race</option>
               <option value="NIRCA Indoor Race">NIRCA Indoor Race</option>
               <option value="NCAA Outdoor Race">NCAA Outdoor Race</option>
@@ -117,12 +99,7 @@
               Create Event
             </button>
           </div>
-          <input
-            type="hidden"
-            class="m-0 hidden h-0 p-0"
-            name="offset"
-            value={new Date().getTimezoneOffset() / 60}
-          />
+          <input type="hidden" class="hidden h-0 m-0 p-0" name="offset" value={new Date().getTimezoneOffset()/60} />
         </form>
       </div>
     </div>

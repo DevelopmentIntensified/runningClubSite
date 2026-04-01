@@ -1,8 +1,4 @@
-<script lang="ts">
-  export let data;
-</script>
-
-<div class="relative h-32 sm:h-40 md:h-48 mb-6">
+<div class="relative h-64 sm:h-80 md:h-96 mb-6">
   <img
     src={data.image.imageUrl}
     alt={data.image.alt}

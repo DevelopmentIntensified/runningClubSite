@@ -8,8 +8,7 @@ const pages: string[] = [
   "contact",
   "login",
   "news",
-  "alumni",
-  "privacy"
+  "alumni"
 ]; // populate this with all the slugs you wish to include
 
 /** @type {import('./$types').RequestHandler} */

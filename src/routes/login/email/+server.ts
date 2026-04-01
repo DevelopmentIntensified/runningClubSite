@@ -60,7 +60,7 @@ export const POST = async (event: RequestEvent) => {
 
   const { success } = await sendEmail({
     to: email,
-    from: 'libertyrunningclub@libertyrunningclub.com',
+    from: 'Liberty Running Club <noreply@libertyrunningclub.com>',
     subject: 'Your Liberty Running Club Login Code',
     html: `<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
       <h2 style="color: #1a365d;">Liberty Running Club</h2>

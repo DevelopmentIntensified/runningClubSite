@@ -12,7 +12,7 @@
 
   <div class="space-y-16">
     <section class="bg-white shadow-xl rounded-lg overflow-hidden">
-      <div class="relative h-32 sm:h-40 md:h-48">
+      <div class="relative h-64 sm:h-80 md:h-96">
         <img
           src="/placeholder.svg?height=400&width=800"
           alt="Runners in action"
@@ -32,7 +32,7 @@
     </section>
 
     <section class="bg-white shadow-xl rounded-lg overflow-hidden">
-      <div class="relative h-32 sm:h-40 md:h-48">
+      <div class="relative h-64 sm:h-80 md:h-96">
         <img
           src="/placeholder.svg?height=400&width=800"
           alt="Group running together"
@@ -55,7 +55,7 @@
     </section>
 
     <section class="bg-white shadow-xl rounded-lg overflow-hidden">
-      <div class="relative h-32 sm:h-40 md:h-48">
+      <div class="relative h-64 sm:h-80 md:h-96">
         <img
           src="/placeholder.svg?height=400&width=800"
           alt="Diverse group of runners"

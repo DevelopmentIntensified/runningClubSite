@@ -1,110 +1,211 @@
 import { db } from '.';
 import { events } from './schema';
-import { DateTime } from 'luxon'
+
 const eventsData = [
- {
-    title: 'PowerPoint Night',
-    start: '2026-01-23T18:30:00-05:00',
-    end: '2026-01-23T20:30:00-05:00',
-    location: 'LRC',
-    type: 'Social',
-    description: 'A fun evening of creative and entertaining PowerPoint presentations by club members.'
+  {
+    title: 'Finn Pincus Invitational',
+    start: new Date('2025-01-17T09:00:00'),
+    end: new Date('2025-01-17T17:00:00'),
+    location: 'Roanoke College Track',
+    type: 'NCAA Indoor Meet',
+    description:
+      'Annual indoor track meet hosted by Roanoke College, featuring top collegiate athletes from the region.'
   },
   {
-    title: "80's Movie Nights",
-    start: '2026-01-30T19:00:00-05:00',
-    end: '2026-01-31T22:00:00-05:00',
-    location: 'LRC',
-    type: 'Social',
-    description: 'Two-night throwback movie marathon featuring iconic 80s films.'
+    title: 'Arctic 5k',
+    start: new Date('2025-02-01T09:00:00'),
+    end: new Date('2025-02-01T11:00:00'),
+    location: 'Hydaway Outdoor Center',
+    type: 'Trail Race',
+    description:
+      'A challenging winter trail race through the scenic Hydaway Outdoor Center. Bundle up for this frosty 5k!'
   },
   {
-    title: 'Rock Wall Night',
-    start: '2026-02-06T18:30:00-05:00',
-    end: '2026-02-06T20:30:00-05:00',
-    location: 'LRC',
-    type: 'Activity',
-    description: 'An adventurous evening of indoor rock climbing with fellow club members.'
+    title: 'Liberty Open',
+    start: new Date('2025-02-07T09:00:00'),
+    end: new Date('2025-02-07T17:00:00'),
+    location: 'Liberty Indoor Track',
+    type: 'NCAA Indoor Meet',
+    description:
+      "Liberty University's premier indoor track and field event, showcasing talent from across the country."
   },
   {
-    title: 'Super Bowl Party',
-    start: '2026-02-08T18:00:00-05:00',
-    end: '2026-02-08T22:00:00-05:00',
-    location: 'LRC',
-    type: 'Social',
-    description: 'Watch party for the big game with food, friends, and football.'
+    title: 'UVA',
+    start: new Date('2025-03-01T09:00:00'),
+    end: new Date('2025-03-01T17:00:00'),
+    location: 'UVA Track Complex',
+    type: 'NIRCA Meet',
+    description:
+      'National Intercollegiate Running Club Association meet hosted by the University of Virginia. A great opportunity for club runners to compete.'
   },
   {
-    title: 'Galentines',
-    start: '2026-02-16T18:00:00-05:00',
-    end: '2026-02-16T20:00:00-05:00',
-    location: 'LRC',
-    type: 'Social',
-    description: "A Galentine's Day celebration honoring friendship and community."
+    title: 'King of The Mountain',
+    start: new Date('2025-03-01T09:00:00'),
+    end: new Date('2025-03-01T12:00:00'),
+    location: 'Hydaway Outdoor Center',
+    type: 'Trail Race',
+    description:
+      'An exhilarating trail race that challenges runners to conquer the mountain trails of Hydaway Outdoor Center.'
   },
   {
-    title: 'Morning Hike',
-    start: '2026-02-21T08:00:00-05:00',
-    end: '2026-02-21T11:00:00-05:00',
-    location: 'TBD',
-    type: 'Activity',
-    description: 'An early morning group hike to enjoy nature and get some fresh air together.'
+    title: 'JMU',
+    start: new Date('2025-03-08T09:00:00'),
+    end: new Date('2025-03-08T17:00:00'),
+    location: 'JMU track Complex',
+    type: 'NIRCA Meet',
+    description:
+      'NIRCA meet hosted by James Madison University, bringing together collegiate running clubs for friendly competition.'
   },
   {
-    title: 'Movie on the Track — LOTR',
-    start: '2026-03-06T18:00:00-05:00',
-    end: '2026-03-06T21:30:00-05:00',
-    location: 'LRC Track',
-    type: 'Social',
-    description: 'Outdoor screening of The Lord of the Rings on the track. Bring blankets and snacks!'
+    title: 'VTech',
+    start: new Date('2025-03-22T09:00:00'),
+    end: new Date('2025-03-22T17:00:00'),
+    location: 'Vtech Track Complex',
+    type: 'NIRCA Meet',
+    description:
+      'Virginia Tech hosts this NIRCA meet, offering a chance for club runners to test their skills on a fast track.'
+  },
+  {
+    title: 'Dr. Jack M. Toms Invitational',
+    start: new Date('2025-03-28T09:00:00'),
+    end: new Date('2025-03-28T17:00:00'),
+    location: 'University of Lynchburg Track',
+    type: 'NCAA Outdoor Meet',
+    description:
+      'Annual outdoor track and field invitational honoring Dr. Jack M. Toms, featuring top collegiate athletes from across the region.'
+  },
+  {
+    title: 'NIRCA Track & Field National Championships',
+    start: new Date('2025-04-05T09:00:00'),
+    end: new Date('2025-04-05T17:00:00'),
+    location: 'Sportsbackers Stadium (VCU)',
+    type: 'NIRCA Nationals',
+    description:
+      'The pinnacle of the NIRCA track and field season, bringing together the best club runners from across the nation to compete for national titles.'
+  },
+  {
+    title: 'NIRCA Half Marathon Nationals',
+    start: new Date('2025-04-05T08:00:00'),
+    end: new Date('2025-04-05T12:00:00'),
+    location: 'Unknown',
+    type: 'NIRCA Nationals',
+    description:
+      'National championship half marathon for collegiate running clubs, testing endurance over 13.1 miles of challenging terrain.'
+  },
+  {
+    title: 'Dennis Craddock Coaches Invitational',
+    start: new Date('2025-04-11T09:00:00'),
+    end: new Date('2025-04-11T17:00:00'),
+    location: 'University of Lynchburg Track',
+    type: 'NCAA Outdoor Meet',
+    description:
+      'Prestigious outdoor track meet named in honor of legendary coach Dennis Craddock, featuring top-tier collegiate competition.'
+  },
+  {
+    title: 'Wildcat Twilight',
+    start: new Date('2025-04-19T16:00:00'),
+    end: new Date('2025-04-19T22:00:00'),
+    location: 'Randolph Track',
+    type: 'NCAA Outdoor Meet',
+    description:
+      'Evening track meet hosted by Randolph College, providing a unique atmosphere for athletes to achieve personal bests under the lights.'
+  },
+  {
+    title: 'Hill City Twighlight',
+    start: new Date('2025-05-02T16:00:00'),
+    end: new Date('2025-05-02T22:00:00'),
+    location: 'University of Lynchburg Track',
+    type: 'NCAA Outdoor Meet',
+    description:
+      "Lynchburg's premier twilight meet, offering fast times and high-level competition as the sun sets over the Hill City."
+  },
+  {
+    title: 'Liberty Twilight',
+    start: new Date('2025-05-06T16:00:00'),
+    end: new Date('2025-05-06T22:00:00'),
+    location: 'Liberty Outdoor Track',
+    type: 'NCAA Meet',
+    description:
+      "Liberty University's signature twilight meet, attracting top talent for an evening of high-performance track and field events."
+  },
+  {
+    title: 'Down the Stretch Track Fest',
+    start: new Date('2025-05-16T16:00:00'),
+    end: new Date('2025-05-16T22:00:00'),
+    location: 'George Mason Track',
+    type: 'Other',
+    description:
+      'Season-ending track festival hosted by George Mason University, celebrating the sport with a mix of competitive events and fun activities.'
+  },
+  {
+    title: 'Elite Gymnastics Open Gym Night',
+    start: new Date(2025, 0, 30, 20, 0), // January 30th, 2025, 8:00 PM
+    end: new Date(2025, 0, 30, 22, 0), // January 30th, 2025, 10:00 PM
+    location: 'Elite Gymnastics',
+    type: 'Social Event'
+  },
+  {
+    title: 'Frozen on Ice',
+    start: new Date(2025, 1, 7, 19, 0), // February 7th, 2025, 7:00 PM
+    end: new Date(2025, 1, 7, 21, 0), // February 7th, 2025, 9:00 PM
+    location: 'Student Activities Center',
+    type: 'Social Event'
+  },
+  {
+    title: 'Elite Gymnastics Night',
+    start: new Date(2025, 1, 13, 20, 0), // February 13th, 2025, 8:00 PM
+    end: new Date(2025, 1, 13, 22, 0), // February 13th, 2025, 10:00 PM
+    location: 'Elite Gymnastics',
+    type: 'Social Event'
+  },
+  {
+    title: 'Josiah Queen Concert',
+    start: new Date(2025, 1, 21, 19, 0), // February 21st, 2025, 7:00 PM
+    end: new Date(2025, 1, 21, 22, 0), // February 21st, 2025, 10:00 PM
+    location: 'Concert Hall',
+    type: 'Social Event'
+  },
+  {
+    title: 'Sunrise Hike at Sharp Top',
+    start: new Date(2025, 2, 1, 6, 0), // March 1st, 2025, 6:00 AM
+    end: new Date(2025, 2, 1, 9, 0), // March 1st, 2025, 9:00 AM
+    location: 'Sharp Top Mountain',
+    type: 'Social Event'
   },
   {
     title: 'Spring Break',
-    start: '2026-03-13T00:00:00-04:00',
-    end: '2026-03-22T23:59:00-04:00',
-    location: '',
-    type: 'Break',
-    description: 'Spring break — no scheduled club events. Enjoy the time off!'
+    start: new Date(2025, 2, 9, 0, 0), // March 9th, 2025, 12:00 AM
+    end: new Date(2025, 2, 14, 23, 59), // March 14th, 2025, 11:59 PM
+    location: 'Liberty University',
+    type: 'Social Event'
   },
   {
-    title: 'Regionals & Coffeehouse',
-    start: '2026-03-28T11:30:00-04:00',
-    end: '2026-03-28T17:00:00-04:00',
-    location: 'LRC',
-    type: 'Competition',
-    description: 'Regional competition followed by a coffeehouse social. Dinner gathering before the event.'
+    title: 'Class of Coffeehouse',
+    start: new Date(2025, 2, 22, 19, 0), // March 22nd, 2025, 7:00 PM
+    end: new Date(2025, 2, 22, 22, 0), // March 22nd, 2025, 10:00 PM
+    location: 'Student Center',
+    type: 'Social Event'
   },
   {
-    title: 'Cherry Blossom Race',
-    start: '2026-04-11T08:00:00-04:00',
-    end: '2026-04-11T12:00:00-04:00',
+    title: 'Tubing at Snowflex',
+    start: new Date(2025, 2, 29, 18, 0), // March 29th, 2025, 6:00 PM
+    end: new Date(2025, 2, 29, 21, 0), // March 29th, 2025, 9:00 PM
+    location: 'Snowflex Centre',
+    type: 'Social Event'
+  },
+  {
+    title: 'Outside Movie Night',
+    start: new Date(2025, 3, 11, 20, 0), // April 11th, 2025, 8:00 PM
+    end: new Date(2025, 3, 11, 23, 0), // April 11th, 2025, 11:00 PM
     location: 'TBD',
-    type: 'Race',
-    description: 'A scenic spring race celebrating cherry blossom season.'
+    type: 'Social Event'
   },
   {
-    title: 'Late Skate',
-    start: '2026-04-17T21:00:00-04:00',
-    end: '2026-04-17T23:00:00-04:00',
+    title: 'Spring Formal',
+    start: new Date(2025, 3, 25, 18, 0), // April 25th, 2025, 6:00 PM
+    end: new Date(2025, 3, 25, 21, 0), // April 25th, 2025, 9:00 PM
     location: 'TBD',
-    type: 'Activity',
-    description: 'A late-night skating outing for club members to unwind and have fun.'
-  },
-  {
-    title: 'Celebratory Potluck',
-    start: '2026-04-18T18:00:00-04:00',
-    end: '2026-04-18T20:00:00-04:00',
-    location: 'TBD',
-    type: 'Social',
-    description: 'End-of-season potluck celebration. Bring a dish to share! Location to be determined.'
-  },
-  {
-    title: 'Formal',
-    start: '2026-04-25T18:00:00-04:00',
-    end: '2026-04-25T21:00:00-04:00',
-    location: 'TBD',
-    type: 'Social',
-    description: 'The LRC spring formal — a dressed-up evening to close out the semester. Location to be determined.'
+    type: 'Social Event'
   }
 ];
 

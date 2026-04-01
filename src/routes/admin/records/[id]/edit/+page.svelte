@@ -97,11 +97,10 @@
               required
               class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
             >
-              <option value="cross_country">Cross Country</option>
               <option value="track">Track</option>
-              <option value="field">Field</option>
-              <option value="road">Road</option>
+              <option value="cross_country">Cross Country</option>
               <option value="trail">Trail</option>
+              <option value="road">Road</option>
             </select>
           </div>
           {#if error}

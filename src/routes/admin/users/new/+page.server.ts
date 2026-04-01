@@ -1,23 +1,27 @@
-import { createUser } from '$lib/actions/users';
+import { createuser } from '$lib/actions/leaders';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
 
 export const actions: Actions = {
-  createUser: async ({ request }) => {
+  createuser: async ({ request }) => {
     const formData = await request.formData();
-    const email = formData.get('email');
-    const isAdmin = formData.get('isAdmin');
+    const name = formData.get('name');
+    const position = formData.get('position');
+    const bio = formData.get('bio');
+    const imageUrl = formData.get('imageUrl');
 
-    if (!email) {
-      return fail(400, { message: 'Email is required' });
+    if (!name || !position) {
+      return fail(400, { message: 'Name and position are required' });
     }
 
-    const newUser = await createUser({
-      email: email.toString(),
-      isAdmin: isAdmin === 'on'
+    const newuser = await createLeader({
+      name: name.toString(),
+      position: position.toString(),
+      bio: bio?.toString() || null,
+      imageUrl: imageUrl?.toString() || null
     });
 
-    if (newUser) {
+    if (newuser) {
       throw redirect(302, '/admin/users');
     } else {
       return fail(500, { message: 'Failed to create user' });

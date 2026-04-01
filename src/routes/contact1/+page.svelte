@@ -18,7 +18,7 @@
 
 <div class="container mx-auto px-4 py-12">
   <div class="overflow-hidden rounded-lg bg-white shadow-xl pb-5">
-  <div class="relative h-32 sm:h-40 md:h-48 mb-6">
+  <div class="relative h-64 sm:h-80 md:h-96 mb-6">
     <img
       src={trainingImg}
       alt="Runners training"

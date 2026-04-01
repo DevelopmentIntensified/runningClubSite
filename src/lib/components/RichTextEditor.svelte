@@ -11,45 +11,47 @@
 
   onMount(async () => {
     if (browser) {
-      await initQuill();
+      const Quill = (await import('quill')).default;
+      await import('quill/dist/quill.snow.css');
+
+      const toolbarOptions = [
+        ['bold', 'italic', 'underline', 'strike'],
+        ['blockquote', 'code-block'],
+        [{ 'header': 1 }, { 'header': 2 }],
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        [{ 'script': 'sub'}, { 'script': 'super' }],
+        [{ 'indent': '-1'}, { 'indent': '+1' }],
+        [{ 'direction': 'rtl' }],
+        [{ 'size': ['small', false, 'large', 'huge'] }],
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+        [{ 'color': [] }, { 'background': [] }],
+        [{ 'font': [] }],
+        [{ 'align': [] }],
+        ['clean'],
+        ['link', 'image']
+      ];
+
+      quill = new Quill(editorElement, {
+        modules: {
+          toolbar: toolbarOptions
+        },
+        placeholder: placeholder,
+        theme: 'snow'
+      });
+
+      quill.root.innerHTML = value;
+
+      quill.on('text-change', () => {
+        value = quill.root.innerHTML;
+      });
     }
+
+    return () => {
+      if (quill) {
+        quill = null;
+      }
+    };
   });
-
-  async function initQuill() {
-    const Quill = (await import('quill')).default;
-    await import('quill/dist/quill.snow.css');
-
-    const toolbarOptions = [
-      ['bold', 'italic', 'underline', 'strike'],
-      ['blockquote', 'code-block'],
-      [{ 'header': 1 }, { 'header': 2 }],
-      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-      [{ 'script': 'sub'}, { 'script': 'super' }],
-      [{ 'indent': '-1'}, { 'indent': '+1' }],
-      [{ 'direction': 'rtl' }],
-      [{ 'size': ['small', false, 'large', 'huge'] }],
-      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-      [{ 'color': [] }, { 'background': [] }],
-      [{ 'font': [] }],
-      [{ 'align': [] }],
-      ['clean'],
-      ['link', 'image']
-    ];
-
-    quill = new Quill(editorElement, {
-      modules: {
-        toolbar: toolbarOptions
-      },
-      placeholder: placeholder,
-      theme: 'snow'
-    });
-
-    quill.root.innerHTML = value;
-
-    quill.on('text-change', () => {
-      value = quill.root.innerHTML;
-    });
-  }
 </script>
 
 <div class="rich-text-editor">

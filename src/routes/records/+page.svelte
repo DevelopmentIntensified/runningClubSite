@@ -15,14 +15,6 @@
   $: filteredMenRecords = menRecords.filter((record) => record.type === activeType);
   $: filteredWomenRecords = womenRecords.filter((record) => record.type === activeType);
 
-  const typeOptions = [
-    { value: 'cross_country', label: 'Cross Country' },
-    { value: 'track', label: 'Track' },
-    { value: 'field', label: 'Field' },
-    { value: 'road', label: 'Road' },
-    { value: 'trail', label: 'Trail' }
-  ];
-
   function setActiveType(type: string) {
     activeType = type;
   }
@@ -76,16 +68,46 @@
       </div>
 
       <div class="mb-8 flex justify-center space-x-4">
-        {#each typeOptions as type}
-          <button
-            class="rounded-full px-4 py-2 {activeType === type.value
-              ? 'bg-secondary-600 text-white'
-              : 'bg-gray-200 text-gray-800'}"
-            on:click={() => setActiveType(type.value)}
-          >
-            {type.label}
-          </button>
-        {/each}
+        <button
+          class="rounded-full px-4 py-2 {activeType === 'cross_country'
+            ? 'bg-secondary-600 text-white'
+            : 'bg-gray-200 text-gray-800'}"
+          on:click={() => setActiveType('cross_country')}
+        >
+          Cross Country
+        </button>
+        <button
+          class="rounded-full px-4 py-2 {activeType === 'track'
+            ? 'bg-secondary-600 text-white'
+            : 'bg-gray-200 text-gray-800'}"
+          on:click={() => setActiveType('track')}
+        >
+          Track
+        </button>
+        <button
+          class="rounded-full px-4 py-2 {activeType === 'field'
+            ? 'bg-secondary-600 text-white'
+            : 'bg-gray-200 text-gray-800'}"
+          on:click={() => setActiveType('field')}
+        >
+          Field
+        </button>
+        <button
+          class="rounded-full px-4 py-2 {activeType === 'trail'
+            ? 'bg-secondary-600 text-white'
+            : 'bg-gray-200 text-gray-800'}"
+          on:click={() => setActiveType('trail')}
+        >
+          Trail
+        </button>
+        <button
+          class="rounded-full px-4 py-2 {activeType === 'road'
+            ? 'bg-secondary-600 text-white'
+            : 'bg-gray-200 text-gray-800'}"
+          on:click={() => setActiveType('road')}
+        >
+          Road
+        </button>
       </div>
 
       <div class="overflow-hidden rounded-lg bg-white shadow-lg">
@@ -136,16 +158,46 @@
       </div>
 
       <div class="mb-8 flex justify-center space-x-4">
-        {#each typeOptions as type}
-          <button
-            class="rounded-full px-4 py-2 {activeType === type.value
-              ? 'bg-secondary-600 text-white'
-              : 'bg-gray-200 text-gray-800'}"
-            on:click={() => setActiveType(type.value)}
-          >
-            {type.label}
-          </button>
-        {/each}
+        <button
+          class="rounded-full px-4 py-2 {activeType === 'cross_country'
+            ? 'bg-secondary-600 text-white'
+            : 'bg-gray-200 text-gray-800'}"
+          on:click={() => setActiveType('cross_country')}
+        >
+          Cross Country
+        </button>
+        <button
+          class="rounded-full px-4 py-2 {activeType === 'track'
+            ? 'bg-secondary-600 text-white'
+            : 'bg-gray-200 text-gray-800'}"
+          on:click={() => setActiveType('track')}
+        >
+          Track
+        </button>
+        <button
+          class="rounded-full px-4 py-2 {activeType === 'field'
+            ? 'bg-secondary-600 text-white'
+            : 'bg-gray-200 text-gray-800'}"
+          on:click={() => setActiveType('field')}
+        >
+          Field
+        </button>
+        <button
+          class="rounded-full px-4 py-2 {activeType === 'trail'
+            ? 'bg-secondary-600 text-white'
+            : 'bg-gray-200 text-gray-800'}"
+          on:click={() => setActiveType('trail')}
+        >
+          Trail
+        </button>
+        <button
+          class="rounded-full px-4 py-2 {activeType === 'road'
+            ? 'bg-secondary-600 text-white'
+            : 'bg-gray-200 text-gray-800'}"
+          on:click={() => setActiveType('road')}
+        >
+          Road
+        </button>
       </div>
 
       <div class="overflow-hidden rounded-lg bg-white shadow-lg">

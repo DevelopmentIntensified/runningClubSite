@@ -1,19 +1,20 @@
 <script lang="ts">
   import logo from '$lib/assets/images/logos/redLogo.png';
   export let data;
+  // console.warn('DEBUGPRINT[1]: +page.svelte:9: data=', data);
 
   import { writable } from 'svelte/store';
   import Calendar from '$lib/components/Calendar.svelte';
+  import type { CalendarEvent } from '$lib/server/db/schema.js';
   import { DateTime } from 'luxon';
 
   const currentDate = writable(DateTime.now().setZone('America/New_York'));
-  let events = data.events.map((e: any) => ({
+  let events: CalendarEvent[] = data.events;
+  events = events.map(e => ({
     ...e,
-    date: DateTime.fromISO(e.start),
-    start: DateTime.fromISO(e.start),
-    end: DateTime.fromISO(e.end),
-    location: e.location ?? '',
-    description: e.description ?? ''
+    date: DateTime.fromJSDate(e.date),
+    start: DateTime.fromJSDate(e.start),
+    end: DateTime.fromJSDate(e.end),
   }))
   console.log(events)
 </script>
@@ -24,7 +25,7 @@
 
 <div class="container mx-auto px-4 py-12">
   <div class="overflow-hidden rounded-lg bg-white shadow-xl">
-    <div class="relative h-32 sm:h-40 md:h-48">
+    <div class="relative h-64 sm:h-80 md:h-96">
       <img
         src={data.image.imageUrl}
         alt={data.image.alt}

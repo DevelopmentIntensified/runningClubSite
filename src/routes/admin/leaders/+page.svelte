@@ -2,109 +2,101 @@
   import { enhance } from '$app/forms';
   import type { PageData } from './$types';
 
-  export let data: PageData;
+  let { data }: { data: PageData } = $props();
 
-  let searchTerm = '';
+  let searchTerm = $state('');
 
-  $: filteredLeaders = data.leaders
-    .filter((leader) => 
-      leader.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      leader.position.toLowerCase().includes(searchTerm.toLowerCase())
-    )
-    .sort((a, b) => a.order - b.order);
+  let filteredLeaders = $derived.by(() => {
+    let result = [...data.leaders];
+    if (searchTerm) {
+      result = result.filter(leader => 
+        leader.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        leader.position.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+    return result.sort((a, b) => a.order - b.order);
+  });
 </script>
 
 <svelte:head>
   <title>Manage Leaders - Liberty Running Club</title>
 </svelte:head>
 
-<div class="min-h-screen bg-gray-100 px-4 py-12 sm:px-6 lg:px-8">
-  <div class="mx-auto max-w-7xl">
-    <div class="overflow-hidden rounded-lg bg-white shadow-xl">
-      <div class="bg-primary-600 px-4 py-6 sm:px-6">
-        <h2 class="text-center text-3xl font-extrabold text-white">Manage Leaders</h2>
-      </div>
-      <div class="p-6 sm:p-8">
-        <div class="mb-6 flex justify-between items-center">
+<div class="rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+  <div class="border-b border-slate-200 bg-slate-50/50 px-6 py-4">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <h2 class="text-xl font-semibold text-slate-800">Leaders</h2>
+      
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+        <div class="relative">
           <input
             type="text"
-            name="search"
-            id="search"
             bind:value={searchTerm}
             placeholder="Search by name or position"
-            class="mt-1 block w-64 rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+            class="w-full rounded-lg border border-slate-200 bg-white px-4 py-2.5 pr-10 text-sm text-slate-700 placeholder-slate-400 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20 sm:w-64"
           />
-          <a
-            href="/admin/leaders/new"
-            class="inline-flex items-center rounded-md border border-transparent bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
-          >
-            Add New Leader
-          </a>
+          <svg class="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
         </div>
-        <div class="overflow-x-auto">
-          <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
-              <tr>
-                <th
-                  scope="col"
-                  class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                  >Name</th
-                >
-                <th
-                  scope="col"
-                  class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                  >Order</th
-                >
-                <th
-                  scope="col"
-                  class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                  >Position</th
-                >
-                <th
-                  scope="col"
-                  class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                  >Status</th
-                >
-                <th
-                  scope="col"
-                  class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                  >Actions</th
-                >
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-200 bg-white">
-              {#each filteredLeaders as leader (leader.id)}
-                <tr>
-                  <td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900"
-                    >{leader.name}</td
-                  >
-                  <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500"
-                    >{leader.order}</td
-                  >
-                  <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500"
-                    >{leader.position}</td
-                  >
-                  <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                    <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium {leader.active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
-                      {leader.active ? 'Active' : 'Inactive'}
-                    </span>
-                  </td>
-                  <td class="whitespace-nowrap px-6 py-4 text-sm font-medium">
-                    <a
-                      href="/admin/leaders/{leader.id}/edit"
-                      class="mr-4 text-primary-600 hover:text-primary-900">Edit</a
-                    >
-                    <form action="?/deleteLeader" method="POST" use:enhance class="inline">
-                      <input type="hidden" name="id" value={leader.id} />
-                      <button type="submit" class="text-red-600 hover:text-red-900">Delete</button>
-                    </form>
-                  </td>
-                </tr>
-              {/each}
-            </tbody>
-          </table>
-        </div>
+        
+        <a
+          href="/admin/leaders/new"
+          class="inline-flex items-center justify-center gap-2 rounded-lg bg-primary-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:bg-primary-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+        >
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+          </svg>
+          Add Leader
+        </a>
       </div>
     </div>
   </div>
+
+  {#if filteredLeaders.length === 0}
+    <div class="flex flex-col items-center justify-center py-16 text-center">
+      <svg class="h-12 w-12 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+      </svg>
+      <p class="mt-4 text-sm text-slate-500">No leaders found</p>
+    </div>
+  {:else}
+    <div class="overflow-x-auto">
+      <table class="w-full">
+        <thead>
+          <tr class="border-b border-slate-200 bg-slate-50/50">
+            <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Name</th>
+            <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Order</th>
+            <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Position</th>
+            <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Status</th>
+            <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100">
+          {#each filteredLeaders as leader (leader.id)}
+            <tr class="hover:bg-slate-50/50 transition-colors">
+              <td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-slate-700">{leader.name}</td>
+              <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-600">{leader.order}</td>
+              <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-600">{leader.position}</td>
+              <td class="whitespace-nowrap px-6 py-4">
+                <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium {leader.active ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'}">
+                  {leader.active ? 'Active' : 'Inactive'}
+                </span>
+              </td>
+              <td class="whitespace-nowrap px-6 py-4 text-sm">
+                <div class="flex items-center gap-3">
+                  <a href="/admin/leaders/{leader.id}/edit" class="text-primary-600 hover:text-primary-800 font-medium text-xs">Edit</a>
+                  <span class="text-slate-300">|</span>
+                  <form action="?/deleteLeader" method="POST" use:enhance class="inline">
+                    <input type="hidden" name="id" value={leader.id} />
+                    <button type="submit" class="text-red-600 hover:text-red-800 text-xs">Delete</button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          {/each}
+        </tbody>
+      </table>
+    </div>
+  {/if}
 </div>
