@@ -109,7 +109,8 @@ export const records = pgTable('records', {
   time: text('time').notNull(),
   year: integer('year'),
   gender: text('gender').notNull(),
-  type: text('type').notNull(), // 'track' or 'cross_country'
+  type: text('type').notNull(), // 'track', 'cross_country', 'field'
+  category: text('category').notNull().default('road'), // 'road', 'trail'
   link: text('link'),
   created_at: timestamp('created_at').defaultNow().notNull()
 });

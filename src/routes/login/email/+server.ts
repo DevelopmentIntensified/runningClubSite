@@ -60,11 +60,20 @@ export const POST = async (event: RequestEvent) => {
 
   const { success } = await sendEmail({
     to: email,
-    from: 'login@libertyrunningclub.com',
-    subject: 'Liberty Running Club Email Confirmation for ' + email,
-    html: `<h1>Here is the code to use for logging in: ${code}</h1>
-`
-// or if you would rather, here is a link for loggin in: <a href="${signInUrl.toString()}"> link </a>
+    from: 'Liberty Running Club <noreply@libertyrunningclub.com>',
+    subject: 'Your Liberty Running Club Login Code',
+    html: `<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+      <h2 style="color: #1a365d;">Liberty Running Club</h2>
+      <p>Dear Member,</p>
+      <p>You have requested to sign in to your Liberty Running Club account. Please use the following verification code:</p>
+      <div style="background: #f7f7f7; padding: 15px; text-align: center; font-size: 24px; font-weight: bold; letter-spacing: 4px; margin: 20px 0;">
+        ${code}
+      </div>
+      <p>This code will expire in 15 minutes for security purposes.</p>
+      <p>If you did not request this code, please disregard this email.</p>
+      <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
+      <p style="color: #666; font-size: 12px;">This is an automated message from Liberty Running Club. Please do not reply to this email.</p>
+    </div>`
   });
 
   if (success) {
