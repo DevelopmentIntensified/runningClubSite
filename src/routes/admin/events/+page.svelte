@@ -41,13 +41,7 @@
       <h2 class="text-xl font-semibold text-slate-800">Calendar View</h2>
     </div>
   </div>
-  <Calendar {currentDate} {events} />
-</div>
-
-<div class="rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
-  <div class="border-b border-slate-200 bg-slate-50/50 px-6 py-4">
-    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-      <h2 class="text-xl font-semibold text-slate-800">Events List</h2>
+  <Calendar {currentDate} {events} isAdmin />
       
       <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
         <div class="relative">

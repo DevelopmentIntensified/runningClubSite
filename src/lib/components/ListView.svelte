@@ -13,6 +13,7 @@
     description:string,
     id: string,
   }[];
+  export let isAdmin = false;
   export let removeEvent: (id: string) => void;
 
   $: year = $currentDate.year;
@@ -38,7 +39,11 @@
     </div>
   {/if}
   {#each filteredEvents as event}
-    <a href="/admin/events/{event.id}/edit" class="block">
+    {#if isAdmin}
+      <a href="/admin/events/{event.id}/edit" class="block">
+    {:else}
+      <a href="/schedule/event/{event.id}" class="block">
+    {/if}
       <div
         class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm "
       >

@@ -8,6 +8,7 @@
 
   export let currentDate: Writable<DateTime>;
   export let events: CalendarEvent[];
+  export let isAdmin = false;
 
   let view: 'month' | 'list' = 'list';
 </script>
@@ -35,8 +36,8 @@
     </div>
   </div>
   {#if view === 'month'}
-    <MonthView {currentDate} {events} />
+    <MonthView {currentDate} {events} {isAdmin} />
   {:else}
-    <ListView {currentDate} {events} />
+    <ListView {currentDate} {events} {isAdmin} />
   {/if}
 </div>

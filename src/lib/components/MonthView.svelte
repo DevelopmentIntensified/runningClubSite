@@ -6,8 +6,7 @@
 
   export let currentDate: Writable<DateTime>;
   export let events: Event[];
-  export let removeEvent: (id: string) => void;
-  
+export let isAdmin = false;
   type EventWithId = Event & { id: string };
 
   $: year = $currentDate.year;
@@ -55,7 +54,11 @@
       <div class="space-y-1">
         {#each dayEvents as event}
           {@const color = Object.keys(colors).filter((key) => event.type.includes(key))[0]}
-          <a href="/admin/events/{event.id}/edit" class="block">
+          {#if isAdmin}
+            <a href="/admin/events/{event.id}/edit" class="block">
+          {:else}
+            <a href="/schedule/event/{event.id}" class="block">
+          {/if}
             <div
               class="flex items-center justify-between rounded {colors[color] ||
                 'bg-blue-200'} p-1 text-xs sm:text-sm"
