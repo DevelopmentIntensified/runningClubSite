@@ -102,12 +102,6 @@ Use this one-time code to finish signing in. It expires in <strong>15 minutes</s
 <p style="margin:0 0 12px 0;font-size:14px;line-height:1.5;color:#52525b;">
 If you did not try to sign in, you can ignore this message. No account changes are made until the code is entered.
 </p>
-<p style="margin:0 0 20px 0;font-size:14px;line-height:1.5;color:#52525b;">
-You may also use this link on the same device (optional):
-</p>
-<p style="margin:0 0 24px 0;font-size:14px;word-break:break-all;">
-<a href="${signInUrl.toString()}" style="color:#1d4ed8;text-decoration:underline;">${signInUrl.toString()}</a>
-</p>
 <hr style="border:none;border-top:1px solid #e4e4e7;margin:0 0 16px 0;" />
 <p style="margin:0;font-size:12px;line-height:1.5;color:#71717a;">
 Liberty Running Club · Automated message · Please do not reply to this email.
