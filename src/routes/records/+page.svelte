@@ -92,6 +92,22 @@
         >
           Field
         </button>
+        <button
+          class="rounded-full px-4 py-2 {activeType === 'trail'
+            ? 'bg-secondary-600 text-white'
+            : 'bg-gray-200 text-gray-800'}"
+          on:click={() => setActiveType('trail')}
+        >
+          Trail
+        </button>
+        <button
+          class="rounded-full px-4 py-2 {activeType === 'road'
+            ? 'bg-secondary-600 text-white'
+            : 'bg-gray-200 text-gray-800'}"
+          on:click={() => setActiveType('road')}
+        >
+          Road
+        </button>
       </div>
 
       <div class="overflow-hidden rounded-lg bg-white shadow-lg">
@@ -165,6 +181,22 @@
           on:click={() => setActiveType('field')}
         >
           Field
+        </button>
+        <button
+          class="rounded-full px-4 py-2 {activeType === 'trail'
+            ? 'bg-secondary-600 text-white'
+            : 'bg-gray-200 text-gray-800'}"
+          on:click={() => setActiveType('trail')}
+        >
+          Trail
+        </button>
+        <button
+          class="rounded-full px-4 py-2 {activeType === 'road'
+            ? 'bg-secondary-600 text-white'
+            : 'bg-gray-200 text-gray-800'}"
+          on:click={() => setActiveType('road')}
+        >
+          Road
         </button>
       </div>
 

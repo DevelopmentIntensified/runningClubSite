@@ -2,179 +2,277 @@
   import { enhance } from '$app/forms';
   import type { PageData } from './$types';
 
-  export let data: PageData;
+  let { data }: { data: PageData } = $props();
 
-  let searchTerm = '';
+  let searchTerm = $state('');
 
-  $: trackRecords = data.records
-    .filter((record) => record.type === 'track')
-    .filter((record) => 
-      record.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      record.event.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      record.time.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      record.year.toString().includes(searchTerm)
-    )
+  let trackRecords = $derived.by(() => {
+    let result = data.records.filter(r => r.type === 'track');
+    if (searchTerm) {
+      result = result.filter(r => 
+        r.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        r.event.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        r.time.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        r.year.toString().includes(searchTerm)
+      );
+    }
+    return result;
+  });
 
-  $: crossCountryRecords = data.records
-    .filter((record) => record.type === 'cross_country')
-    .filter((record) => 
-      record.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      record.event.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      record.time.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      record.year.toString().includes(searchTerm)
-    )
+  let crossCountryRecords = $derived.by(() => {
+    let result = data.records.filter(r => r.type === 'cross_country');
+    if (searchTerm) {
+      result = result.filter(r => 
+        r.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        r.event.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        r.time.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        r.year.toString().includes(searchTerm)
+      );
+    }
+    return result;
+  });
+
+  let trailRecords = $derived.by(() => {
+    let result = data.records.filter(r => r.type === 'trail');
+    if (searchTerm) {
+      result = result.filter(r => 
+        r.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        r.event.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        r.time.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        r.year.toString().includes(searchTerm)
+      );
+    }
+    return result;
+  });
+
+  let roadRecords = $derived.by(() => {
+    let result = data.records.filter(r => r.type === 'road');
+    if (searchTerm) {
+      result = result.filter(r => 
+        r.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        r.event.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        r.time.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        r.year.toString().includes(searchTerm)
+      );
+    }
+    return result;
+  });
 </script>
 
 <svelte:head>
   <title>Manage Records - Liberty Running Club</title>
 </svelte:head>
 
-<div class="min-h-screen bg-gray-100 px-4 py-12 sm:px-6 lg:px-8">
-  <div class="mx-auto max-w-7xl">
-    <div class="overflow-hidden rounded-lg bg-white shadow-xl">
-      <div class="bg-primary-600 px-4 py-6 sm:px-6">
-        <h2 class="text-center text-3xl font-extrabold text-white">Manage Records</h2>
-      </div>
-      <div class="p-6 sm:p-8">
-        <div class="mb-6 flex justify-between items-center">
+<div class="rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+  <div class="border-b border-slate-200 bg-slate-50/50 px-6 py-4">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <h2 class="text-xl font-semibold text-slate-800">Records</h2>
+      
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+        <div class="relative">
           <input
             type="text"
-            name="search"
-            id="search"
             bind:value={searchTerm}
             placeholder="Search by name, event, time, or year"
-            class="mt-1 block w-96 rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+            class="w-full rounded-lg border border-slate-200 bg-white px-4 py-2.5 pr-10 text-sm text-slate-700 placeholder-slate-400 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20 sm:w-80"
           />
-          <a
-            href="/admin/records/new"
-            class="inline-flex items-center rounded-md border border-transparent bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
-          >
-            Add New Record
-          </a>
+          <svg class="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
         </div>
-
-        <h3 class="mb-4 text-2xl font-bold">Track Records</h3>
-        <div class="mb-8 overflow-x-auto">
-          <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
-              <tr>
-                <th
-                  scope="col"
-                  class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                  >Event</th
-                >
-                <th
-                  scope="col"
-                  class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                  >Name</th
-                >
-                <th
-                  scope="col"
-                  class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                  >Time</th
-                >
-                <th
-                  scope="col"
-                  class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                  >Year</th
-                >
-                <th
-                  scope="col"
-                  class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                  >Gender</th
-                >
-                <th
-                  scope="col"
-                  class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                  >Actions</th
-                >
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-200 bg-white">
-              {#each trackRecords as record (record.id)}
-                <tr>
-                  <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{record.event}</td>
-                  <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{record.name}</td>
-                  <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{record.time}</td>
-                  <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{record.year}</td>
-                  <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{record.gender}</td>
-                  <td class="whitespace-nowrap px-6 py-4 text-sm font-medium">
-                    <a
-                      href="/admin/records/{record.id}/edit"
-                      class="mr-4 text-primary-600 hover:text-primary-900">Edit</a
-                    >
-                    <form action="?/deleteRecord" method="POST" use:enhance class="inline">
-                      <input type="hidden" name="id" value={record.id} />
-                      <button type="submit" class="text-red-600 hover:text-red-900">Delete</button>
-                    </form>
-                  </td>
-                </tr>
-              {/each}
-            </tbody>
-          </table>
-        </div>
-
-        <h3 class="mb-4 text-2xl font-bold">Cross Country Records</h3>
-        <div class="overflow-x-auto">
-          <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
-              <tr>
-                <th
-                  scope="col"
-                  class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                  >Event</th
-                >
-                <th
-                  scope="col"
-                  class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                  >Name</th
-                >
-                <th
-                  scope="col"
-                  class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                  >Time</th
-                >
-                <th
-                  scope="col"
-                  class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                  >Year</th
-                >
-                <th
-                  scope="col"
-                  class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                  >Gender</th
-                >
-                <th
-                  scope="col"
-                  class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                  >Actions</th
-                >
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-200 bg-white">
-              {#each crossCountryRecords as record (record.id)}
-                <tr>
-                  <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{record.event}</td>
-                  <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{record.name}</td>
-                  <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{record.time}</td>
-                  <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{record.year}</td>
-                  <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{record.gender}</td>
-                  <td class="whitespace-nowrap px-6 py-4 text-sm font-medium">
-                    <a
-                      href="/admin/records/{record.id}/edit"
-                      class="mr-4 text-primary-600 hover:text-primary-900">Edit</a
-                    >
-                    <form action="?/deleteRecord" method="POST" use:enhance class="inline">
-                      <input type="hidden" name="id" value={record.id} />
-                      <button type="submit" class="text-red-600 hover:text-red-900">Delete</button>
-                    </form>
-                  </td>
-                </tr>
-              {/each}
-            </tbody>
-          </table>
-        </div>
+        
+        <a
+          href="/admin/records/new"
+          class="inline-flex items-center justify-center gap-2 rounded-lg bg-primary-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:bg-primary-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+        >
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+          </svg>
+          Add Record
+        </a>
       </div>
+    </div>
+  </div>
+
+  <div class="p-6">
+    <div class="mb-8">
+      <h3 class="text-lg font-semibold text-slate-800 mb-4">Track Records</h3>
+      {#if trackRecords.length === 0}
+        <div class="flex flex-col items-center justify-center py-8 text-center">
+          <p class="text-sm text-slate-500">No track records found</p>
+        </div>
+      {:else}
+        <div class="overflow-x-auto rounded-lg border border-slate-200">
+          <table class="w-full">
+            <thead>
+              <tr class="border-b border-slate-200 bg-slate-50/50">
+                <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Event</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Name</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Time</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Year</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Gender</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              {#each trackRecords as record (record.id)}
+                <tr class="hover:bg-slate-50/50 transition-colors">
+                  <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.event}</td>
+                  <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.name}</td>
+                  <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.time}</td>
+                  <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.year}</td>
+                  <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.gender}</td>
+                  <td class="whitespace-nowrap px-4 py-3 text-sm">
+                    <div class="flex items-center gap-2">
+                      <a href="/admin/records/{record.id}/edit" class="text-primary-600 hover:text-primary-800 font-medium text-xs">Edit</a>
+                      <span class="text-slate-300">|</span>
+                      <form action="?/deleteRecord" method="POST" use:enhance class="inline">
+                        <input type="hidden" name="id" value={record.id} />
+                        <button type="submit" class="text-red-600 hover:text-red-800 text-xs">Delete</button>
+                      </form>
+                    </div>
+                  </td>
+                </tr>
+              {/each}
+            </tbody>
+          </table>
+        </div>
+      {/if}
+    </div>
+
+    <div>
+      <h3 class="text-lg font-semibold text-slate-800 mb-4">Cross Country Records</h3>
+      {#if crossCountryRecords.length === 0}
+        <div class="flex flex-col items-center justify-center py-8 text-center">
+          <p class="text-sm text-slate-500">No cross country records found</p>
+        </div>
+      {:else}
+        <div class="overflow-x-auto rounded-lg border border-slate-200">
+          <table class="w-full">
+            <thead>
+              <tr class="border-b border-slate-200 bg-slate-50/50">
+                <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Event</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Name</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Time</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Year</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Gender</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              {#each crossCountryRecords as record (record.id)}
+                <tr class="hover:bg-slate-50/50 transition-colors">
+                  <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.event}</td>
+                  <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.name}</td>
+                  <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.time}</td>
+                  <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.year}</td>
+                  <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.gender}</td>
+                  <td class="whitespace-nowrap px-4 py-3 text-sm">
+                    <div class="flex items-center gap-2">
+                      <a href="/admin/records/{record.id}/edit" class="text-primary-600 hover:text-primary-800 font-medium text-xs">Edit</a>
+                      <span class="text-slate-300">|</span>
+                      <form action="?/deleteRecord" method="POST" use:enhance class="inline">
+                        <input type="hidden" name="id" value={record.id} />
+                        <button type="submit" class="text-red-600 hover:text-red-800 text-xs">Delete</button>
+                      </form>
+                    </div>
+                  </td>
+                </tr>
+              {/each}
+            </tbody>
+          </table>
+        </div>
+      {/if}
+    </div>
+
+    <div class="mb-8">
+      <h3 class="text-lg font-semibold text-slate-800 mb-4">Trail Records</h3>
+      {#if trailRecords.length === 0}
+        <div class="flex flex-col items-center justify-center py-8 text-center">
+          <p class="text-sm text-slate-500">No trail records found</p>
+        </div>
+      {:else}
+        <div class="overflow-x-auto rounded-lg border border-slate-200">
+          <table class="w-full">
+            <thead>
+              <tr class="border-b border-slate-200 bg-slate-50/50">
+                <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Event</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Name</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Time</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Year</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Gender</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              {#each trailRecords as record (record.id)}
+                <tr class="hover:bg-slate-50/50 transition-colors">
+                  <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.event}</td>
+                  <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.name}</td>
+                  <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.time}</td>
+                  <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.year}</td>
+                  <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.gender}</td>
+                  <td class="whitespace-nowrap px-4 py-3 text-sm">
+                    <div class="flex items-center gap-2">
+                      <a href="/admin/records/{record.id}/edit" class="text-primary-600 hover:text-primary-800 font-medium text-xs">Edit</a>
+                      <span class="text-slate-300">|</span>
+                      <form action="?/deleteRecord" method="POST" use:enhance class="inline">
+                        <input type="hidden" name="id" value={record.id} />
+                        <button type="submit" class="text-red-600 hover:text-red-800 text-xs">Delete</button>
+                      </form>
+                    </div>
+                  </td>
+                </tr>
+              {/each}
+            </tbody>
+          </table>
+        </div>
+      {/if}
+    </div>
+
+    <div>
+      <h3 class="text-lg font-semibold text-slate-800 mb-4">Road Records</h3>
+      {#if roadRecords.length === 0}
+        <div class="flex flex-col items-center justify-center py-8 text-center">
+          <p class="text-sm text-slate-500">No road records found</p>
+        </div>
+      {:else}
+        <div class="overflow-x-auto rounded-lg border border-slate-200">
+          <table class="w-full">
+            <thead>
+              <tr class="border-b border-slate-200 bg-slate-50/50">
+                <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Event</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Name</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Time</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Year</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Gender</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              {#each roadRecords as record (record.id)}
+                <tr class="hover:bg-slate-50/50 transition-colors">
+                  <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.event}</td>
+                  <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.name}</td>
+                  <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.time}</td>
+                  <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.year}</td>
+                  <td class="whitespace-nowrap px-4 py-3 text-sm text-slate-600">{record.gender}</td>
+                  <td class="whitespace-nowrap px-4 py-3 text-sm">
+                    <div class="flex items-center gap-2">
+                      <a href="/admin/records/{record.id}/edit" class="text-primary-600 hover:text-primary-800 font-medium text-xs">Edit</a>
+                      <span class="text-slate-300">|</span>
+                      <form action="?/deleteRecord" method="POST" use:enhance class="inline">
+                        <input type="hidden" name="id" value={record.id} />
+                        <button type="submit" class="text-red-600 hover:text-red-800 text-xs">Delete</button>
+                      </form>
+                    </div>
+                  </td>
+                </tr>
+              {/each}
+            </tbody>
+          </table>
+        </div>
+      {/if}
     </div>
   </div>
 </div>

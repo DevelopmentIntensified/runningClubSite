@@ -7,6 +7,8 @@
   export let currentDate: Writable<DateTime>;
   export let events: Event[];
   export let removeEvent: (id: string) => void;
+  
+  type EventWithId = Event & { id: string };
 
   $: year = $currentDate.year;
   $: month = $currentDate.month;
@@ -53,7 +55,7 @@
       <div class="space-y-1">
         {#each dayEvents as event}
           {@const color = Object.keys(colors).filter((key) => event.type.includes(key))[0]}
-          <a href="/schedule/event/{event.id}" class="block">
+          <a href="/admin/events/{event.id}/edit" class="block">
             <div
               class="flex items-center justify-between rounded {colors[color] ||
                 'bg-blue-200'} p-1 text-xs sm:text-sm"
