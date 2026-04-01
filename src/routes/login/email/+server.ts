@@ -119,7 +119,7 @@ Liberty Running Club · Automated message · Please do not reply to this email.
 
   const { success } = await sendEmail({
     to: email,
-    from: `Liberty Running Club <${CLUBEMAIL}>`,
+    from: CLUBEMAIL,
     subject: 'Your Liberty Running Club verification code',
     text: plainText,
     html: htmlBody
