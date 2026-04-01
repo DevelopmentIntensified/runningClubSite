@@ -11,6 +11,7 @@
     location: string,
     type: string,
     description:string,
+    id: string,
   }[];
   export let removeEvent: (id: string) => void;
 
@@ -37,7 +38,7 @@
     </div>
   {/if}
   {#each filteredEvents as event}
-    <a href="/schedule/event/{event.id}" class="block">
+    <a href="/admin/events/{event.id}/edit" class="block">
       <div
         class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm "
       >

@@ -87,6 +87,8 @@
             >
               <option value="track">Track</option>
               <option value="cross_country">Cross Country</option>
+              <option value="trail">Trail</option>
+              <option value="road">Road</option>
             </select>
           </div>
           {#if error}
