@@ -28,6 +28,7 @@ export const load: PageServerLoad = async () => {
     isAdmin: true
   };
 };
+};
 
 export const actions: Actions = {
   deleteEvent: async ({ request }) => {
