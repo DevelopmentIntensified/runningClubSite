@@ -43,8 +43,6 @@
       </div>
     </div>
   </div>
-    </div>
-  </div>
 
   <div class="container mx-auto px-4 py-8">
     <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
