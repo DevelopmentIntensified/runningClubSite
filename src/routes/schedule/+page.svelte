@@ -24,19 +24,12 @@
 </svelte:head>
 
 <div class="container mx-auto px-4 py-12">
+  <div class="rounded-2xl bg-primary-700 p-8 text-center text-white mb-8">
+    <h1 class="text-4xl font-bold sm:text-5xl">Schedule</h1>
+    <p class="mt-2 text-lg text-primary-100">Weekly and season events now in calendar view.</p>
+  </div>
+
   <div class="overflow-hidden rounded-lg bg-white shadow-xl">
-    <div class="relative h-64 sm:h-80 md:h-96">
-      <img
-        src={data.image.imageUrl}
-        alt={data.image.alt}
-        class="absolute inset-0 h-full w-full object-cover"
-      />
-      <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
-        <h2 class="px-4 text-center text-3xl font-bold text-white sm:text-4xl md:text-5xl">
-          Schedule
-        </h2>
-      </div>
-    </div>
     <Calendar {currentDate} {events} />
     <!-- <div class="mt-8"> -->
     <!-- 	<h2 class="mb-4 text-2xl font-semibold">Upcoming Events</h2> -->

@@ -14,21 +14,16 @@
 </svelte:head>
 
 <div class="container mx-auto px-4 py-12">
-  <h1 class="mb-8 text-center text-4xl font-bold">About Liberty Running Club</h1>
+  <div class="rounded-2xl bg-primary-700 p-8 text-center text-white mb-12">
+    <h1 class="text-4xl font-bold sm:text-5xl">About Liberty Running Club</h1>
+    <p class="mt-2 text-lg text-primary-100">Community, competition, and Christ through running.</p>
+  </div>
 
   <div class="mb-12 grid gap-12 md:grid-cols-2">
     <div>
-      <div class="relative h-64 sm:h-80 md:h-96">
-        <img
-          src={data.image.imageUrl}
-          alt={data.image.alt}
-          class="absolute inset-0 h-full w-full object-cover"
-        />
-        <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <h2 class="px-4 text-center text-3xl font-bold text-white sm:text-4xl md:text-5xl">
-            What We Do
-          </h2>
-        </div>
+      <div class="rounded-2xl bg-slate-50 p-8"> 
+        <h2 class="text-3xl font-bold text-slate-900">What We Do</h2>
+        <p class="mt-4 text-slate-700">We bring runners together with a solid training and mission-first culture.</p>
       </div>
     </div>
     <div>
