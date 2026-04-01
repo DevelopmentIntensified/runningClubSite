@@ -14,9 +14,20 @@
 </svelte:head>
 
 <div class="container mx-auto px-4 py-12">
-  <div class="rounded-2xl bg-primary-700 p-8 text-center text-white mb-12">
-    <h1 class="text-4xl font-bold sm:text-5xl">About Liberty Running Club</h1>
-    <p class="mt-2 text-lg text-primary-100">Community, competition, and Christ through running.</p>
+  <div class="overflow-hidden rounded-2xl mb-10">
+    <div class="relative h-64 sm:h-80 md:h-96">
+      <img
+        src={data.image.imageUrl}
+        alt={data.image.alt}
+        class="absolute inset-0 h-full w-full object-cover"
+      />
+      <div class="absolute inset-0 flex items-center justify-center bg-black/50">
+        <div class="text-center px-4">
+          <h1 class="text-4xl font-bold text-white sm:text-5xl">About Liberty Running Club</h1>
+          <p class="mt-2 text-base text-primary-100 sm:text-lg">Community, competition, and Christ through running.</p>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="mb-12 grid gap-12 md:grid-cols-2">

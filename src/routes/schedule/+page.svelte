@@ -24,9 +24,18 @@
 </svelte:head>
 
 <div class="container mx-auto px-4 py-12">
-  <div class="rounded-2xl bg-primary-700 p-8 text-center text-white mb-8">
-    <h1 class="text-4xl font-bold sm:text-5xl">Schedule</h1>
-    <p class="mt-2 text-lg text-primary-100">Weekly and season events now in calendar view.</p>
+  <div class="relative h-64 sm:h-80 md:h-96 mb-8 overflow-hidden rounded-2xl">
+    <img
+      src={data.image.imageUrl}
+      alt={data.image.alt}
+      class="absolute inset-0 h-full w-full object-cover"
+    />
+    <div class="absolute inset-0 flex items-center justify-center bg-black/50">
+      <div class="text-center px-4">
+        <h1 class="text-4xl font-bold text-white sm:text-5xl">Schedule</h1>
+        <p class="mt-2 text-base text-primary-100 sm:text-lg">Weekly and season events now in calendar view.</p>
+      </div>
+    </div>
   </div>
 
   <div class="overflow-hidden rounded-lg bg-white shadow-xl">

@@ -18,9 +18,18 @@
 
 <div class="container mx-auto px-4 py-12">
   <div class="overflow-hidden rounded-lg bg-white shadow-xl pb-5">
-  <div class="rounded-t-lg bg-primary-700 p-8 text-center text-white">
-    <h2 class="text-3xl font-bold sm:text-4xl md:text-5xl">Contact Us</h2>
-    <p class="mt-2 text-primary-100">Use the form below to send us a message.</p>
+  <div class="relative h-64 sm:h-80 md:h-96 overflow-hidden">
+    <img
+      src={trainingImg}
+      alt="Runners training"
+      class="absolute inset-0 h-full w-full object-cover"
+    />
+    <div class="absolute inset-0 flex items-center justify-center bg-black/50">
+      <div class="text-center px-4">
+        <h2 class="text-3xl font-bold text-white sm:text-4xl md:text-5xl">Contact Us</h2>
+        <p class="mt-2 text-primary-100">Use the form below to send us a message.</p>
+      </div>
+    </div>
   </div>
 
   {#if form?.success}
