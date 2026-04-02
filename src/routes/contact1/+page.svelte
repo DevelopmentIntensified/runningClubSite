@@ -19,7 +19,7 @@
   <title>Contact Us - Liberty Running Club</title>
 </svelte:head>
 
-<div class="min-h-screen bg-gray-50">
+<div class="container mx-auto px-4 py-12">
     <div class="relative mb-8 h-48 overflow-hidden rounded-2xl sm:h-64 md:h-80">
 
     <img
