@@ -3,10 +3,18 @@
   import { fade } from 'svelte/transition';
   import type { LayoutData } from './$types';
   import '../app.css';
+  import { onMount } from 'svelte';
 
   export let data: LayoutData;
   console.warn('DEBUGPRINT[3]: +layout.svelte:6: data=', data);
   $: pathname = data.pathname;
+
+  onMount(async () => {
+    const { injectSpeedInsights } = await import('@vercel/speed-insights/sveltekit');
+    const { injectAnalytics } = await import('@vercel/analytics/sveltekit');
+    injectSpeedInsights();
+    injectAnalytics();
+  });
 </script>
 
 <div class="flex min-h-screen flex-col">
