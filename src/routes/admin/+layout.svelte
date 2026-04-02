@@ -71,7 +71,7 @@
               </svg>
             {:else if link.icon === 'trophy'}
               <svg class="h-5 w-5 text-slate-600 group-hover:text-primary-600 {isActive(link.href) ? 'text-primary-600' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
               </svg>
             {:else if link.icon === 'image'}
               <svg class="h-5 w-5 text-slate-600 group-hover:text-primary-600 {isActive(link.href) ? 'text-primary-600' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24">

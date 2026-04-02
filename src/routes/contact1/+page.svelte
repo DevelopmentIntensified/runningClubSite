@@ -20,7 +20,7 @@
 </svelte:head>
 
 <div class="min-h-screen bg-gray-50">
-  <div class="relative h-48 sm:h-64 md:h-80">
+  <div class="relative mb-8 h-48 overflow-hidden rounded-2xl sm:h-64 md:h-80">
     <img
       src={trainingImg}
       alt="Runners training"
@@ -29,6 +29,7 @@
     <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-black/40 to-black/60">
       <div class="px-4 text-center">
         <h2 class="text-3xl font-bold text-white sm:text-4xl md:text-5xl">Contact Us</h2>
+        <p class="mt-2 text-sm text-white/90 sm:text-base">We'd love to hear from you</p>
       </div>
     </div>
   </div>
