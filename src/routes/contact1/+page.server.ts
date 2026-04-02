@@ -10,19 +10,34 @@ const resend = new Resend(RESENDAPIKEY);
 export const actions = {
   default: async ({ request }) => {
     const formData = await request.formData();
-    console.log(Object.keys(request));
-    console.log(formData.get('email'));
+    const honeypot = formData.get('honeypot');
+    const name = formData.get('name') as string;
+    const email = formData.get('email') as string;
+    const message = formData.get('message') as string;
+
+    if (honeypot && honeypot !== '') {
+      return { success: true };
+    }
+
+    if (!name || !email || !message || name.length > 100 || message.length > 2000) {
+      return { success: false };
+    }
+
+    if (/[a-z0-9]+@[a-z0-9]+\.[a-z0-9]+/i.test(message) && /http|www\./i.test(message)) {
+      return { success: false };
+    }
+
     const res = await resend.emails.send({
-      from: `${formData.get('name')} via LRC Contact form <lrc@resend.dev>`,
+      from: 'Liberty Running Club Contact <libertyrunningclub@libertyrunningclub.com>',
       to: [CLUBEMAIL],
-      subject: 'LRC Contact Form from ' + formData.get('name'),
+      subject: 'LRC Contact Form from ' + name,
       html:
-        '<p>Name: ' +
-        formData.get('name') +
-        '</p><p>Email: ' +
-        formData.get('email') +
-        '</p><p>Message: ' +
-        formData.get('message') +
+        '<p><strong>Name:</strong> ' +
+        name +
+        '</p><p><strong>Email:</strong> ' +
+        email +
+        '</p><p><strong>Message:</strong></p><p>' +
+        message.replace(/\n/g, '<br>') +
         '</p>'
     });
     console.log(res.error);
