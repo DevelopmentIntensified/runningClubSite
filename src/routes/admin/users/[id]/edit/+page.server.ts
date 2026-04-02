@@ -13,23 +13,22 @@ export const load: PageServerLoad = async ({ params }) => {
 export const actions: Actions = {
   updateUser: async ({ request, params }) => {
     const formData = await request.formData();
-    const email = formData.get('email') as string | null;
-    const isAdmin = formData.get('isAdmin') as string | null;
-    const bio = formData.get('bio') as string | null;
-    const imageUrl = formData.get('imageUrl') as string | null;
+    const email = formData.get('email');
+    const isAdmin = formData.get('isAdmin');
+    const bio = formData.get('bio');
+    const imageUrl = formData.get('imageUrl');
 
-    const updateData: {
-      email?: string;
-      isAdmin?: boolean;
-    } = {};
+    if (!email || !isAdmin) {
+      return fail(400, { message: 'Name and position are required' });
+    }
 
-    if (email) updateData.email = email;
-    if (isAdmin) updateData.isAdmin = isAdmin === 'true';
-
-    const updatedUser = await updateUser(parseInt(params.id), updateData);
+    const updatedUser = await updateUser(parseInt(params.id), {
+      email: email.toString(),
+      isAdmin: isAdmin === 'true'
+    });
 
     if (updatedUser) {
-      throw redirect(302, '/admin/users');
+      throw redirect(302, '/admin/Users');
     } else {
       return fail(500, { message: 'Failed to update User' });
     }

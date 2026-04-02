@@ -33,6 +33,7 @@
               id="title"
               name="title"
               value={event.title}
+              required
               class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
             />
           </div>
@@ -45,6 +46,7 @@
               id="start"
               name="start"
               value={formatDateForInput(event.start)}
+              required
               class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
             />
           </div>
@@ -57,6 +59,7 @@
               id="end"
               name="end"
               value={formatDateForInput(event.end)}
+              required
               class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
             />
           </div>
@@ -67,16 +70,7 @@
               id="location"
               name="location"
               value={event.location}
-              class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
-            />
-          </div>
-          <div>
-            <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
-            <input
-              type="text"
-              id="description"
-              name="description"
-              value={event.description || ''}
+              required
               class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
             />
           </div>

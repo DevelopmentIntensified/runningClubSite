@@ -14,35 +14,27 @@ export const load: PageServerLoad = async ({ params }) => {
 export const actions: Actions = {
   updateEvent: async ({ request, params }) => {
     const formData = await request.formData();
-    const title = formData.get('title') as string | null;
-    const start = formData.get('start') as string | null;
-    const end = formData.get('end') as string | null;
-    const location = formData.get('location') as string | null;
-    const type = formData.get('type') as string | null;
+    const title = formData.get('title');
+    const start = formData.get('start');
+    const end = formData.get('end');
+    const location = formData.get('location');
+    const type = formData.get('type');
     const offset = formData.get('offset');
 
-    const updateData: {
-      title?: string;
-      start?: string;
-      end?: string;
-      location?: string;
-      type?: string;
-      description?: string;
-    } = {};
+    if (!title || !start || !end || !location || !type) {
+      return fail(400, { message: 'All fields are required' });
+    }
 
-    if (title) updateData.title = title;
-    if (location) updateData.location = location;
-    if (type) updateData.type = type;
-    if (formData.get('description')) updateData.description = formData.get('description') as string;
+    let start2 = DateTime.fromISO(start.replace(" ", "T")).setZone('America/New_York')
+    let end2 = DateTime.fromISO(end.replace(" ", "T")).setZone('America/New_York')
     
-    if (start) {
-      updateData.start = DateTime.fromISO(start.replace(" ", "T")).setZone('America/New_York').toString();
-    }
-    if (end) {
-      updateData.end = DateTime.fromISO(end.replace(" ", "T")).setZone('America/New_York').toString();
-    }
-
-    const updatedEvent = await updateEvent(parseInt(params.id), updateData);
+    const updatedEvent = await updateEvent(parseInt(params.id), {
+      title: title.toString(),
+      start: start2.toString(),
+      end: end2.toString(),
+      location: location.toString(),
+      type: type.toString()
+    });
 
     if (updatedEvent) {
       throw redirect(302, '/admin/events');

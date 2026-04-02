@@ -23,6 +23,7 @@
               type="text"
               name="title"
               id="title"
+              required
               value={data.image.title}
               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
             />
@@ -65,6 +66,7 @@
               type="number"
               name="order"
               id="order"
+              required
               min="1"
               value={data.image.order}
               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"

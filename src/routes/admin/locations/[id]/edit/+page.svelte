@@ -27,6 +27,7 @@
               id="name"
               name="name"
               value={location.name}
+              required
               class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
             />
           </div>
@@ -47,8 +48,10 @@
               id="description"
               name="description"
               rows="3"
+              required
               class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
-            >{location.description}</textarea>
+              >{location.description}</textarea
+            >
           </div>
           <div>
             <label for="link" class="block text-sm font-medium text-gray-700">Map URL</label>
@@ -57,6 +60,7 @@
               id="link"
               name="link"
               value={location.link}
+              required
               class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
             />
           </div>

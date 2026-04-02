@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
   import teamPhoto from '$lib/assets/images/social/shraptop.jpeg';
   import FacebookIcon from '$lib/components/FacebookIcon.svelte';
   import InstagramIcon from '$lib/components/InstagramIcon.svelte';
@@ -8,11 +7,6 @@
   import type { PageData } from './$types';
   export let data: PageData;
   const leaders = data.leaders;
-
-  onMount(() => {
-    console.log('%c🐢 Slow and steady? Or just steady?', 'font-size: 20px; color: #b72025;');
-    console.log('%cDid you know: The tortoise beat the hare!', 'font-style: italic;');
-  });
 </script>
 
 <svelte:head>
@@ -20,13 +14,36 @@
 </svelte:head>
 
 <div class="container mx-auto px-4 py-8">
-  <div class="mb-12 grid gap-8 md:grid-cols-2">
-    <div class="relative overflow-hidden rounded-2xl">
+  <div class="mb-8 overflow-hidden rounded-2xl">
+    <div class="relative h-48 sm:h-64 md:h-80">
       <img
         src={data.image.imageUrl}
         alt={data.image.alt}
-        class="h-full w-full object-contain"
+        class="absolute inset-0 h-full w-full object-cover"
       />
+      <div
+        class="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-black/40 to-black/60"
+      >
+        <div class="px-4 text-center">
+          <h1 class="text-3xl font-bold text-white sm:text-4xl md:text-5xl">
+            About Liberty Running Club
+          </h1>
+          <p class="mt-2 text-sm text-white/90 sm:text-base">
+            Community, competition, and Christ through running.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-12 grid gap-12 md:grid-cols-2">
+    <div>
+      <div class="rounded-2xl bg-slate-50 p-8">
+        <h2 class="text-3xl font-bold text-slate-900">What We Do</h2>
+        <p class="mt-4 text-slate-700">
+          We bring runners together with a solid training and mission-first culture.
+        </p>
+      </div>
     </div>
     <div>
       <h2 class="mb-4 text-2xl font-semibold">Our Mission</h2>
@@ -35,15 +52,17 @@
         God through their passion for running. We believe that every stride we take is an
         opportunity to honor our Creator and inspire others.
       </p>
+      <h2 class="mb-4 text-2xl font-semibold">What We Do</h2>
       <ul class="mb-4 list-inside list-disc">
         <li>Weekly group runs for all levels</li>
         <li>Social Events</li>
         <li>Participation in local and regional races through NIRCA</li>
+        <!-- <li>Community outreach through running-related service projects</li> -->
       </ul>
       <h2 class="mb-4 text-2xl font-semibold">Competition</h2>
       <p class="mb-4">
         We compete in several local races including several comunity 5ks and trail races along with
-        a few NCAA meets. Our main competitions are the <a class="text-primary-700" href="#nirca"
+        a few NCAA meets. Our main competitions are the <a class="text-blue-500" href="#nirca"
           >NIRCA</a
         > races. Please see that section for more details
       </p>
@@ -52,48 +71,56 @@
         Whether you're a seasoned runner or just starting out, we welcome you to join our community.
         Together, we can encourage one another, improve our physical health, and grow in our faith.
       </p>
+
+      <h2 class="mb-4 text-2xl font-semibold" id="nirca">What is NIRCA?</h2>
+      <p class="mb-4">
+        <a class="text-blue-500" href="https://clubrunning.org/">
+          The National Intercollegiate Running Club Association (NIRCA)</a
+        >
+        connects running clubs nationwide through friendly competitions. NIRCA hosts a full cross-country
+        season, a Cross Country Championship Series, the Road and Track Nationals, and all-club conferences.
+        Athletes may participate in as many or as few meets as they wish. Race fees are paid on race
+        day and refunded at the end of the season. If you wish to participate in NIRCA and have not already
+        been onboarded, please fill out
+        <a class="text-blue-500" href="https://forms.gle/39mTeUgKqwdDUCDW9">this form</a>
+      </p>
+
+      <h2 class="mb-4 text-2xl font-semibold" id="nirca">Our Socials</h2>
+      <div class="flex space-x-4">
+        <a
+          href="https://instagram.com/libertyrunningclub"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-gray-800 transition duration-300 hover:text-primary-600"
+        >
+          <InstagramIcon class="h-16 w-16" />
+        </a>
+        <a
+          href="https://m.facebook.com/profile.php?id=61557970186364&name=xhp_nt__fb__action__open_user"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-gray-800 transition duration-300 hover:text-primary-600"
+        >
+          <FacebookIcon class="h-16 w-16" />
+        </a>
+        <a
+          href="https://www.linkedin.com/company/liberty-running-club"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-gray-800 transition duration-300 hover:text-primary-600"
+        >
+          <LinkedInIcon class="h-16 w-16" />
+        </a>
+        <!-- <a -->
+        <!-- 	href="https://groupme.com/join_group/12345678/abcdefgh" -->
+        <!-- 	target="_blank" -->
+        <!-- 	rel="noopener noreferrer" -->
+        <!-- 	class="text-gray-800 transition duration-300 hover:text-primary-600" -->
+        <!-- > -->
+        <!-- 	<GroupmeIcon class="h-6 w-6" /> -->
+        <!-- </a> -->
+      </div>
     </div>
-  </div>
-
-  <h2 class="mb-4 text-2xl font-semibold" id="nirca">What is NIRCA?</h2>
-  <p class="mb-8 max-w-2xl">
-    <a class="text-primary-700" href="https://clubrunning.org/">
-      The National Intercollegiate Running Club Association (NIRCA)</a
-    >
-    connects running clubs nationwide through friendly competitions. NIRCA hosts a full cross-country
-    season, a Cross Country Championship Series, the Road and Track Nationals, and all-club conferences.
-    Athletes may participate in as many or as few meets as they wish. Race fees are paid on race
-    day and refunded at the end of the season. If you wish to participate in NIRCA and have not already
-    been onboarded, please fill out
-    <a class="text-primary-700" href="https://forms.gle/39mTeUgKqwdDUCDW9">this form</a>
-  </p>
-
-  <h2 class="mb-4 text-2xl font-semibold" id="nirca">Our Socials</h2>
-  <div class="mb-12 flex space-x-4">
-    <a
-      href="https://instagram.com/libertyrunningclub"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="text-gray-800 transition duration-300 hover:text-primary-600"
-    >
-      <InstagramIcon class="h-16 w-16" />
-    </a>
-    <a
-      href="https://m.facebook.com/profile.php?id=61557970186364&name=xhp_nt__fb__action__open_user"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="text-gray-800 transition duration-300 hover:text-primary-600"
-    >
-      <FacebookIcon class="h-16 w-16" />
-    </a>
-    <a
-      href="https://www.linkedin.com/company/liberty-running-club"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="text-gray-800 transition duration-300 hover:text-primary-600"
-    >
-      <LinkedInIcon class="h-16 w-16" />
-    </a>
   </div>
 
   <h2 class="mb-6 text-center text-3xl font-semibold">Our Leadership Team</h2>

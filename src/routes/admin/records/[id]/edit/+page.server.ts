@@ -13,33 +13,29 @@ export const load: PageServerLoad = async ({ params }) => {
 export const actions: Actions = {
   updateRecord: async ({ request, params }) => {
     const formData = await request.formData();
-    const event = formData.get('event') as string | null;
-    const name = formData.get('name') as string | null;
-    const time = formData.get('time') as string | null;
-    const yearStr = formData.get('year') as string | null;
-    const gender = formData.get('gender') as string | null;
-    const type = formData.get('type') as string | null;
-    const link = formData.get('link') as string | null;
+    const event = formData.get('event');
+    const name = formData.get('name');
+    const time = formData.get('time');
+    const yearStr = formData.get('year') as string;
+    const gender = formData.get('gender');
+    const type = formData.get('type');
+    const link = formData.get('link') as string;
 
-    const updateData: {
-      event?: string;
-      name?: string;
-      time?: string;
-      year?: number | null;
-      gender?: string;
-      type?: string;
-      link?: string;
-    } = {};
+    if (!event || !name || !time || !gender || !type) {
+      return fail(400, { message: 'All fields are required' });
+    }
 
-    if (event) updateData.event = event;
-    if (name) updateData.name = name;
-    if (time) updateData.time = time;
-    if (yearStr) updateData.year = parseInt(yearStr);
-    if (gender) updateData.gender = gender;
-    if (type) updateData.type = type;
-    if (link) updateData.link = link;
+    const year = yearStr ? parseInt(yearStr) : null;
 
-    const updatedRecord = await updateRecord(parseInt(params.id), updateData);
+    const updatedRecord = await updateRecord(parseInt(params.id), {
+      event: event.toString(),
+      name: name.toString(),
+      time: time.toString(),
+      year,
+      gender: gender.toString(),
+      type: type.toString(),
+      link
+    });
 
     if (updatedRecord) {
       throw redirect(302, '/admin/records');
