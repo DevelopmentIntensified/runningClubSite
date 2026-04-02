@@ -77,7 +77,7 @@
               <td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-slate-700">{location.name}</td>
               <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-600">{location.order}</td>
               <td class="px-6 py-4 text-sm text-slate-600 max-w-xs">
-                <div class="truncate">{@html location.description}</div>
+                <div class="truncate">{location.description}</div>
               </td>
               <td class="whitespace-nowrap px-6 py-4 text-sm">
                 <div class="flex items-center gap-3">
