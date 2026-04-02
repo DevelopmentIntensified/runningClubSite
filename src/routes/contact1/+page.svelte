@@ -20,7 +20,8 @@
 </svelte:head>
 
 <div class="min-h-screen bg-gray-50">
-  <div class="relative h-48 sm:h-64 md:h-80">
+    <div class="relative mb-8 h-48 overflow-hidden rounded-2xl sm:h-64 md:h-80">
+
     <img
       src={trainingImg}
       alt="Runners training"
