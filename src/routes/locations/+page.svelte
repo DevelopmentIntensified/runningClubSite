@@ -80,7 +80,11 @@
                 {location.name}
               </h3>
               <p class="mb-4 flex-1 text-gray-600">
-                {location.description || 'No description available.'}
+                {#if location.description}
+                  {@html location.description}
+                {:else}
+                  No description available.
+                {/if}
               </p>
               <div class="mt-auto flex gap-3">
                 <button

@@ -1,11 +1,13 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
   import type { PageData } from './$types';
+  import RichTextEditor from '$lib/components/RichTextEditor.svelte';
 
   export let data: PageData;
 
   let { location } = data;
   let error = '';
+  let description = $state(location.description || '');
 </script>
 
 <svelte:head>
@@ -44,14 +46,10 @@
             <label for="description" class="block text-sm font-medium text-gray-700"
               >Description</label
             >
-            <textarea
-              id="description"
-              name="description"
-              rows="3"
-              required
-              class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
-              >{location.description}</textarea
-            >
+            <div class="mt-1">
+              <RichTextEditor bind:value={description} />
+            </div>
+            <input type="hidden" name="description" value={description} />
           </div>
           <div>
             <label for="link" class="block text-sm font-medium text-gray-700">Map URL</label>
