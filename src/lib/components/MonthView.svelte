@@ -79,7 +79,7 @@
       )}
       {@const dayEvents = events.filter((event) => formatDate(event.date) === date)}
       <div
-        class="min-h-[5.5rem] border-t border-transparent bg-white p-1.5 transition-colors hover:bg-slate-50/90 sm:min-h-[6.5rem] sm:p-2"
+        class="group min-h-[5.5rem] border-t border-transparent bg-white p-1.5 transition-colors hover:bg-slate-50/90 sm:min-h-[6.5rem] sm:p-2"
       >
         <div class="mb-1 flex items-center justify-between">
           <span class="text-xs font-semibold text-slate-500 sm:text-sm">{day}</span>
