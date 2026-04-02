@@ -19,7 +19,7 @@
       <img
         src={data.image.imageUrl}
         alt={data.image.alt}
-        class="absolute inset-0 h-full w-full object-cover"
+        class="absolute inset-0 h-full w-full object-cover object-center"
       />
       <div
         class="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-black/40 to-black/60"
@@ -52,7 +52,6 @@
         God through their passion for running. We believe that every stride we take is an
         opportunity to honor our Creator and inspire others.
       </p>
-      <h2 class="mb-4 text-2xl font-semibold">What We Do</h2>
       <ul class="mb-4 list-inside list-disc">
         <li>Weekly group runs for all levels</li>
         <li>Social Events</li>
