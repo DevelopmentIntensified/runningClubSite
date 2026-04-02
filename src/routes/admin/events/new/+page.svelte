@@ -1,12 +1,11 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
   import { onMount } from 'svelte';
-  import { page } from '$app/stores';
 
   let error = '';
 
-  let startDate = '';
-  let endDate = '';
+  let startDate = $state('');
+  let endDate = $state('');
 
   onMount(() => {
     const params = new URLSearchParams(window.location.search);
