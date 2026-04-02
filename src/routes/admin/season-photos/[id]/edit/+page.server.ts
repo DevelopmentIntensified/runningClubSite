@@ -15,22 +15,20 @@ export const load: PageServerLoad = async ({ params }) => {
 export const actions: Actions = {
   updateLink: async ({ request, params }) => {
     const formData = await request.formData();
-    const title = formData.get('title') as string;
-    const link = formData.get('link') as string;
-    const season = formData.get('season') as string;
+    const title = formData.get('title') as string | null;
+    const link = formData.get('link') as string | null;
+    const season = formData.get('season') as string | null;
 
-    if (!title || !link || !season) {
-      return fail(400, { message: 'Title, link, and season are required' });
-    }
+    const updateData: { title?: string; link?: string; season?: string } = {};
+
+    if (title) updateData.title = title;
+    if (link) updateData.link = link;
+    if (season) updateData.season = season;
 
     try {
       await db
         .update(seasonImageLinks)
-        .set({
-          title,
-          link,
-          season
-        })
+        .set(updateData)
         .where(eq(seasonImageLinks.id, parseInt(params.id)));
     } catch (error) {
       return fail(500, { message: 'Failed to update link' });

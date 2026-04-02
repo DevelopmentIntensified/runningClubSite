@@ -44,7 +44,6 @@
         <select
           id="locationName"
           name="locationName"
-          required
           value={data.image.locationName}
           class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
         >
@@ -62,7 +61,6 @@
           type="text"
           id="alt"
           name="alt"
-          required
           value={data.image.alt}
           class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
         />
