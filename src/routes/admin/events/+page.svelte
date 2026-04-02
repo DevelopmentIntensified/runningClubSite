@@ -43,7 +43,9 @@
   <div class="mb-8 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
     <div class="border-b border-slate-200 bg-slate-50/50 px-6 py-4">
       <h2 class="text-xl font-semibold text-slate-800">Calendar</h2>
-      <p class="mt-1 text-sm text-slate-500">Click an event on the calendar to edit.</p>
+      <p class="mt-1 text-sm text-slate-500">
+        Click an event to edit. Hover to reveal delete button.
+      </p>
     </div>
     <div class="p-4 sm:p-6">
       <Calendar {currentDate} {events} isAdmin />
@@ -85,7 +87,9 @@
   </div>
 
   {#if filteredEvents.length === 0}
-    <div class="flex flex-col items-center justify-center rounded-xl border border-dashed border-slate-200 py-16 text-center">
+    <div
+      class="flex flex-col items-center justify-center rounded-xl border border-dashed border-slate-200 py-16 text-center"
+    >
       <svg class="h-12 w-12 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path
           stroke-linecap="round"
@@ -101,27 +105,46 @@
       <table class="w-full">
         <thead>
           <tr class="border-b border-slate-200 bg-slate-50/50">
-            <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Title</th>
-            <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Date</th>
-            <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Location</th>
-            <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Actions</th>
+            <th
+              class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500"
+              >Title</th
+            >
+            <th
+              class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500"
+              >Date</th
+            >
+            <th
+              class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500"
+              >Location</th
+            >
+            <th
+              class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500"
+              >Actions</th
+            >
           </tr>
         </thead>
         <tbody class="divide-y divide-slate-100">
           {#each filteredEvents as event (event.id)}
             <tr class="transition-colors hover:bg-slate-50/50">
-              <td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-slate-700">{event.title}</td>
-              <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-600">{new Date(event.date).toLocaleDateString()}</td>
+              <td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-slate-700"
+                >{event.title}</td
+              >
+              <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-600"
+                >{new Date(event.date).toLocaleDateString()}</td
+              >
               <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-600">{event.location}</td>
               <td class="whitespace-nowrap px-6 py-4 text-sm">
                 <div class="flex items-center gap-3">
-                  <a href="/admin/events/edit/{event.id}" class="text-xs font-medium text-primary-600 hover:text-primary-800"
-                    >Edit</a
+                  <a
+                    href="/admin/events/edit/{event.id}"
+                    class="text-xs font-medium text-primary-600 hover:text-primary-800">Edit</a
                   >
                   <span class="text-slate-300">|</span>
                   <form action="?/deleteEvent" method="POST" use:enhance class="inline">
                     <input type="hidden" name="id" value={event.id} />
-                    <button type="submit" class="text-xs text-red-600 hover:text-red-800">Delete</button>
+                    <button type="submit" class="text-xs text-red-600 hover:text-red-800"
+                      >Delete</button
+                    >
                   </form>
                 </div>
               </td>
