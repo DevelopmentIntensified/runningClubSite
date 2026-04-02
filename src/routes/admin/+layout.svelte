@@ -70,16 +70,8 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
             {:else if link.icon === 'trophy'}
-              <svg class="h-5 w-5 text-slate-600 group-hover:text-primary-600 {isActive(link.href) ? 'text-primary-600' : ''}" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-                <g fill="currentColor">
-                  <polygon points="39 33 25 33 25 61 32 55 39 61 39 33"></polygon>
-                  <path d="M39,33H25v9.92a5,5,0,0,1,2.41,1.17A8.12,8.12,0,0,0,32,46a8.12,8.12,0,0,0,4.59-1.91A4.91,4.91,0,0,1,39,42.92Z" fill="currentColor"></path>
-                  <polygon points="35 33 35 57.57 32 55 29 57.57 29 33 35 33"></polygon>
-                  <path d="M29,45.12a5.73,5.73,0,0,0,6,0V33H29Z" fill="currentColor"></path>
-                  <path d="M50.55,23.5c0-2.11,1.57-4.44,1-6.34S48.2,14.24,47,12.6s-1.3-4.48-3-5.69-4.35-.42-6.32-1S34.11,3,32,3s-3.83,2.24-5.73,2.86-4.68-.14-6.32,1-1.75,4-3,5.69-3.85,2.59-4.49,4.56.95,4.23.95,6.34-1.57,4.44-.95,6.34S15.8,32.76,17,34.4s1.3,4.48,3,5.69,4.35.42,6.32,1S29.89,44,32,44s3.83-2.24,5.73-2.86,4.68.14,6.32-1,1.75-4,3-5.69,3.85-2.59,4.49-4.56S50.55,25.61,50.55,23.5Z" fill="currentColor"></path>
-                  <circle cx="32" cy="23.5" r="14.5" fill="currentColor"></circle>
-                  <path d="M33.37,16l1.52,2.63a1.54,1.54,0,0,0,1.06.76L39,20a1.53,1.53,0,0,1,.85,2.56l-2.1,2.22a1.5,1.5,0,0,0-.4,1.22l.36,3a1.57,1.57,0,0,1-2.22,1.58l-2.81-1.27a1.6,1.6,0,0,0-1.32,0l-2.81,1.27A1.57,1.57,0,0,1,26.31,29l.36-3a1.5,1.5,0,0,0-.4-1.22l-2.1-2.22A1.53,1.53,0,0,1,25,20l3-.59a1.54,1.54,0,0,0,1.06-.76L30.63,16A1.59,1.59,0,0,1,33.37,16Z" fill="currentColor"></path>
-                </g>
+              <svg class="h-5 w-5 text-yellow-500 group-hover:text-yellow-600 {isActive(link.href) ? 'text-yellow-600' : ''}" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM7 8c0-.55.45-1 1-1s1 .45 1 1v1H7V8zm5 10c-1.65 0-3-1.35-3-3h6c0 1.65-1.35 3-3 3z"/>
               </svg>
             {:else if link.icon === 'image'}
               <svg class="h-5 w-5 text-slate-600 group-hover:text-primary-600 {isActive(link.href) ? 'text-primary-600' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24">

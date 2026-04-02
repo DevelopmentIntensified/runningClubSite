@@ -25,24 +25,20 @@ export const load: PageServerLoad = async ({ params }) => {
 export const actions: Actions = {
   default: async ({ request, params }) => {
     const formData = await request.formData();
-    const title = formData.get('title') as string;
+    const title = formData.get('title') as string | null;
     const image = formData.get('image') as File;
-    const order = formData.get('order') as string;
+    const order = formData.get('order') as string | null;
     const imageUrl = formData.get('imageUrl') as string;
 
-    if (!title || !order) {
-      return fail(400, { message: 'Title and order are required' });
-    }
+    const updateData: { title?: string; order?: number; imageUrl?: string } = {};
 
-    const orderNum = parseInt(order);
-    if (isNaN(orderNum)) {
-      return fail(400, { message: 'Order must be a number' });
+    if (title) updateData.title = title;
+    if (order) {
+      const orderNum = parseInt(order);
+      if (!isNaN(orderNum)) {
+        updateData.order = orderNum;
+      }
     }
-
-    const updateData: { title: string; order: number; imageUrl?: string } = {
-      title,
-      order: orderNum
-    };
 
     if (image && image.size > 0) {
       const { url } = await put(image.name, image, { access: "public", token: BLOB_READ_WRITE_TOKEN });

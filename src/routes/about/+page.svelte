@@ -14,36 +14,13 @@
 </svelte:head>
 
 <div class="container mx-auto px-4 py-8">
-  <div class="mb-8 overflow-hidden rounded-2xl">
-    <div class="relative h-48 sm:h-64 md:h-80">
+  <div class="mb-12 grid gap-12 md:grid-cols-2">
+    <div class="overflow-hidden rounded-2xl">
       <img
         src={data.image.imageUrl}
         alt={data.image.alt}
-        class="absolute inset-0 h-full w-full object-cover"
+        class="h-full w-full object-cover"
       />
-      <div
-        class="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-black/40 to-black/60"
-      >
-        <div class="px-4 text-center">
-          <h1 class="text-3xl font-bold text-white sm:text-4xl md:text-5xl">
-            About Liberty Running Club
-          </h1>
-          <p class="mt-2 text-sm text-white/90 sm:text-base">
-            Community, competition, and Christ through running.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="mb-12 grid gap-12 md:grid-cols-2">
-    <div>
-      <div class="rounded-2xl bg-slate-50 p-8">
-        <h2 class="text-3xl font-bold text-slate-900">What We Do</h2>
-        <p class="mt-4 text-slate-700">
-          We bring runners together with a solid training and mission-first culture.
-        </p>
-      </div>
     </div>
     <div>
       <h2 class="mb-4 text-2xl font-semibold">Our Mission</h2>
@@ -57,7 +34,6 @@
         <li>Weekly group runs for all levels</li>
         <li>Social Events</li>
         <li>Participation in local and regional races through NIRCA</li>
-        <!-- <li>Community outreach through running-related service projects</li> -->
       </ul>
       <h2 class="mb-4 text-2xl font-semibold">Competition</h2>
       <p class="mb-4">

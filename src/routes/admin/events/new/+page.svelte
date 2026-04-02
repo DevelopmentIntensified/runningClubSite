@@ -1,20 +1,22 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
   import { onMount } from 'svelte';
-  import { page } from '$app/stores';
+  import { DateTime } from 'luxon';
 
   let error = '';
 
-  let startDate = '';
-  let endDate = '';
+  let startDate = $state('');
+  let endDate = $state('');
 
   onMount(() => {
     const params = new URLSearchParams(window.location.search);
     const dateParam = params.get('date');
     if (dateParam) {
-      const date = dateParam;
-      startDate = `${date}T09:00`;
-      endDate = `${date}T10:00`;
+      const dateObj = DateTime.fromFormat(dateParam, 'yyyy-MM-dd', { zone: 'America/New_York' });
+      if (dateObj.isValid) {
+        startDate = dateObj.toFormat('yyyy-MM-dd') + 'T09:00';
+        endDate = dateObj.toFormat('yyyy-MM-dd') + 'T10:00';
+      }
     }
   });
 </script>
