@@ -37,13 +37,12 @@
   </div>
 
   <div class="mb-12 grid gap-12 md:grid-cols-2">
-    <div>
-      <div class="rounded-2xl bg-slate-50 p-8">
-        <h2 class="text-3xl font-bold text-slate-900">What We Do</h2>
-        <p class="mt-4 text-slate-700">
-          We bring runners together with a solid training and mission-first culture.
-        </p>
-      </div>
+    <div class="overflow-hidden rounded-2xl">
+      <img
+        src={data.image.imageUrl}
+        alt={data.image.alt}
+        class="h-full w-full object-cover"
+      />
     </div>
     <div>
       <h2 class="mb-4 text-2xl font-semibold">Our Mission</h2>
@@ -57,7 +56,6 @@
         <li>Weekly group runs for all levels</li>
         <li>Social Events</li>
         <li>Participation in local and regional races through NIRCA</li>
-        <!-- <li>Community outreach through running-related service projects</li> -->
       </ul>
       <h2 class="mb-4 text-2xl font-semibold">Competition</h2>
       <p class="mb-4">

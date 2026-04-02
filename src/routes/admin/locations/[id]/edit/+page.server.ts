@@ -14,25 +14,24 @@ export const load: PageServerLoad = async ({ params }) => {
 export const actions: Actions = {
   updateLocation: async ({ request, params }) => {
     const formData = await request.formData();
-    const name = formData.get('name');
-    const description = formData.get('description');
-    const link = formData.get('link');
-    let order = formData.get('order') as string;
+    const name = formData.get('name') as string | null;
+    const description = formData.get('description') as string | null;
+    const link = formData.get('link') as string | null;
+    let order = formData.get('order') as string | null;
 
-    if (!name || !description || !link) {
-      return fail(400, { message: 'All fields are required' });
-    }
+    const updateData: {
+      name?: string;
+      order?: number;
+      description?: string;
+      link?: string;
+    } = {};
 
-    if(!order){
-      order = "10";
-    }
+    if (name) updateData.name = name;
+    if (description) updateData.description = description;
+    if (link) updateData.link = link;
+    if (order) updateData.order = parseInt(order);
 
-    const updatedLocation = await updateLocation(parseInt(params.id), {
-      name: name.toString(),
-      order: parseInt(order),
-      description: description.toString(),
-      link: link.toString()
-    });
+    const updatedLocation = await updateLocation(parseInt(params.id), updateData);
 
     if (updatedLocation) {
       throw redirect(302, '/admin/locations');

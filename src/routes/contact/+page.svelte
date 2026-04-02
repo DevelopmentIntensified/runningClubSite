@@ -2,7 +2,6 @@
   import { enhance } from '$app/forms';
   import type { PageData, ActionData } from './$types';
 
-  import trainingImg from '$lib/assets/images/training/Runnersrunnigntothecamera.jpeg';
   let { data, form }: { data: PageData; form: ActionData } = $props();
 
   let formData = {
@@ -20,17 +19,15 @@
 </svelte:head>
 
 <div class="min-h-screen bg-gray-50">
-  <div class="relative h-48 sm:h-64 md:h-80">
+  <div class="relative mb-8 h-48 overflow-hidden rounded-2xl sm:h-64 md:h-80">
     <img
-      src={trainingImg}
-      alt="Runners training"
+      src={data.image.imageUrl}
+      alt={data.image.alt}
       class="absolute inset-0 h-full w-full object-cover"
     />
-    <div
-      class="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-black/40 to-black/60"
-    >
+    <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-black/40 to-black/60">
       <div class="px-4 text-center">
-        <h2 class="text-3xl font-bold text-white sm:text-4xl md:text-5xl">Contact Us</h2>
+        <h1 class="text-3xl font-bold text-white sm:text-4xl md:text-5xl">Contact Us</h1>
         <p class="mt-2 text-sm text-white/90 sm:text-base">We'd love to hear from you.</p>
       </div>
     </div>
@@ -40,21 +37,9 @@
     <div class="mx-auto max-w-2xl">
       {#if form?.success || submitted}
         <div class="rounded-2xl border border-green-200 bg-green-50 p-8 text-center">
-          <div
-            class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-green-100"
-          >
-            <svg
-              class="h-6 w-6 text-green-600"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M5 13l4 4L19 7"
-              />
+          <div class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
+            <svg class="h-6 w-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
             </svg>
           </div>
           <h3 class="text-xl font-semibold text-green-900">Message Sent!</h3>
@@ -62,7 +47,7 @@
         </div>
       {:else}
         <div class="overflow-hidden rounded-2xl bg-white shadow-xl">
-          <div class="bg-primary-600 px-6 py-4">
+          <div class="bg-primary-700 px-6 py-4">
             <h3 class="text-xl font-semibold text-white">Send us a Message</h3>
             <p class="mt-1 text-sm text-primary-100">
               Fill out the form below and we'll respond ASAP.
@@ -135,7 +120,7 @@
 
             <button
               type="submit"
-              class="w-full rounded-lg bg-primary-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition-all hover:bg-primary-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+              class="w-full rounded-lg bg-primary-700 px-4 py-3 text-sm font-semibold text-white shadow-sm transition-all hover:bg-primary-800 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
             >
               Send Message
             </button>
@@ -146,7 +131,7 @@
           <p class="text-sm text-gray-500">
             Prefer email? Reach us at <a
               href="mailto:libertyrunningclub@libertyrunningclub.com"
-              class="text-primary-600 hover:text-primary-800"
+              class="text-primary-700 hover:text-primary-800"
               >libertyrunningclub@libertyrunningclub.com</a
             >
           </p>

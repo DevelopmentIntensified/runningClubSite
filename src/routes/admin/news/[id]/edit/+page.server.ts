@@ -15,37 +15,33 @@ export const load: PageServerLoad = async ({ params }) => {
 export const actions: Actions = {
   updateNews: async ({ request, params }) => {
     const formData = await request.formData();
-    const title = formData.get('title');
-    const content = formData.get('content');
+    const title = formData.get('title') as string | null;
+    const content = formData.get('content') as string | null;
     const image = formData.get('image') as File;
     const currentImageUrl = formData.get('currentImageUrl') as string;
 
-    if (!title || !content) {
-      return fail(400, { message: 'Title and content are required' });
-    }
+    const updateData: { title?: string; imageUrl?: string; content?: string } = {};
+
+    if (title) updateData.title = title;
+    if (content) updateData.content = content;
 
     try {
       let imageUrl = currentImageUrl;
 
       if (image && image instanceof File && image.size > 0) {
-        // Delete the old image
         await del(currentImageUrl, { token: BLOB_READ_WRITE_TOKEN }).catch((e) => {
           console.log('Error deleting old image:', e);
         });
 
-        // Upload the new image
         const { url } = await put(image.name, image, {
           access: 'public',
           token: BLOB_READ_WRITE_TOKEN
         });
         imageUrl = url;
+        updateData.imageUrl = imageUrl;
       }
 
-      const updatedNews = await updateNews(parseInt(params.id), {
-        title: title.toString(),
-        imageUrl,
-        content: content.toString()
-      });
+      const updatedNews = await updateNews(parseInt(params.id), updateData);
 
     } catch (error) {
       console.error('Error updating news item:', error);

@@ -15,32 +15,28 @@ export const load: PageServerLoad = async ({ params }) => {
 export const actions: Actions = {
   updateAlumnus: async ({ request, params }) => {
     const formData = await request.formData();
-    const name = formData.get('name') as string;
-    const major = formData.get('major') as string;
-    const graduationYear = formData.get('graduationYear') as string;
-    const achievements = formData.get('achievements') as string;
-    const currentOccupation = formData.get('currentOccupation') as string;
+    const name = formData.get('name') as string | null;
+    const major = formData.get('major') as string | null;
+    const graduationYear = formData.get('graduationYear') as string | null;
+    const achievements = formData.get('achievements') as string | null;
+    const currentOccupation = formData.get('currentOccupation') as string | null;
     const image = formData.get('image') as File;
     const imageUrl = formData.get('imageUrl') as string;
 
-    if (!name || !graduationYear) {
-      return fail(400, { message: 'Name and graduation year are required' });
-    }
-
     const updateData: {
-      name: string;
-      major: string;
-      graduationYear: number;
-      achievements: string | null;
-      currentOccupation: string | null;
+      name?: string;
+      major?: string;
+      graduationYear?: number;
+      achievements?: string | null;
+      currentOccupation?: string | null;
       imageUrl?: string;
-    } = {
-      name,
-      major,
-      graduationYear: parseInt(graduationYear),
-      achievements: achievements || null,
-      currentOccupation: currentOccupation || null
-    };
+    } = {};
+
+    if (name) updateData.name = name;
+    if (major) updateData.major = major;
+    if (graduationYear) updateData.graduationYear = parseInt(graduationYear);
+    if (achievements !== null) updateData.achievements = achievements || null;
+    if (currentOccupation !== null) updateData.currentOccupation = currentOccupation || null;
 
     if (image && image.size > 0) {
       const { url } = await put(image.name, image, { access: "public", token: BLOB_READ_WRITE_TOKEN });

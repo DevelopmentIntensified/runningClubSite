@@ -74,10 +74,8 @@
       <div class="min-h-[5.5rem] bg-slate-50/80 sm:min-h-[6.5rem]"></div>
     {/each}
     {#each days as day}
-      {@const date = formatDate(
-        DateTime.fromObject({ year, month, day }, { zone: 'America/New_York' })
-      )}
-      {@const dayEvents = events.filter((event) => formatDate(event.date) === date)}
+      {@const date = DateTime.fromObject({ year, month, day }, { zone: 'America/New_York' }).toFormat('yyyy-MM-dd')}
+      {@const dayEvents = events.filter((event) => event.date.toFormat('yyyy-MM-dd') === date)}
       <div
         class="group min-h-[5.5rem] border-t border-transparent bg-white p-1.5 transition-colors hover:bg-slate-50/90 sm:min-h-[6.5rem] sm:p-2"
       >

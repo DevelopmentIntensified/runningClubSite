@@ -27,7 +27,6 @@
               id="event"
               name="event"
               value={record.event}
-              required
               class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
             />
           </div>
@@ -38,7 +37,6 @@
               id="name"
               name="name"
               value={record.name}
-              required
               class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
             />
           </div>
@@ -49,7 +47,6 @@
               id="link"
               name="link"
               value={record.link}
-              required
               class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
             />
           </div>
@@ -60,7 +57,6 @@
               id="time"
               name="time"
               value={record.time}
-              required
               class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
             />
           </div>
@@ -83,7 +79,6 @@
               id="gender"
               name="gender"
               value={record.gender}
-              required
               class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
             >
               <option value="male">Male</option>
@@ -96,7 +91,6 @@
               id="type"
               name="type"
               value={record.type}
-              required
               class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
             >
               <option value="track">Track</option>

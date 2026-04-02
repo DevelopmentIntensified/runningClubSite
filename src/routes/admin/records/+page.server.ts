@@ -7,7 +7,7 @@ export const load: PageServerLoad = async () => {
   records = records.map((record) => {
     return {
       ...record,
-      year: record.year || "",
+      year: record.year ? new Date(record.year).getFullYear() : "",
     }
   })
 

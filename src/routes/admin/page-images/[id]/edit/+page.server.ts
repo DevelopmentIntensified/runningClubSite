@@ -25,25 +25,21 @@ export const load: PageServerLoad = async ({ params }) => {
 export const actions: Actions = {
   default: async ({ request, params }) => {
     const formData = await request.formData();
-    const locationName = formData.get('locationName');
-    const alt = formData.get('alt');
+    const locationName = formData.get('locationName') as string | null;
+    const alt = formData.get('alt') as string | null;
     const image = formData.get('image') as File;
     const currentImageUrl = formData.get('currentImageUrl') as string;
 
-    if (!locationName || !alt) {
-      return fail(400, {
-        message: 'Location and alt text are required'
-      });
-    }
+    const updateData: { locationName?: string; alt?: string; imageUrl?: string } = {};
+
+    if (locationName) updateData.locationName = locationName;
+    if (alt) updateData.alt = alt;
 
     try {
       let imageUrl = currentImageUrl;
 
-      if (image && image instanceof File) {
-        // Delete the old image
+      if (image && image instanceof File && image.size > 0) {
         await del(currentImageUrl, { token: BLOB_READ_WRITE_TOKEN });
-
-        // Upload the new image
         const { url } = await put(image.name, image, {
           access: 'public',
           token: BLOB_READ_WRITE_TOKEN
@@ -53,11 +49,7 @@ export const actions: Actions = {
 
       await db
         .update(pageImages)
-        .set({
-          locationName: locationName.toString(),
-          alt: alt.toString(),
-          imageUrl
-        })
+        .set(updateData)
         .where(eq(pageImages.id, parseInt(params.id)));
 
     } catch (error) {
