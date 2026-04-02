@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import teamPhoto from '$lib/assets/images/social/shraptop.jpeg';
   import FacebookIcon from '$lib/components/FacebookIcon.svelte';
   import InstagramIcon from '$lib/components/InstagramIcon.svelte';
@@ -7,6 +8,11 @@
   import type { PageData } from './$types';
   export let data: PageData;
   const leaders = data.leaders;
+
+  onMount(() => {
+    console.log('%c🐢 Slow and steady? Or just steady?', 'font-size: 20px; color: #b72025;');
+    console.log('%cDid you know: The tortoise beat the hare!', 'font-style: italic;');
+  });
 </script>
 
 <svelte:head>

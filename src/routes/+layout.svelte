@@ -1,5 +1,6 @@
 <script lang="ts">
   import Navbar from '$lib/components/Navbar.svelte';
+  import EasterEggs from '$lib/components/EasterEggs.svelte';
   import { fade } from 'svelte/transition';
   import type { LayoutData } from './$types';
   import '../app.css';
@@ -16,6 +17,8 @@
     injectAnalytics();
   });
 </script>
+
+<EasterEggs />
 
 <div class="flex min-h-screen flex-col">
   <Navbar
