@@ -12,7 +12,7 @@
 </script>
 
 <div class="container mx-auto p-4">
-  <button on:click={goBack} class="mb-4 flex items-center text-blue-500 hover:text-blue-600">
+  <button on:click={goBack} class="mb-4 flex items-center text-primary-700 hover:text-primary-800">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       class="mr-1 h-5 w-5"

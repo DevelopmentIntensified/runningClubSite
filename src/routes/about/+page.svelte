@@ -62,7 +62,7 @@
       <h2 class="mb-4 text-2xl font-semibold">Competition</h2>
       <p class="mb-4">
         We compete in several local races including several comunity 5ks and trail races along with
-        a few NCAA meets. Our main competitions are the <a class="text-blue-500" href="#nirca"
+        a few NCAA meets. Our main competitions are the <a class="text-primary-700" href="#nirca"
           >NIRCA</a
         > races. Please see that section for more details
       </p>
@@ -74,7 +74,7 @@
 
       <h2 class="mb-4 text-2xl font-semibold" id="nirca">What is NIRCA?</h2>
       <p class="mb-4">
-        <a class="text-blue-500" href="https://clubrunning.org/">
+        <a class="text-primary-700" href="https://clubrunning.org/">
           The National Intercollegiate Running Club Association (NIRCA)</a
         >
         connects running clubs nationwide through friendly competitions. NIRCA hosts a full cross-country
@@ -82,7 +82,7 @@
         Athletes may participate in as many or as few meets as they wish. Race fees are paid on race
         day and refunded at the end of the season. If you wish to participate in NIRCA and have not already
         been onboarded, please fill out
-        <a class="text-blue-500" href="https://forms.gle/39mTeUgKqwdDUCDW9">this form</a>
+        <a class="text-primary-700" href="https://forms.gle/39mTeUgKqwdDUCDW9">this form</a>
       </p>
 
       <h2 class="mb-4 text-2xl font-semibold" id="nirca">Our Socials</h2>

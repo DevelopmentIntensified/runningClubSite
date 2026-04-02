@@ -37,13 +37,13 @@
     <p class="mb-8 text-2xl">Running and Glorifying God through every step</p>
     <a
       href="/about"
-      class="rounded bg-red-600 px-4 py-2 font-bold text-white transition duration-300 hover:bg-red-700"
+      class="rounded bg-primary-700 px-4 py-2 font-bold text-white transition duration-300 hover:bg-primary-800"
     >
       Learn More
     </a>
     <a
       href={data.isLoggedIn ? '/groupme' : '/login'}
-      class="mt-3 rounded bg-secondary px-4 py-2 font-bold text-white transition duration-300 hover:bg-secondary-900"
+      class="mt-3 rounded bg-secondary-700 px-4 py-2 font-bold text-white transition duration-300 hover:bg-secondary-800"
     >
       Join Us
     </a>
