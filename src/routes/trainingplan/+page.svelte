@@ -52,4 +52,3 @@ We’re excited to offer training for the upcoming XC season! Whether you are:
       </div>
     </div>
   </div>
-</div>
