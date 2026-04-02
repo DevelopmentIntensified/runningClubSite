@@ -83,6 +83,23 @@
       >
         <div class="mb-1 flex items-center justify-between">
           <span class="text-xs font-semibold text-slate-500 sm:text-sm">{day}</span>
+          {#if isAdmin}
+            <a
+              href="/admin/events/new?date={date}"
+              class="rounded p-0.5 text-primary-600 opacity-0 transition-opacity hover:bg-primary-50 group-hover:opacity-100"
+              title="Add event on this day"
+            >
+              <svg
+                class="h-3 w-3"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M12 4v16m8-8H4"></path>
+              </svg>
+            </a>
+          {/if}
         </div>
         <div class="flex flex-col gap-1">
           {#each dayEvents as event}
