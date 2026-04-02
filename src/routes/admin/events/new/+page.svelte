@@ -1,7 +1,22 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
+  import { onMount } from 'svelte';
+  import { page } from '$app/stores';
 
   let error = '';
+
+  let startDate = '';
+  let endDate = '';
+
+  onMount(() => {
+    const params = new URLSearchParams(window.location.search);
+    const dateParam = params.get('date');
+    if (dateParam) {
+      const date = dateParam;
+      startDate = `${date}T09:00`;
+      endDate = `${date}T10:00`;
+    }
+  });
 </script>
 
 <svelte:head>
@@ -34,6 +49,7 @@
               type="datetime-local"
               id="start"
               name="start"
+              bind:value={startDate}
               required
               class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
             />
@@ -46,6 +62,7 @@
               type="datetime-local"
               id="end"
               name="end"
+              bind:value={endDate}
               required
               class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
             />
@@ -82,6 +99,7 @@
               <option value="Social">Social</option>
               <option value="Practice">Practice</option>
               <option value="Trail Race">Trail Race</option>
+              <option value="Road Race">Road Race</option>
               <option value="NIRCA Outdoor Race">NIRCA Outdoor Race</option>
               <option value="NIRCA Indoor Race">NIRCA Indoor Race</option>
               <option value="NCAA Outdoor Race">NCAA Outdoor Race</option>
@@ -99,7 +117,12 @@
               Create Event
             </button>
           </div>
-          <input type="hidden" class="hidden h-0 m-0 p-0" name="offset" value={new Date().getTimezoneOffset()/60} />
+          <input
+            type="hidden"
+            class="m-0 hidden h-0 p-0"
+            name="offset"
+            value={new Date().getTimezoneOffset() / 60}
+          />
         </form>
       </div>
     </div>

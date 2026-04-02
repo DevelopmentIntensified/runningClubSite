@@ -13,22 +13,36 @@
   <title>About Liberty Running Club</title>
 </svelte:head>
 
-<div class="container mx-auto px-4 py-12">
-  <h1 class="mb-8 text-center text-4xl font-bold">About Liberty Running Club</h1>
+<div class="container mx-auto px-4 py-8">
+  <div class="mb-8 overflow-hidden rounded-2xl">
+    <div class="relative h-48 sm:h-64 md:h-80">
+      <img
+        src={data.image.imageUrl}
+        alt={data.image.alt}
+        class="absolute inset-0 h-full w-full object-cover"
+      />
+      <div
+        class="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-black/40 to-black/60"
+      >
+        <div class="px-4 text-center">
+          <h1 class="text-3xl font-bold text-white sm:text-4xl md:text-5xl">
+            About Liberty Running Club
+          </h1>
+          <p class="mt-2 text-sm text-white/90 sm:text-base">
+            Community, competition, and Christ through running.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="mb-12 grid gap-12 md:grid-cols-2">
     <div>
-      <div class="relative h-64 sm:h-80 md:h-96">
-        <img
-          src={data.image.imageUrl}
-          alt={data.image.alt}
-          class="absolute inset-0 h-full w-full object-cover"
-        />
-        <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <h2 class="px-4 text-center text-3xl font-bold text-white sm:text-4xl md:text-5xl">
-            What We Do
-          </h2>
-        </div>
+      <div class="rounded-2xl bg-slate-50 p-8">
+        <h2 class="text-3xl font-bold text-slate-900">What We Do</h2>
+        <p class="mt-4 text-slate-700">
+          We bring runners together with a solid training and mission-first culture.
+        </p>
       </div>
     </div>
     <div>
@@ -63,11 +77,11 @@
         <a class="text-blue-500" href="https://clubrunning.org/">
           The National Intercollegiate Running Club Association (NIRCA)</a
         >
-        connects running clubs nationwide through friendly competitions. NIRCA hosts a full
-        cross-country season, a Cross Country Championship Series, the Road and Track Nationals, and
-        all-club conferences. Athletes may participate in as many or as few meets as they wish. Race
-        fees are paid on race day and refunded at the end of the season. If you wish to participate
-        in NIRCA and have not already been onboarded, please fill out
+        connects running clubs nationwide through friendly competitions. NIRCA hosts a full cross-country
+        season, a Cross Country Championship Series, the Road and Track Nationals, and all-club conferences.
+        Athletes may participate in as many or as few meets as they wish. Race fees are paid on race
+        day and refunded at the end of the season. If you wish to participate in NIRCA and have not already
+        been onboarded, please fill out
         <a class="text-blue-500" href="https://forms.gle/39mTeUgKqwdDUCDW9">this form</a>
       </p>
 

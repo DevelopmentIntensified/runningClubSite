@@ -8,23 +8,25 @@ export const actions: Actions = {
     const event = formData.get('event');
     const name = formData.get('name');
     const time = formData.get('time');
-    const year = formData.get('year');
+    const yearStr = formData.get('year') as string;
     const gender = formData.get('gender');
     const type = formData.get('type');
     const link = formData.get('link') as string;
 
-    if (!event || !name || !time || !year || !gender || !type) {
+    if (!event || !name || !time || !gender || !type) {
       return fail(400, { message: 'All fields are required' });
     }
+
+    const year = yearStr ? parseInt(yearStr) : null;
 
     const newRecord = await createRecord({
       event: event.toString(),
       name: name.toString(),
       time: time.toString(),
-      year: parseInt(year.toString()),
+      year,
       gender: gender.toString(),
       type: type.toString(),
-      link
+      link: link || null
     });
 
     if (newRecord) {

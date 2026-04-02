@@ -8,7 +8,6 @@
   onMount(() => {
     const interval = setInterval(() => {
       currentSlide = (currentSlide + 1) % slides.length;
-      console.log(currentSlide);
     }, 3500);
 
     return () => clearInterval(interval);

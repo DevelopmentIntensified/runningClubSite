@@ -7,7 +7,7 @@ export const load: PageServerLoad = async (e) => {
   const eventsData = await db
     .select()
     .from(events)
-    .where(eq(events.id, e.params.id))
+    .where(eq(events.id, Number(e.params.id)))
     .orderBy(events.start);
 
   return {
