@@ -28,7 +28,7 @@
   <title>Running Locations - Liberty Running Club</title>
 </svelte:head>
 
-<div class="min-h-screen bg-gray-50">
+<div class="container mx-auto px-4 py-12">
   <div class="relative mb-8 h-48 overflow-hidden rounded-2xl sm:h-64 md:h-80">
     <img
       src={data.image.imageUrl}
@@ -43,8 +43,7 @@
     </div>
   </div>
 
-  <div class="container mx-auto px-4 py-8">
-    <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+  <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
       <div class="relative flex-1 max-w-md">
         <input
           type="text"
