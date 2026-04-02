@@ -70,8 +70,8 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
             {:else if link.icon === 'trophy'}
-              <svg class="h-5 w-5 text-slate-600 group-hover:text-primary-600 {isActive(link.href) ? 'text-primary-600' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+              <svg class="h-5 w-5 text-yellow-500 group-hover:text-yellow-600 {isActive(link.href) ? 'text-yellow-600' : ''}" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM7 8c0-.55.45-1 1-1s1 .45 1 1v1H7V8zm5 10c-1.65 0-3-1.35-3-3h6c0 1.65-1.35 3-3 3z"/>
               </svg>
             {:else if link.icon === 'image'}
               <svg class="h-5 w-5 text-slate-600 group-hover:text-primary-600 {isActive(link.href) ? 'text-primary-600' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
