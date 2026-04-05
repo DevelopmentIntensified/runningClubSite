@@ -2,19 +2,11 @@
   import { enhance } from '$app/forms';
   import type { PageData } from './$types';
   import RichTextEditor from '$lib/components/RichTextEditor.svelte';
+  import ImageUpload from '$lib/components/ImageUpload.svelte';
 
   export let data: PageData;
   let error = '';
   let content = '';
-  let imagePreview: string | null = null;
-
-  function handleImageChange(event: Event) {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files[0]) {
-      const file = input.files[0];
-      imagePreview = URL.createObjectURL(file);
-    }
-  }
 </script>
 
 <svelte:head>
@@ -45,26 +37,8 @@
             <input type="hidden" name="content" value={content} />
           </div>
           <div>
-            <label for="image" class="block text-sm font-medium text-gray-700">Image</label>
-            <input
-              type="file"
-              accept="image/*"
-              id="image"
-              name="image"
-              on:change={handleImageChange}
-              required
-              class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-100"
-            />
+            <ImageUpload name="imageUrl" label="Image" required={true} />
           </div>
-          {#if imagePreview}
-            <div class="mt-4">
-              <img
-                src={imagePreview}
-                alt="Preview"
-                class="h-48 w-full object-cover rounded-lg"
-              />
-            </div>
-          {/if}
           {#if error}
             <div class="text-sm text-red-500">{error}</div>
           {/if}

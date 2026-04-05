@@ -10,21 +10,27 @@ export const actions: Actions = {
     const title = formData.get('title');
     const content = formData.get('content');
     const image = formData.get('image') as File;
+    const imageUrl = formData.get('imageUrl') as string;
 
     if (!title || !content) {
       return fail(400, { message: 'Title and content are required' });
     }
 
-    if (!image || !(image instanceof File)) {
+    let finalImageUrl = imageUrl;
+    
+    if (!finalImageUrl && image.size > 0) {
+      const { url } = await put(image.name, image, { access: "public", token: BLOB_READ_WRITE_TOKEN });
+      finalImageUrl = url;
+    }
+
+    if (!finalImageUrl) {
       return fail(400, { message: 'Image is required' });
     }
 
     try {
-      const { url } = await put(image.name, image, { access: "public", token: BLOB_READ_WRITE_TOKEN });
-
       const newNews = await createNews({
         title: title.toString(),
-        imageUrl: url,
+        imageUrl: finalImageUrl,
         content: content.toString(),
         createdBy: locals.user?.id
       });

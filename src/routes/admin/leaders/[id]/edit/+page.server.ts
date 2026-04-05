@@ -15,38 +15,46 @@ export const load: PageServerLoad = async ({ params }) => {
 export const actions: Actions = {
   updateLeader: async ({ request, params }) => {
     const formData = await request.formData();
-    const name = formData.get('name') as string | null;
-    const position = formData.get('position') as string | null;
-    const bio = formData.get('bio') as string | null;
-    const order = formData.get('order') as string | null;
+    const name = formData.get('name') as string;
+    const position = formData.get('position') as string;
+    const bio = formData.get('bio') as string;
+    const order = formData.get('order') as string;
     const image = formData.get('image') as File;
+    const imageUrl = formData.get('imageUrl') as string;
+    const currentImageUrl = formData.get('currentImageUrl') as string;
     const active = formData.get('active') === 'on';
-    let imageUrl = formData.get('imageUrl') as string;
 
-    const updateData: {
-      name?: string;
-      position?: string;
-      bio?: string;
-      order?: number;
-      imageUrl?: string;
-      active?: boolean;
-    } = {};
-
-    if (name) updateData.name = name;
-    if (position) updateData.position = position;
-    if (bio) updateData.bio = bio;
-    if (order) updateData.order = parseInt(order);
-    updateData.active = active;
-
-    if (image && image.size > 0) {
-      const { url } = await put(image.name, image, { access: "public", token: BLOB_READ_WRITE_TOKEN });
-      await del(imageUrl, { token: BLOB_READ_WRITE_TOKEN }).catch((e)=>{
-        console.log(e)
-      })
-      updateData.imageUrl = url;
+    if (!name || !position) {
+      return fail(400, { message: 'Name and position are required' });
     }
 
-    const updatedLeader = await updateLeader(parseInt(params.id), updateData);
+    let finalImageUrl = currentImageUrl || imageUrl;
+
+    if (image.size > 0) {
+      const { url } = await put(image.name, image, { access: "public", token: BLOB_READ_WRITE_TOKEN });
+      if (currentImageUrl) {
+        await del(currentImageUrl, { token: BLOB_READ_WRITE_TOKEN }).catch((e) => {
+          console.log(e);
+        });
+      }
+      finalImageUrl = url;
+    } else if (imageUrl && imageUrl !== currentImageUrl) {
+      if (currentImageUrl) {
+        await del(currentImageUrl, { token: BLOB_READ_WRITE_TOKEN }).catch((e) => {
+          console.log(e);
+        });
+      }
+      finalImageUrl = imageUrl;
+    }
+
+    const updatedLeader = await updateLeader(parseInt(params.id), {
+      name,
+      position,
+      order: parseInt(order),
+      bio,
+      imageUrl: finalImageUrl,
+      active
+    });
 
     if (updatedLeader) {
       throw redirect(302, '/admin/leaders');

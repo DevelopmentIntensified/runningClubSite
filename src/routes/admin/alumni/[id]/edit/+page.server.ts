@@ -22,6 +22,7 @@ export const actions: Actions = {
     const currentOccupation = formData.get('currentOccupation') as string | null;
     const image = formData.get('image') as File;
     const imageUrl = formData.get('imageUrl') as string;
+    const currentImageUrl = formData.get('currentImageUrl') as string;
 
     const updateData: {
       name?: string;
@@ -40,11 +41,15 @@ export const actions: Actions = {
 
     if (image && image.size > 0) {
       const { url } = await put(image.name, image, { access: "public", token: BLOB_READ_WRITE_TOKEN });
-      if (imageUrl !== null && imageUrl !== '') {
-        console.log(imageUrl);
-        del(imageUrl, { token: BLOB_READ_WRITE_TOKEN });
+      if (currentImageUrl) {
+        del(currentImageUrl, { token: BLOB_READ_WRITE_TOKEN }).catch((e) => console.log(e));
       }
       updateData.imageUrl = url;
+    } else if (imageUrl && imageUrl !== currentImageUrl) {
+      if (currentImageUrl) {
+        del(currentImageUrl, { token: BLOB_READ_WRITE_TOKEN }).catch((e) => console.log(e));
+      }
+      updateData.imageUrl = imageUrl;
     }
 
     const updatedAlumnus = await updateAlumnus(parseInt(params.id), updateData);

@@ -13,22 +13,26 @@ export const actions: Actions = {
     const achievements = formData.get('achievements');
     const currentOccupation = formData.get('currentOccupation');
     const image = formData.get('image') as File;
+    const imageUrl = formData.get('imageUrl') as string;
 
     if (!name || !graduationYear) {
       return fail(400, { message: 'Name and graduation year are required' });
     }
 
-    if (!image) {
-      throw error(400, { message: "No image" });
+    let finalImageUrl = imageUrl;
+    
+    if (!finalImageUrl && image.size > 0) {
+      const { url } = await put(image.name, image, { access: "public", token: BLOB_READ_WRITE_TOKEN });
+      finalImageUrl = url;
     }
-    const { url } = await put(image.name, image, { access: "public", token: BLOB_READ_WRITE_TOKEN });
+
     const newAlumnus = await createAlumnus({
       name: name.toString(),
       major: major?.toString(),
       graduationYear: parseInt(graduationYear.toString()),
       achievements: achievements?.toString() || null,
       currentOccupation: currentOccupation?.toString() || null,
-      imageUrl: url
+      imageUrl: finalImageUrl || null
     });
 
     if (newAlumnus) {

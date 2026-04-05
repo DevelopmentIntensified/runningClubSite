@@ -10,17 +10,23 @@ export const actions: Actions = {
     const formData = await request.formData();
     const title = formData.get('title') as string;
     const image = formData.get('image') as File;
+    const imageUrl = formData.get('imageUrl') as string;
     const order = formData.get('order') as string;
 
-    if (!title || !image || !order) {
+    if (!title || !order) {
       return fail(400, { message: 'All fields are required' });
     }
 
-    if (!image) {
-      throw error(400, { message: "No image" });
+    let finalImageUrl = imageUrl;
+    
+    if (!finalImageUrl && image.size > 0) {
+      const { url } = await put(image.name, image, { access: "public", token: BLOB_READ_WRITE_TOKEN });
+      finalImageUrl = url;
     }
 
-    const { url } = await put(image.name, image, { access: "public", token: BLOB_READ_WRITE_TOKEN });
+    if (!finalImageUrl) {
+      throw error(400, { message: "No image" });
+    }
 
     const orderNum = parseInt(order);
     if (isNaN(orderNum)) {
@@ -29,7 +35,7 @@ export const actions: Actions = {
 
     await db.insert(slideShowImages).values({
       title,
-      imageUrl: url,
+      imageUrl: finalImageUrl,
       order: orderNum
     });
 

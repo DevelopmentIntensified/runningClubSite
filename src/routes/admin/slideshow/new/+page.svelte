@@ -1,5 +1,6 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
+  import ImageUpload from '$lib/components/ImageUpload.svelte';
 </script>
 
 <svelte:head>
@@ -26,20 +27,7 @@
           </div>
 
           <div>
-            <label for="image" class="block text-sm font-medium text-gray-700">Image</label>
-            <input
-              type="file"
-              name="image"
-              id="image"
-              accept="image/*"
-              required
-              class="mt-1 block w-full text-sm text-gray-500
-                file:mr-4 file:py-2 file:px-4
-                file:rounded-md file:border-0
-                file:text-sm file:font-semibold
-                file:bg-primary-50 file:text-primary-700
-                hover:file:bg-primary-100"
-            />
+            <ImageUpload name="imageUrl" label="Image" required={true} />
           </div>
 
           <div>

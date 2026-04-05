@@ -15,33 +15,42 @@ export const load: PageServerLoad = async ({ params }) => {
 export const actions: Actions = {
   updateNews: async ({ request, params }) => {
     const formData = await request.formData();
-    const title = formData.get('title') as string | null;
-    const content = formData.get('content') as string | null;
+    const title = formData.get('title') as string;
+    const content = formData.get('content') as string;
     const image = formData.get('image') as File;
+    const imageUrl = formData.get('imageUrl') as string;
     const currentImageUrl = formData.get('currentImageUrl') as string;
 
-    const updateData: { title?: string; imageUrl?: string; content?: string } = {};
-
-    if (title) updateData.title = title;
-    if (content) updateData.content = content;
+    if (!title || !content) {
+      return fail(400, { message: 'Title and content are required' });
+    }
 
     try {
-      let imageUrl = currentImageUrl;
+      let finalImageUrl = currentImageUrl;
 
-      if (image && image instanceof File && image.size > 0) {
+      if (image && image.size > 0) {
         await del(currentImageUrl, { token: BLOB_READ_WRITE_TOKEN }).catch((e) => {
           console.log('Error deleting old image:', e);
         });
-
         const { url } = await put(image.name, image, {
           access: 'public',
           token: BLOB_READ_WRITE_TOKEN
         });
-        imageUrl = url;
-        updateData.imageUrl = imageUrl;
+        finalImageUrl = url;
+      } else if (imageUrl && imageUrl !== currentImageUrl) {
+        if (currentImageUrl) {
+          await del(currentImageUrl, { token: BLOB_READ_WRITE_TOKEN }).catch((e) => {
+            console.log('Error deleting old image:', e);
+          });
+        }
+        finalImageUrl = imageUrl;
       }
 
-      const updatedNews = await updateNews(parseInt(params.id), updateData);
+      const updatedNews = await updateNews(parseInt(params.id), {
+        title: title.toString(),
+        imageUrl: finalImageUrl,
+        content: content.toString()
+      });
 
     } catch (error) {
       console.error('Error updating news item:', error);

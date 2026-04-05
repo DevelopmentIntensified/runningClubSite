@@ -25,39 +25,50 @@ export const load: PageServerLoad = async ({ params }) => {
 export const actions: Actions = {
   default: async ({ request, params }) => {
     const formData = await request.formData();
-    const locationName = formData.get('locationName') as string | null;
-    const alt = formData.get('alt') as string | null;
+    const locationName = formData.get('locationName') as string;
+    const alt = formData.get('alt') as string;
     const image = formData.get('image') as File;
+    const imageUrl = formData.get('imageUrl') as string;
     const currentImageUrl = formData.get('currentImageUrl') as string;
 
-    const updateData: { locationName?: string; alt?: string; imageUrl?: string } = {};
-
-    if (locationName) updateData.locationName = locationName;
-    if (alt) updateData.alt = alt;
+    if (!locationName || !alt) {
+      return fail(400, {
+        message: 'Location and alt text are required'
+      });
+    }
 
     try {
-      let imageUrl = currentImageUrl;
+      let finalImageUrl = currentImageUrl;
 
-      if (image && image instanceof File && image.size > 0) {
-        await del(currentImageUrl, { token: BLOB_READ_WRITE_TOKEN });
+      if (image && image.size > 0) {
+        await del(currentImageUrl, { token: BLOB_READ_WRITE_TOKEN }).catch((e) => console.log(e));
         const { url } = await put(image.name, image, {
           access: 'public',
           token: BLOB_READ_WRITE_TOKEN
         });
-        imageUrl = url;
+        finalImageUrl = url;
+      } else if (imageUrl && imageUrl !== currentImageUrl) {
+        if (currentImageUrl) {
+          await del(currentImageUrl, { token: BLOB_READ_WRITE_TOKEN }).catch((e) => console.log(e));
+        }
+        finalImageUrl = imageUrl;
       }
 
       await db
         .update(pageImages)
-        .set(updateData)
+        .set({
+          locationName: locationName.toString(),
+          alt: alt.toString(),
+          imageUrl: finalImageUrl
+        })
         .where(eq(pageImages.id, parseInt(params.id)));
 
-    } catch (error) {
-      console.error('Error updating image:', error);
+    } catch (err) {
+      console.error('Error updating image:', err);
       return fail(500, {
         message: 'Failed to update image'
       });
     }
     throw redirect(303, '/admin/page-images');
   }
-}; 
+};

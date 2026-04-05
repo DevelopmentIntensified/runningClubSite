@@ -1,6 +1,7 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
   import type { PageData } from './$types';
+  import ImageUpload from '$lib/components/ImageUpload.svelte';
 
   export let data: PageData;
 
@@ -71,24 +72,8 @@
             <label for="active" class="ml-2 block text-sm text-gray-900">Active</label>
           </div>
           <div>
-            <input
-              type="hidden"
-              id="imageUrl"
-              name="imageUrl"
-              value={leader.imageUrl}
-              class="sr-only"
-            />
-            <label for="image" class="block text-sm font-medium text-gray-700">Image (Accepts png, gif, jpeg, jpg)</label>
-            <img src={leader.imageUrl} alt={leader.name} class="h-64 w-full object-cover" />
-            <input
-              type="file"
-              accept="image/png, image/gif, image/jpeg, image/jpg"
-              id="image"
-              alt="leader"
-              name="image"
-              src={leader.imageUrl}
-              class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
-            />
+            <input type="hidden" name="currentImageUrl" value={leader.imageUrl} />
+            <ImageUpload name="imageUrl" label="Image (Accepts png, gif, jpeg, jpg)" value={leader.imageUrl} />
           </div>
           {#if error}
             <div class="text-sm text-red-500">{error}</div>

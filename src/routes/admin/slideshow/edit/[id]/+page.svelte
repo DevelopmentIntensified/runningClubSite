@@ -1,6 +1,7 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
   import type { PageData } from './$types';
+  import ImageUpload from '$lib/components/ImageUpload.svelte';
 
   export let data: PageData;
 </script>
@@ -29,37 +30,11 @@
           </div>
 
           <div>
-            <label for="image" class="block text-sm font-medium text-gray-700">Image</label>
-            <div class="mt-1 flex items-center space-x-4">
-              <img
-                src={data.image.imageUrl}
-                alt={data.image.title}
-                class="h-32 w-48 object-cover rounded"
-              />
-              <input
-                type="file"
-                name="image"
-                id="image"
-                accept="image/*"
-                class="block w-full text-sm text-gray-500
-                  file:mr-4 file:py-2 file:px-4
-                  file:rounded-md file:border-0
-                  file:text-sm file:font-semibold
-                  file:bg-primary-50 file:text-primary-700
-                  hover:file:bg-primary-100"
-              />
-            </div>
-            <p class="mt-1 text-sm text-gray-500">Leave empty to keep the current image</p>
+            <input type="hidden" name="currentImageUrl" value={data.image.imageUrl} />
+            <ImageUpload name="imageUrl" label="Image" value={data.image.imageUrl} />
           </div>
 
           <div>
-            <input
-              type="hidden"
-              id="imageUrl"
-              name="imageUrl"
-              value={data.image.imageUrl}
-              class="sr-only"
-            />
             <label for="order" class="block text-sm font-medium text-gray-700">Display Order</label>
             <input
               type="number"

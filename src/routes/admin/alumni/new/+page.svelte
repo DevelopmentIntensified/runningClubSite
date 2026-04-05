@@ -1,5 +1,6 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
+  import ImageUpload from '$lib/components/ImageUpload.svelte';
 
   let error = '';
 </script>
@@ -15,7 +16,7 @@
         <h2 class="text-center text-3xl font-extrabold text-white">Add New Alumnus</h2>
       </div>
       <div class="p-6 sm:p-8">
-        <form action="?/createAlumnus" method="POST" use:enhance class="space-y-6">
+        <form action="?/createAlumnus" method="POST" use:enhance class="space-y-6" enctype="multipart/form-data">
           <div>
             <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
             <input
@@ -69,15 +70,7 @@
             />
           </div>
           <div>
-            <label for="image" class="block text-sm font-medium text-gray-700">Image (Accepts png, gif, jpeg, jpg)</label>
-            <input
-              type="file"
-              accept="image/png, image/gif, image/jpeg, image/jpg"
-              alt="leader"
-              id="image"
-              name="image"
-              class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
-            />
+            <ImageUpload name="imageUrl" label="Image (Accepts png, gif, jpeg, jpg)" />
           </div>
           {#if error}
             <div class="text-sm text-red-500">{error}</div>

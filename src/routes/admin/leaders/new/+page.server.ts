@@ -16,6 +16,7 @@ export const actions: Actions = {
     const position = formData.get('position') as string;
     const bio = formData.get('bio') as string;
     const image = formData.get('image') as File;
+    const imageUrl = formData.get('imageUrl') as string;
     const order = formData.get('order') as string;
     const active = formData.get('active') === 'on';
 
@@ -23,16 +24,23 @@ export const actions: Actions = {
       return fail(400, { message: 'Name and position are required' });
     }
 
-    if (!image) {
+    let finalImageUrl = imageUrl;
+    
+    if (!finalImageUrl && image.size > 0) {
+      const { url } = await put(image.name, image, { access: "public", token: BLOB_READ_WRITE_TOKEN });
+      finalImageUrl = url;
+    }
+
+    if (!finalImageUrl) {
       throw error(400, { message: "No image" });
     }
-    const { url } = await put(image.name, image, { access: "public", token: BLOB_READ_WRITE_TOKEN });
+
     const newLeader = await createLeader({
       name,
       position,
       order: parseInt(order),
       bio,
-      imageUrl: url,
+      imageUrl: finalImageUrl,
       active
     });
 

@@ -2,21 +2,13 @@
   import { enhance } from '$app/forms';
   import type { PageData } from './$types';
   import RichTextEditor from '$lib/components/RichTextEditor.svelte';
+  import ImageUpload from '$lib/components/ImageUpload.svelte';
 
   export let data: PageData;
 
   let { newsItem } = data;
   let error = '';
-  let imagePreview: string | null = null;
   let content = newsItem.content;
-
-  function handleImageChange(event: Event) {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files[0]) {
-      const file = input.files[0];
-      imagePreview = URL.createObjectURL(file);
-    }
-  }
 </script>
 
 <svelte:head>
@@ -49,23 +41,7 @@
             <RichTextEditor bind:value={content} />
           </div>
           <div>
-            <label for="image" class="block text-sm font-medium text-gray-700">Image</label>
-            <div class="mt-1 flex items-center space-x-4">
-              {#if imagePreview}
-                <img src={imagePreview} alt="Preview" class="h-32 w-32 rounded object-cover" />
-              {:else if newsItem.imageUrl}
-                <img src={newsItem.imageUrl} alt={newsItem.title} class="h-32 w-32 rounded object-cover" />
-              {/if}
-              <input
-                type="file"
-                accept="image/*"
-                id="image"
-                name="image"
-                on:change={handleImageChange}
-                class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-100"
-              />
-            </div>
-            <p class="mt-1 text-sm text-gray-500">Leave empty to keep the current image</p>
+            <ImageUpload name="imageUrl" label="Image" value={newsItem.imageUrl} />
           </div>
           {#if error}
             <div class="text-sm text-red-500">{error}</div>
