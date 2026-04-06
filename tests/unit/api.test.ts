@@ -30,7 +30,7 @@ describe('API Tests', () => {
 
   describe('Login API', () => {
     it('should return 400 if email or password is missing', async () => {
-      const request = new Request('http://localhost/api/login', {
+      const request = new Request('https://test.libertyrunningclub.com/api/login', {
         method: 'POST',
         body: new URLSearchParams({ email: 'test@example.com' }).toString()
       });
@@ -43,7 +43,7 @@ describe('API Tests', () => {
     it('should return 400 if login fails', async () => {
       vi.mocked(auth.useKey).mockRejectedValue(new Error('Invalid credentials'));
 
-      const request = new Request('http://localhost/api/login', {
+      const request = new Request('https://test.libertyrunningclub.com/api/login', {
         method: 'POST',
         body: new URLSearchParams({ email: 'test@example.com', password: 'password' }).toString()
       });
@@ -61,7 +61,7 @@ describe('API Tests', () => {
       vi.mocked(db.query.users.findFirst).mockResolvedValue({ id: '123', isAdmin: false } as any);
       vi.mocked(auth.createSession).mockResolvedValue({} as any);
 
-      const request = new Request('http://localhost/api/login', {
+      const request = new Request('https://test.libertyrunningclub.com/api/login', {
         method: 'POST',
         body: new URLSearchParams({ email: 'test@example.com', password: 'password' }).toString()
       });
@@ -77,7 +77,7 @@ describe('API Tests', () => {
 
   describe('Register API', () => {
     it('should return 400 if email or password is missing', async () => {
-      const request = new Request('http://localhost/api/register', {
+      const request = new Request('https://test.libertyrunningclub.com/api/register', {
         method: 'POST',
         body: new URLSearchParams({ email: 'test@example.com' }).toString()
       });
@@ -90,7 +90,7 @@ describe('API Tests', () => {
     it('should return 400 if registration fails', async () => {
       vi.mocked(auth.createUser).mockRejectedValue(new Error('Email already in use'));
 
-      const request = new Request('http://localhost/api/register', {
+      const request = new Request('https://test.libertyrunningclub.com/api/register', {
         method: 'POST',
         body: new URLSearchParams({ email: 'test@example.com', password: 'password' }).toString()
       });
@@ -107,7 +107,7 @@ describe('API Tests', () => {
       vi.mocked(auth.createUser).mockResolvedValue({ userId: '123' } as any);
       vi.mocked(auth.createSession).mockResolvedValue({} as any);
 
-      const request = new Request('http://localhost/api/register', {
+      const request = new Request('https://test.libertyrunningclub.com/api/register', {
         method: 'POST',
         body: new URLSearchParams({ email: 'test@example.com', password: 'password' }).toString()
       });
