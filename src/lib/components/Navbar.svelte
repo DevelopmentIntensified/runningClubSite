@@ -49,6 +49,10 @@
       href: '/season-photos',
       label: 'Season Photos'
     });
+    navItems.push({
+      href: '/forms',
+      label: 'Forms'
+    });
   // }
 
   const adminItems = [{ href: '/admin/users', label: 'Admin' }];

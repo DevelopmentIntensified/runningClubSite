@@ -10,6 +10,7 @@ export const handle: Handle = async ({ event, resolve }) => {
       || event.url.pathname.includes('/groupme') 
       || event.url.pathname.includes('/trainingplan')
       || event.url.pathname.includes('/season-photos')
+      || event.url.pathname.includes('/forms')
     ) {
       throw redirect(302, '/login');
       // return error(403, 'Unauthorized');

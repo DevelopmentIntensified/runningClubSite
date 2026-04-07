@@ -114,6 +114,19 @@ export const records = pgTable('records', {
   created_at: timestamp('created_at').defaultNow().notNull()
 });
 
+export const forms = pgTable('forms', {
+  id: serial('id').primaryKey(),
+  title: text('title').notNull(),
+  description: text('description'),
+  externalUrl: text('external_url').notNull(),
+  embedCode: text('embed_code'),
+  active: boolean('active').default(true).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  createdBy: integer('created_by')
+    .notNull()
+    .references(() => users.id)
+});
+
 export type Session = typeof sessions.$inferSelect;
 
 export type Records = typeof records.$inferSelect;
