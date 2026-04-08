@@ -1,5 +1,6 @@
 import { db } from '$lib/server/db';
 import { alumniNewsletter } from '$lib/server/db/schema';
+import { eq } from 'drizzle-orm';
 import { Resend } from 'resend';
 import { fail } from '@sveltejs/kit';
 import type { Actions } from './$types';
@@ -28,7 +29,7 @@ export const actions: Actions = {
     }
 
     try {
-      const existing = await db.select().from(alumniNewsletter).where(require('drizzle-orm').eq(alumniNewsletter.email, email));
+      const existing = await db.select().from(alumniNewsletter).where(eq(alumniNewsletter.email, email));
       if (existing.length > 0) {
         return fail(400, { message: 'This email is already signed up for the alumni newsletter', error: 'already_signed_up' });
       }
