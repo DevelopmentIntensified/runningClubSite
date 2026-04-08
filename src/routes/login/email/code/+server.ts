@@ -8,9 +8,10 @@ import { deleteCode, deleteDeadCodes, getCode } from '$lib/actions/codes';
 
 export const POST: RequestHandler = async function(event) {
   const siteUrl = getUrl();
-  const redirectUrl = new URL(siteUrl + '/login');
-  redirectUrl.searchParams.set('error', 'The code incorrect. Please try again');
-  const code = (await event.request.json()).code
+  const body = await event.request.json();
+  const code = body.code;
+  const redirectUrl = body.redirectUrl || '/groupme';
+  
   console.warn("DEBUGPRINT[1]: +server.ts:14: code=", code)
 
   await deleteDeadCodes()
@@ -48,10 +49,12 @@ export const POST: RequestHandler = async function(event) {
 
     let headers = new Headers();
     headers.append('Set-Cookie', sessionCookie.serialize());
+    headers.append('Set-Cookie', `redirectUrl=; path=/; max-age=0`);
 
     let result = new Response(null, {
       status: 200,
-      headers
+      headers,
+      redirect: redirectUrl
     });
 
     await deleteCode(code)

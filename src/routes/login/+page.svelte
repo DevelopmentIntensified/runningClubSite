@@ -8,20 +8,21 @@
   let code = '';
   let waiting = false;
   let privacyAccepted = false;
+  let redirectUrl = '/groupme';
 
   async function handleCodeCheck() {
     waiting = true;
     const res = await fetch('/login/email/code', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ code })
+      body: JSON.stringify({ code, redirectUrl })
     });
 
     if (res.status === 500) {
       const json = await res.json();
       error = json.error;
     } else {
-      await goto('/groupme');
+      await goto(redirectUrl);
       location.reload();
     }
     waiting = false;
@@ -55,6 +56,15 @@
     const params = new URLSearchParams(window.location.search);
     if (params.has('error')) {
       error = params.get('error') as string;
+    }
+    if (params.has('redirectUrl')) {
+      redirectUrl = params.get('redirectUrl') as string;
+      document.cookie = `redirectUrl=${encodeURIComponent(redirectUrl)}; path=/; max-age=300`;
+    } else {
+      const match = document.cookie.match(/redirectUrl=([^;]+)/);
+      if (match) {
+        redirectUrl = decodeURIComponent(match[1]);
+      }
     }
   });
 </script>

@@ -12,8 +12,8 @@ export const handle: Handle = async ({ event, resolve }) => {
       || event.url.pathname.includes('/season-photos')
       || event.url.pathname.includes('/forms')
     ) {
-      throw redirect(302, '/login');
-      // return error(403, 'Unauthorized');
+      const redirectUrl = event.url.pathname + event.url.search;
+      throw redirect(302, `/login?redirectUrl=${encodeURIComponent(redirectUrl)}`);
     }
     return resolve(event);
   }
