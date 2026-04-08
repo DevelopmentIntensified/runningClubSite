@@ -119,7 +119,6 @@ export const forms = pgTable('forms', {
   title: text('title').notNull(),
   description: text('description'),
   externalUrl: text('external_url').notNull(),
-  embed: boolean('embed').default(false).notNull(),
   active: boolean('active').default(true).notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   createdBy: integer('created_by')

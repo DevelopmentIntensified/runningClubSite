@@ -2,7 +2,7 @@ import { getForm } from '$lib/actions/forms';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ params }) => {
+export const load: PageServerLoad = async ({ params, locals }) => {
   const id = parseInt(params.id);
   const form = await getForm(id);
   
@@ -10,5 +10,7 @@ export const load: PageServerLoad = async ({ params }) => {
     throw error(404, 'Form not found');
   }
   
-  return { form };
+  const isAdmin = locals.user?.isAdmin ?? false;
+  
+  return { form, isAdmin };
 };
