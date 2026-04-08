@@ -51,7 +51,7 @@
 			</p>
 			<p class="mt-3 text-slate-700">
 				When we process data through Resend, Resend may process certain technical and delivery-related data as
-				described in their own policy. You can read Resend’s privacy policy here:
+				described in their own policy. You can read Resend's privacy policy here:
 				<a
 					href="https://resend.com/legal/privacy-policy"
 					class="font-medium text-primary-600 underline decoration-primary-300 underline-offset-2 hover:text-primary-800"
@@ -59,6 +59,14 @@
 					rel="noopener noreferrer"
 					>https://resend.com/legal/privacy-policy</a
 				>.
+			</p>
+
+			<h2 class="mt-8 text-xl font-semibold text-slate-900">Alumni Newsletter Signup</h2>
+			<p class="mt-3 text-slate-700">
+				When you sign up for our alumni newsletter, we collect your first name, last name, and email address. This information is stored in our database and added to our alumni email list via Resend.
+			</p>
+			<p class="mt-3 text-slate-700">
+				We use this information to send you alumni-specific updates, event invitations, and club news. You can unsubscribe from alumni emails at any time using the unsubscribe link in any email we send.
 			</p>
 
 			<h2 class="mt-8 text-xl font-semibold text-slate-900">How we use your information</h2>

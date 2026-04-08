@@ -126,6 +126,14 @@ export const forms = pgTable('forms', {
     .references(() => users.id)
 });
 
+export const alumniNewsletter = pgTable('alumni_newsletter', {
+  id: serial('id').primaryKey(),
+  firstName: text('first_name').notNull(),
+  lastName: text('last_name').notNull(),
+  email: text('email').notNull().unique(),
+  createdAt: timestamp('created_at').defaultNow().notNull()
+});
+
 export type Session = typeof sessions.$inferSelect;
 
 export type Records = typeof records.$inferSelect;

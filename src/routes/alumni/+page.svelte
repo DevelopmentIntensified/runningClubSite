@@ -14,8 +14,13 @@
     Are you one of our alumni? Don't see yourself here? Feel free to <a class="text-primary-700 hover:text-primary-800" href="/contact">Contact us</a> and ask us to add you. You should also join our
     <a href="https://alumnicommunity.liberty.edu/groups/92/feed" class="text-primary-700 hover:text-primary-800">Alumni Group</a>. We look forward to seeing you there!
   </h3>
+  <p class="mt-4 text-center">
+    <a href="/alumni-newsletter" class="inline-block rounded-lg bg-primary-600 px-6 py-3 text-white font-medium hover:bg-primary-700">
+      Sign Up for Alumni Newsletter
+    </a>
+  </p>
 
-  <div class="grid gap-8 mt-3 md:grid-cols-2 lg:grid-cols-3">
+  <div class="grid gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3">
     {#each data.alumni as alumnus}
       <div class="overflow-hidden rounded-lg bg-white shadow-lg">
         {#if alumnus.imageUrl}
