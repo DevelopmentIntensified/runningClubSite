@@ -20,7 +20,7 @@ export const actions: Actions = {
     const title = formData.get('title') as string;
     const description = formData.get('description') as string;
     const externalUrl = formData.get('externalUrl') as string;
-    const embedCode = formData.get('embedCode') as string;
+    const embed = formData.get('embed') === 'on';
     const active = formData.get('active') === 'on';
 
     if (!title || !externalUrl) {
@@ -31,7 +31,7 @@ export const actions: Actions = {
       title,
       description,
       externalUrl,
-      embedCode: embedCode || null,
+      embed,
       active
     });
 

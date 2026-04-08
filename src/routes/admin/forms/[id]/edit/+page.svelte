@@ -58,17 +58,15 @@
             />
           </div>
 
-          <div>
-            <label for="embedCode" class="block text-sm font-medium text-gray-700">Embed Code (optional)</label>
-            <textarea
-              id="embedCode"
-              name="embedCode"
-              rows="4"
-              class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
-            >{formData.embedCode || ''}</textarea>
-            <p class="mt-2 text-sm text-gray-500">
-              If provided, users will see an embedded version of the form on our site.
-            </p>
+          <div class="flex items-center">
+            <input
+              type="checkbox"
+              id="embed"
+              name="embed"
+              checked={formData.embed}
+              class="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+            />
+            <label for="embed" class="ml-2 block text-sm text-gray-900">Embed form on page</label>
           </div>
 
           <div class="flex items-center">

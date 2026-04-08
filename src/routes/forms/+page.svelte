@@ -2,6 +2,13 @@
   import type { PageData } from './$types';
 
   export let data: PageData;
+
+  function getEmbedUrl(url: string): string {
+    if (url.includes('docs.google.com/forms')) {
+      return url.replace('/viewform', '/embed');
+    }
+    return '';
+  }
 </script>
 
 <svelte:head>
@@ -26,12 +33,31 @@
               <p class="mt-2 text-sm text-gray-600">{form.description}</p>
             {/if}
             
-            {#if form.embedCode}
-              <div class="mt-4">
-                <div class="embed-container">
-                  {@html form.embedCode}
+            {#if form.embed}
+              {@const embedUrl = getEmbedUrl(form.externalUrl)}
+              {#if embedUrl}
+                <div class="mt-4">
+                  <iframe 
+                    src={embedUrl}
+                    class="w-full min-h-[500px] border-0"
+                    title={form.title}
+                  ></iframe>
                 </div>
-              </div>
+              {:else}
+                <div class="mt-4">
+                  <a
+                    href={form.externalUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center text-primary-600 hover:text-primary-900"
+                  >
+                    Open Form
+                    <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                </div>
+              {/if}
             {:else}
               <div class="mt-4">
                 <a
@@ -59,11 +85,3 @@
     </div>
   </div>
 </div>
-
-<style>
-  .embed-container :global(iframe) {
-    width: 100%;
-    min-height: 500px;
-    border: none;
-  }
-</style>
