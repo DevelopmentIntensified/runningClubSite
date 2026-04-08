@@ -1,6 +1,9 @@
 import { getUser, updateUser } from '$lib/actions/users';
 import { fail, redirect } from '@sveltejs/kit';
+import { Resend } from 'resend';
 import type { PageServerLoad, Actions } from './$types';
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const load: PageServerLoad = async ({ params }) => {
   const User = await getUser(parseInt(params.id));
@@ -26,9 +29,25 @@ export const actions: Actions = {
     if (email) updateData.email = email;
     if (isAdmin) updateData.isAdmin = isAdmin === 'true';
 
+    const existingUser = await getUser(parseInt(params.id));
+    
     const updatedUser = await updateUser(parseInt(params.id), updateData);
 
     if (updatedUser) {
+      if (existingUser && existingUser.email !== email && email) {
+        try {
+          await resend.contacts.delete({
+            email: existingUser.email,
+            audienceId: '5046fe42-78bf-469f-8252-add00f568bf9'
+          });
+          await resend.contacts.create({
+            email,
+            audienceId: '5046fe42-78bf-469f-8252-add00f568bf9'
+          });
+        } catch (resendError) {
+          console.error('Resend sync error:', resendError);
+        }
+      }
       throw redirect(302, '/admin/users');
     } else {
       return fail(500, { message: 'Failed to update User' });
