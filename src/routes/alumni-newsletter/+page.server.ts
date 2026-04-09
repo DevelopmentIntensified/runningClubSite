@@ -45,7 +45,8 @@ export const actions: Actions = {
         await resend.contacts.create({
           email,
           firstName,
-          lastName
+          lastName,
+          segments: ['5046fe42-78bf-469f-8252-add00f568bf9']
         });
 
         await resend.emails.send({
