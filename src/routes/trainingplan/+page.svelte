@@ -24,6 +24,36 @@
     </div>
   </div>
 
+  <div class="overflow-hidden rounded-2xl bg-white shadow-xl p-6">
+      <p class="mb-6 text-lg">
+We're excited to offer training for the upcoming XC season! Whether you are:
+            </p>
+      <ol class="mb-8 list-inside list-disc text-lg">
+        <li>A former NCAA athlete who wants to continue competing</li>
+        <li>Just Starting to run</li>
+        <li>Training for a marathon, half marathon, or any other distance</li>
+        <li>
+          Gearing up for cross-country (XC) this fall, we have plenty of competitive opportunities
+        </li>
+        <li>Trying to walk on to the NCAA team</li>
+      </ol>
+      <p class="mb-6 text-lg">
+       If you have any questions, DM George Crowder, Jill Crunkilton, or Evan O'Connor on groupme!
+            </p>
+      <div class="mt-6 w-full">
+        <iframe 
+          src="https://docs.google.com/forms/d/e/1FAIpQLSdYpov_P1dT_fnmX4S6CEEqdwHx2KCBMKx4zqwne1t3LzdhZA/viewform?embedded=true"
+          class="h-[800px] w-full border-0"
+          title="Training Plan Signup"
+        >
+          Loading...
+        </iframe>
+      </div>
+    </div>
+  </div>
+    </div>
+  </div>
+
   <div class="overflow-hidden rounded-2xl bg-white shadow-xl">
       <p class="mb-6 text-lg">
 We’re excited to offer training for the upcoming XC season! Whether you are:
