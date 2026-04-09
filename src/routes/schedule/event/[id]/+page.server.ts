@@ -1,4 +1,5 @@
 import type { PageServerLoad } from './$types';
+import { error } from '@sveltejs/kit';
 import { db } from '$lib/server/db';
 import { events } from '$lib/server/db/schema';
 import { eq } from 'drizzle-orm';
@@ -10,12 +11,18 @@ export const load: PageServerLoad = async (e) => {
     .where(eq(events.id, Number(e.params.id)))
     .orderBy(events.start);
 
+  const eventData = eventsData[0];
+  
+  if (!eventData) {
+    throw error(404, 'Event not found');
+  }
+
   return {
-    event: eventsData.map((e) => ({
-      date: new Date(e.start),
-      ...e,
-      start: new Date(e.start),
-      end: new Date(e.end),
-    }))[0]
+    event: {
+      date: new Date(eventData.start),
+      ...eventData,
+      start: new Date(eventData.start),
+      end: new Date(eventData.end),
+    }
   };
 };
