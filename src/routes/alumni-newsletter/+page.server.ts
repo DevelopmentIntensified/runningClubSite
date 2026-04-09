@@ -3,9 +3,10 @@ import { alumniNewsletter } from '$lib/server/db/schema';
 import { eq } from 'drizzle-orm';
 import { Resend } from 'resend';
 import { fail } from '@sveltejs/kit';
+import { RESENDAPIKEY, CLUBEMAIL } from '$env/static/private';
 import type { Actions } from './$types';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(RESENDAPIKEY);
 
 export const actions: Actions = {
   default: async ({ request }) => {
@@ -44,8 +45,26 @@ export const actions: Actions = {
         await resend.contacts.create({
           email,
           firstName,
-          lastName,
-          audienceId: '5046fe42-78bf-469f-8252-add00f568bf9'
+          lastName
+        });
+
+        await resend.emails.send({
+          from: `Liberty Running Club <${CLUBEMAIL}>`,
+          to: [email],
+          subject: 'Welcome to the Liberty Running Club Alumni Newsletter!',
+          html: `
+            <p>Hi ${firstName},</p>
+            <p>Welcome to the Liberty Running Club Alumni Newsletter! We're excited to have you as part of our alumni community.</p>
+            <p>You'll receive updates about:</p>
+            <ul>
+              <li>Alumni events and reunions</li>
+              <li>Club news and achievements</li>
+              <li>Upcoming races and competitions</li>
+              <li>Opportunities to stay connected with fellow alumni</li>
+            </ul>
+            <p>Go Flames!</p>
+            <p>- Liberty Running Club</p>
+          `
         });
       } catch (resendError) {
         console.error('Resend error:', resendError);

@@ -1,9 +1,10 @@
 import { getUser, updateUser } from '$lib/actions/users';
 import { fail, redirect } from '@sveltejs/kit';
 import { Resend } from 'resend';
+import { RESENDAPIKEY } from '$env/static/private';
 import type { PageServerLoad, Actions } from './$types';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(RESENDAPIKEY);
 
 export const load: PageServerLoad = async ({ params }) => {
   const User = await getUser(parseInt(params.id));
@@ -37,12 +38,10 @@ export const actions: Actions = {
       if (existingUser && existingUser.email !== email && email) {
         try {
           await resend.contacts.delete({
-            email: existingUser.email,
-            audienceId: '5046fe42-78bf-469f-8252-add00f568bf9'
+            email: existingUser.email
           });
           await resend.contacts.create({
-            email,
-            audienceId: '5046fe42-78bf-469f-8252-add00f568bf9'
+            email
           });
         } catch (resendError) {
           console.error('Resend sync error:', resendError);
