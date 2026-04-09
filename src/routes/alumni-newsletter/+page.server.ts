@@ -53,17 +53,26 @@ export const actions: Actions = {
           to: [email],
           subject: 'Welcome to the Liberty Running Club Alumni Newsletter!',
           html: `
-            <p>Hi ${firstName},</p>
-            <p>Welcome to the Liberty Running Club Alumni Newsletter! We're excited to have you as part of our alumni community.</p>
-            <p>You'll receive updates about:</p>
-            <ul>
-              <li>Alumni events and reunions</li>
-              <li>Club news and achievements</li>
-              <li>Upcoming races and competitions</li>
-              <li>Opportunities to stay connected with fellow alumni</li>
-            </ul>
-            <p>Go Flames!</p>
-            <p>- Liberty Running Club</p>
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+              <div style="text-align: center; margin-bottom: 30px;">
+                <img src="https://www.libertyrunningclub.com/logo.png" alt="Liberty Running Club" style="max-width: 200px; height: auto;">
+              </div>
+              <p style="font-size: 18px;">Hi ${firstName},</p>
+              <p style="font-size: 16px; line-height: 1.6;">Welcome to the Liberty Running Club Alumni Newsletter! We're excited to have you as part of our alumni community.</p>
+              <p style="font-size: 16px; line-height: 1.6; margin-top: 20px;">You'll receive updates about:</p>
+              <ul style="font-size: 16px; line-height: 1.8;">
+                <li>Alumni events and reunions</li>
+                <li>Club news and achievements</li>
+                <li>Upcoming races and competitions</li>
+                <li>Opportunities to stay connected with fellow alumni</li>
+              </ul>
+              <div style="background-color: #f5f5f5; padding: 20px; border-radius: 8px; margin: 30px 0; text-align: center; font-style: italic; font-size: 14px;">
+                <p>"Have I not commanded you? Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go."</p>
+                <p style="font-weight: bold; margin-top: 10px;">- Joshua 1:9</p>
+              </div>
+              <p style="font-size: 16px;">Go Flames!</p>
+              <p style="font-size: 14px; color: #666;">- Liberty Running Club</p>
+            </div>
           `
         });
       } catch (resendError) {
