@@ -1,4 +1,5 @@
 import { getUser, updateUser } from '$lib/actions/users';
+import { deleteUserSessions } from '$lib/actions/sessions';
 import { fail, redirect } from '@sveltejs/kit';
 import { Resend } from 'resend';
 import { RESENDAPIKEY } from '$env/static/private';
@@ -31,10 +32,13 @@ export const actions: Actions = {
     if (isAdmin) updateData.isAdmin = isAdmin === 'true';
 
     const existingUser = await getUser(parseInt(params.id));
+    const userId = parseInt(params.id);
     
-    const updatedUser = await updateUser(parseInt(params.id), updateData);
+    const updatedUser = await updateUser(userId, updateData);
 
     if (updatedUser) {
+      await deleteUserSessions(userId);
+      
       if (existingUser && existingUser.email !== email && email) {
         try {
           await resend.contacts.delete({
