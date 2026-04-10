@@ -5,6 +5,7 @@ import { users } from '$lib/server/db/schema';
 import { db } from '$lib/server/db/';
 import { eq } from 'drizzle-orm';
 import { deleteCode, deleteDeadCodes, getCode } from '$lib/actions/codes';
+import { deleteExpiredSessions, deleteUserSessions } from '$lib/actions/sessions';
 import { Resend } from 'resend';
 import { RESENDAPIKEY } from '$env/static/private';
 import { updateUser } from '$lib/actions/users';
@@ -20,7 +21,8 @@ export const POST: RequestHandler = async function(event) {
   
   console.warn("DEBUGPRINT[1]: +server.ts:14: code=", code)
 
-  await deleteDeadCodes()
+  await deleteDeadCodes();
+  await deleteExpiredSessions();
 
   const codeToCheck = await getCode(code)
   if (!codeToCheck) {
@@ -59,6 +61,7 @@ export const POST: RequestHandler = async function(event) {
       }
     } else {
       await updateUser(userAccount[0].id, { lastLogin: new Date() });
+      await deleteUserSessions(userAccount[0].id);
     }
 
     const session = await lucia.createSession(userAccount[0].id.toString(), {});
