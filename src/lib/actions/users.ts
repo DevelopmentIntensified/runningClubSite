@@ -1,5 +1,5 @@
 import { db } from '$lib/server/db';
-import { users, sessions, type User } from '$lib/server/db/schema';
+import { users, type User } from '$lib/server/db/schema';
 import { eq, asc, desc } from 'drizzle-orm';
 
 export async function getUsers(sortBy: 'email' | 'createdAt' | 'lastLogin' = 'email') {
@@ -33,6 +33,5 @@ export async function updateUser(id: number, data: Partial<Omit<User, 'id'>>) {
 }
 
 export async function deleteUser(id: number) {
-  await db.delete(sessions).where(eq(sessions.userId, id));
   await db.delete(users).where(eq(users.id, id));
 }
