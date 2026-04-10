@@ -26,10 +26,17 @@
 
   <div class="overflow-hidden rounded-2xl bg-white shadow-xl p-6">
     <p class="mb-6 text-lg">
-      Sign up for our summer training program! Whether you're looking to maintain your fitness, prepare for fall racing, or just stay active during the summer months, we've got you covered.
+      We're excited to offer individualized summer training. Whether you are:
     </p>
-    <p class="mb-6 text-lg">
-      If you have any questions, DM George Crowder, Jill Crunkilton, or Evan O'Connor on groupme!
+    <ul class="mb-8 list-disc pl-8 text-lg">
+      <li>Just Starting to run</li>
+      <li>A former NCAA athlete who wants to continue competing</li>
+      <li>Training for a marathon, half marathon, or any other distance</li>
+      <li>Gearing up for cross-country (XC) this fall (we have plenty of competitive opportunities)</li>
+      <li>Trying to walk on to the NCAA team</li>
+    </ul>
+    <p class="mb-4 text-lg">
+      Click the link below to get started. The form will take about 30-40 minutes. If you have any questions, DM George Crowder, Jill Crunkilton, or Evan O'Connor on groupme!
     </p>
     <div class="mt-6 w-full">
       <iframe 
