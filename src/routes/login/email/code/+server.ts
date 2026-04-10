@@ -5,6 +5,11 @@ import { users } from '$lib/server/db/schema';
 import { db } from '$lib/server/db/';
 import { eq } from 'drizzle-orm';
 import { deleteCode, deleteDeadCodes, getCode } from '$lib/actions/codes';
+import { Resend } from 'resend';
+import { RESENDAPIKEY } from '$env/static/private';
+
+const resend = new Resend(RESENDAPIKEY);
+const GENERAL_SEGMENT_ID = '708d2ae5-c8c6-41b8-94d4-8a9693b237c9';
 
 export const POST: RequestHandler = async function(event) {
   const siteUrl = getUrl();
@@ -42,6 +47,15 @@ export const POST: RequestHandler = async function(event) {
         })
         .returning({ id: users.id });
       userAccount = [{ id: ids[0].id, email, isAdmin: false }];
+
+      try {
+        await resend.contacts.create({
+          email,
+          segments: [GENERAL_SEGMENT_ID]
+        });
+      } catch (resendError) {
+        console.error('Resend contact create error:', resendError);
+      }
     }
 
     const session = await lucia.createSession(userAccount[0].id.toString(), {});
