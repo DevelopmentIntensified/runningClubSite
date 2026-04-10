@@ -5,12 +5,18 @@ import { users } from '$lib/server/db/schema';
 import { db } from '$lib/server/db/';
 import { eq } from 'drizzle-orm';
 import { deleteCode, deleteDeadCodes, getCode } from '$lib/actions/codes';
+import { Resend } from 'resend';
+import { RESENDAPIKEY } from '$env/static/private';
+
+const resend = new Resend(RESENDAPIKEY);
+const GENERAL_SEGMENT_ID = '708d2ae5-c8c6-41b8-94d4-8a9693b237c9';
 
 export const POST: RequestHandler = async function(event) {
   const siteUrl = getUrl();
-  const redirectUrl = new URL(siteUrl + '/login');
-  redirectUrl.searchParams.set('error', 'The code incorrect. Please try again');
-  const code = (await event.request.json()).code
+  const body = await event.request.json();
+  const code = body.code;
+  const redirectUrl = body.redirectUrl || '/groupme';
+  
   console.warn("DEBUGPRINT[1]: +server.ts:14: code=", code)
 
   await deleteDeadCodes()
@@ -41,6 +47,15 @@ export const POST: RequestHandler = async function(event) {
         })
         .returning({ id: users.id });
       userAccount = [{ id: ids[0].id, email, isAdmin: false }];
+
+      try {
+        await resend.contacts.create({
+          email,
+          segments: [GENERAL_SEGMENT_ID]
+        });
+      } catch (resendError) {
+        console.error('Resend contact create error:', resendError);
+      }
     }
 
     const session = await lucia.createSession(userAccount[0].id.toString(), {});
@@ -48,10 +63,12 @@ export const POST: RequestHandler = async function(event) {
 
     let headers = new Headers();
     headers.append('Set-Cookie', sessionCookie.serialize());
+    headers.append('Set-Cookie', `redirectUrl=; path=/; max-age=0`);
 
     let result = new Response(null, {
       status: 200,
-      headers
+      headers,
+      redirect: redirectUrl
     });
 
     await deleteCode(code)
