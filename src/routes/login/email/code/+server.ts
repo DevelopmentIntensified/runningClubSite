@@ -52,7 +52,7 @@ export const POST: RequestHandler = async function(event) {
       try {
         await resend.contacts.create({
           email,
-          segments: [GENERAL_SEGMENT_ID]
+          audienceId: GENERAL_SEGMENT_ID
         });
       } catch (resendError) {
         console.error('Resend contact create error:', resendError);

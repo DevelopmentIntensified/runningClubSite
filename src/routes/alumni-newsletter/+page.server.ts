@@ -46,7 +46,7 @@ export const actions: Actions = {
           email,
           firstName,
           lastName,
-          segments: ['5046fe42-78bf-469f-8252-add00f568bf9']
+          audienceId: '5046fe42-78bf-469f-8252-add00f568bf9'
         });
 
         await resend.emails.send({
