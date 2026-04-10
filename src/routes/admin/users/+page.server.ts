@@ -2,9 +2,10 @@ import { getUsers, deleteUser } from '$lib/actions/users';
 import { fail } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
 
-export const load: PageServerLoad = async () => {
-  const users = await getUsers();
-  return { users };
+export const load: PageServerLoad = async ({ url }) => {
+  const sortBy = (url.searchParams.get('sort') as 'email' | 'createdAt' | 'lastLogin') || 'email';
+  const users = await getUsers(sortBy);
+  return { users, sortBy };
 };
 
 export const actions: Actions = {

@@ -7,6 +7,7 @@ import { eq } from 'drizzle-orm';
 import { deleteCode, deleteDeadCodes, getCode } from '$lib/actions/codes';
 import { Resend } from 'resend';
 import { RESENDAPIKEY } from '$env/static/private';
+import { updateUser } from '$lib/actions/users';
 
 const resend = new Resend(RESENDAPIKEY);
 const GENERAL_SEGMENT_ID = '708d2ae5-c8c6-41b8-94d4-8a9693b237c9';
@@ -56,6 +57,8 @@ export const POST: RequestHandler = async function(event) {
       } catch (resendError) {
         console.error('Resend contact create error:', resendError);
       }
+    } else {
+      await updateUser(userAccount[0].id, { lastLogin: new Date() });
     }
 
     const session = await lucia.createSession(userAccount[0].id.toString(), {});

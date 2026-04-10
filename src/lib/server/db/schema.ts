@@ -3,7 +3,9 @@ import { pgTable, serial, text, integer, numeric, timestamp, boolean } from 'dri
 export const users = pgTable('user', {
   id: serial('id').primaryKey(),
   isAdmin: boolean('is_admin').default(false).notNull(),
-  email: text('email').notNull().unique()
+  email: text('email').notNull().unique(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  lastLogin: timestamp('last_login')
 });
 
 export const sessions = pgTable('session', {

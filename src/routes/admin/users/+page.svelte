@@ -1,5 +1,6 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
+  import { goto } from '$app/navigation';
   import type { PageData } from './$types';
 
   let { data }: { data: PageData } = $props();
@@ -13,8 +14,23 @@
         user.email.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
-    return result.sort((a, b) => a.email.localeCompare(b.email));
+    return result;
   });
+
+  function handleSort(sortBy: string) {
+    const url = new URL(window.location.href);
+    url.searchParams.set('sort', sortBy);
+    goto(url.toString());
+  }
+
+  function formatDate(date: Date | null | undefined): string {
+    if (!date) return 'Never';
+    return new Date(date).toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'short', 
+      day: 'numeric' 
+    });
+  }
 </script>
 
 <svelte:head>
@@ -38,6 +54,15 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
         </div>
+        <select
+          value={data.sortBy}
+          onchange={(e) => handleSort((e.target as HTMLSelectElement).value)}
+          class="rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-700 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20"
+        >
+          <option value="email">Sort by Email</option>
+          <option value="createdAt">Sort by Date Created</option>
+          <option value="lastLogin">Sort by Last Login</option>
+        </select>
       </div>
     </div>
   </div>
@@ -56,6 +81,8 @@
           <tr class="border-b border-slate-200 bg-slate-50/50">
             <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Email</th>
             <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Admin</th>
+            <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Date Created</th>
+            <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Last Login</th>
             <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Actions</th>
           </tr>
         </thead>
@@ -68,6 +95,8 @@
                   {user.isAdmin ? 'Yes' : 'No'}
                 </span>
               </td>
+              <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-600">{formatDate(user.createdAt)}</td>
+              <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-600">{formatDate(user.lastLogin)}</td>
               <td class="whitespace-nowrap px-6 py-4 text-sm">
                 <div class="flex items-center gap-3">
                   <a href="/admin/users/{user.id}/edit" class="text-primary-600 hover:text-primary-800 font-medium text-xs">Edit</a>

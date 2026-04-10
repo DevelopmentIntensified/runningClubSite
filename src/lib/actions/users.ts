@@ -1,9 +1,20 @@
 import { db } from '$lib/server/db';
 import { users, type User } from '$lib/server/db/schema';
-import { eq } from 'drizzle-orm';
+import { eq, asc, desc } from 'drizzle-orm';
 
-export async function getUsers() {
-  return await db.select().from(users);
+export async function getUsers(sortBy: 'email' | 'createdAt' | 'lastLogin' = 'email') {
+  let orderBy;
+  switch (sortBy) {
+    case 'createdAt':
+      orderBy = desc(users.createdAt);
+      break;
+    case 'lastLogin':
+      orderBy = desc(users.lastLogin);
+      break;
+    default:
+      orderBy = asc(users.email);
+  }
+  return await db.select().from(users).orderBy(orderBy);
 }
 
 export async function getUser(id: number) {
