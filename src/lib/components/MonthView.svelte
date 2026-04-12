@@ -11,7 +11,7 @@
 
   let deletingId: number | null = null;
   let hoveredEvent: CalendarEventView | null = null;
-  let hoverPosition: { x: number; y: number } = { x: 0, y: 0 };
+  let hoveredEventElement: HTMLElement | null = null;
 
   $: year = $currentDate.year;
   $: month = $currentDate.month;
@@ -89,13 +89,14 @@
     return `${baseUrl}&${params.toString()}`;
   }
 
-  function handleEventHover(event: CalendarEventView, e: MouseEvent) {
+  function handleEventHover(event: CalendarEventView, element: HTMLElement) {
     hoveredEvent = event;
-    hoverPosition = { x: e.clientX, y: e.clientY };
+    hoveredEventElement = element;
   }
 
   function handleEventLeave() {
     hoveredEvent = null;
+    hoveredEventElement = null;
   }
 </script>
 
@@ -172,7 +173,7 @@
                 class="min-w-0 flex-1"
               >
                 <div
-                  onmouseenter={(e) => handleEventHover(event, e)}
+                  onmouseenter={(e) => handleEventHover(event, e.currentTarget as HTMLElement)}
                   onmouseleave={handleEventLeave}
                   class="truncate rounded-md px-1.5 py-0.5 text-[10px] font-medium ring-1 sm:text-xs cursor-pointer hover:opacity-80 {chipClass(
                     event.type
@@ -239,10 +240,11 @@
   </div>
 </div>
 
-{#if hoveredEvent}
+{#if hoveredEvent && hoveredEventElement}
+  {@const rect = hoveredEventElement.getBoundingClientRect()}
   <div
     class="fixed z-50 rounded-lg border border-slate-200 bg-white p-4 shadow-xl"
-    style="left: {Math.min(hoverPosition.x + 10, window.innerWidth - 280)}px; top: {hoverPosition.y + 10}px; max-width: 260px;"
+    style="left: {rect.left}px; top: {rect.bottom + 8}px; min-width: {Math.max(rect.width, 200)}px;"
     onmouseenter={() => hoveredEvent = hoveredEvent}
     onmouseleave={handleEventLeave}
     role="tooltip"
