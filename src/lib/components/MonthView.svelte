@@ -167,19 +167,20 @@
         <div class="flex flex-col gap-1">
           {#each dayEvents as event}
             <div class="group flex min-w-0 items-center gap-1">
-              <button
-                onmouseenter={(e) => handleEventHover(event, e)}
-                onmouseleave={handleEventLeave}
-                class="min-w-0 flex-1 cursor-pointer"
+              <a
+                href={isAdmin ? `/admin/events/edit/${event.id}` : `/schedule/event/${event.id}`}
+                class="min-w-0 flex-1"
               >
                 <div
-                  class="truncate rounded-md px-1.5 py-0.5 text-[10px] font-medium ring-1 sm:text-xs {chipClass(
+                  onmouseenter={(e) => handleEventHover(event, e)}
+                  onmouseleave={handleEventLeave}
+                  class="truncate rounded-md px-1.5 py-0.5 text-[10px] font-medium ring-1 sm:text-xs cursor-pointer hover:opacity-80 {chipClass(
                     event.type
                   )}"
                 >
                   {event.title}
                 </div>
-              </button>
+              </a>
               {#if isAdmin}
                 <form
                   method="POST"
@@ -242,6 +243,9 @@
   <div
     class="fixed z-50 rounded-lg border border-slate-200 bg-white p-4 shadow-xl"
     style="left: {Math.min(hoverPosition.x + 10, window.innerWidth - 280)}px; top: {hoverPosition.y + 10}px; max-width: 260px;"
+    onmouseenter={() => hoveredEvent = hoveredEvent}
+    onmouseleave={handleEventLeave}
+    role="tooltip"
   >
     <a
       href={isAdmin ? `/admin/events/edit/${hoveredEvent.id}` : `/schedule/event/${hoveredEvent.id}`}

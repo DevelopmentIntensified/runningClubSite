@@ -135,7 +135,12 @@
       </a>
 
       {#if hoveredEvent === event.id}
-        <div class="absolute left-0 right-0 top-full z-10 mt-2 rounded-lg border border-slate-200 bg-white p-4 shadow-lg">
+        <div 
+          class="absolute left-0 right-0 top-full z-10 mt-2 rounded-lg border border-slate-200 bg-white p-4 shadow-lg"
+          onmouseenter={() => hoveredEvent = event.id}
+          onmouseleave={() => hoveredEvent = null}
+          role="tooltip"
+        >
           <h4 class="mb-2 font-semibold text-slate-900">{event.title}</h4>
           <p class="mb-1 text-sm text-slate-600">
             {event.start.toLocaleString(DateTime.DATETIME_FULL)}
