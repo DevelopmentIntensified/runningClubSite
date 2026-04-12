@@ -1,20 +1,14 @@
-import { handleUpload } from '@vercel/blob/client';
+import { handleUpload, type HandleUploadBody } from '@vercel/blob/client';
 import { error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { BLOB_READ_WRITE_TOKEN } from '$env/static/private';
 
 export const POST: RequestHandler = async ({ request }) => {
   try {
-    const body = await request.arrayBuffer();
-    
+    const body = (await request.json()) as HandleUploadBody;
+
     const jsonResponse = await handleUpload({
-      token: BLOB_READ_WRITE_TOKEN,
-      body: new ReadableStream({
-        start(controller) {
-          controller.enqueue(new Uint8Array(body));
-          controller.close();
-        }
-      }),
+      body,
+      request,
       onBeforeGenerateToken: async (pathname) => {
         const sessionId = request.cookies.get('session');
         if (!sessionId) {
