@@ -19,37 +19,22 @@
 </script>
 
 <svelte:head>
-  <title>Manage Season Photos - Liberty Running Club</title>
+  <title>Manage Season Photo Albums - Liberty Running Club</title>
 </svelte:head>
 
 <div class="rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
   <div class="border-b border-slate-200 bg-slate-50/50 px-6 py-4">
     <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-      <h2 class="text-xl font-semibold text-slate-800">Season Photos</h2>
-      
-      <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
-        <div class="relative">
-          <input
-            type="text"
-            bind:value={searchTerm}
-            placeholder="Search by title or season"
-            class="w-full rounded-lg border border-slate-200 bg-white px-4 py-2.5 pr-10 text-sm text-slate-700 placeholder-slate-400 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20 sm:w-64"
-          />
-          <svg class="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
-        </div>
-        
-        <a
-          href="/admin/season-photos/new"
-          class="inline-flex items-center justify-center gap-2 rounded-lg bg-primary-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:bg-primary-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
-        >
-          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-          </svg>
-          Add Photo Album
-        </a>
-      </div>
+      <h2 class="text-xl font-semibold text-slate-800">Season Photo Albums</h2>
+      <a
+        href="/admin/season-photos/new"
+        class="inline-flex items-center justify-center gap-2 rounded-lg bg-primary-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:bg-primary-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+      >
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+        </svg>
+        Add Album
+      </a>
     </div>
   </div>
 
@@ -65,6 +50,7 @@
       <table class="w-full">
         <thead>
           <tr class="border-b border-slate-200 bg-slate-50/50">
+            <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Preview</th>
             <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Title</th>
             <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Season</th>
             <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Actions</th>
@@ -73,6 +59,17 @@
         <tbody class="divide-y divide-slate-100">
           {#each filteredPhotos as photo (photo.id)}
             <tr class="hover:bg-slate-50/50 transition-colors">
+              <td class="whitespace-nowrap px-6 py-4">
+                {#if photo.imageUrl}
+                  <img src={photo.imageUrl} alt={photo.title} class="h-14 w-20 rounded-lg object-cover shadow-sm" />
+                {:else}
+                  <div class="h-14 w-20 rounded-lg bg-slate-100 flex items-center justify-center">
+                    <svg class="h-6 w-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                {/if}
+              </td>
               <td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-slate-700">{photo.title}</td>
               <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-600">{photo.season}</td>
               <td class="whitespace-nowrap px-6 py-4 text-sm">
