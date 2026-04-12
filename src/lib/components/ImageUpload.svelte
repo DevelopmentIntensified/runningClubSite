@@ -78,7 +78,7 @@
       />
       <button
         type="button"
-        on:click={handleClear}
+        onclick={handleClear}
         class="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1 text-xs hover:bg-red-600"
       >
         ✕
@@ -91,10 +91,10 @@
       class:bg-gray-50={!dragging}
       class:border-primary-500={dragging}
       class:bg-primary-50={dragging}
-      on:drop={handleDrop}
-      on:dragover={handleDragOver}
-      on:dragleave={handleDragLeave}
-      on:click={() => fileInput.click()}
+      ondrop={handleDrop}
+      ondragover={handleDragOver}
+      ondragleave={handleDragLeave}
+      onclick={() => fileInput.click()}
       role="button"
       tabindex="0"
     >
@@ -105,7 +105,7 @@
         {accept}
         {required}
         class="hidden"
-        on:change={handleInputChange}
+        onchange={handleInputChange}
       />
       {#if uploading}
         <p class="text-sm text-gray-500">Uploading...</p>

@@ -5,10 +5,8 @@ import { users } from '$lib/server/db/schema';
 import { db } from '$lib/server/db/';
 import { eq } from 'drizzle-orm';
 import { deleteCode, deleteDeadCodes, getCode } from '$lib/actions/codes';
-import { deleteExpiredSessions, deleteUserSessions } from '$lib/actions/sessions';
 import { Resend } from 'resend';
 import { RESENDAPIKEY } from '$env/static/private';
-import { updateUser } from '$lib/actions/users';
 
 const resend = new Resend(RESENDAPIKEY);
 const GENERAL_SEGMENT_ID = '708d2ae5-c8c6-41b8-94d4-8a9693b237c9';
@@ -21,8 +19,7 @@ export const POST: RequestHandler = async function(event) {
   
   console.warn("DEBUGPRINT[1]: +server.ts:14: code=", code)
 
-  await deleteDeadCodes();
-  await deleteExpiredSessions();
+  await deleteDeadCodes()
 
   const codeToCheck = await getCode(code)
   if (!codeToCheck) {
@@ -54,14 +51,11 @@ export const POST: RequestHandler = async function(event) {
       try {
         await resend.contacts.create({
           email,
-          audienceId: GENERAL_SEGMENT_ID
+          segments: [GENERAL_SEGMENT_ID]
         });
       } catch (resendError) {
         console.error('Resend contact create error:', resendError);
       }
-    } else {
-      await updateUser(userAccount[0].id, { lastLogin: new Date() });
-      await deleteUserSessions(userAccount[0].id);
     }
 
     const session = await lucia.createSession(userAccount[0].id.toString(), {});
