@@ -1,5 +1,4 @@
 <script lang="ts">
-  export let value = '';
   export let name = 'image';
   export let required = false;
   export let label = 'Image';
