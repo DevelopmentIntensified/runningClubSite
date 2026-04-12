@@ -18,7 +18,7 @@ export const actions: Actions = {
 
     let finalImageUrl = imageUrl;
     
-    if (!finalImageUrl && image.size > 0) {
+    if (!finalImageUrl && image && image.size > 0) {
       const { url } = await put(image.name, image, { access: "public", token: BLOB_READ_WRITE_TOKEN });
       finalImageUrl = url;
     }
