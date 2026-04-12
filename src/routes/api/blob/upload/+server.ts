@@ -1,6 +1,7 @@
 import { handleUpload } from '@vercel/blob/client';
 import { error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
+import { BLOB_READ_WRITE_TOKEN } from '$env/static/private';
 
 export const POST: RequestHandler = async ({ request }) => {
   try {
@@ -23,6 +24,7 @@ export const POST: RequestHandler = async ({ request }) => {
         return {
           allowedContentTypes: ['image/jpeg', 'image/png', 'image/webp', 'image/gif'],
           addRandomSuffix: true,
+          token: BLOB_READ_WRITE_TOKEN,
         };
       },
     });
