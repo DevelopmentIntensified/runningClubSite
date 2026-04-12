@@ -86,8 +86,12 @@
       <div class="min-h-[5.5rem] bg-slate-50/80 sm:min-h-[6.5rem]"></div>
     {/each}
     {#each days as day}
-      {@const date = DateTime.fromObject({ year, month, day }, { zone: 'America/New_York' }).toFormat('yyyy-MM-dd')}
-      {@const dayEvents = events.filter((event) => event.date.toFormat('yyyy-MM-dd') === date)}
+      {@const date = DateTime.fromObject({ year, month, day }, { zone: 'America/New_York' })}
+      {@const dayEvents = events.filter((event) => {
+        const eventStart = event.start.startOf('day');
+        const eventEnd = event.end.startOf('day');
+        return date >= eventStart && date <= eventEnd;
+      })}
       <div
         class="group min-h-[5.5rem] border-t border-transparent bg-white p-1.5 transition-colors hover:bg-slate-50/90 sm:min-h-[6.5rem] sm:p-2"
       >
@@ -202,7 +206,11 @@
       <h4 class="mb-2 font-semibold text-slate-900 hover:text-primary-600">{hoveredEvent.title}</h4>
     </a>
     <p class="mb-1 text-sm text-slate-600">
-      {hoveredEvent.start.toLocaleString(DateTime.DATETIME_FULL)}
+      {#if hoveredEvent.start.hasSame(hoveredEvent.end, 'day')}
+        {hoveredEvent.start.toLocaleString(DateTime.DATETIME_FULL)}
+      {:else}
+        {hoveredEvent.start.toLocaleString(DateTime.DATE_FULL)} - {hoveredEvent.end.toLocaleString(DateTime.DATE_FULL)}
+      {/if}
     </p>
     {#if hoveredEvent.location}
       <p class="mb-2 text-sm text-slate-600">{hoveredEvent.location}</p>
