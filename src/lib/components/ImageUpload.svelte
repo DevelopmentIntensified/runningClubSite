@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { upload } from '@vercel/blob/client';
+
   export let value = '';
   export let name = 'image';
   export let required = false;
@@ -7,14 +9,36 @@
 
   let fileInput: HTMLInputElement;
   let dragging = false;
+  let uploading = false;
   let error = '';
   let previewUrl = '';
+
+  async function handleFileUpload(file: File) {
+    if (!file) return;
+    
+    error = '';
+    uploading = true;
+
+    try {
+      const blob = await upload(file.name, file, {
+        access: 'public',
+        handleUploadUrl: '/api/blob/upload'
+      });
+      value = blob.url;
+      previewUrl = blob.url;
+    } catch (e) {
+      error = e instanceof Error ? e.message : 'Will upload on submit';
+      previewUrl = URL.createObjectURL(file);
+    } finally {
+      uploading = false;
+    }
+  }
 
   function handleDrop(e: DragEvent) {
     e.preventDefault();
     dragging = false;
     const file = e.dataTransfer?.files[0];
-    if (file) handleFile(file);
+    if (file) handleFileUpload(file);
   }
 
   function handleDragOver(e: DragEvent) {
@@ -26,20 +50,16 @@
     dragging = false;
   }
 
-  function handleFile(file: File) {
-    if (!file) return;
-    previewUrl = URL.createObjectURL(file);
-  }
-
   function handleInputChange(e: Event) {
     const target = e.target as HTMLInputElement;
     const file = target.files?.[0];
-    if (file) handleFile(file);
+    if (file) handleFileUpload(file);
   }
 
   function handleClear() {
     value = '';
     previewUrl = '';
+    error = '';
     if (fileInput) fileInput.value = '';
   }
 </script>
@@ -62,6 +82,9 @@
         ✕
       </button>
     </div>
+    {#if value}
+      <input type="hidden" name={name} value={value} />
+    {/if}
   {:else}
     <div
       class="mt-1 border-2 border-dashed rounded-md p-4 text-center cursor-pointer transition-colors"
@@ -85,11 +108,15 @@
         class="hidden"
         onchange={handleInputChange}
       />
-      <p class="text-sm text-gray-500">Click or drag image here</p>
+      {#if uploading}
+        <p class="text-sm text-gray-500">Uploading...</p>
+      {:else}
+        <p class="text-sm text-gray-500">Click or drag image here</p>
+      {/if}
     </div>
   {/if}
 
   {#if error}
-    <p class="mt-1 text-sm text-red-500">{error}</p>
+    <p class="mt-1 text-sm text-yellow-500">{error}</p>
   {/if}
 </div>
