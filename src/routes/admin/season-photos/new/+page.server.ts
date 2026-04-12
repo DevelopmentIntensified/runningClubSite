@@ -9,6 +9,7 @@ export const actions: Actions = {
     const title = formData.get('title') as string;
     const link = formData.get('link') as string;
     const season = formData.get('season') as string;
+    const imageUrl = formData.get('imageUrl') as string;
 
     if (!title || !link || !season) {
       return fail(400, { message: 'Title, link, and season are required' });
@@ -18,7 +19,8 @@ export const actions: Actions = {
       await db.insert(seasonImageLinks).values({
         title,
         link,
-        season
+        season,
+        imageUrl: imageUrl || null
       });
     } catch (error) {
       return fail(500, { message: 'Failed to create link' });

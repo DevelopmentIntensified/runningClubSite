@@ -44,7 +44,8 @@ export const seasonImageLinks = pgTable('seasonImageLinks', {
   title: text('title').notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   link: text('link').notNull(),
-  season: text('season').notNull()
+  season: text('season').notNull(),
+  imageUrl: text('imageUrl')
 });
 
 export const pageImages = pgTable('pageImages', {

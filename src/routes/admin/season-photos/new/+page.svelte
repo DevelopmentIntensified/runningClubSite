@@ -1,9 +1,11 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
+  import ImageUpload from '$lib/components/ImageUpload.svelte';
   import type { PageData } from './$types';
 
   export let data: PageData;
   let error = '';
+  let imageUrl = '';
 
   const seasons = [
     'Fall 2020',
@@ -20,7 +22,6 @@
     'Spring 2026',
     'Fall 2026',
     'Spring 2027',
-    'Fall 2027',
   ];
 </script>
 
@@ -70,6 +71,7 @@
               class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
             />
           </div>
+          <ImageUpload bind:value={imageUrl} name="imageUrl" label="Cover Image (optional)" />
           {#if error}
             <div class="text-sm text-red-500">{error}</div>
           {/if}
@@ -85,4 +87,4 @@
       </div>
     </div>
   </div>
-</div> 
+</div>
