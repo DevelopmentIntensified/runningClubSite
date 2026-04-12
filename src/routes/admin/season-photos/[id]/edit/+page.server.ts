@@ -17,6 +17,14 @@ export const load: PageServerLoad = async ({ params }) => {
 export const actions: Actions = {
   updateLink: async ({ request, params }) => {
     const formData = await request.formData();
+    console.log('=== UPDATE LINK ===');
+    console.log('title:', formData.get('title'));
+    console.log('link:', formData.get('link'));
+    console.log('season:', formData.get('season'));
+    console.log('image (file):', formData.get('image'));
+    console.log('imageUrl:', formData.get('imageUrl'));
+    console.log('currentImageUrl:', formData.get('currentImageUrl'));
+    
     const title = formData.get('title') as string | null;
     const linkValue = formData.get('link') as string | null;
     const season = formData.get('season') as string | null;
@@ -24,6 +32,9 @@ export const actions: Actions = {
     const imageUrl = formData.get('imageUrl') as string | null;
     const [currentLink] = await db.select().from(seasonImageLinks).where(eq(seasonImageLinks.id, parseInt(params.id)));
     const currentImageUrl = currentLink?.imageUrl || '';
+
+    console.log('Parsed imageFile:', imageFile, 'size:', imageFile?.size);
+    console.log('Parsed imageUrl:', imageUrl);
 
     const updateData: { title?: string; link?: string; season?: string; imageUrl?: string | null } = {};
 
