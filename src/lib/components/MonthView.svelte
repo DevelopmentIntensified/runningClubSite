@@ -90,7 +90,11 @@
       {@const dayEvents = events.filter((event) => {
         const eventStart = event.start.startOf('day');
         const eventEnd = event.end.startOf('day');
-        return date >= eventStart && date <= eventEnd;
+        if (isAdmin) {
+          return date >= eventStart && date <= eventEnd;
+        } else {
+          return date.hasSame(eventStart, 'day');
+        }
       })}
       <div
         class="group min-h-[5.5rem] border-t border-transparent bg-white p-1.5 transition-colors hover:bg-slate-50/90 sm:min-h-[6.5rem] sm:p-2"
