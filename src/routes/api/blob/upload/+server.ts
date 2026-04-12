@@ -5,10 +5,16 @@ import { BLOB_READ_WRITE_TOKEN } from '$env/static/private';
 
 export const POST: RequestHandler = async ({ request }) => {
   try {
+    const body = await request.arrayBuffer();
+    
     const jsonResponse = await handleUpload({
       token: BLOB_READ_WRITE_TOKEN,
-      body: request.body,
-      request,
+      body: new ReadableStream({
+        start(controller) {
+          controller.enqueue(new Uint8Array(body));
+          controller.close();
+        }
+      }),
       onBeforeGenerateToken: async (pathname) => {
         const sessionId = request.cookies.get('session');
         if (!sessionId) {
@@ -36,6 +42,7 @@ export const POST: RequestHandler = async ({ request }) => {
       }
     });
   } catch (err) {
+    console.error('Blob upload error:', err);
     const message = err instanceof Error ? err.message : 'Unknown error';
     return new Response(JSON.stringify({ error: message }), {
       status: 400,
