@@ -15,7 +15,6 @@
     description: string | null;
     location: string | null;
     created_at: Date;
-    date: Date;
     start: string | Date;
     end: string | Date;
   };
@@ -24,7 +23,7 @@
 
   let events: CalendarEventView[] = (data.events as ScheduleEventRow[]).map((e) => ({
     ...e,
-    date: DateTime.fromJSDate(e.date instanceof Date ? e.date : new Date(e.date)),
+    date: DateTime.fromJSDate(new Date(e.start)),
     start: DateTime.fromJSDate(new Date(e.start)),
     end: DateTime.fromJSDate(new Date(e.end))
   }));

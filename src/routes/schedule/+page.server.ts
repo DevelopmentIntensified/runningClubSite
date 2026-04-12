@@ -8,32 +8,10 @@ import { eq } from "drizzle-orm";
 
 export const load: PageServerLoad = async () => {
   const eventsData = await db.select().from(events).orderBy(events.start);
-  const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
-  const events2 = eventsData.flatMap((e) => {
-    e.start = new Date(e.start)
-    e.end = new Date(e.end)
-    if (e.start.getDate() === e.end.getDate()) {
-      return {
-        date: e.start,
-        ...e
-      }
-    }
-    const diffDays = Math.round(Math.abs((e.start.getTime() - e.end.getTime()) / oneDay));
-    const days = []
-
-    for (let i = 0; i <= diffDays; i++) {
-      days.push({
-        date: new Date(e.start.getTime() + (oneDay * i)),
-        ...e
-      })
-    }
-
-    return days
-  })
   const [image] = await db.select().from(pageImages).where(eq(pageImages.locationName, 'Schedule'));
 
   return {
-    events: events2,
+    events: eventsData,
     image
   };
 };
