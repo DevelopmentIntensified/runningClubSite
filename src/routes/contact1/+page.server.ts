@@ -1,14 +1,11 @@
-/**
- * @param {Request} request
- * @returns {Promise<Response>}
- */
 import { Resend } from 'resend';
-import type { Actions } from '../contact/$types';
 import { RESENDAPIKEY, CLUBEMAIL } from '$env/static/private';
+import type { Actions } from './$types';
+
 const resend = new Resend(RESENDAPIKEY);
 
 export const actions = {
-  default: async ({ request }) => {
+  default: async ({ request }: { request: Request }) => {
     const formData = await request.formData();
     const honeypot = formData.get('honeypot');
     const name = formData.get('name') as string;

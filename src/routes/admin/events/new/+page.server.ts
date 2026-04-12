@@ -6,28 +6,27 @@ import { DateTime } from 'luxon';
 export const actions: Actions = {
   createEvent: async ({ request }) => {
     const formData = await request.formData();
-    const title = formData.get('title');
-    const start = formData.get('start');
-    const end = formData.get('end');
-    const location = formData.get('location');
-    const type = formData.get('type');
+    const title = formData.get('title') as string;
+    const start = formData.get('start') as string;
+    const end = formData.get('end') as string;
+    const location = formData.get('location') as string;
+    const type = formData.get('type') as string;
     const description = formData.get('description') as string;
 
     if (!title || !start || !end || !location || !type) {
       return fail(400, { message: 'All fields are required' });
     }
-    const offset = formData.get("offset") as string
 
-    let start2 = DateTime.fromISO(start.replace(" ", "T")).setZone('America/New_York')
-    let end2 = DateTime.fromISO(end.replace(" ", "T")).setZone('America/New_York')
+    let start2 = DateTime.fromISO(start.replace(" ", "T")).setZone('America/New_York');
+    let end2 = DateTime.fromISO(end.replace(" ", "T")).setZone('America/New_York');
 
     const newEvent = await createEvent({
       description: description,
-      title: title.toString(),
+      title: title,
       start: start2.toString(),
       end: end2.toString(),
-      location: location.toString(),
-      type: type.toString()
+      location: location,
+      type: type
     });
 
     if (newEvent) {

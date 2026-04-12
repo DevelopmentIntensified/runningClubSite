@@ -15,7 +15,7 @@
         alumnus.graduationYear?.toString().includes(searchTerm)
       );
     }
-    return result.sort((a, b) => b.graduationYear - a.graduationYear);
+    return result.sort((a, b) => (b.graduationYear ?? 0) - (a.graduationYear ?? 0));
   });
 </script>
 

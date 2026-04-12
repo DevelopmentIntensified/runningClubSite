@@ -1,6 +1,9 @@
 import { db } from '$lib/server/db';
-import { events, type CalendarEvent } from '$lib/server/db/schema';
+import { events } from '$lib/server/db/schema';
 import { eq } from 'drizzle-orm';
+import type { InferInsertModel } from 'drizzle-orm';
+
+type CalendarEvent = InferInsertModel<typeof events>;
 
 export async function getEvents() {
   return await db.select().from(events).orderBy(events.start);
@@ -11,8 +14,8 @@ export async function getEvent(id: number) {
   return event;
 }
 
-export async function createEvent(data: Omit<CalendarEvent, 'id' | 'created_at'>) {
-  const [createdEvent] = await db.insert(events).values(data).returning();
+export async function createEvent(data: Omit<CalendarEvent, 'id'>) {
+  const [createdEvent] = await db.insert(events).values(data as Partial<CalendarEvent>).returning();
   return createdEvent;
 }
 

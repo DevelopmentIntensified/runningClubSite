@@ -9,10 +9,11 @@
   let editorElement: HTMLElement;
   let quill: any;
 
-  onMount(async () => {
-    if (browser) {
-      const Quill = (await import('quill')).default;
-      await import('quill/dist/quill.snow.css');
+  onMount(() => {
+    if (!browser) return;
+
+    import('quill').then(({ default: Quill }) => {
+      import('quill/dist/quill.snow.css');
 
       const toolbarOptions = [
         ['bold', 'italic', 'underline', 'strike'],
@@ -44,12 +45,10 @@
       quill.on('text-change', () => {
         value = quill.root.innerHTML;
       });
-    }
+    });
 
     return () => {
-      if (quill) {
-        quill = null;
-      }
+      quill = null;
     };
   });
 </script>

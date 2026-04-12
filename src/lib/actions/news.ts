@@ -1,6 +1,9 @@
 import { db } from '$lib/server/db';
-import { news, type News } from '$lib/server/db/schema';
+import { news } from '$lib/server/db/schema';
 import { count, desc, eq } from 'drizzle-orm';
+import type { InferInsertModel } from 'drizzle-orm';
+
+type News = InferInsertModel<typeof news>;
 
 export async function getNewsCount() {
   return await db.select({ count: count() }).from(news)
@@ -15,12 +18,12 @@ export async function getNewsItem(id: number) {
   return newsItem;
 }
 
-export async function createNews(data: Omit<News, 'id' | 'createdAt'>) {
-  const [createdNews] = await db.insert(news).values(data).returning();
+export async function createNews(data: Omit<News, 'id'>) {
+  const [createdNews] = await db.insert(news).values(data as News).returning();
   return createdNews;
 }
 
-export async function updateNews(id: number, data: Partial<Omit<News, 'id' | 'createdAt'>>) {
+export async function updateNews(id: number, data: Partial<Omit<News, 'id'>>) {
   const [updatedNews] = await db.update(news).set(data).where(eq(news.id, id)).returning();
   return updatedNews;
 }

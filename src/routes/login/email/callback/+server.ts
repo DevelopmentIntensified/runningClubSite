@@ -79,7 +79,7 @@ export const GET: RequestHandler = async function (event) {
           isAdmin: false
         })
         .returning({ id: users.id });
-      userAccount = [{ id: ids[0].id, email, isAdmin: false }];
+      userAccount = [{ id: ids[0].id, email, isAdmin: false, createdAt: new Date(), lastLogin: null }];
     }
 
     const session = await lucia.createSession(userAccount[0].id.toString(), {});

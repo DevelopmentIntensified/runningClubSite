@@ -32,7 +32,7 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
         isAdmin: true
       })
       .returning({ id: users.id });
-    userAccount = [{ id: newUsers[0].id, email, isAdmin: true }];
+    userAccount = [{ id: newUsers[0].id, email, isAdmin: true, createdAt: new Date(), lastLogin: null }];
   }
   
   const session = await lucia.createSession(userAccount[0].id.toString(), {});

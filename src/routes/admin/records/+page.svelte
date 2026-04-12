@@ -13,7 +13,7 @@
         r.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         r.event.toLowerCase().includes(searchTerm.toLowerCase()) ||
         r.time.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        r.year.toString().includes(searchTerm)
+        (r.year?.toString().includes(searchTerm) ?? false)
       );
     }
     return result;
@@ -26,7 +26,7 @@
         r.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         r.event.toLowerCase().includes(searchTerm.toLowerCase()) ||
         r.time.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        r.year.toString().includes(searchTerm)
+        (r.year?.toString().includes(searchTerm) ?? false)
       );
     }
     return result;
@@ -39,7 +39,7 @@
         r.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         r.event.toLowerCase().includes(searchTerm.toLowerCase()) ||
         r.time.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        r.year.toString().includes(searchTerm)
+        (r.year?.toString().includes(searchTerm) ?? false)
       );
     }
     return result;
@@ -52,7 +52,7 @@
         r.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         r.event.toLowerCase().includes(searchTerm.toLowerCase()) ||
         r.time.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        r.year.toString().includes(searchTerm)
+        (r.year?.toString().includes(searchTerm) ?? false)
       );
     }
     return result;

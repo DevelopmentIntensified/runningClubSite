@@ -1,9 +1,9 @@
 import { getEvent, updateEvent } from '$lib/actions/events';
 import { fail, redirect } from '@sveltejs/kit';
-import type { PageServerLoad, Actions } from '../$types';
+import type { PageServerLoad, Actions } from './$types';
 import { DateTime } from 'luxon';
 
-export const load: PageServerLoad = async ({ params }) => {
+export const load: PageServerLoad = async ({ params }: { params: { id: string } }) => {
   const event = await getEvent(parseInt(params.id));
   if (!event) {
     throw redirect(302, '/admin/events');
@@ -12,14 +12,13 @@ export const load: PageServerLoad = async ({ params }) => {
 };
 
 export const actions: Actions = {
-  updateEvent: async ({ request, params }) => {
+  updateEvent: async ({ request, params }: { request: Request; params: { id: string } }) => {
     const formData = await request.formData();
     const title = formData.get('title') as string | null;
     const start = formData.get('start') as string | null;
     const end = formData.get('end') as string | null;
     const location = formData.get('location') as string | null;
     const type = formData.get('type') as string | null;
-    const offset = formData.get('offset');
 
     const updateData: {
       title?: string;

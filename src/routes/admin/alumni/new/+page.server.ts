@@ -1,5 +1,5 @@
 import { createAlumnus } from '$lib/actions/alumni';
-import { error, fail, redirect } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
 import { put } from '@vercel/blob';
 import { BLOB_READ_WRITE_TOKEN } from '$env/static/private';
@@ -7,13 +7,13 @@ import { BLOB_READ_WRITE_TOKEN } from '$env/static/private';
 export const actions: Actions = {
   createAlumnus: async ({ request }) => {
     const formData = await request.formData();
-    const name = formData.get('name');
-    const major = formData.get('major');
-    const graduationYear = formData.get('graduationYear');
-    const achievements = formData.get('achievements');
-    const currentOccupation = formData.get('currentOccupation');
+    const name = formData.get('name') as string;
+    const major = formData.get('major') as string | null;
+    const graduationYear = formData.get('graduationYear') as string;
+    const achievements = formData.get('achievements') as string | null;
+    const currentOccupation = formData.get('currentOccupation') as string | null;
     const image = formData.get('image') as File;
-    const imageUrl = formData.get('imageUrl') as string;
+    const imageUrl = formData.get('imageUrl') as string | null;
 
     if (!name || !graduationYear) {
       return fail(400, { message: 'Name and graduation year are required' });
@@ -27,11 +27,11 @@ export const actions: Actions = {
     }
 
     const newAlumnus = await createAlumnus({
-      name: name.toString(),
-      major: major?.toString(),
-      graduationYear: parseInt(graduationYear.toString()),
-      achievements: achievements?.toString() || null,
-      currentOccupation: currentOccupation?.toString() || null,
+      name: name,
+      major: major,
+      graduationYear: parseInt(graduationYear),
+      achievements: achievements || null,
+      currentOccupation: currentOccupation || null,
       imageUrl: finalImageUrl || null
     });
 

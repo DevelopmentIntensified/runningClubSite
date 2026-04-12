@@ -1,6 +1,9 @@
 import { db } from '$lib/server/db';
-import { alumni, type Alumni } from '$lib/server/db/schema';
+import { alumni } from '$lib/server/db/schema';
 import { count, eq } from 'drizzle-orm';
+import type { InferInsertModel } from 'drizzle-orm';
+
+type Alumni = InferInsertModel<typeof alumni>;
 
 export async function getAlumniCount() {
   return await db.select({ count: count() }).from(alumni)
@@ -16,7 +19,7 @@ export async function getAlumnus(id: number) {
 }
 
 export async function createAlumnus(data: Omit<Alumni, 'id'>) {
-  const [createdAlumnus] = await db.insert(alumni).values(data).returning();
+  const [createdAlumnus] = await db.insert(alumni).values(data as Partial<Alumni>).returning();
   return createdAlumnus;
 }
 

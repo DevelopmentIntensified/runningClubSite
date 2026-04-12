@@ -1,9 +1,9 @@
-import { createuser } from '$lib/actions/leaders';
+import { createLeader } from '$lib/actions/leaders';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
 
 export const actions: Actions = {
-  createuser: async ({ request }) => {
+  default: async ({ request }) => {
     const formData = await request.formData();
     const name = formData.get('name');
     const position = formData.get('position');
@@ -18,7 +18,9 @@ export const actions: Actions = {
       name: name.toString(),
       position: position.toString(),
       bio: bio?.toString() || null,
-      imageUrl: imageUrl?.toString() || null
+      imageUrl: imageUrl?.toString() || null,
+      order: 0,
+      active: true
     });
 
     if (newuser) {

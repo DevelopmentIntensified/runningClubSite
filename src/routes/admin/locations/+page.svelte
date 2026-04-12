@@ -14,7 +14,7 @@
         location.description?.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
-    return result.sort((a, b) => a.order - b.order);
+    return result.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
   });
 </script>
 

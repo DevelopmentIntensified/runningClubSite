@@ -46,12 +46,12 @@ export const POST: RequestHandler = async function(event) {
           isAdmin: false
         })
         .returning({ id: users.id });
-      userAccount = [{ id: ids[0].id, email, isAdmin: false }];
+      userAccount = [{ id: ids[0].id, email, isAdmin: false, createdAt: new Date(), lastLogin: null }];
 
       try {
         await resend.contacts.create({
           email,
-          segments: [GENERAL_SEGMENT_ID]
+          audienceId: GENERAL_SEGMENT_ID
         });
       } catch (resendError) {
         console.error('Resend contact create error:', resendError);
@@ -64,11 +64,11 @@ export const POST: RequestHandler = async function(event) {
     let headers = new Headers();
     headers.append('Set-Cookie', sessionCookie.serialize());
     headers.append('Set-Cookie', `redirectUrl=; path=/; max-age=0`);
+    headers.append('Location', redirectUrl);
 
     let result = new Response(null, {
       status: 200,
-      headers,
-      redirect: redirectUrl
+      headers
     });
 
     await deleteCode(code)

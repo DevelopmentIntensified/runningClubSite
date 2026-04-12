@@ -3,26 +3,9 @@
   import ImageUpload from '$lib/components/ImageUpload.svelte';
   import type { PageData } from './$types';
 
-  export let data: PageData;
+  let { data }: { data: PageData } = $props();
   let error = '';
   let imageUrl = '';
-
-  const seasons = [
-    'Fall 2020',
-    'Spring 2021',
-    'Fall 2021',
-    'Spring 2022',
-    'Fall 2022',
-    'Spring 2023',
-    'Fall 2023',
-    'Spring 2024',
-    'Fall 2024',
-    'Spring 2025',
-    'Fall 2025',
-    'Spring 2026',
-    'Fall 2026',
-    'Spring 2027',
-  ];
 </script>
 
 <svelte:head>
@@ -49,17 +32,14 @@
           </div>
           <div>
             <label for="season" class="block text-sm font-medium text-gray-700">Season</label>
-            <select
+            <input
+              type="text"
               id="season"
               name="season"
               required
+              placeholder="e.g., Fall 2024"
               class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
-            >
-              <option value="">Select a season</option>
-              {#each seasons as season}
-                <option value={season}>{season}</option>
-              {/each}
-            </select>
+            />
           </div>
           <div>
             <label for="link" class="block text-sm font-medium text-gray-700">Photo Album Link</label>

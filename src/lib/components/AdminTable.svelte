@@ -7,7 +7,6 @@
     label: string;
     variant?: 'primary' | 'danger';
     formAction?: string;
-    formMethod?: 'POST' | 'DELETE';
     hiddenInput?: { name: string; value: string | number };
   }
 
@@ -176,7 +175,7 @@
                       {#if column.actions}
                         {#each column.actions as action}
                           {#if action.formAction}
-                            <form action={action.formAction} method={action.formMethod || 'POST'} use:enhance class="inline">
+                            <form action={action.formAction} method="POST" use:enhance class="inline">
                               {#if action.hiddenInput}
                                 <input type="hidden" name={action.hiddenInput.name} value={action.hiddenInput.value} />
                               {/if}

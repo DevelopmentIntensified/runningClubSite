@@ -7,8 +7,8 @@ import { BLOB_READ_WRITE_TOKEN } from '$env/static/private';
 export const actions: Actions = {
   createNews: async ({ request, locals }) => {
     const formData = await request.formData();
-    const title = formData.get('title');
-    const content = formData.get('content');
+    const title = formData.get('title') as string;
+    const content = formData.get('content') as string;
     const image = formData.get('image') as File;
     const imageUrl = formData.get('imageUrl') as string;
 
@@ -29,10 +29,10 @@ export const actions: Actions = {
 
     try {
       const newNews = await createNews({
-        title: title.toString(),
+        title: title,
         imageUrl: finalImageUrl,
-        content: content.toString(),
-        createdBy: locals.user?.id
+        content: content,
+        createdBy: locals.user?.id!
       });
 
     } catch (error) {

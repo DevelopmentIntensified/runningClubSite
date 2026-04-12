@@ -18,12 +18,14 @@ export const actions: Actions = {
     const title = formData.get('title') as string | null;
     const link = formData.get('link') as string | null;
     const season = formData.get('season') as string | null;
+    const imageUrl = formData.get('imageUrl') as string | null;
 
-    const updateData: { title?: string; link?: string; season?: string } = {};
+    const updateData: { title?: string; link?: string; season?: string; imageUrl?: string | null } = {};
 
     if (title) updateData.title = title;
     if (link) updateData.link = link;
     if (season) updateData.season = season;
+    if (imageUrl !== null) updateData.imageUrl = imageUrl || null;
 
     try {
       await db
