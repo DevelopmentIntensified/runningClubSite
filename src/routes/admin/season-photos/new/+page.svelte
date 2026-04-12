@@ -18,7 +18,7 @@
         <h2 class="text-center text-3xl font-extrabold text-white">Add New Season Photo Album</h2>
       </div>
       <div class="p-6 sm:p-8">
-        <form action="?/createLink" method="POST" use:enhance class="space-y-6">
+        <form action="?/createLink" method="POST" use:enhance class="space-y-6" enctype="multipart/form-data">
           <div>
             <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
             <input

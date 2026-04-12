@@ -19,7 +19,7 @@
         <h2 class="text-center text-3xl font-extrabold text-white">Edit Season Photo Album</h2>
       </div>
       <div class="p-6 sm:p-8">
-        <form action="?/updateLink" method="POST" use:enhance class="space-y-6">
+        <form action="?/updateLink" method="POST" use:enhance class="space-y-6" enctype="multipart/form-data">
           <input type="hidden" name="id" value={link.id} />
           <input type="hidden" name="currentImageUrl" value={link.imageUrl || ''} />
           <div>
