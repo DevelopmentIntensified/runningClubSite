@@ -1,4 +1,5 @@
 <script lang="ts">
+  export let value = '';
   export let name = 'image';
   export let required = false;
   export let label = 'Image';
@@ -6,7 +7,7 @@
 
   let fileInput: HTMLInputElement;
   let dragging = false;
-  let previewUrl = '';
+  let previewUrl = value || '';
 
   function handleDrop(e: DragEvent) {
     e.preventDefault();
