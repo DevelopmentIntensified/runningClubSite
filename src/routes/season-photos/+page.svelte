@@ -21,8 +21,8 @@
 <div class="container mx-auto px-4 py-12">
   <div class="relative mb-8 h-48 overflow-hidden rounded-2xl sm:h-64 md:h-80">
     <img
-      src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=1200&h=400&fit=crop"
-      alt="Season Photos"
+      src={data.heroImage?.imageUrl || 'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=1200&h=400&fit=crop'}
+      alt={data.heroImage?.alt || 'Season Photos'}
       class="absolute inset-0 h-full w-full object-cover"
     />
     <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-black/40 to-black/60">
