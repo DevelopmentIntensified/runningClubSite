@@ -1,5 +1,5 @@
 import { db } from '$lib/server/db';
-import { pageImages, seasonImageLinks } from '$lib/server/db/schema';
+import { pageImages } from '$lib/server/db/schema';
 import { fail } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
 import { eq } from 'drizzle-orm';
@@ -8,11 +8,9 @@ import { BLOB_READ_WRITE_TOKEN } from '$env/static/private';
 
 export const load: PageServerLoad = async () => {
   const images = await db.select().from(pageImages).orderBy(pageImages.locationName);
-  const seasonPhotos = await db.select().from(seasonImageLinks).orderBy(seasonImageLinks.createdAt);
 
   return {
-    images,
-    seasonPhotos
+    images
   };
 };
 
