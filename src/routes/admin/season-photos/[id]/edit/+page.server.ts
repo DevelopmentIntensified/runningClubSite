@@ -3,7 +3,7 @@ import { seasonImageLinks } from '$lib/server/db/schema';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import { eq } from 'drizzle-orm';
-import { put } from '@vercel/blob';
+import { put, del } from '@vercel/blob';
 import { BLOB_READ_WRITE_TOKEN } from '$env/static/private';
 
 export const load: PageServerLoad = async ({ params }) => {
@@ -22,6 +22,8 @@ export const actions: Actions = {
     const season = formData.get('season') as string | null;
     const imageFile = formData.get('image') as File | null;
     const imageUrl = formData.get('imageUrl') as string | null;
+    const [currentLink] = await db.select().from(seasonImageLinks).where(eq(seasonImageLinks.id, parseInt(params.id)));
+    const currentImageUrl = currentLink?.imageUrl || '';
 
     const updateData: { title?: string; link?: string; season?: string; imageUrl?: string | null } = {};
 
@@ -30,6 +32,9 @@ export const actions: Actions = {
     if (season) updateData.season = season;
 
     if (imageFile && imageFile.size > 0) {
+      if (currentImageUrl) {
+        await del(currentImageUrl, { token: BLOB_READ_WRITE_TOKEN }).catch((e) => console.log(e));
+      }
       const { url } = await put(imageFile.name, imageFile, { access: "public", token: BLOB_READ_WRITE_TOKEN });
       updateData.imageUrl = url;
     } else if (imageUrl) {

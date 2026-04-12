@@ -21,6 +21,7 @@
       <div class="p-6 sm:p-8">
         <form action="?/updateLink" method="POST" use:enhance class="space-y-6">
           <input type="hidden" name="id" value={link.id} />
+          <input type="hidden" name="currentImageUrl" value={link.imageUrl || ''} />
           <div>
             <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
             <input
