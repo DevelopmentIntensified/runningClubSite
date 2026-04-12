@@ -87,11 +87,8 @@
     {/each}
     {#each days as day}
       {@const date = DateTime.fromObject({ year, month, day }, { zone: 'America/New_York' })}
-      {@const dayEvents = events.filter((event) => {
-        const eventStart = event.start.startOf('day');
-        const eventEnd = event.end.startOf('day');
-        return date >= eventStart && date <= eventEnd;
-      })}
+      {@const dayEvents = events.filter((event) => event.date.toFormat('yyyy-MM-dd') === date.toFormat('yyyy-MM-dd'))}
+      {@const uniqueDayEvents = dayEvents.filter((event, index, self) => self.findIndex(e => e.id === event.id) === index)}
       <div
         class="group min-h-[5.5rem] border-t border-transparent bg-white p-1.5 transition-colors hover:bg-slate-50/90 sm:min-h-[6.5rem] sm:p-2"
       >
@@ -116,7 +113,7 @@
           {/if}
         </div>
         <div class="flex flex-col gap-1">
-          {#each dayEvents as event}
+          {#each uniqueDayEvents as event}
             <div class="group flex min-w-0 items-center gap-1">
               <a
                 href={isAdmin ? `/admin/events/edit/${event.id}` : `/schedule/event/${event.id}`}
