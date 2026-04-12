@@ -1,6 +1,7 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import { DateTime } from 'luxon';
+  import { downloadICS, getGoogleCalendarUrl } from '$lib/utils/calendarExport';
 
   export let data;
   const event = data.event;
@@ -12,58 +13,15 @@
   const startDt = DateTime.fromJSDate(new Date(event.start));
   const endDt = DateTime.fromJSDate(new Date(event.end));
 
-  function formatICSDate(dt: DateTime): string {
-    return dt.toUTC().toFormat("yyyyMMdd'T'HHmmss'Z'");
-  }
-
-  function escapeICS(str: string): string {
-    return str.replace(/[\\;,\n]/g, (match) => {
-      switch (match) {
-        case '\\': return '\\\\';
-        case ';': return '\\;';
-        case ',': return '\\,';
-        case '\n': return '\\n';
-        default: return match;
-      }
+  function handleDownloadICS() {
+    downloadICS({
+      id: event.id,
+      title: event.title,
+      description: event.description,
+      location: event.location,
+      start: startDt,
+      end: endDt
     });
-  }
-
-  function downloadEventICS() {
-    const now = formatICSDate(DateTime.now());
-    const icsContent = [
-      'BEGIN:VCALENDAR',
-      'VERSION:2.0',
-      'PRODID:-//Liberty Running Club//Event//EN',
-      'BEGIN:VEVENT',
-      `DTSTART:${formatICSDate(startDt)}`,
-      `DTEND:${formatICSDate(endDt)}`,
-      `DTSTAMP:${now}`,
-      `UID:${event.id}@libertyrunningclub.com`,
-      `SUMMARY:${escapeICS(event.title)}`,
-      event.location ? `LOCATION:${escapeICS(event.location)}` : '',
-      event.description ? `DESCRIPTION:${escapeICS(event.description)}` : '',
-      'END:VEVENT',
-      'END:VCALENDAR'
-    ].join('\r\n');
-
-    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `${event.title.replace(/[^a-z0-9]/gi, '-').toLowerCase()}.ics`;
-    link.click();
-    URL.revokeObjectURL(url);
-  }
-
-  function getGoogleCalendarUrl(): string {
-    const baseUrl = 'https://calendar.google.com/calendar/render?action=TEMPLATE';
-    const params = new URLSearchParams({
-      text: event.title,
-      dates: `${startDt.toUTC().toFormat("yyyyMMdd'T'HHmmss'Z'")}/${endDt.toUTC().toFormat("yyyyMMdd'T'HHmmss'Z'")}`,
-      details: event.description || '',
-      location: event.location || '',
-    });
-    return `${baseUrl}&${params.toString()}`;
   }
 </script>
 
@@ -118,7 +76,7 @@
         {/if}
         <div class="mt-4 flex flex-wrap gap-2">
           <a
-            href={getGoogleCalendarUrl()}
+            href={getGoogleCalendarUrl({ id: event.id, title: event.title, description: event.description, location: event.location, start: startDt, end: endDt })}
             target="_blank"
             rel="noopener noreferrer"
             class="inline-flex items-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-sm font-medium text-white hover:bg-blue-600"
@@ -132,7 +90,7 @@
             Add to Google Calendar
           </a>
           <button
-            onclick={downloadEventICS}
+            onclick={handleDownloadICS}
             class="inline-flex items-center gap-2 rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700"
           >
             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
