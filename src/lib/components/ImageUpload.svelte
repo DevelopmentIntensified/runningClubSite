@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { upload } from '@vercel/blob/client';
-
   export let value = '';
   export let name = 'image';
   export let required = false;
@@ -9,30 +7,8 @@
 
   let fileInput: HTMLInputElement;
   let dragging = false;
-  let uploading = false;
   let error = '';
   let previewUrl = '';
-
-  async function handleFile(file: File) {
-    if (!file) return;
-    
-    error = '';
-    uploading = true;
-
-    try {
-      const newBlob = await upload(file.name, file, {
-        access: 'public',
-        handleUploadUrl: '/api/blob/upload',
-      });
-
-      value = newBlob.url;
-      previewUrl = newBlob.url;
-    } catch (e) {
-      error = e instanceof Error ? e.message : 'Upload failed';
-    } finally {
-      uploading = false;
-    }
-  }
 
   function handleDrop(e: DragEvent) {
     e.preventDefault();
@@ -50,13 +26,15 @@
     dragging = false;
   }
 
+  function handleFile(file: File) {
+    if (!file) return;
+    previewUrl = URL.createObjectURL(file);
+  }
+
   function handleInputChange(e: Event) {
     const target = e.target as HTMLInputElement;
     const file = target.files?.[0];
-    if (file) {
-      previewUrl = URL.createObjectURL(file);
-      handleFile(file);
-    }
+    if (file) handleFile(file);
   }
 
   function handleClear() {
@@ -69,10 +47,10 @@
 <div>
   <label for={name} class="block text-sm font-medium text-gray-700">{label}</label>
   
-  {#if value || previewUrl}
+  {#if previewUrl}
     <div class="mt-2 relative inline-block">
       <img 
-        src={previewUrl || value} 
+        src={previewUrl} 
         alt="Preview" 
         class="max-h-48 rounded-md border border-gray-300"
       />
@@ -107,17 +85,11 @@
         class="hidden"
         onchange={handleInputChange}
       />
-      {#if uploading}
-        <p class="text-sm text-gray-500">Uploading...</p>
-      {:else}
-        <p class="text-sm text-gray-500">Click or drag image here</p>
-      {/if}
+      <p class="text-sm text-gray-500">Click or drag image here</p>
     </div>
   {/if}
 
   {#if error}
     <p class="mt-1 text-sm text-red-500">{error}</p>
   {/if}
-
-  <input type="hidden" {name} {value} />
 </div>

@@ -70,7 +70,7 @@
             />
           </div>
           <div>
-            <ImageUpload name="imageUrl" label="Image (Accepts png, gif, jpeg, jpg)" />
+            <ImageUpload name="image" label="Image (Accepts png, gif, jpeg, jpg)" />
           </div>
           {#if error}
             <div class="text-sm text-red-500">{error}</div>

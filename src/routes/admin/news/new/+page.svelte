@@ -37,7 +37,7 @@
             <input type="hidden" name="content" value={content} />
           </div>
           <div>
-            <ImageUpload name="imageUrl" label="Image" required={true} />
+            <ImageUpload name="image" label="Image" required={true} />
           </div>
           {#if error}
             <div class="text-sm text-red-500">{error}</div>
