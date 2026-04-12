@@ -6,6 +6,7 @@ import { BLOB_READ_WRITE_TOKEN } from '$env/static/private';
 export const POST: RequestHandler = async ({ request }) => {
   try {
     const jsonResponse = await handleUpload({
+      token: BLOB_READ_WRITE_TOKEN,
       body: request.body,
       request,
       onBeforeGenerateToken: async (pathname) => {
@@ -24,7 +25,6 @@ export const POST: RequestHandler = async ({ request }) => {
         return {
           allowedContentTypes: ['image/jpeg', 'image/png', 'image/webp', 'image/gif'],
           addRandomSuffix: true,
-          token: BLOB_READ_WRITE_TOKEN,
         };
       },
     });
