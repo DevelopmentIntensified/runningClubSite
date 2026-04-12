@@ -4,7 +4,15 @@ import type { RequestHandler } from './$types';
 
 export const POST: RequestHandler = async ({ request }) => {
   try {
-    const body = (await request.json()) as HandleUploadBody;
+    const contentType = request.headers.get('content-type');
+    
+    let body: HandleUploadBody;
+    if (contentType?.includes('application/json')) {
+      body = await request.json();
+    } else {
+      const text = await request.text();
+      body = JSON.parse(text);
+    }
 
     const jsonResponse = await handleUpload({
       body,
