@@ -9,18 +9,20 @@ export const actions: Actions = {
     const formData = await request.formData();
     const title = formData.get('title') as string;
     const content = formData.get('content') as string;
-    const image = formData.get('image') as File;
-    const imageUrl = formData.get('imageUrl') as string;
+    const imageFile = formData.get('image') as File | null;
+    const imageUrl = formData.get('imageUrl') as string | null;
 
     if (!title || !content) {
       return fail(400, { message: 'Title and content are required' });
     }
 
-    let finalImageUrl = imageUrl;
+    let finalImageUrl: string | null = null;
     
-    if (image && image.size > 0) {
-      const { url } = await put(image.name, image, { access: "public", token: BLOB_READ_WRITE_TOKEN });
+    if (imageFile && imageFile.size > 0) {
+      const { url } = await put(imageFile.name, imageFile, { access: "public", token: BLOB_READ_WRITE_TOKEN });
       finalImageUrl = url;
+    } else if (imageUrl) {
+      finalImageUrl = imageUrl;
     }
 
     if (!finalImageUrl) {

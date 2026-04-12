@@ -69,6 +69,7 @@
         ✕
       </button>
     </div>
+    <input type="hidden" name="imageUrl" value={value} />
   {/if}
   
   {#if !previewUrl}
