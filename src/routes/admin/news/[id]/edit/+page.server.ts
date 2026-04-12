@@ -17,8 +17,8 @@ export const actions: Actions = {
     const formData = await request.formData();
     const title = formData.get('title') as string;
     const content = formData.get('content') as string;
-    const image = formData.get('image') as File;
-    const imageUrl = formData.get('imageUrl') as string;
+    const imageFile = formData.get('image') as File | null;
+    const imageUrl = formData.get('imageUrl') as string | null;
     const currentImageUrl = formData.get('currentImageUrl') as string;
 
     if (!title || !content) {
@@ -28,21 +28,16 @@ export const actions: Actions = {
     try {
       let finalImageUrl = currentImageUrl;
 
-      if (image && image.size > 0) {
+      if (imageFile && imageFile.size > 0) {
         await del(currentImageUrl, { token: BLOB_READ_WRITE_TOKEN }).catch((e) => {
           console.log('Error deleting old image:', e);
         });
-        const { url } = await put(image.name, image, {
+        const { url } = await put(imageFile.name, imageFile, {
           access: 'public',
           token: BLOB_READ_WRITE_TOKEN
         });
         finalImageUrl = url;
-      } else if (imageUrl && imageUrl !== currentImageUrl) {
-        if (currentImageUrl) {
-          await del(currentImageUrl, { token: BLOB_READ_WRITE_TOKEN }).catch((e) => {
-            console.log('Error deleting old image:', e);
-          });
-        }
+      } else if (imageUrl) {
         finalImageUrl = imageUrl;
       }
 

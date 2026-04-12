@@ -73,7 +73,7 @@
           </div>
           <div>
             <input type="hidden" name="currentImageUrl" value={leader.imageUrl} />
-            <ImageUpload name="imageUrl" label="Image (Accepts png, gif, jpeg, jpg)" value={leader.imageUrl} />
+            <ImageUpload name="image" label="Image (Accepts png, gif, jpeg, jpg)" value={leader.imageUrl} />
           </div>
           {#if error}
             <div class="text-sm text-red-500">{error}</div>

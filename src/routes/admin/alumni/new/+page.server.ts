@@ -12,17 +12,17 @@ export const actions: Actions = {
     const graduationYear = formData.get('graduationYear') as string;
     const achievements = formData.get('achievements') as string | null;
     const currentOccupation = formData.get('currentOccupation') as string | null;
-    const image = formData.get('image') as File;
+    const imageFile = formData.get('image') as File | null;
     const imageUrl = formData.get('imageUrl') as string | null;
 
     if (!name || !graduationYear) {
       return fail(400, { message: 'Name and graduation year are required' });
     }
 
-    let finalImageUrl = imageUrl;
+    let finalImageUrl: string | null = imageUrl;
     
-    if (image && image.size > 0) {
-      const { url } = await put(image.name, image, { access: "public", token: BLOB_READ_WRITE_TOKEN });
+    if (imageFile && imageFile.size > 0) {
+      const { url } = await put(imageFile.name, imageFile, { access: "public", token: BLOB_READ_WRITE_TOKEN });
       finalImageUrl = url;
     }
 
@@ -32,7 +32,7 @@ export const actions: Actions = {
       graduationYear: parseInt(graduationYear),
       achievements: achievements || null,
       currentOccupation: currentOccupation || null,
-      imageUrl: finalImageUrl || null
+      imageUrl: finalImageUrl
     });
 
     if (newAlumnus) {

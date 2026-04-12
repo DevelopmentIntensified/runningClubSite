@@ -55,7 +55,7 @@
       </div>
 
       <div>
-        <ImageUpload name="imageUrl" label="Image" required={true} />
+        <ImageUpload name="image" label="Image" required={true} />
       </div>
 
       <div class="flex justify-end space-x-4">

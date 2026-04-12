@@ -5,7 +5,6 @@
 
   let { data }: { data: PageData } = $props();
   let link = data.link;
-  let imageUrl = link.imageUrl || '';
   let error = '';
 </script>
 
@@ -55,8 +54,8 @@
           </div>
           <div>
             <ImageUpload
-              bind:value={imageUrl}
-              name="imageUrl"
+              name="image"
+              value={link.imageUrl || ''}
               label="Cover Image (optional)"
             />
           </div>

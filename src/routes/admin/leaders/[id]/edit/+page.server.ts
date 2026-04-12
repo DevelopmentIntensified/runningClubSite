@@ -19,8 +19,8 @@ export const actions: Actions = {
     const position = formData.get('position') as string;
     const bio = formData.get('bio') as string;
     const order = formData.get('order') as string;
-    const image = formData.get('image') as File;
-    const imageUrl = formData.get('imageUrl') as string;
+    const imageFile = formData.get('image') as File | null;
+    const imageUrl = formData.get('imageUrl') as string | null;
     const currentImageUrl = formData.get('currentImageUrl') as string;
     const active = formData.get('active') === 'on';
 
@@ -28,22 +28,17 @@ export const actions: Actions = {
       return fail(400, { message: 'Name and position are required' });
     }
 
-    let finalImageUrl = currentImageUrl || imageUrl;
+    let finalImageUrl = currentImageUrl;
 
-    if (image.size > 0) {
-      const { url } = await put(image.name, image, { access: "public", token: BLOB_READ_WRITE_TOKEN });
+    if (imageFile && imageFile.size > 0) {
+      const { url } = await put(imageFile.name, imageFile, { access: "public", token: BLOB_READ_WRITE_TOKEN });
       if (currentImageUrl) {
         await del(currentImageUrl, { token: BLOB_READ_WRITE_TOKEN }).catch((e) => {
           console.log(e);
         });
       }
       finalImageUrl = url;
-    } else if (imageUrl && imageUrl !== currentImageUrl) {
-      if (currentImageUrl) {
-        await del(currentImageUrl, { token: BLOB_READ_WRITE_TOKEN }).catch((e) => {
-          console.log(e);
-        });
-      }
+    } else if (imageUrl) {
       finalImageUrl = imageUrl;
     }
 
