@@ -24,7 +24,6 @@
       <div class="p-6 sm:p-8">
         <form action="?/updateNews" method="POST" use:enhance class="space-y-6" enctype="multipart/form-data">
           <input type="hidden" name="id" value={newsItem.id} />
-          <input type="hidden" name="currentImageUrl" value={newsItem.imageUrl} />
           <input type="hidden" name="content" value={content} />
           <div>
             <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
@@ -41,7 +40,7 @@
             <RichTextEditor bind:value={content} />
           </div>
           <div>
-            <ImageUpload name="imageUrl" label="Image" value={newsItem.imageUrl} />
+            <ImageUpload name="image" label="Image" value={newsItem.imageUrl} />
           </div>
           {#if error}
             <div class="text-sm text-red-500">{error}</div>

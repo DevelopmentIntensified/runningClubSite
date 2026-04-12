@@ -85,8 +85,7 @@
             />
           </div>
           <div>
-            <input type="hidden" name="currentImageUrl" value={alumnus.imageUrl || ''} />
-            <ImageUpload name="imageUrl" label="Profile Image" value={alumnus.imageUrl || ''} />
+            <ImageUpload name="image" label="Profile Image" value={alumnus.imageUrl || ''} />
           </div>
           {#if error}
             <div class="text-sm text-red-500">{error}</div>

@@ -28,7 +28,7 @@ export const actions: Actions = {
     const locationName = formData.get('locationName') as string;
     const alt = formData.get('alt') as string;
     const image = formData.get('image') as File | null;
-    const currentImageUrl = formData.get('currentImageUrl') as string;
+    const imageUrl = formData.get('imageUrl') as string | null;
 
     if (!locationName || !alt) {
       return fail(400, {
@@ -37,17 +37,16 @@ export const actions: Actions = {
     }
 
     try {
-      let finalImageUrl = currentImageUrl;
+      let finalImageUrl = imageUrl || '';
 
       if (image && image.size > 0) {
-        if (currentImageUrl) {
-          await del(currentImageUrl, { token: BLOB_READ_WRITE_TOKEN }).catch((e) => console.log(e));
-        }
         const { url } = await put(image.name, image, {
           access: 'public',
           token: BLOB_READ_WRITE_TOKEN
         });
         finalImageUrl = url;
+      } else if (imageUrl) {
+        finalImageUrl = imageUrl;
       }
 
       await db

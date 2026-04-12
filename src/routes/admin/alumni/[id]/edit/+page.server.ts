@@ -22,7 +22,6 @@ export const actions: Actions = {
     const currentOccupation = formData.get('currentOccupation') as string | null;
     const imageFile = formData.get('image') as File | null;
     const imageUrl = formData.get('imageUrl') as string | null;
-    const currentImageUrl = formData.get('currentImageUrl') as string;
 
     const updateData: {
       name?: string;

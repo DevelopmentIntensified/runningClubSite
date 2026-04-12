@@ -5,7 +5,6 @@
 
   let { data }: { data: PageData } = $props();
   let error = '';
-  let imageUrl = '';
 </script>
 
 <svelte:head>
@@ -51,7 +50,7 @@
               class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
             />
           </div>
-          <ImageUpload bind:value={imageUrl} name="imageUrl" label="Cover Image (optional)" />
+          <ImageUpload name="image" label="Cover Image (optional)" />
           {#if error}
             <div class="text-sm text-red-500">{error}</div>
           {/if}
