@@ -72,7 +72,10 @@ export function downloadSchoolYearEventsICS(events: CalendarEvent[]): void {
     return;
   }
 
-  const now = formatICSDate(DateTime.now());
+  const now = DateTime.now();
+  const year = now.month >= 8 ? now.year : now.year - 1;
+  const fileName = `liberty-running-club-${year}-${year + 1}.ics`;
+
   const icsContent = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
@@ -86,7 +89,7 @@ export function downloadSchoolYearEventsICS(events: CalendarEvent[]): void {
       'BEGIN:VEVENT',
       `DTSTART:${formatICSDate(event.start)}`,
       `DTEND:${formatICSDate(event.end)}`,
-      `DTSTAMP:${now}`,
+      `DTSTAMP:${formatICSDate(now)}`,
       `UID:${event.id}@libertyrunningclub.com`,
       `SUMMARY:${escapeICS(event.title)}`,
       event.location ? `LOCATION:${escapeICS(event.location)}` : '',
@@ -101,7 +104,7 @@ export function downloadSchoolYearEventsICS(events: CalendarEvent[]): void {
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
   link.href = url;
-  link.download = 'liberty-running-club-schedule.ics';
+  link.download = fileName;
   link.click();
   URL.revokeObjectURL(url);
 }
