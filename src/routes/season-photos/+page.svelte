@@ -1,22 +1,17 @@
 <script lang="ts">
   import type { PageData } from './$types';
-  export let data: PageData;
+  let { data }: { data: PageData } = $props();
 
-  let selectedSeason = data.seasons[0];
+  let searchTerm = $state('');
 
-  const seasonIcons: Record<string, string> = {
-    'Fall': '🍂',
-    'Winter': '❄️',
-    'Spring': '🌸',
-    'Summer': '☀️'
-  };
-
-  function getSeasonIcon(season: string): string {
-    for (const [key, icon] of Object.entries(seasonIcons)) {
-      if (season.includes(key)) return icon;
-    }
-    return '📷';
-  }
+  let filteredLinks = $derived.by(() => {
+    if (!searchTerm) return data.links;
+    const term = searchTerm.toLowerCase();
+    return data.links.filter((link: typeof data.links[0]) => 
+      link.title.toLowerCase().includes(term) ||
+      link.season.toLowerCase().includes(term)
+    );
+  });
 </script>
 
 <svelte:head>
@@ -38,23 +33,23 @@
     </div>
   </div>
 
-  <div class="mb-8 flex flex-wrap justify-center gap-3">
-    {#each data.seasons as season}
-      <button
-        onclick={() => selectedSeason = season}
-        class="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-all {selectedSeason === season
-          ? 'bg-primary-600 text-white shadow-md'
-          : 'bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50 hover:shadow-sm'}"
-      >
-        <span>{getSeasonIcon(season)}</span>
-        <span>{season}</span>
-      </button>
-    {/each}
+  <div class="mb-8 max-w-md mx-auto">
+    <div class="relative">
+      <input
+        type="text"
+        bind:value={searchTerm}
+        placeholder="Search by title or season..."
+        class="w-full rounded-full border border-slate-200 bg-white px-5 py-3 pl-12 text-sm text-slate-700 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20"
+      />
+      <svg class="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+      </svg>
+    </div>
   </div>
 
-    {#if data.linksBySeason[selectedSeason]?.length}
+  {#if filteredLinks.length}
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {#each data.linksBySeason[selectedSeason] as link}
+      {#each filteredLinks as link}
         <a
           href={link.link}
           target="_blank"
@@ -84,6 +79,7 @@
           </div>
           <div class="absolute bottom-0 left-0 right-0 p-4">
             <h3 class="text-lg font-semibold text-white">{link.title}</h3>
+            <p class="text-sm text-white/80">{link.season}</p>
           </div>
         </a>
       {/each}
@@ -93,8 +89,8 @@
       <svg class="mx-auto h-16 w-16 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
       </svg>
-      <p class="mt-4 text-lg font-medium text-slate-600">No photos for this season yet</p>
-      <p class="mt-1 text-sm text-slate-500">Check back later for updates!</p>
+      <p class="mt-4 text-lg font-medium text-slate-600">No photos found</p>
+      <p class="mt-1 text-sm text-slate-500">Try a different search term</p>
     </div>
   {/if}
 </div> 
