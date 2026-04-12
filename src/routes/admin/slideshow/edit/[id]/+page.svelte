@@ -30,8 +30,7 @@
           </div>
 
           <div>
-            <input type="hidden" name="currentImageUrl" value={data.image.imageUrl} />
-            <ImageUpload name="imageUrl" label="Image" value={data.image.imageUrl} />
+            <ImageUpload name="image" label="Image" value={data.image.imageUrl} />
           </div>
 
           <div>
