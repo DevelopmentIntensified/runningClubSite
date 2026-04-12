@@ -13,6 +13,7 @@
     'Boys Records',
     'Contact',
     'Training',
+    'Season Photos Hero',
   ];
 </script>
 
