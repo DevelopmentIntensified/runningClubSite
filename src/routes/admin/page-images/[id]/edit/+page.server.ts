@@ -29,6 +29,7 @@ export const actions: Actions = {
     const alt = formData.get('alt') as string;
     const image = formData.get('image') as File | null;
     const imageUrl = formData.get('imageUrl') as string | null;
+    const currentImageUrl = formData.get('currentImageUrl') as string || '';
 
     if (!locationName || !alt) {
       return fail(400, {
@@ -37,9 +38,12 @@ export const actions: Actions = {
     }
 
     try {
-      let finalImageUrl = imageUrl || '';
+      let finalImageUrl = currentImageUrl;
 
       if (image && image.size > 0) {
+        if (currentImageUrl) {
+          await del(currentImageUrl, { token: BLOB_READ_WRITE_TOKEN }).catch((e) => console.log(e));
+        }
         const { url } = await put(image.name, image, {
           access: 'public',
           token: BLOB_READ_WRITE_TOKEN

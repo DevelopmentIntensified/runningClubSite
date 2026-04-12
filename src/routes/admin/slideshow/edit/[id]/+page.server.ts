@@ -28,6 +28,7 @@ export const actions: Actions = {
     const title = formData.get('title') as string;
     const image = formData.get('image') as File;
     const imageUrl = formData.get('imageUrl') as string | null;
+    const currentImageUrl = formData.get('currentImageUrl') as string || '';
     const order = formData.get('order') as string;
 
     if (!title || !order) {
@@ -45,6 +46,9 @@ export const actions: Actions = {
     };
 
     if (image && image.size > 0) {
+      if (currentImageUrl) {
+        await del(currentImageUrl, { token: BLOB_READ_WRITE_TOKEN }).catch((e) => console.log(e));
+      }
       const { url } = await put(image.name, image, { access: "public", token: BLOB_READ_WRITE_TOKEN });
       updateData.imageUrl = url;
     } else if (imageUrl) {

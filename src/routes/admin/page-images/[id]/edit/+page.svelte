@@ -27,6 +27,8 @@
       use:enhance
       class="space-y-6"
     >
+      <input type="hidden" name="currentImageUrl" value={data.image.imageUrl || ''} />
+      
       <div>
         <label for="locationName" class="block text-sm font-medium text-gray-700 mb-1">
           Location

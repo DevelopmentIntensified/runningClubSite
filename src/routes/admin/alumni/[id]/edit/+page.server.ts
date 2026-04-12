@@ -22,6 +22,8 @@ export const actions: Actions = {
     const currentOccupation = formData.get('currentOccupation') as string | null;
     const imageFile = formData.get('image') as File | null;
     const imageUrl = formData.get('imageUrl') as string | null;
+    const alumnus = await getAlumnus(parseInt(params.id));
+    const currentImageUrl = alumnus?.imageUrl || '';
 
     const updateData: {
       name?: string;

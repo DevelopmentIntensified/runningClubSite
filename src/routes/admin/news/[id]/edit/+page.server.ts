@@ -19,15 +19,21 @@ export const actions: Actions = {
     const content = formData.get('content') as string;
     const imageFile = formData.get('image') as File | null;
     const imageUrl = formData.get('imageUrl') as string | null;
+    const currentImageUrl = formData.get('currentImageUrl') as string || '';
 
     if (!title || !content) {
       return fail(400, { message: 'Title and content are required' });
     }
 
     try {
-      let finalImageUrl = imageUrl || '';
+      let finalImageUrl = currentImageUrl;
 
       if (imageFile && imageFile.size > 0) {
+        if (currentImageUrl) {
+          await del(currentImageUrl, { token: BLOB_READ_WRITE_TOKEN }).catch((e) => {
+            console.log('Error deleting old image:', e);
+          });
+        }
         const { url } = await put(imageFile.name, imageFile, {
           access: 'public',
           token: BLOB_READ_WRITE_TOKEN

@@ -18,6 +18,7 @@
       </div>
       <div class="p-6 sm:p-8">
         <form method="POST" use:enhance class="space-y-6" enctype="multipart/form-data">
+          <input type="hidden" name="currentImageUrl" value={data.image.imageUrl || ''} />
           <div>
             <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
             <input
