@@ -59,7 +59,7 @@
       </div>
 
       <div>
-        <ImageUpload name="imageUrl" label="Image" value={data.image.imageUrl} />
+        <ImageUpload name="image" label="Image" />
       </div>
 
       <div class="flex justify-end space-x-4">
