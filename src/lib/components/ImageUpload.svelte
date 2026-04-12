@@ -13,7 +13,9 @@
     e.preventDefault();
     dragging = false;
     const file = e.dataTransfer?.files[0];
-    if (file) handleFile(file);
+    if (file) {
+      previewUrl = URL.createObjectURL(file);
+    }
   }
 
   function handleDragOver(e: DragEvent) {
@@ -25,20 +27,15 @@
     dragging = false;
   }
 
-  function handleFile(file: File) {
-    if (!file) return;
-    previewUrl = URL.createObjectURL(file);
-    value = file.name;
-  }
-
   function handleInputChange(e: Event) {
     const target = e.target as HTMLInputElement;
     const file = target.files?.[0];
-    if (file) handleFile(file);
+    if (file) {
+      previewUrl = URL.createObjectURL(file);
+    }
   }
 
   function handleClear() {
-    value = '';
     previewUrl = '';
     if (fileInput) fileInput.value = '';
   }
@@ -46,6 +43,16 @@
 
 <div>
   <label for={name} class="block text-sm font-medium text-gray-700">{label}</label>
+  
+  <input
+    bind:this={fileInput}
+    type="file"
+    {name}
+    {accept}
+    {required}
+    class="hidden"
+    onchange={handleInputChange}
+  />
   
   {#if previewUrl}
     <div class="mt-2 relative inline-block">
@@ -62,7 +69,9 @@
         ✕
       </button>
     </div>
-  {:else}
+  {/if}
+  
+  {#if !previewUrl}
     <div
       class="mt-1 border-2 border-dashed rounded-md p-4 text-center cursor-pointer transition-colors"
       class:border-gray-300={!dragging}
@@ -76,15 +85,6 @@
       role="button"
       tabindex="0"
     >
-      <input
-        bind:this={fileInput}
-        type="file"
-        {name}
-        {accept}
-        {required}
-        class="hidden"
-        onchange={handleInputChange}
-      />
       <p class="text-sm text-gray-500">Click or drag image here</p>
     </div>
   {/if}
