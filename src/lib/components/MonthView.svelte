@@ -99,7 +99,7 @@
           <span class="text-xs font-semibold text-slate-500 sm:text-sm">{day}</span>
           {#if isAdmin}
             <a
-              href="/admin/events/new?date={date}"
+              href="/admin/events/new?date={date.toFormat('yyyy-MM-dd')}"
               class="rounded p-0.5 text-primary-600 opacity-0 transition-opacity hover:bg-primary-50 group-hover:opacity-100"
               title="Add event on this day"
             >
