@@ -2,6 +2,8 @@ import type { RequestHandler } from './$types';
 import { lucia } from '$lib/server/auth';
 import { users } from '$lib/server/db/schema';
 import { db } from '$lib/server/db/';
+import { sql } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 
 export const POST: RequestHandler = async ({ request, cookies }) => {
   const body = await request.json();
@@ -24,18 +26,33 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
 
   try {
     const now = new Date();
-    const ids = await db
-      .insert(users)
-      .values({
-        email,
-        isAdmin: false,
-        firstName,
-        lastName,
-        stateOfOrigin: stateOfOrigin || null,
-        createdAt: now,
-        lastLogin: now
-      })
-      .returning({ id: users.id });
+
+    // Check if user already exists
+    const existing = await db.execute(sql`SELECT id FROM "user" WHERE email = ${email}`);
+
+    let userId: number;
+    if (existing.length === 0) {
+      const ids = await db
+        .insert(users)
+        .values({
+          email,
+          isAdmin: false,
+          firstName,
+          lastName,
+          stateOfOrigin: stateOfOrigin || null,
+          createdAt: now,
+          lastLogin: now
+        })
+        .returning({ id: users.id });
+      userId = ids[0].id;
+    } else {
+      const updated = await db
+        .update(users)
+        .set({ firstName, lastName, stateOfOrigin: stateOfOrigin || null, lastLogin: now })
+        .where(eq(users.email, email))
+        .returning({ id: users.id });
+      userId = updated[0].id;
+    }
 
     const session = await lucia.createSession(ids[0].id.toString(), {});
     const sessionCookie = lucia.createSessionCookie(session.id);
