@@ -71,23 +71,17 @@ export const GET: RequestHandler = async function (event) {
     const { email } = payload;
     let userAccount: User[] = await db.select().from(users).where(eq(users.email, email));
 
-    if (userAccount.length === 0) {
-      let ids = await db
-        .insert(users)
-        .values({
-          email,
-          isAdmin: false
-        })
-        .returning({ id: users.id });
-      userAccount = [{ id: ids[0].id, email, isAdmin: false, createdAt: new Date(), lastLogin: null }];
-    }
-
-    const session = await lucia.createSession(userAccount[0].id.toString(), {});
-    const sessionCookie = lucia.createSessionCookie(session.id);
-
     let headers = new Headers();
-    headers.append('Set-Cookie', sessionCookie.serialize());
-    headers.append('Location', siteUrl + 'groupme/');
+
+    if (userAccount.length === 0) {
+      event.cookies.set('pendingSignupEmail', email, { path: '/', maxAge: 900 });
+      headers.append('Location', siteUrl + '/login/setup');
+    } else {
+      const session = await lucia.createSession(userAccount[0].id.toString(), {});
+      const sessionCookie = lucia.createSessionCookie(session.id);
+      headers.append('Set-Cookie', sessionCookie.serialize());
+      headers.append('Location', siteUrl + 'groupme/');
+    }
 
     let result = new Response(null, {
       status: 302,

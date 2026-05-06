@@ -11,7 +11,9 @@
     let result = [...data.users];
     if (searchTerm) {
       result = result.filter(user => 
-        user.email.toLowerCase().includes(searchTerm.toLowerCase())
+        user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (user.firstName && user.firstName.toLowerCase().includes(searchTerm.toLowerCase())) ||
+        (user.lastName && user.lastName.toLowerCase().includes(searchTerm.toLowerCase()))
       );
     }
     return result;
@@ -79,7 +81,9 @@
       <table class="w-full">
         <thead>
           <tr class="border-b border-slate-200 bg-slate-50/50">
+            <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Name</th>
             <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Email</th>
+            <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">State</th>
             <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Admin</th>
             <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Date Created</th>
             <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Last Login</th>
@@ -89,7 +93,9 @@
         <tbody class="divide-y divide-slate-100">
           {#each filteredUsers as user (user.id)}
             <tr class="hover:bg-slate-50/50 transition-colors">
-              <td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-slate-700">{user.email}</td>
+              <td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-slate-700">{user.firstName && user.lastName ? `${user.firstName} ${user.lastName}` : '—'}</td>
+              <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-600">{user.email}</td>
+              <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-600">{user.stateOfOrigin || '—'}</td>
               <td class="whitespace-nowrap px-6 py-4">
                 <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium {user.isAdmin ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-600'}">
                   {user.isAdmin ? 'Yes' : 'No'}

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
+
   export let value = '';
   export let name = 'image';
   export let required = false;
@@ -8,6 +10,7 @@
   export let aspectTolerance = 0.3;
 
   let fileInput: HTMLInputElement;
+  let dropArea: HTMLDivElement;
   let dragging = false;
   let previewUrl = value || '';
   let aspectWarning = '';
@@ -40,6 +43,22 @@
     }
   }
 
+  function handlePaste(e: ClipboardEvent) {
+    e.preventDefault();
+    const items = e.clipboardData?.items;
+    if (!items) return;
+    for (const item of items) {
+      if (item.type.startsWith('image/')) {
+        const file = item.getAsFile();
+        if (file) {
+          previewUrl = URL.createObjectURL(file);
+          checkAspectRatio(file);
+        }
+        break;
+      }
+    }
+  }
+
   function checkAspectRatio(file: File) {
     aspectWarning = '';
     if (!idealAspect || !file.type.startsWith('image/')) return;
@@ -63,6 +82,17 @@
     aspectWarning = '';
     if (fileInput) fileInput.value = '';
   }
+
+  onMount(() => {
+    if (dropArea) {
+      dropArea.addEventListener('paste', handlePaste);
+    }
+    return () => {
+      if (dropArea) {
+        dropArea.removeEventListener('paste', handlePaste);
+      }
+    };
+  });
 </script>
 
 <div>
@@ -101,6 +131,7 @@
   
   {#if !previewUrl}
     <div
+      bind:this={dropArea}
       class="mt-1 border-2 border-dashed rounded-md p-4 text-center cursor-pointer transition-colors"
       class:border-gray-300={!dragging}
       class:bg-gray-50={!dragging}
@@ -113,7 +144,7 @@
       role="button"
       tabindex="0"
     >
-      <p class="text-sm text-gray-500">Click or drag image here</p>
+      <p class="text-sm text-gray-500">Click, drag, or paste image here</p>
     </div>
   {/if}
 </div>

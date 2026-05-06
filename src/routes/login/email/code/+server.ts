@@ -38,15 +38,18 @@ export const POST: RequestHandler = async function(event) {
       );
     }
     let userAccount = await db.select().from(users).where(eq(users.email, email));
+
+    let headers = new Headers();
+
     if (userAccount.length === 0) {
-      let ids = await db
-        .insert(users)
-        .values({
-          email,
-          isAdmin: false
-        })
-        .returning({ id: users.id });
-      userAccount = [{ id: ids[0].id, email, isAdmin: false, createdAt: new Date(), lastLogin: null }];
+      event.cookies.set('pendingSignupEmail', email, { path: '/', maxAge: 900 });
+      headers.append('Location', '/login/setup');
+    } else {
+      const session = await lucia.createSession(userAccount[0].id.toString(), {});
+      const sessionCookie = lucia.createSessionCookie(session.id);
+      headers.append('Set-Cookie', sessionCookie.serialize());
+      headers.append('Set-Cookie', `redirectUrl=; path=/; max-age=0`);
+      headers.append('Location', redirectUrl);
 
       try {
         await resend.contacts.create({
@@ -57,14 +60,6 @@ export const POST: RequestHandler = async function(event) {
         console.error('Resend contact create error:', resendError);
       }
     }
-
-    const session = await lucia.createSession(userAccount[0].id.toString(), {});
-    const sessionCookie = lucia.createSessionCookie(session.id);
-
-    let headers = new Headers();
-    headers.append('Set-Cookie', sessionCookie.serialize());
-    headers.append('Set-Cookie', `redirectUrl=; path=/; max-age=0`);
-    headers.append('Location', redirectUrl);
 
     let result = new Response(null, {
       status: 200,

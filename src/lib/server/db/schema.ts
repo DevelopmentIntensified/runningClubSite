@@ -4,6 +4,9 @@ export const users = pgTable('user', {
   id: serial('id').primaryKey(),
   isAdmin: boolean('is_admin').default(false).notNull(),
   email: text('email').notNull().unique(),
+  firstName: text('first_name'),
+  lastName: text('last_name'),
+  stateOfOrigin: text('state_of_origin'),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   lastLogin: timestamp('last_login')
 });
