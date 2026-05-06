@@ -76,7 +76,7 @@
             <label for="active" class="ml-2 block text-sm text-gray-900">Active</label>
           </div>
           <div>
-            <ImageUpload name="imageUrl" label="Image (Accepts png, gif, jpeg, jpg)" required={true} />
+            <ImageUpload name="imageUrl" label="Image (Accepts png, gif, jpeg, jpg)" required={true} idealAspect={2/3} />
           </div>
           {#if error}
             <div class="text-sm text-red-500">{error}</div>

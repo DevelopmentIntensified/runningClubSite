@@ -41,7 +41,7 @@
             <RichTextEditor bind:value={content} />
           </div>
           <div>
-            <ImageUpload name="image" label="Image" value={newsItem.imageUrl} />
+            <ImageUpload name="image" label="Image" value={newsItem.imageUrl} idealAspect={16/9} />
           </div>
           {#if error}
             <div class="text-sm text-red-500">{error}</div>

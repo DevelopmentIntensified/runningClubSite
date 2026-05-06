@@ -4,10 +4,13 @@
   export let required = false;
   export let label = 'Image';
   export let accept = 'image/jpeg,image/png,image/webp,image/gif';
+  export let idealAspect: number | null = null;
+  export let aspectTolerance = 0.3;
 
   let fileInput: HTMLInputElement;
   let dragging = false;
   let previewUrl = value || '';
+  let aspectWarning = '';
 
   function handleDrop(e: DragEvent) {
     e.preventDefault();
@@ -15,6 +18,7 @@
     const file = e.dataTransfer?.files[0];
     if (file) {
       previewUrl = URL.createObjectURL(file);
+      checkAspectRatio(file);
     }
   }
 
@@ -32,11 +36,31 @@
     const file = target.files?.[0];
     if (file) {
       previewUrl = URL.createObjectURL(file);
+      checkAspectRatio(file);
     }
+  }
+
+  function checkAspectRatio(file: File) {
+    aspectWarning = '';
+    if (!idealAspect || !file.type.startsWith('image/')) return;
+
+    const img = new Image();
+    img.onload = () => {
+      const actual = img.width / img.height;
+      const ratio = actual / idealAspect;
+      if (ratio < (1 - aspectTolerance) || ratio > (1 + aspectTolerance)) {
+        const idealRatio = idealAspect < 1
+          ? `1:${Math.round(1 / idealAspect)}`
+          : `${Math.round(idealAspect)}:1`;
+        aspectWarning = `Ideal aspect ratio is ${idealRatio}. Image may appear cropped.`;
+      }
+    };
+    img.src = URL.createObjectURL(file);
   }
 
   function handleClear() {
     previewUrl = '';
+    aspectWarning = '';
     if (fileInput) fileInput.value = '';
   }
 </script>
@@ -69,6 +93,9 @@
         ✕
       </button>
     </div>
+    {#if aspectWarning}
+      <p class="mt-2 text-sm text-amber-600">⚠ {aspectWarning}</p>
+    {/if}
     <input type="hidden" name="imageUrl" value={value} />
   {/if}
   

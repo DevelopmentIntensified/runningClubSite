@@ -85,7 +85,7 @@
             />
           </div>
           <div>
-            <ImageUpload name="image" label="Profile Image" value={alumnus.imageUrl || ''} />
+            <ImageUpload name="image" label="Profile Image" value={alumnus.imageUrl || ''} idealAspect={2/3} />
           </div>
           {#if error}
             <div class="text-sm text-red-500">{error}</div>

@@ -37,7 +37,7 @@
             <input type="hidden" name="content" value={content} />
           </div>
           <div>
-            <ImageUpload name="image" label="Image" required={true} />
+            <ImageUpload name="image" label="Image" required={true} idealAspect={16/9} />
           </div>
           {#if error}
             <div class="text-sm text-red-500">{error}</div>

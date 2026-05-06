@@ -70,7 +70,7 @@
             />
           </div>
           <div>
-            <ImageUpload name="image" label="Image (Accepts png, gif, jpeg, jpg)" />
+            <ImageUpload name="image" label="Image (Accepts png, gif, jpeg, jpg)" idealAspect={2/3} />
           </div>
           {#if error}
             <div class="text-sm text-red-500">{error}</div>
