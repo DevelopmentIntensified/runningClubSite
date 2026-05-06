@@ -9,6 +9,45 @@
   let waiting = false;
   let redirectUrl = '/groupme';
 
+  let stateSearch = '';
+  let stateDropdownOpen = false;
+  let stateInputFocused = false;
+
+  const usStates = [
+    'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut',
+    'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa',
+    'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan',
+    'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
+    'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio',
+    'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota',
+    'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia',
+    'Wisconsin', 'Wyoming'
+  ];
+
+  $: filteredStates = stateSearch === ''
+    ? usStates
+    : usStates.filter(s => s.toLowerCase().includes(stateSearch.toLowerCase()));
+
+  function selectState(state: string) {
+    stateOfOrigin = state;
+    stateSearch = state;
+    stateDropdownOpen = false;
+  }
+
+  function handleStateInput(e: Event) {
+    stateSearch = (e.target as HTMLInputElement).value;
+    stateDropdownOpen = true;
+    if (stateSearch === '') {
+      stateOfOrigin = '';
+    }
+  }
+
+  function handleStateBlur() {
+    setTimeout(() => {
+      stateDropdownOpen = false;
+    }, 200);
+  }
+
   onMount(() => {
     const params = new URLSearchParams(window.location.search);
     if (params.has('redirectUrl')) {
@@ -99,18 +138,39 @@
         </div>
       </div>
 
-      <div>
+      <div class="relative">
         <label for="stateOfOrigin" class="block text-sm font-medium text-gray-700">State of Origin</label>
-        <div class="relative mt-1 rounded-md shadow-sm">
+        <div class="relative mt-1">
           <input
             id="stateOfOrigin"
             name="stateOfOrigin"
             type="text"
-            class="block w-full rounded-md border border-gray-300 bg-white py-2 px-3 leading-5 placeholder-gray-500 focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
-            placeholder="Virginia"
-            bind:value={stateOfOrigin}
+            class="block w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 leading-5 placeholder-gray-500 focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+            placeholder="Start typing to search..."
+            value={stateSearch}
+            on:input={handleStateInput}
+            on:focus={() => { stateDropdownOpen = true; }}
+            on:blur={handleStateBlur}
           />
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+            <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+          </div>
         </div>
+
+        {#if stateDropdownOpen && filteredStates.length > 0}
+          <ul class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md border border-gray-300 bg-white py-1 text-base shadow-lg focus:outline-none sm:text-sm">
+            {#each filteredStates as state}
+              <li
+                class="cursor-pointer px-3 py-2 hover:bg-primary-100 {stateOfOrigin === state ? 'bg-primary-50' : ''}"
+                on:mousedown={() => selectState(state)}
+              >
+                {state}
+              </li>
+            {/each}
+          </ul>
+        {/if}
       </div>
 
       <div>
