@@ -16,9 +16,16 @@ export const POST: RequestHandler = async function(event) {
   const code = body.code;
   const redirectUrl = body.redirectUrl || '/groupme';
   
-  await deleteDeadCodes()
+  console.log('Login code attempt, code:', code)
+
+  try {
+    await deleteDeadCodes()
+  } catch (e) {
+    console.error('deleteDeadCodes error:', e)
+  }
 
   const codeToCheck = await getCode(code)
+  console.log('codeToCheck:', codeToCheck)
   if (!codeToCheck) {
     return new Response(
       JSON.stringify({ success: false, error: 'Unexpected error, please try again' }),
@@ -35,11 +42,14 @@ export const POST: RequestHandler = async function(event) {
       );
     }
 
-    const result = await db.execute(sql`SELECT id, email FROM "user" WHERE email = ${email}`);
+    console.log('Querying user for email:', email)
+    const result = await db.execute(sql`SELECT id, email FROM "user" WHERE email = ${email}`)
+    console.log('User query result:', result.length, 'rows')
 
     let headers = new Headers();
 
     if (result.length === 0) {
+      console.log('New user, redirecting to setup')
       event.cookies.set('pendingSignupEmail', email, { path: '/', maxAge: 900 });
       headers.append('Location', '/login/setup');
     } else {
@@ -68,9 +78,9 @@ export const POST: RequestHandler = async function(event) {
 
     return result2;
   } catch (error) {
-    console.log(error);
+    console.error('Login error:', error);
     return new Response(
-      JSON.stringify({ success: false, error: 'Unexpected error, please try again' }),
+      JSON.stringify({ success: false, error: 'Unexpected error, please try again', details: error instanceof Error ? error.message : String(error) }),
       { status: 500 }
     );
   }
