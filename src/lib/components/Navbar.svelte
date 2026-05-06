@@ -11,46 +11,52 @@
   console.warn('DEBUGPRINT[2]: Navbar.svelte:7: isAdmin=', isAdmin);
 
   let isOpen = false;
-  let aboutDropdownOpen = false;
+  let openDropdown: string | null = null;
 
-  const navItems = [
-    { href: '/', label: 'Home' },
-    { href: '/schedule', label: 'Schedule' },
-    { href: '/locations', label: 'Locations' },
-    { href: '/records', label: 'Records' },
-    { href: '/contact1', label: 'Contact' },
+  const categories = [
+    {
+      label: 'About',
+      items: () => [
+        { href: '/about', label: 'Who We Are' },
+        { href: '/stats', label: 'Where We\'re From' },
+        ...(displayAlumni ? [{ href: '/alumni', label: 'Alumni' }] : [])
+      ]
+    },
+    {
+      label: 'Practice',
+      items: () => [
+        { href: '/schedule', label: 'Schedule' },
+        { href: '/locations', label: 'Locations' },
+        { href: '/trainingplan', label: 'Training Plan' }
+      ]
+    },
+    {
+      label: 'Resources',
+      items: () => [
+        { href: '/records', label: 'Records' },
+        ...(displayNews ? [{ href: '/news', label: 'News' }] : []),
+        { href: '/season-photos', label: 'Season Photos' },
+        { href: '/groupme', label: 'GroupMe' }
+      ]
+    }
   ];
 
-  const aboutItems = [
-    { href: '/about', label: 'Who We Are' },
-    { href: '/stats', label: 'Where We\'re From' }
-  ];
+  const contactLink = { href: '/contact1', label: 'Contact' };
 
   const mobileNavItems = [
-    ...navItems,
+    { href: '/', label: 'Home' },
     { href: '/about', label: 'Who We Are' },
     { href: '/stats', label: 'Where We\'re From' },
+    ...(displayAlumni ? [{ href: '/alumni', label: 'Alumni' }] : []),
+    { href: '/schedule', label: 'Schedule' },
+    { href: '/locations', label: 'Locations' },
+    { href: '/trainingplan', label: 'Training Plan' },
+    { href: '/records', label: 'Records' },
+    ...(displayNews ? [{ href: '/news', label: 'News' }] : []),
+    { href: '/season-photos', label: 'Season Photos' },
+    { href: '/groupme', label: 'GroupMe' },
+    { href: '/contact1', label: 'Contact' }
   ];
-
-  if (displayAlumni) {
-    mobileNavItems.push({ href: '/alumni', label: 'Alumni' });
-  }
-
-  if (displayNews) {
-    mobileNavItems.push({ href: '/news', label: 'News' });
-  }
-
-  const desktopExtras = [];
-  if (displayAlumni) desktopExtras.push({ href: '/alumni', label: 'Alumni' });
-  if (displayNews) desktopExtras.push({ href: '/news', label: 'News' });
-
-  // if (isLoggedIn) {
-    desktopExtras.push(
-      { href: '/trainingplan', label: 'Training' },
-      { href: '/groupme', label: 'Groupme Link' },
-      { href: '/season-photos', label: 'Season Photos' }
-    );
-  // }
 
   const adminItems = [{ href: '/admin/users', label: 'Admin' }];
 
@@ -60,6 +66,19 @@
 
   function closeMenu() {
     isOpen = false;
+    openDropdown = null;
+  }
+
+  function toggleDropdown(label: string) {
+    openDropdown = openDropdown === label ? null : label;
+  }
+
+  function isActive(path: string): boolean {
+    return $page.url.pathname === path;
+  }
+
+  function isCategoryActive(cat: typeof categories[0]): boolean {
+    return cat.items().some(item => isActive(item.href));
   }
 </script>
 
@@ -71,74 +90,49 @@
           <img class="h-16 w-16" src={logoUrl} alt="Liberty Running Club" />
         </a>
         <div class="hidden lg:block">
-          <div class="ml-10 flex items-baseline space-x-4">
-            {#each navItems as item}
-              <a
-                href={item.href}
-                class="rounded-md px-3 py-2 text-sm font-medium hover:bg-primary-700 {$page.url
-                  .pathname === item.href
-                  ? 'bg-primary-700'
-                  : ''}"
-              >
-                {item.label}
-              </a>
-            {/each}
-
-            <div class="relative">
-              <button
-                on:click={() => aboutDropdownOpen = !aboutDropdownOpen}
-                on:mouseenter={() => aboutDropdownOpen = true}
-                class="rounded-md px-3 py-2 text-sm font-medium hover:bg-primary-700 flex items-center gap-1 {$page.url
-                  .pathname === '/about' || $page.url.pathname === '/stats'
-                  ? 'bg-primary-700'
-                  : ''}"
-              >
-                About
-                <svg class="w-4 h-4 transition-transform" class:rotate-180={aboutDropdownOpen} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-
-              {#if aboutDropdownOpen}
-                <div
-                  class="absolute z-50 mt-1 w-48 rounded-md bg-white py-1 shadow-lg"
-                  on:mouseleave={() => aboutDropdownOpen = false}
+          <div class="ml-10 flex items-baseline space-x-1">
+            {#each categories as category}
+              <div class="relative">
+                <button
+                  on:click={() => toggleDropdown(category.label)}
+                  class="rounded-md px-3 py-2 text-sm font-medium hover:bg-primary-700 flex items-center gap-1 {isCategoryActive(category) ? 'bg-primary-700' : ''}"
                 >
-                  {#each aboutItems as item}
-                    <a
-                      href={item.href}
-                      class="block px-4 py-2 text-sm text-gray-700 hover:bg-primary-100 {$page.url
-                        .pathname === item.href
-                        ? 'bg-primary-100 text-primary-700'
-                        : ''}"
-                      on:click={() => aboutDropdownOpen = false}
-                    >
-                      {item.label}
-                    </a>
-                  {/each}
-                </div>
-              {/if}
-            </div>
+                  {category.label}
+                  <svg class="w-4 h-4 transition-transform" class:rotate-180={openDropdown === category.label} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
 
-            {#each desktopExtras as item}
-              <a
-                href={item.href}
-                class="rounded-md px-3 py-2 text-sm font-medium hover:bg-primary-700 {$page.url
-                  .pathname === item.href
-                  ? 'bg-primary-700'
-                  : ''}"
-              >
-                {item.label}
-              </a>
+                {#if openDropdown === category.label}
+                  <div
+                    class="absolute z-50 mt-1 w-48 rounded-md bg-white py-1 shadow-lg"
+                  >
+                    {#each category.items() as item}
+                      <a
+                        href={item.href}
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-primary-100 {isActive(item.href) ? 'bg-primary-100 text-primary-700 font-medium' : ''}"
+                        on:click={() => openDropdown = null}
+                      >
+                        {item.label}
+                      </a>
+                    {/each}
+                  </div>
+                {/if}
+              </div>
             {/each}
+
+            <a
+              href={contactLink.href}
+              class="rounded-md px-3 py-2 text-sm font-medium hover:bg-primary-700 {isActive(contactLink.href) ? 'bg-primary-700' : ''}"
+            >
+              {contactLink.label}
+            </a>
+
             {#if isAdmin}
               {#each adminItems as item}
                 <a
                   href={item.href}
-                  class="rounded-md px-3 py-2 text-sm font-medium hover:bg-primary-700 {$page.url
-                    .pathname === item.href
-                    ? 'bg-primary-700'
-                    : ''}"
+                  class="rounded-md px-3 py-2 text-sm font-medium hover:bg-primary-700 {isActive(item.href) ? 'bg-primary-700' : ''}"
                 >
                   {item.label}
                 </a>
@@ -257,8 +251,6 @@
           >
             Sign Up/Login
           </a>
-          <!-- <a href="/login" on:click={closeMenu} class="block px-3 py-2 rounded-md text-base font-medium hover:bg-primary-700">Login</a> -->
-          <!-- <a href="/register" on:click={closeMenu} class="block px-3 py-2 rounded-md text-base font-medium hover:bg-primary-700">Register</a> -->
         {/if}
       </div>
     </div>
