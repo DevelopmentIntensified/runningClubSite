@@ -2,7 +2,6 @@ import type { RequestHandler } from './$types';
 import { lucia } from '$lib/server/auth';
 import { users } from '$lib/server/db/schema';
 import { db } from '$lib/server/db/';
-import { eq } from 'drizzle-orm';
 
 export const POST: RequestHandler = async ({ request, cookies }) => {
   const body = await request.json();
@@ -40,14 +39,15 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
 
     const session = await lucia.createSession(ids[0].id.toString(), {});
     const sessionCookie = lucia.createSessionCookie(session.id);
+    const clearPending = 'pendingSignupEmail=; Path=/; Max-Age=0';
 
-    cookies.delete('pendingSignupEmail', { path: '/' });
+    const headers = new Headers();
+    headers.append('Set-Cookie', sessionCookie.serialize());
+    headers.append('Set-Cookie', 'pendingSignupEmail=; Path=/; Max-Age=0');
 
-    return new Response(JSON.stringify({ success: true }), {
-      status: 200,
-      headers: {
-        'Set-Cookie': sessionCookie.serialize()
-      }
+    return new Response(JSON.stringify({ success: true, redirectTo: '/groupme' }), {
+      headers,
+      status: 200
     });
   } catch (error) {
     console.error('Error creating user:', error);

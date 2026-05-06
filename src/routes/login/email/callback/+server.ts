@@ -70,24 +70,22 @@ export const GET: RequestHandler = async function (event) {
     const { email } = payload;
     const userResult = await db.execute(sql`SELECT id, email FROM "user" WHERE email = ${email}`);
 
-    let headers = new Headers();
+    const headers = new Headers();
 
     if (userResult.length === 0) {
-      event.cookies.set('pendingSignupEmail', email, { path: '/', maxAge: 900 });
+      headers.append('Set-Cookie', `pendingSignupEmail=${encodeURIComponent(email)}; Path=/; Max-Age=900; HttpOnly; SameSite=Lax`);
       headers.append('Location', siteUrl + '/login/setup');
     } else {
       const session = await lucia.createSession(userResult[0].id.toString(), {});
       const sessionCookie = lucia.createSessionCookie(session.id);
       headers.append('Set-Cookie', sessionCookie.serialize());
-      headers.append('Location', siteUrl + 'groupme/');
+      headers.append('Location', siteUrl + '/groupme/');
     }
 
-    let response = new Response(null, {
+    return new Response(null, {
       status: 302,
       headers
     });
-
-    return response;
   } catch (error) {
     console.log(error);
     return new Response(null, {

@@ -18,11 +18,11 @@
       body: JSON.stringify({ code, redirectUrl })
     });
 
-    if (res.status === 500) {
-      const json = await res.json();
+    const json = await res.json();
+    if (!json.success) {
       error = json.error;
     } else {
-      await goto(redirectUrl);
+      await goto(json.redirectTo || redirectUrl);
       location.reload();
     }
     waiting = false;

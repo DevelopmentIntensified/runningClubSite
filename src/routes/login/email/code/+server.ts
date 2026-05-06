@@ -15,8 +15,6 @@ export const POST: RequestHandler = async function(event) {
   const body = await event.request.json();
   const code = body.code;
   const redirectUrl = body.redirectUrl || '/groupme';
-  
-  console.log('Login code attempt, code:', code)
 
   try {
     await deleteDeadCodes()
@@ -25,11 +23,10 @@ export const POST: RequestHandler = async function(event) {
   }
 
   const codeToCheck = await getCode(code)
-  console.log('codeToCheck:', codeToCheck)
   if (!codeToCheck) {
     return new Response(
-      JSON.stringify({ success: false, error: 'Unexpected error, please try again' }),
-      { status: 500 }
+      JSON.stringify({ success: false, error: 'Invalid or expired code. Please request a new one.' }),
+      { status: 400 }
     );
   }
 
@@ -42,22 +39,21 @@ export const POST: RequestHandler = async function(event) {
       );
     }
 
-    console.log('Querying user for email:', email)
     const result = await db.execute(sql`SELECT id, email FROM "user" WHERE email = ${email}`)
-    console.log('User query result:', result.length, 'rows')
 
-    let headers = new Headers();
+    const headers = new Headers();
 
     if (result.length === 0) {
-      console.log('New user, redirecting to setup')
       event.cookies.set('pendingSignupEmail', email, { path: '/', maxAge: 900 });
-      headers.append('Location', '/login/setup');
+      return new Response(JSON.stringify({ success: true, redirectTo: '/login/setup' }), {
+        headers,
+        status: 200
+      });
     } else {
       const session = await lucia.createSession(result[0].id.toString(), {});
       const sessionCookie = lucia.createSessionCookie(session.id);
       headers.append('Set-Cookie', sessionCookie.serialize());
-      headers.append('Set-Cookie', `redirectUrl=; path=/; max-age=0`);
-      headers.append('Location', redirectUrl);
+      headers.append('Set-Cookie', 'redirectUrl=; Path=/; Max-Age=0');
 
       try {
         await resend.contacts.create({
@@ -67,16 +63,12 @@ export const POST: RequestHandler = async function(event) {
       } catch (resendError) {
         console.error('Resend contact create error:', resendError);
       }
+
+      return new Response(JSON.stringify({ success: true, redirectTo: redirectUrl }), {
+        headers,
+        status: 200
+      });
     }
-
-    let result2 = new Response(null, {
-      status: 200,
-      headers
-    });
-
-    await deleteCode(code)
-
-    return result2;
   } catch (error) {
     console.error('Login error:', error);
     return new Response(

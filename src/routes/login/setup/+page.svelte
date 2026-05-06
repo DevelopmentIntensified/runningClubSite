@@ -26,7 +26,7 @@
     if (json.error) {
       error = json.error;
     } else {
-      await goto('/groupme');
+      await goto(json.redirectTo || '/groupme');
       location.reload();
     }
     waiting = false;
