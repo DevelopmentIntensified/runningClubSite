@@ -1,4 +1,4 @@
-import { getLeaders, deleteLeader } from '$lib/actions/leaders';
+import { getLeaders, deleteLeader, convertLeaderToAlumnus } from '$lib/actions/leaders';
 import { fail } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
 
@@ -17,6 +17,17 @@ export const actions: Actions = {
     }
 
     await deleteLeader(parseInt(id));
+    return { success: true };
+  },
+  convertLeaderToAlumnus: async ({ request }) => {
+    const formData = await request.formData();
+    const id = formData.get('id');
+
+    if (!id || typeof id !== 'string') {
+      return fail(400, { message: 'Invalid leader ID' });
+    }
+
+    await convertLeaderToAlumnus(parseInt(id));
     return { success: true };
   }
 };

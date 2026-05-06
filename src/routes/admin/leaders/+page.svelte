@@ -87,6 +87,13 @@
                 <div class="flex items-center gap-3">
                   <a href="/admin/leaders/{leader.id}/edit" class="text-primary-600 hover:text-primary-800 font-medium text-xs">Edit</a>
                   <span class="text-slate-300">|</span>
+                  {#if leader.active}
+                    <form action="?/convertLeaderToAlumnus" method="POST" use:enhance class="inline">
+                      <input type="hidden" name="id" value={leader.id} />
+                      <button type="submit" class="text-amber-600 hover:text-amber-800 text-xs">Make Alumni</button>
+                    </form>
+                    <span class="text-slate-300">|</span>
+                  {/if}
                   <form action="?/deleteLeader" method="POST" use:enhance class="inline">
                     <input type="hidden" name="id" value={leader.id} />
                     <button type="submit" class="text-red-600 hover:text-red-800 text-xs">Delete</button>

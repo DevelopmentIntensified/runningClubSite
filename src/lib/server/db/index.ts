@@ -11,6 +11,7 @@ import { insertEvents } from './insertEvents';
 import { insertLocations } from './insertLocations';
 import { insertLeaders } from './insertLeaders';
 import { insertRecurringEvents } from './insertRecurringEvents';
+import { insertSemesterPractices, deleteSemesterPractices } from './insertSemesterPractices';
 
 if (false) {
   insertLeaders();
@@ -34,4 +35,14 @@ if (false) {
 
   // Log the current date for reference
   console.log('Script run date:', new Date().toISOString());
+}
+if (false) {
+  await insertSemesterPractices()
+    .then(() => console.log('All semester practices for Fall 2026 and Spring 2027 inserted successfully'))
+    .catch(error => console.error('Error inserting semester practices:', error))
+}
+if (false) {
+  await deleteSemesterPractices()
+    .then(() => console.log('All semester practices for Fall 2026 and Spring 2027 deleted successfully'))
+    .catch(error => console.error('Error deleting semester practices:', error))
 }
