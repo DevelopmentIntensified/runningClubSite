@@ -5,6 +5,7 @@ const pages: string[] = [
   "schedule",
   "locations",
   "records",
+  "stats",
   "contact",
   "login",
   "news",

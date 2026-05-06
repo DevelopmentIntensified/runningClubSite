@@ -18,6 +18,7 @@
     { href: '/schedule', label: 'Schedule' },
     { href: '/locations', label: 'Locations' },
     { href: '/records', label: 'Records' },
+    { href: '/stats', label: 'Stats' },
     { href: '/contact1', label: 'Contact' },
     // { href: '/news', label: 'News' }
   ];
