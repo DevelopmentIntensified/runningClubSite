@@ -1,9 +1,8 @@
 import type { RequestHandler } from './$types';
 import { getUrl } from '$lib/utils/getUrl';
 import { lucia } from '$lib/server/auth';
-import { users } from '$lib/server/db/schema';
 import { db } from '$lib/server/db/';
-import { eq } from 'drizzle-orm';
+import { sql } from 'drizzle-orm';
 import { deleteCode, deleteDeadCodes, getCode } from '$lib/actions/codes';
 import { Resend } from 'resend';
 import { RESENDAPIKEY } from '$env/static/private';
@@ -17,8 +16,6 @@ export const POST: RequestHandler = async function(event) {
   const code = body.code;
   const redirectUrl = body.redirectUrl || '/groupme';
   
-  console.warn("DEBUGPRINT[1]: +server.ts:14: code=", code)
-
   await deleteDeadCodes()
 
   const codeToCheck = await getCode(code)
@@ -37,15 +34,16 @@ export const POST: RequestHandler = async function(event) {
         { status: 500 }
       );
     }
-    let userAccount = await db.select().from(users).where(eq(users.email, email));
+
+    const result = await db.execute(sql`SELECT id, email, first_name FROM "user" WHERE email = ${email}`);
 
     let headers = new Headers();
 
-    if (userAccount.length === 0) {
+    if (result.length === 0 || !result[0].first_name) {
       event.cookies.set('pendingSignupEmail', email, { path: '/', maxAge: 900 });
       headers.append('Location', '/login/setup');
     } else {
-      const session = await lucia.createSession(userAccount[0].id.toString(), {});
+      const session = await lucia.createSession(result[0].id.toString(), {});
       const sessionCookie = lucia.createSessionCookie(session.id);
       headers.append('Set-Cookie', sessionCookie.serialize());
       headers.append('Set-Cookie', `redirectUrl=; path=/; max-age=0`);
@@ -61,14 +59,14 @@ export const POST: RequestHandler = async function(event) {
       }
     }
 
-    let result = new Response(null, {
+    let result2 = new Response(null, {
       status: 200,
       headers
     });
 
     await deleteCode(code)
 
-    return result;
+    return result2;
   } catch (error) {
     console.log(error);
     return new Response(
