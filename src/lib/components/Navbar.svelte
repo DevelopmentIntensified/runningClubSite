@@ -11,45 +11,45 @@
   console.warn('DEBUGPRINT[2]: Navbar.svelte:7: isAdmin=', isAdmin);
 
   let isOpen = false;
+  let aboutDropdownOpen = false;
 
   const navItems = [
     { href: '/', label: 'Home' },
-    { href: '/about', label: 'About' },
     { href: '/schedule', label: 'Schedule' },
     { href: '/locations', label: 'Locations' },
     { href: '/records', label: 'Records' },
-    { href: '/stats', label: 'Stats' },
     { href: '/contact1', label: 'Contact' },
-    // { href: '/news', label: 'News' }
+  ];
+
+  const aboutItems = [
+    { href: '/about', label: 'Who We Are' },
+    { href: '/stats', label: 'Where We\'re From' }
+  ];
+
+  const mobileNavItems = [
+    ...navItems,
+    { href: '/about', label: 'Who We Are' },
+    { href: '/stats', label: 'Where We\'re From' },
   ];
 
   if (displayAlumni) {
-    navItems.push({
-      href: '/alumni',
-      label: 'Alumni'
-    });
+    mobileNavItems.push({ href: '/alumni', label: 'Alumni' });
   }
 
   if (displayNews) {
-    navItems.push({
-      href: '/news',
-      label: 'News'
-    });
+    mobileNavItems.push({ href: '/news', label: 'News' });
   }
 
+  const desktopExtras = [];
+  if (displayAlumni) desktopExtras.push({ href: '/alumni', label: 'Alumni' });
+  if (displayNews) desktopExtras.push({ href: '/news', label: 'News' });
+
   // if (isLoggedIn) {
-    navItems.push({
-      href: '/trainingplan',
-      label: 'Training'
-    });
-    navItems.push({
-      href: '/groupme',
-      label: 'Groupme Link'
-    });
-    navItems.push({
-      href: '/season-photos',
-      label: 'Season Photos'
-    });
+    desktopExtras.push(
+      { href: '/trainingplan', label: 'Training' },
+      { href: '/groupme', label: 'Groupme Link' },
+      { href: '/season-photos', label: 'Season Photos' }
+    );
   // }
 
   const adminItems = [{ href: '/admin/users', label: 'Admin' }];
@@ -73,6 +73,54 @@
         <div class="hidden lg:block">
           <div class="ml-10 flex items-baseline space-x-4">
             {#each navItems as item}
+              <a
+                href={item.href}
+                class="rounded-md px-3 py-2 text-sm font-medium hover:bg-primary-700 {$page.url
+                  .pathname === item.href
+                  ? 'bg-primary-700'
+                  : ''}"
+              >
+                {item.label}
+              </a>
+            {/each}
+
+            <div class="relative">
+              <button
+                on:click={() => aboutDropdownOpen = !aboutDropdownOpen}
+                on:mouseenter={() => aboutDropdownOpen = true}
+                class="rounded-md px-3 py-2 text-sm font-medium hover:bg-primary-700 flex items-center gap-1 {$page.url
+                  .pathname === '/about' || $page.url.pathname === '/stats'
+                  ? 'bg-primary-700'
+                  : ''}"
+              >
+                About
+                <svg class="w-4 h-4 transition-transform" class:rotate-180={aboutDropdownOpen} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+
+              {#if aboutDropdownOpen}
+                <div
+                  class="absolute z-50 mt-1 w-48 rounded-md bg-white py-1 shadow-lg"
+                  on:mouseleave={() => aboutDropdownOpen = false}
+                >
+                  {#each aboutItems as item}
+                    <a
+                      href={item.href}
+                      class="block px-4 py-2 text-sm text-gray-700 hover:bg-primary-100 {$page.url
+                        .pathname === item.href
+                        ? 'bg-primary-100 text-primary-700'
+                        : ''}"
+                      on:click={() => aboutDropdownOpen = false}
+                    >
+                      {item.label}
+                    </a>
+                  {/each}
+                </div>
+              {/if}
+            </div>
+
+            {#each desktopExtras as item}
               <a
                 href={item.href}
                 class="rounded-md px-3 py-2 text-sm font-medium hover:bg-primary-700 {$page.url
@@ -163,7 +211,7 @@
   {#if isOpen}
     <div transition:slide={{ duration: 300 }} class="lg:hidden">
       <div class="space-y-1 px-2 pb-3 pt-2 lg:px-3">
-        {#each navItems as item}
+        {#each mobileNavItems as item}
           <a
             href={item.href}
             on:click={closeMenu}
