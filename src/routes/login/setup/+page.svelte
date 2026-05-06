@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
 
   let firstName = '';
@@ -6,6 +7,14 @@
   let stateOfOrigin = '';
   let error = '';
   let waiting = false;
+  let redirectUrl = '/groupme';
+
+  onMount(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.has('redirectUrl')) {
+      redirectUrl = params.get('redirectUrl') as string;
+    }
+  });
 
   async function handleSubmit() {
     if (!firstName.trim() || !lastName.trim()) {
@@ -19,14 +28,14 @@
     const res = await fetch('/login/setup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ firstName: firstName.trim(), lastName: lastName.trim(), stateOfOrigin: stateOfOrigin.trim() || null })
+      body: JSON.stringify({ firstName: firstName.trim(), lastName: lastName.trim(), stateOfOrigin: stateOfOrigin.trim() || null, redirectUrl })
     });
 
     const json = await res.json();
     if (json.error) {
       error = json.error;
     } else {
-      await goto(json.redirectTo || '/groupme');
+      await goto(json.redirectTo || redirectUrl);
       location.reload();
     }
     waiting = false;

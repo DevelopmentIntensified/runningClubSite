@@ -70,16 +70,20 @@ export const GET: RequestHandler = async function (event) {
     const { email } = payload;
     const userResult = await db.execute(sql`SELECT id, email, first_name FROM "user" WHERE email = ${email}`);
 
+    const targetRedirect = event.cookies.get('redirectUrl');
+    const finalRedirect = targetRedirect ? decodeURIComponent(targetRedirect) : '/groupme';
+
     const headers = new Headers();
 
     if (userResult.length === 0 || !userResult[0].first_name) {
       headers.append('Set-Cookie', `pendingSignupEmail=${encodeURIComponent(email)}; Path=/; Max-Age=900; HttpOnly; SameSite=Lax`);
-      headers.append('Location', siteUrl + '/login/setup');
+      headers.append('Location', siteUrl + `/login/setup?redirectUrl=${encodeURIComponent(finalRedirect)}`);
     } else {
       const session = await lucia.createSession(userResult[0].id.toString(), {});
       const sessionCookie = lucia.createSessionCookie(session.id);
       headers.append('Set-Cookie', sessionCookie.serialize());
-      headers.append('Location', siteUrl + '/groupme/');
+      headers.append('Set-Cookie', 'redirectUrl=; Path=/; Max-Age=0');
+      headers.append('Location', siteUrl + finalRedirect);
     }
 
     return new Response(null, {

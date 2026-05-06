@@ -45,7 +45,8 @@ export const POST: RequestHandler = async function(event) {
 
     if (result.length === 0 || !result[0].first_name) {
       event.cookies.set('pendingSignupEmail', email, { path: '/', maxAge: 900 });
-      return new Response(JSON.stringify({ success: true, redirectTo: '/login/setup' }), {
+      const setupUrl = `/login/setup?redirectUrl=${encodeURIComponent(redirectUrl)}`;
+      return new Response(JSON.stringify({ success: true, redirectTo: setupUrl }), {
         headers,
         status: 200
       });

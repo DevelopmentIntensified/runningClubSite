@@ -7,7 +7,7 @@ import { eq } from 'drizzle-orm';
 
 export const POST: RequestHandler = async ({ request, cookies }) => {
   const body = await request.json();
-  const { firstName, lastName, stateOfOrigin } = body;
+  const { firstName, lastName, stateOfOrigin, redirectUrl } = body;
 
   if (!firstName || !lastName) {
     return new Response(
@@ -27,7 +27,6 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
   try {
     const now = new Date();
 
-    // Check if user already exists
     const existing = await db.execute(sql`SELECT id FROM "user" WHERE email = ${email}`);
 
     let userId: number;
@@ -54,15 +53,15 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
       userId = updated[0].id;
     }
 
-    const session = await lucia.createSession(ids[0].id.toString(), {});
+    const session = await lucia.createSession(userId.toString(), {});
     const sessionCookie = lucia.createSessionCookie(session.id);
     const clearPending = 'pendingSignupEmail=; Path=/; Max-Age=0';
 
     const headers = new Headers();
     headers.append('Set-Cookie', sessionCookie.serialize());
-    headers.append('Set-Cookie', 'pendingSignupEmail=; Path=/; Max-Age=0');
+    headers.append('Set-Cookie', clearPending);
 
-    return new Response(JSON.stringify({ success: true, redirectTo: '/groupme' }), {
+    return new Response(JSON.stringify({ success: true, redirectTo: redirectUrl || '/groupme' }), {
       headers,
       status: 200
     });
