@@ -4,9 +4,8 @@ import { getUrl } from '$lib/utils/getUrl';
 import { EMAILSECRET } from '$env/static/private';
 import type { EmailTokenPayload } from '../+server';
 import { lucia } from '$lib/server/auth';
-import { users, type User } from '$lib/server/db/schema';
 import { db } from '$lib/server/db/';
-import { eq } from 'drizzle-orm';
+import { sql } from 'drizzle-orm';
 
 export const GET: RequestHandler = async function (event) {
   const requestUrl = new URL(event.url);
@@ -69,15 +68,15 @@ export const GET: RequestHandler = async function (event) {
 
   try {
     const { email } = payload;
-    let userAccount: User[] = await db.select().from(users).where(eq(users.email, email));
+    const result = await db.execute(sql`SELECT id, email FROM "user" WHERE email = ${email}`);
 
     let headers = new Headers();
 
-    if (userAccount.length === 0) {
+    if (result.length === 0) {
       event.cookies.set('pendingSignupEmail', email, { path: '/', maxAge: 900 });
       headers.append('Location', siteUrl + '/login/setup');
     } else {
-      const session = await lucia.createSession(userAccount[0].id.toString(), {});
+      const session = await lucia.createSession(result[0].id.toString(), {});
       const sessionCookie = lucia.createSessionCookie(session.id);
       headers.append('Set-Cookie', sessionCookie.serialize());
       headers.append('Location', siteUrl + 'groupme/');

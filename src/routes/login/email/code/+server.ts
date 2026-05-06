@@ -35,11 +35,11 @@ export const POST: RequestHandler = async function(event) {
       );
     }
 
-    const result = await db.execute(sql`SELECT id, email, first_name FROM "user" WHERE email = ${email}`);
+    const result = await db.execute(sql`SELECT id, email FROM "user" WHERE email = ${email}`);
 
     let headers = new Headers();
 
-    if (result.length === 0 || !result[0].first_name) {
+    if (result.length === 0) {
       event.cookies.set('pendingSignupEmail', email, { path: '/', maxAge: 900 });
       headers.append('Location', '/login/setup');
     } else {
