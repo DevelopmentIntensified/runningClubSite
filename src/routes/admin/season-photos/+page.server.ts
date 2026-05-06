@@ -10,7 +10,7 @@ export const load: PageServerLoad = async () => {
 };
 
 export const actions: Actions = {
-  deleteLink: async ({ request }) => {
+  deletePhoto: async ({ request }) => {
     const formData = await request.formData();
     const id = formData.get('id') as string;
 
@@ -21,8 +21,8 @@ export const actions: Actions = {
     try {
       await db.delete(seasonImageLinks).where(eq(seasonImageLinks.id, parseInt(id)));
     } catch (error) {
-      return fail(500, { message: 'Failed to delete link' });
+      return fail(500, { message: 'Failed to delete photo' });
     }
-      throw redirect(303, '/admin/season-links');
+    return { success: true };
   }
 }; 
