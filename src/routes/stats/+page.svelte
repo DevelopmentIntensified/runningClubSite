@@ -10,10 +10,10 @@
 
   let stats: Record<string, { total: number; firstYear: number }> = data.stats;
   let years: string[] = data.years;
-  let selectedYear = 'all';
-  let hoveredState: { abbr: string; total: number; firstYear: number } | null = null;
-  let mouseX = 0;
-  let mouseY = 0;
+  let selectedYear = $state('all');
+  let hoveredState: { abbr: string; total: number; firstYear: number } | null = $state(null);
+  let mouseX = $state(0);
+  let mouseY = $state(0);
   let svgPaths: Array<{ d: string; abbr: string; id: string }> = [];
 
   const colorScale = scaleThreshold()
@@ -100,18 +100,18 @@
             stroke="#fff"
             stroke-width="1"
             class="cursor-pointer transition-opacity hover:opacity-80"
-            on:mouseenter={(e) => {
+            onmouseenter={(e) => {
               const total = stats[path.abbr]?.total || 0;
               const firstYear = stats[path.abbr]?.firstYear || 0;
               hoveredState = { abbr: path.abbr, total, firstYear };
               mouseX = e.clientX;
               mouseY = e.clientY;
             }}
-            on:mousemove={(e) => {
+            onmousemove={(e) => {
               mouseX = e.clientX;
               mouseY = e.clientY;
             }}
-            on:mouseleave={() => { hoveredState = null; }}
+            onmouseleave={() => { hoveredState = null; }}
           />
         {/each}
       </svg>
