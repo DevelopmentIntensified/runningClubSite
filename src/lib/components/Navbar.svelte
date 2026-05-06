@@ -64,8 +64,8 @@
 </script>
 
 <nav class="bg-primary-600 text-white">
-  <div class="max-w-7xl px-4 md:px-6 lg:px-8">
-    <div class="flex h-16 items-center justify-start">
+  <div class="max-w-7xl px-4 md:px-6 lg:px-8 mx-auto">
+    <div class="flex h-16 items-center justify-between">
       <div class="flex items-center">
         <a href="/" class="flex-shrink-0">
           <img class="h-16 w-16" src={logoUrl} alt="Liberty Running Club" />
@@ -75,7 +75,7 @@
             {#each navItems as item}
               <a
                 href={item.href}
-                class="rounded-md px-2 py-2 text-sm font-medium hover:bg-primary-700 {$page.url
+                class="rounded-md px-3 py-2 text-sm font-medium hover:bg-primary-700 {$page.url
                   .pathname === item.href
                   ? 'bg-primary-700'
                   : ''}"
@@ -102,7 +102,7 @@
       <div class="hidden lg:block">
         <div class="ml-4 flex items-center lg:ml-6">
           {#if isLoggedIn}
-            <form action="/api/logout" class="absolute right-5" method="POST">
+            <form action="/api/logout" method="POST">
               <button
                 type="submit"
                 class="rounded-md px-3 py-2 text-sm font-medium hover:bg-primary-700">Logout</button
@@ -111,19 +111,17 @@
           {:else}
             <a
               href={'/login'}
-              class="absolute right-5 rounded bg-primary-600 px-4 py-2 font-bold text-white transition duration-300 hover:bg-primary-700"
+              class="rounded bg-primary-500 px-4 py-2 font-bold text-white transition duration-300 hover:bg-primary-700"
             >
               Sign Up/Login
             </a>
-            <!-- <a href="/login" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-primary-700">Login</a> -->
-            <!-- <a href="/register" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-primary-700">Register</a> -->
           {/if}
         </div>
       </div>
-      <div class="w-full lg:hidden">
+      <div class="lg:hidden">
         <button
           on:click={toggleMenu}
-          class="absolute right-5 top-3 inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+          class="inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
         >
           <span class="sr-only">Open main menu</span>
           {#if isOpen}
