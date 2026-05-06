@@ -16,16 +16,33 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
     );
   }
 
-  const email = cookies.get('pendingSignupEmail');
-  if (!email) {
-    return new Response(
-      JSON.stringify({ success: false, error: 'No pending signup found. Please start over.' }),
-      { status: 400 }
-    );
-  }
-
   try {
     const now = new Date();
+    const sessionId = cookies.get(lucia.sessionCookieName);
+    const headers = new Headers();
+
+    if (sessionId) {
+      const { session, user } = await lucia.validateSession(sessionId);
+      if (session && user) {
+        await db
+          .update(users)
+          .set({ firstName, lastName, stateOfOrigin: stateOfOrigin || null, lastLogin: now })
+          .where(eq(users.id, parseInt(user.id)));
+
+        return new Response(JSON.stringify({ success: true, redirectTo: redirectUrl || '/groupme' }), {
+          headers,
+          status: 200
+        });
+      }
+    }
+
+    const email = cookies.get('pendingSignupEmail');
+    if (!email) {
+      return new Response(
+        JSON.stringify({ success: false, error: 'No pending signup found. Please start over.' }),
+        { status: 400 }
+      );
+    }
 
     const existing = await db.execute(sql`SELECT id FROM "user" WHERE email = ${email}`);
 
@@ -57,7 +74,6 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
     const sessionCookie = lucia.createSessionCookie(session.id);
     const clearPending = 'pendingSignupEmail=; Path=/; Max-Age=0';
 
-    const headers = new Headers();
     headers.append('Set-Cookie', sessionCookie.serialize());
     headers.append('Set-Cookie', clearPending);
 
