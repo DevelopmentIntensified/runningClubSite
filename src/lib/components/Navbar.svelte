@@ -2,6 +2,7 @@
   import { page } from '$app/stores';
   import logoUrl from '$lib/assets/images/logos/logo.png';
   import { slide } from 'svelte/transition';
+  import { onMount } from 'svelte';
 
   export let isAdmin: boolean;
   export let isLoggedIn: boolean;
@@ -10,6 +11,7 @@
 
   let isOpen = false;
   let openDropdown: string | null = null;
+  let navElement: HTMLElement;
 
   const categories = [
     {
@@ -120,9 +122,20 @@
   function isCategoryActive(cat: typeof categories[0]): boolean {
     return cat.items().some(item => isActive(item.href));
   }
+
+  function handleClickOutside(e: MouseEvent) {
+    if (navElement && !navElement.contains(e.target as Node)) {
+      openDropdown = null;
+    }
+  }
+
+  onMount(() => {
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  });
 </script>
 
-<nav class="bg-primary-600 text-white">
+<nav class="bg-primary-600 text-white" bind:this={navElement}>
   <div class="max-w-7xl px-4 md:px-6 lg:px-8 mx-auto">
     <div class="flex h-16 items-center justify-between">
       <div class="flex items-center">
