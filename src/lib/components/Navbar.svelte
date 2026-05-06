@@ -5,8 +5,6 @@
 
   export let isAdmin: boolean;
   export let isLoggedIn: boolean;
-  export let displayNews: boolean;
-  export let displayAlumni: boolean;
 
   console.warn('DEBUGPRINT[2]: Navbar.svelte:7: isAdmin=', isAdmin);
 
@@ -17,45 +15,65 @@
     {
       label: 'About',
       items: () => [
-        { href: '/about', label: 'Who We Are' },
-        { href: '/stats', label: 'Where We\'re From' },
-        ...(displayAlumni ? [{ href: '/alumni', label: 'Alumni' }] : [])
+        { href: '/about', label: 'About' },
+        { href: '/stats', label: 'Where We\'re From' }
       ]
     },
     {
       label: 'Practice',
       items: () => [
         { href: '/schedule', label: 'Schedule' },
-        { href: '/locations', label: 'Locations' },
-        { href: '/trainingplan', label: 'Training Plan' }
+        { href: '/locations', label: 'Locations' }
       ]
     },
     {
-      label: 'Resources',
+      label: 'Team',
       items: () => [
         { href: '/records', label: 'Records' },
-        ...(displayNews ? [{ href: '/news', label: 'News' }] : []),
-        { href: '/season-photos', label: 'Season Photos' },
-        { href: '/groupme', label: 'GroupMe' }
+        { href: '/alumni', label: 'Alumni' }
+      ]
+    },
+    {
+      label: 'Get Involved',
+      items: () => [
+        { href: '/trainingplan', label: 'Training Plan' },
+        { href: '/groupme', label: 'GroupMe' },
+        { href: '/season-photos', label: 'Season Photos' }
+      ]
+    },
+    {
+      label: 'News & Contact',
+      items: () => [
+        { href: '/news', label: 'News' },
+        { href: '/contact1', label: 'Contact' }
       ]
     }
   ];
 
-  const contactLink = { href: '/contact1', label: 'Contact' };
+  const adminCategory = {
+    label: 'Admin',
+    items: () => [
+      { href: '/admin/users', label: 'Users' }
+    ]
+  };
 
   const mobileNavItems = [
     { href: '/', label: 'Home' },
-    { href: '/about', label: 'Who We Are' },
+    { href: '/about', label: 'About' },
     { href: '/stats', label: 'Where We\'re From' },
-    ...(displayAlumni ? [{ href: '/alumni', label: 'Alumni' }] : []),
     { href: '/schedule', label: 'Schedule' },
     { href: '/locations', label: 'Locations' },
-    { href: '/trainingplan', label: 'Training Plan' },
     { href: '/records', label: 'Records' },
-    ...(displayNews ? [{ href: '/news', label: 'News' }] : []),
-    { href: '/season-photos', label: 'Season Photos' },
+    { href: '/alumni', label: 'Alumni' },
+    { href: '/trainingplan', label: 'Training Plan' },
     { href: '/groupme', label: 'GroupMe' },
+    { href: '/season-photos', label: 'Season Photos' },
+    { href: '/news', label: 'News' },
     { href: '/contact1', label: 'Contact' }
+  ];
+
+  const mobileAdminItems = [
+    { href: '/admin/users', label: 'Users' }
   ];
 
   const adminItems = [{ href: '/admin/users', label: 'Admin' }];
@@ -105,12 +123,12 @@
 
                 {#if openDropdown === category.label}
                   <div
-                    class="absolute z-50 mt-1 w-48 rounded-md bg-white py-1 shadow-lg"
+                    class="absolute z-50 mt-1 w-60 rounded-lg bg-white py-2 shadow-xl border border-gray-100"
                   >
                     {#each category.items() as item}
                       <a
                         href={item.href}
-                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-primary-100 {isActive(item.href) ? 'bg-primary-100 text-primary-700 font-medium' : ''}"
+                        class="block px-5 py-3 text-base text-gray-700 hover:bg-primary-50 {isActive(item.href) ? 'bg-primary-50 text-primary-700 font-semibold' : ''}"
                         on:click={() => openDropdown = null}
                       >
                         {item.label}
@@ -121,22 +139,34 @@
               </div>
             {/each}
 
-            <a
-              href={contactLink.href}
-              class="rounded-md px-3 py-2 text-sm font-medium hover:bg-primary-700 {isActive(contactLink.href) ? 'bg-primary-700' : ''}"
-            >
-              {contactLink.label}
-            </a>
-
             {#if isAdmin}
-              {#each adminItems as item}
-                <a
-                  href={item.href}
-                  class="rounded-md px-3 py-2 text-sm font-medium hover:bg-primary-700 {isActive(item.href) ? 'bg-primary-700' : ''}"
+              <div class="relative">
+                <button
+                  on:click={() => toggleDropdown(adminCategory.label)}
+                  class="rounded-md px-3 py-2 text-sm font-medium hover:bg-primary-700 flex items-center gap-1 bg-primary-500"
                 >
-                  {item.label}
-                </a>
-              {/each}
+                  {adminCategory.label}
+                  <svg class="w-4 h-4 transition-transform" class:rotate-180={openDropdown === adminCategory.label} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                {#if openDropdown === adminCategory.label}
+                  <div
+                    class="absolute z-50 mt-1 w-60 rounded-lg bg-white py-2 shadow-xl border border-gray-100 right-0"
+                  >
+                    {#each adminCategory.items() as item}
+                      <a
+                        href={item.href}
+                        class="block px-5 py-3 text-base text-gray-700 hover:bg-primary-50 {isActive(item.href) ? 'bg-primary-50 text-primary-700 font-semibold' : ''}"
+                        on:click={() => openDropdown = null}
+                      >
+                        {item.label}
+                      </a>
+                    {/each}
+                  </div>
+                {/if}
+              </div>
             {/if}
           </div>
         </div>
