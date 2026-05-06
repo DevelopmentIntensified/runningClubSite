@@ -41,7 +41,7 @@ export async function convertLeaderToAlumnus(id: number) {
   await createAlumnus({
     name: leader.name,
     imageUrl: leader.imageUrl || null,
-    graduationYear: null,
+    graduationYear: new Date().getFullYear(),
     major: null,
     achievements: `Served as ${leader.position} from ${startYear} to ${endYear}`,
     currentOccupation: null
