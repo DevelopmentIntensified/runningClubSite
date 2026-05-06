@@ -53,7 +53,19 @@
   const adminCategory = {
     label: 'Admin',
     items: () => [
-      { href: '/admin/users', label: 'Users' }
+      { href: '/admin', label: 'Dashboard' },
+      { href: '/admin/users', label: 'Users' },
+      { href: '/admin/leaders', label: 'Leaders' },
+      { href: '/admin/alumni', label: 'Alumni' },
+      { href: '/admin/news', label: 'News' },
+      { href: '/admin/events', label: 'Events' },
+      { href: '/admin/locations', label: 'Locations' },
+      { href: '/admin/records', label: 'Records' },
+      { href: '/admin/season-photos', label: 'Season Photos' },
+      { href: '/admin/slideshow', label: 'Slideshow' },
+      { href: '/admin/page-images', label: 'Page Images' },
+      { href: '/admin/forms', label: 'Forms' },
+      { href: '/admin/alumni-newsletter', label: 'Alumni Newsletter' }
     ]
   };
 
@@ -73,10 +85,20 @@
   ];
 
   const mobileAdminItems = [
-    { href: '/admin/users', label: 'Users' }
+    { href: '/admin', label: 'Dashboard' },
+    { href: '/admin/users', label: 'Users' },
+    { href: '/admin/leaders', label: 'Leaders' },
+    { href: '/admin/alumni', label: 'Alumni' },
+    { href: '/admin/news', label: 'News' },
+    { href: '/admin/events', label: 'Events' },
+    { href: '/admin/locations', label: 'Locations' },
+    { href: '/admin/records', label: 'Records' },
+    { href: '/admin/season-photos', label: 'Season Photos' },
+    { href: '/admin/slideshow', label: 'Slideshow' },
+    { href: '/admin/page-images', label: 'Page Images' },
+    { href: '/admin/forms', label: 'Forms' },
+    { href: '/admin/alumni-newsletter', label: 'Alumni Newsletter' }
   ];
-
-  const adminItems = [{ href: '/admin/users', label: 'Admin' }];
 
   function toggleMenu() {
     isOpen = !isOpen;
@@ -248,7 +270,7 @@
           </a>
         {/each}
         {#if isAdmin}
-          {#each adminItems as item}
+          {#each mobileAdminItems as item}
             <a
               href={item.href}
               on:click={closeMenu}
