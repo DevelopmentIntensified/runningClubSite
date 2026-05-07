@@ -12,8 +12,8 @@
   let years: string[] = data.years;
   let selectedYear = $state('all');
   let selectedState = $state('');
-  let stateSearch = '';
-  let stateDropdownOpen = false;
+  let stateSearch = $state('');
+  let stateDropdownOpen = $state(false);
   let hoveredState: { abbr: string; total: number; firstYear: number } | null = $state(null);
   let mouseX = $state(0);
   let mouseY = $state(0);
@@ -22,13 +22,13 @@
     .sort((a, b) => a[1].localeCompare(b[1]))
     .map(([abbr, name]) => ({ abbr, name }));
 
-  $: filteredStates = stateSearch === ''
+  const filteredStates = $derived(stateSearch === ''
     ? stateList
-    : stateList.filter(s => s.name.toLowerCase().includes(stateSearch.toLowerCase()));
+    : stateList.filter(s => s.name.toLowerCase().includes(stateSearch.toLowerCase())));
 
-  $: selectedStateName = selectedState
+  const selectedStateName = $derived(selectedState
     ? stateNames[selectedState] || selectedState
-    : 'All States';
+    : 'All States');
 
   function selectState(abbr: string) {
     selectedState = abbr;
@@ -115,7 +115,7 @@
     <div class="flex justify-center items-center gap-4 mb-6 flex-wrap">
       <div class="relative">
         <button
-          on:click={() => stateDropdownOpen = !stateDropdownOpen}
+          onclick={() => stateDropdownOpen = !stateDropdownOpen}
           class="flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm text-gray-700 shadow-sm hover:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-500/20 min-w-[180px] justify-between"
         >
           <span class="truncate">{selectedStateName}</span>
@@ -131,23 +131,23 @@
                 type="text"
                 placeholder="Search states..."
                 value={stateSearch}
-                on:input={handleStateInput}
-                on:focus={() => stateDropdownOpen = true}
-                on:blur={handleStateBlur}
+                oninput={handleStateInput}
+                onfocus={() => stateDropdownOpen = true}
+                onblur={handleStateBlur}
                 class="w-full rounded-md border border-gray-300 px-3 py-1.5 text-sm focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
               />
             </div>
             <div class="max-h-60 overflow-y-auto">
               <button
                 class="w-full text-left px-4 py-2 text-sm hover:bg-primary-50 {!selectedState ? 'bg-primary-100 text-primary-700 font-medium' : 'text-gray-700'}"
-                on:click={() => { clearStateFilter(); stateDropdownOpen = false; }}
+                onclick={() => { clearStateFilter(); stateDropdownOpen = false; }}
               >
                 All States
               </button>
               {#each filteredStates as state}
                 <button
                   class="w-full text-left px-4 py-2 text-sm hover:bg-primary-50 {selectedState === state.abbr ? 'bg-primary-100 text-primary-700 font-medium' : 'text-gray-700'}"
-                  on:click={() => selectState(state.abbr)}
+                  onclick={() => selectState(state.abbr)}
                 >
                   {state.name}
                 </button>
@@ -170,7 +170,7 @@
 
       {#if selectedState}
         <button
-          on:click={clearStateFilter}
+          onclick={clearStateFilter}
           class="text-sm text-primary-600 hover:text-primary-800 font-medium"
         >
           Clear filter
