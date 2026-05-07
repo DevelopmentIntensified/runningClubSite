@@ -141,7 +141,7 @@
 
     <form class="mt-8 space-y-6" on:submit|preventDefault={handleSubmit}>
       <div>
-        <label for="firstName" class="block text-sm font-medium text-gray-700">First Name</label>
+        <label for="firstName" class="block text-sm font-medium text-gray-700">First Name <span class="text-red-500">*</span></label>
         <div class="relative mt-1 rounded-md shadow-sm">
           <input
             id="firstName"
@@ -156,7 +156,7 @@
       </div>
 
       <div>
-        <label for="lastName" class="block text-sm font-medium text-gray-700">Last Name</label>
+        <label for="lastName" class="block text-sm font-medium text-gray-700">Last Name <span class="text-red-500">*</span></label>
         <div class="relative mt-1 rounded-md shadow-sm">
           <input
             id="lastName"
