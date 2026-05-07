@@ -11,6 +11,7 @@
 
   let stateSearch = '';
   let stateDropdownOpen = false;
+  let stateTouched = false;
 
   const usStates = [
     { name: 'Alabama', abbr: 'AL' }, { name: 'Alaska', abbr: 'AK' }, { name: 'Arizona', abbr: 'AZ' },
@@ -36,6 +37,10 @@
     ? usStates
     : usStates.filter(s => s.name.toLowerCase().includes(stateSearch.toLowerCase()));
 
+  $: stateInputClass = stateTouched && !stateOfOrigin
+    ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
+    : 'border-gray-300 focus:border-primary-500 focus:ring-primary-500';
+
   function selectState(state: { name: string; abbr: string }) {
     stateOfOrigin = state.abbr;
     stateSearch = state.name;
@@ -53,6 +58,11 @@
   function handleStateBlur() {
     setTimeout(() => {
       stateDropdownOpen = false;
+      if (stateOfOrigin) return;
+      const exactMatch = usStates.find(s => s.name.toLowerCase() === stateSearch.toLowerCase());
+      if (exactMatch) {
+        selectState(exactMatch);
+      }
     }, 200);
   }
 
@@ -64,8 +74,22 @@
   });
 
   async function handleSubmit() {
+    stateTouched = true;
+
     if (!firstName.trim() || !lastName.trim()) {
       error = 'First name and last name are required';
+      return;
+    }
+
+    if (stateSearch) {
+      const exactMatch = usStates.find(s => s.name.toLowerCase() === stateSearch.toLowerCase());
+      if (exactMatch && !stateOfOrigin) {
+        stateOfOrigin = exactMatch.abbr;
+      }
+    }
+
+    if (!stateOfOrigin) {
+      error = 'Please select a valid state from the dropdown';
       return;
     }
 
@@ -75,7 +99,7 @@
     const res = await fetch('/login/setup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ firstName: firstName.trim(), lastName: lastName.trim(), stateOfOrigin: stateOfOrigin || null, redirectUrl })
+      body: JSON.stringify({ firstName: firstName.trim(), lastName: lastName.trim(), stateOfOrigin, redirectUrl })
     });
 
     const json = await res.json();
@@ -147,13 +171,13 @@
       </div>
 
       <div class="relative">
-        <label for="stateOfOrigin" class="block text-sm font-medium text-gray-700">State of Origin</label>
+        <label for="stateOfOrigin" class="block text-sm font-medium text-gray-700">State of Origin <span class="text-red-500">*</span></label>
         <div class="relative mt-1">
           <input
             id="stateOfOrigin"
             name="stateOfOrigin"
             type="text"
-            class="block w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 leading-5 placeholder-gray-500 focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+            class="block w-full rounded-md border bg-white py-2 pl-3 pr-10 leading-5 placeholder-gray-500 focus:outline-none focus:ring-1 sm:text-sm {stateInputClass}"
             placeholder="Start typing to search..."
             value={stateSearch}
             on:input={handleStateInput}

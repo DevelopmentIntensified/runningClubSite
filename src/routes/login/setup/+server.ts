@@ -9,9 +9,9 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
   const body = await request.json();
   const { firstName, lastName, stateOfOrigin, redirectUrl } = body;
 
-  if (!firstName || !lastName) {
+  if (!firstName || !lastName || !stateOfOrigin) {
     return new Response(
-      JSON.stringify({ success: false, error: 'First name and last name are required' }),
+      JSON.stringify({ success: false, error: 'First name, last name, and state of origin are required' }),
       { status: 400 }
     );
   }
