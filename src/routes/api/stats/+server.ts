@@ -2,12 +2,44 @@ import type { RequestHandler } from './$types';
 import { db } from '$lib/server/db';
 import { users } from '$lib/server/db/schema';
 import { sql } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 
 export const GET: RequestHandler = async ({ url }) => {
   const year = url.searchParams.get('year');
+  const state = url.searchParams.get('state');
 
   let query;
-  if (year && year !== 'all') {
+  if (state && state !== '') {
+    if (year && year !== 'all') {
+      const start = `${year}-01-01`;
+      const end = `${parseInt(year) + 1}-01-01`;
+      query = sql`
+        SELECT 
+          state_of_origin AS state,
+          COUNT(*) AS total,
+          MIN(EXTRACT(YEAR FROM created_at)) AS first_year
+        FROM "user"
+        WHERE state_of_origin IS NOT NULL 
+          AND state_of_origin != ''
+          AND state_of_origin = ${state}
+          AND created_at >= ${start}
+          AND created_at < ${end}
+        GROUP BY state_of_origin
+      `;
+    } else {
+      query = sql`
+        SELECT 
+          state_of_origin AS state,
+          COUNT(*) AS total,
+          MIN(EXTRACT(YEAR FROM created_at)) AS first_year
+        FROM "user"
+        WHERE state_of_origin IS NOT NULL 
+          AND state_of_origin != ''
+          AND state_of_origin = ${state}
+        GROUP BY state_of_origin
+      `;
+    }
+  } else if (year && year !== 'all') {
     const start = `${year}-01-01`;
     const end = `${parseInt(year) + 1}-01-01`;
     query = sql`
