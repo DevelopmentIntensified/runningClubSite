@@ -11,7 +11,7 @@
 <div class="container mx-auto px-4 py-12">
   <h1 class="mb-8 text-center text-4xl font-bold">Our Alumni</h1>
   <h3 class="text-center text-xl">
-    Are you one of our alumni? Don't see yourself here? Feel free to <a class="text-primary-700 hover:text-primary-800" href="/contact">Contact us</a> and ask us to add you. You should also join our
+    Are you one of our alumni? Don't see yourself here? Feel free to <a class="text-primary-700 hover:text-primary-800" href="/contact1">Contact us</a> and ask us to add you. You should also join our
     <a href="https://alumnicommunity.liberty.edu/groups/92/feed" class="text-primary-700 hover:text-primary-800">Alumni Group</a>. We look forward to seeing you there!
   </h3>
   <p class="mt-4 text-center">
