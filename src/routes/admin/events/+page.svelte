@@ -5,6 +5,7 @@
   import type { PageData } from './$types';
   import { DateTime } from 'luxon';
   import type { CalendarEventView } from '$lib/types';
+  import { chipClass } from '$lib/events';
 
   let { data }: { data: PageData } = $props();
 
@@ -111,6 +112,10 @@
             >
             <th
               class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500"
+              >Type</th
+            >
+            <th
+              class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500"
               >Date</th
             >
             <th
@@ -129,6 +134,13 @@
               <td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-slate-700"
                 >{event.title}</td
               >
+              <td class="whitespace-nowrap px-6 py-4">
+                <span
+                  class="inline-block rounded-md px-2 py-0.5 text-xs font-medium ring-1 {chipClass(event.type)}"
+                >
+                  {event.type}
+                </span>
+              </td>
               <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-600"
                 >{new Date(event.date).toLocaleDateString()}</td
               >

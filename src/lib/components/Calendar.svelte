@@ -25,7 +25,7 @@
           class="rounded-lg px-4 py-2 text-sm font-medium transition-colors {view === 'month'
             ? 'bg-primary-600 text-white shadow-sm'
             : 'bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50'}"
-          on:click={() => (view = 'month')}
+          onclick={() => (view = 'month')}
         >
           Month
         </button>
@@ -34,7 +34,7 @@
           class="rounded-lg px-4 py-2 text-sm font-medium transition-colors {view === 'list'
             ? 'bg-primary-600 text-white shadow-sm'
             : 'bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50'}"
-          on:click={() => (view = 'list')}
+          onclick={() => (view = 'list')}
         >
           List
         </button>
