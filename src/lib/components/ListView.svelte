@@ -2,6 +2,7 @@
   import { DateTime } from 'luxon';
   import type { Writable } from 'svelte/store';
   import type { CalendarEventView } from '$lib/types';
+  import { chipClass, eventTypes } from '$lib/events';
 
   export let currentDate: Writable<any>;
   export let events: CalendarEventView[];
@@ -54,28 +55,11 @@
             <p class="mb-3 text-slate-700">{event.description}</p>
           {/if}
           <div class="flex flex-wrap gap-1.5">
-            {#if event.type.includes('Indoor')}
-              <span class="rounded-md bg-orange-100 px-2 py-0.5 text-xs font-medium text-orange-900">Indoor Race</span>
-            {:else if event.type.includes('Practice')}
-              <span class="rounded-md bg-yellow-100 px-2 py-0.5 text-xs font-medium text-yellow-900">Practice</span>
-            {:else if !event.type.includes('Social')}
-              <span class="rounded-md bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-800">Outdoor Race</span>
-            {/if}
-            {#if event.type.includes('NIRCA')}
-              <span class="rounded-md bg-red-100 px-2 py-0.5 text-xs font-medium text-red-900">{event.type}</span>
-            {/if}
-            {#if event.type.includes('NCAA')}
-              <span class="rounded-md bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-900">{event.type}</span>
-            {/if}
-            {#if event.type.includes('Social')}
-              <span class="rounded-md bg-purple-100 px-2 py-0.5 text-xs font-medium text-purple-900">{event.type}</span>
-            {/if}
-            {#if event.type.includes('Trail Race')}
-              <span class="rounded-md bg-emerald-100 px-2 py-0.5 text-xs font-medium text-emerald-900">{event.type}</span>
-            {/if}
-            {#if event.type.includes('Road Race')}
-              <span class="rounded-md bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-900">{event.type}</span>
-            {/if}
+            <span
+              class="rounded-md px-2 py-0.5 text-xs font-medium ring-1 {chipClass(event.type)}"
+            >
+              {event.type}
+            </span>
           </div>
         </div>
       </a>

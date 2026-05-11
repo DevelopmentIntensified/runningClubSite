@@ -2,6 +2,7 @@
   import { enhance } from '$app/forms';
   import { onMount } from 'svelte';
   import { DateTime } from 'luxon';
+  import { typeOptions } from '$lib/events';
 
   let error = '';
 
@@ -98,14 +99,9 @@
               name="type"
               class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
             >
-              <option value="Social">Social</option>
-              <option value="Practice">Practice</option>
-              <option value="Trail Race">Trail Race</option>
-              <option value="Road Race">Road Race</option>
-              <option value="NIRCA Outdoor Race">NIRCA Outdoor Race</option>
-              <option value="NIRCA Indoor Race">NIRCA Indoor Race</option>
-              <option value="NCAA Outdoor Race">NCAA Outdoor Race</option>
-              <option value="NCAA Indoor Race">NCAA Indoor Race</option>
+              {#each typeOptions() as opt}
+                <option value={opt.value}>{opt.label}</option>
+              {/each}
             </select>
           </div>
           {#if error}

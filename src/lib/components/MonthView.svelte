@@ -4,6 +4,7 @@
   import type { Writable } from 'svelte/store';
   import { DateTime } from 'luxon';
   import { enhance } from '$app/forms';
+  import { chipClass, legendItems } from '$lib/events';
 
   export let currentDate: Writable<DateTime>;
   export let events: CalendarEventView[];
@@ -21,20 +22,6 @@
   $: days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
   $: emptyDays = Array.from({ length: firstDayOfMonth }, (_, i) => i);
 
-  const colors: Record<string, string> = {
-    NIRCA: 'bg-red-100 text-red-900 ring-red-200/80',
-    NCAA: 'bg-blue-100 text-blue-900 ring-blue-200/80',
-    Social: 'bg-purple-100 text-purple-900 ring-purple-200/80',
-    Trail: 'bg-emerald-100 text-emerald-900 ring-emerald-200/80',
-    Road: 'bg-teal-100 text-teal-900 ring-teal-200/80',
-    Practice: 'bg-yellow-100 text-yellow-900 ring-yellow-200/80'
-  };
-
-  function chipClass(type: string): string {
-    const key = Object.keys(colors).find((k) => type.includes(k));
-    return colors[key ?? ''] ?? 'bg-slate-100 text-slate-800 ring-slate-200/80';
-  }
-
   function handleEventHover(event: CalendarEventView, element: HTMLElement) {
     hoveredEvent = event;
     hoveredEventElement = element;
@@ -47,30 +34,11 @@
 </script>
 
 <div class="mb-6 flex flex-wrap gap-2 text-xs sm:text-sm">
-  <span
-    class="inline-flex items-center rounded-full bg-yellow-100 px-2.5 py-1 font-medium text-yellow-900 ring-1 ring-yellow-200/80"
-    >Practice</span
-  >
-  <span
-    class="inline-flex items-center rounded-full bg-red-100 px-2.5 py-1 font-medium text-red-900 ring-1 ring-red-200/80"
-    >NIRCA</span
-  >
-  <span
-    class="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-1 font-medium text-blue-900 ring-1 ring-blue-200/80"
-    >NCAA</span
-  >
-  <span
-    class="inline-flex items-center rounded-full bg-purple-100 px-2.5 py-1 font-medium text-purple-900 ring-1 ring-purple-200/80"
-    >Social</span
-  >
-  <span
-    class="inline-flex items-center rounded-full bg-emerald-100 px-2.5 py-1 font-medium text-emerald-900 ring-1 ring-emerald-200/80"
-    >Trail Race</span
-  >
-  <span
-    class="inline-flex items-center rounded-full bg-teal-100 px-2.5 py-1 font-medium text-teal-900 ring-1 ring-teal-200/80"
-    >Road Race</span
-  >
+  {#each legendItems() as item}
+    <span
+      class="inline-flex items-center rounded-full {item.chipBg} px-2.5 py-1 font-medium {item.chipText} ring-1 {item.chipRing}"
+    >{item.label}</span>
+  {/each}
 </div>
 
 <div class="overflow-x-auto rounded-xl ring-1 ring-slate-200/80">
