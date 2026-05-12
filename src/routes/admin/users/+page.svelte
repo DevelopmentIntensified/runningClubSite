@@ -64,6 +64,7 @@
           <option value="email">Sort by Email</option>
           <option value="createdAt">Sort by Date Created</option>
           <option value="lastLogin">Sort by Last Login</option>
+          <option value="lastUpdated">Sort by Last Updated</option>
         </select>
       </div>
     </div>
@@ -89,6 +90,7 @@
             <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Admin</th>
             <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Date Created</th>
             <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Last Login</th>
+            <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Last Updated</th>
             <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Actions</th>
           </tr>
         </thead>
@@ -107,6 +109,7 @@
               </td>
               <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-600">{formatDate(user.createdAt)}</td>
               <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-600">{formatDate(user.lastLogin)}</td>
+              <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-600">{formatDate(user.lastUpdated)}</td>
               <td class="whitespace-nowrap px-6 py-4 text-sm">
                 <div class="flex items-center gap-3">
                   <a href="/admin/users/{user.id}/edit" class="text-primary-600 hover:text-primary-800 font-medium text-xs">Edit</a>
