@@ -1,3 +1,4 @@
+import { logAdminAction } from '$lib/actions/adminAudit';
 import { getUser, updateUser } from '$lib/actions/users';
 import { deleteUserSessions } from '$lib/actions/sessions';
 import { updateUserProfile } from '$lib/actions/userProfile';
@@ -21,7 +22,7 @@ export const load: PageServerLoad = async ({ params }) => {
 };
 
 export const actions: Actions = {
-  updateUser: async ({ request, params }) => {
+  updateUser: async ({ request, params, locals }) => {
     const formData = await request.formData();
     const email = formData.get('email') as string | null;
     const isAdmin = formData.get('isAdmin') as string | null;
@@ -50,6 +51,7 @@ export const actions: Actions = {
         await deleteUserSessions(userId);
       }
     }
+    await logAdminAction({ adminId: parseInt(locals.user.id), action: 'update', targetType: 'user', targetId: userId });
 
     throw redirect(302, '/admin/users');
   }

@@ -1,3 +1,4 @@
+import { logAdminAction } from '$lib/actions/adminAudit';
 import { db } from '$lib/server/db';
 import { seasonImageLinks } from '$lib/server/db/schema';
 import { fail, redirect } from '@sveltejs/kit';
@@ -15,7 +16,7 @@ export const load: PageServerLoad = async ({ params }) => {
 };
 
 export const actions: Actions = {
-  updateLink: async ({ request, params }) => {
+  updateLink: async ({ request, params, locals }) => {
     const formData = await request.formData();
     console.log('=== UPDATE LINK ===');
     console.log('title:', formData.get('title'));
@@ -57,6 +58,7 @@ export const actions: Actions = {
         .update(seasonImageLinks)
         .set(updateData)
         .where(eq(seasonImageLinks.id, parseInt(params.id)));
+      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'update', targetType: 'season_photo', targetId: parseInt(params.id), details: JSON.stringify({ title }) });
     } catch (error) {
       return fail(500, { message: 'Failed to update link' });
     }

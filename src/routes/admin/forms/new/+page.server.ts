@@ -1,3 +1,4 @@
+import { logAdminAction } from '$lib/actions/adminAudit';
 import { createForm } from '$lib/actions/forms';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
@@ -30,6 +31,7 @@ export const actions: Actions = {
       active,
       createdBy: userId
     });
+    await logAdminAction({ adminId: parseInt(locals.user.id), action: 'create', targetType: 'form', details: JSON.stringify({ title }) });
 
     throw redirect(302, '/admin/forms');
   }

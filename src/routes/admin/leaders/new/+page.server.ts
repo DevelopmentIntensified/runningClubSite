@@ -1,3 +1,4 @@
+import { logAdminAction } from '$lib/actions/adminAudit';
 import { createLeader, getLeadersCount } from '$lib/actions/leaders';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
@@ -10,7 +11,7 @@ export const load: PageServerLoad = async () => {
 };
 
 export const actions: Actions = {
-  createLeader: async ({ request }) => {
+  createLeader: async ({ request, locals }) => {
     const formData = await request.formData();
     const name = formData.get('name') as string;
     const position = formData.get('position') as string;
@@ -45,6 +46,7 @@ export const actions: Actions = {
     });
 
     if (newLeader) {
+      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'create', targetType: 'leader', targetId: newLeader.id, details: JSON.stringify({ name }) });
       throw redirect(302, '/admin/leaders');
     } else {
       return fail(500, { message: 'Failed to create leader' });

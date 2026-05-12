@@ -1,3 +1,4 @@
+import { logAdminAction } from '$lib/actions/adminAudit';
 import { getLocations, deleteLocation } from '$lib/actions/locations';
 import { fail } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
@@ -8,7 +9,7 @@ export const load: PageServerLoad = async () => {
 };
 
 export const actions: Actions = {
-  deleteLocation: async ({ request }) => {
+  deleteLocation: async ({ request, locals }) => {
     const formData = await request.formData();
     const id = formData.get('id');
 
@@ -17,6 +18,7 @@ export const actions: Actions = {
     }
 
     await deleteLocation(parseInt(id));
+    await logAdminAction({ adminId: parseInt(locals.user.id), action: 'delete', targetType: 'location', targetId: parseInt(id) });
     return { success: true };
   }
 };

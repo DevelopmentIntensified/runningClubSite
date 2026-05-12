@@ -1,3 +1,4 @@
+import { logAdminAction } from '$lib/actions/adminAudit';
 import { db } from '$lib/server/db';
 import { seasonImageLinks } from '$lib/server/db/schema';
 import { fail, redirect } from '@sveltejs/kit';
@@ -10,7 +11,7 @@ export const load: PageServerLoad = async () => {
 };
 
 export const actions: Actions = {
-  deletePhoto: async ({ request }) => {
+  deletePhoto: async ({ request, locals }) => {
     const formData = await request.formData();
     const id = formData.get('id') as string;
 
@@ -20,6 +21,7 @@ export const actions: Actions = {
 
     try {
       await db.delete(seasonImageLinks).where(eq(seasonImageLinks.id, parseInt(id)));
+      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'delete', targetType: 'season_photo', targetId: parseInt(id) });
     } catch (error) {
       return fail(500, { message: 'Failed to delete photo' });
     }

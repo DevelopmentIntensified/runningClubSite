@@ -1,10 +1,11 @@
+import { logAdminAction } from '$lib/actions/adminAudit';
 import { createEvent } from '$lib/actions/events';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
 import { DateTime } from 'luxon';
 
 export const actions: Actions = {
-  createEvent: async ({ request }) => {
+  createEvent: async ({ request, locals }) => {
     const formData = await request.formData();
     const title = formData.get('title') as string;
     const start = formData.get('start') as string;
@@ -30,6 +31,7 @@ export const actions: Actions = {
     });
 
     if (newEvent) {
+      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'create', targetType: 'event', targetId: newEvent.id, details: JSON.stringify({ title }) });
       throw redirect(302, '/admin/events');
     } else {
       return fail(500, { message: 'Failed to create event' });

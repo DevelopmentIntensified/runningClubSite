@@ -1,9 +1,10 @@
+import { logAdminAction } from '$lib/actions/adminAudit';
 import { createRecord } from '$lib/actions/records';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
 
 export const actions: Actions = {
-  createRecord: async ({ request }) => {
+  createRecord: async ({ request, locals }) => {
     const formData = await request.formData();
     const event = formData.get('event');
     const name = formData.get('name');
@@ -30,6 +31,7 @@ export const actions: Actions = {
     });
 
     if (newRecord) {
+      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'create', targetType: 'record', targetId: newRecord.id, details: JSON.stringify({ name, event }) });
       throw redirect(302, '/admin/records');
     } else {
       return fail(500, { message: 'Failed to create record' });

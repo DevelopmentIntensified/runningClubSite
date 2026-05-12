@@ -1,3 +1,4 @@
+import { logAdminAction } from '$lib/actions/adminAudit';
 import { createAlumnus } from '$lib/actions/alumni';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
@@ -5,7 +6,7 @@ import { put } from '@vercel/blob';
 import { BLOB_READ_WRITE_TOKEN } from '$env/static/private';
 
 export const actions: Actions = {
-  createAlumnus: async ({ request }) => {
+  createAlumnus: async ({ request, locals }) => {
     const formData = await request.formData();
     const name = formData.get('name') as string;
     const major = formData.get('major') as string | null;
@@ -36,6 +37,7 @@ export const actions: Actions = {
     });
 
     if (newAlumnus) {
+      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'create', targetType: 'alumnus', targetId: newAlumnus.id, details: JSON.stringify({ name }) });
       throw redirect(302, '/admin/alumni');
     } else {
       return fail(500, { message: 'Failed to create alumnus' });

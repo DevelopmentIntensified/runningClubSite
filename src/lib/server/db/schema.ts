@@ -154,6 +154,18 @@ export const alumniNewsletter = pgTable('alumni_newsletter', {
   createdAt: timestamp('created_at').defaultNow().notNull()
 });
 
+export const adminAuditLog = pgTable('admin_audit_log', {
+  id: serial('id').primaryKey(),
+  adminId: integer('admin_id')
+    .notNull()
+    .references(() => users.id),
+  action: text('action').notNull(),
+  targetType: text('target_type'),
+  targetId: integer('target_id'),
+  details: text('details'),
+  createdAt: timestamp('created_at').defaultNow().notNull()
+});
+
 export type Session = typeof sessions.$inferSelect;
 
 export type Records = typeof records.$inferSelect;

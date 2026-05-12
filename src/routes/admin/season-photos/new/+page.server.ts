@@ -1,3 +1,4 @@
+import { logAdminAction } from '$lib/actions/adminAudit';
 import { db } from '$lib/server/db';
 import { seasonImageLinks } from '$lib/server/db/schema';
 import { fail, redirect } from '@sveltejs/kit';
@@ -6,7 +7,7 @@ import { put } from '@vercel/blob';
 import { BLOB_READ_WRITE_TOKEN } from '$env/static/private';
 
 export const actions: Actions = {
-  createLink: async ({ request }) => {
+  createLink: async ({ request, locals }) => {
     const formData = await request.formData();
     console.log('=== CREATE LINK ===');
     console.log('title:', formData.get('title'));
@@ -46,6 +47,7 @@ export const actions: Actions = {
         season,
         imageUrl: finalImageUrl
       });
+      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'create', targetType: 'season_photo', details: JSON.stringify({ title }) });
       console.log('Inserted successfully');
     } catch (error) {
       console.error('Insert error:', error);

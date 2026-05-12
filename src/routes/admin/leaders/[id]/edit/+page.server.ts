@@ -1,3 +1,4 @@
+import { logAdminAction } from '$lib/actions/adminAudit';
 import { getLeader, updateLeader } from '$lib/actions/leaders';
 import { fail, redirect } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
@@ -13,7 +14,7 @@ export const load: PageServerLoad = async ({ params }) => {
 };
 
 export const actions: Actions = {
-  updateLeader: async ({ request, params }) => {
+  updateLeader: async ({ request, params, locals }) => {
     const formData = await request.formData();
     const name = formData.get('name') as string;
     const position = formData.get('position') as string;
@@ -52,6 +53,7 @@ export const actions: Actions = {
     });
 
     if (updatedLeader) {
+      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'update', targetType: 'leader', targetId: parseInt(params.id), details: JSON.stringify({ name }) });
       throw redirect(302, '/admin/leaders');
     } else {
       return fail(500, { message: 'Failed to update leader' });

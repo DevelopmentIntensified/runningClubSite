@@ -1,3 +1,4 @@
+import { logAdminAction } from '$lib/actions/adminAudit';
 import { db } from '$lib/server/db';
 import { slideShowImages } from '$lib/server/db/schema';
 import { fail, redirect } from '@sveltejs/kit';
@@ -6,7 +7,7 @@ import { BLOB_READ_WRITE_TOKEN } from '$env/static/private';
 import type { Actions } from './$types';
 
 export const actions: Actions = {
-  default: async ({ request }) => {
+  default: async ({ request, locals }) => {
     const formData = await request.formData();
     const title = formData.get('title') as string;
     const imageFile = formData.get('image') as File | null;
@@ -38,6 +39,7 @@ export const actions: Actions = {
       imageUrl: finalImageUrl,
       order: orderNum
     });
+    await logAdminAction({ adminId: parseInt(locals.user.id), action: 'create', targetType: 'slide', details: JSON.stringify({ title }) });
 
     throw redirect(303, '/admin/slideshow');
   }

@@ -1,3 +1,4 @@
+import { logAdminAction } from '$lib/actions/adminAudit';
 import { getNews, deleteNews } from '$lib/actions/news';
 import { fail } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
@@ -8,7 +9,7 @@ export const load: PageServerLoad = async () => {
 };
 
 export const actions: Actions = {
-  deleteNews: async ({ request }) => {
+  deleteNews: async ({ request, locals }) => {
     const formData = await request.formData();
     const id = formData.get('id');
 
@@ -17,6 +18,7 @@ export const actions: Actions = {
     }
 
     await deleteNews(parseInt(id));
+    await logAdminAction({ adminId: parseInt(locals.user.id), action: 'delete', targetType: 'news', targetId: parseInt(id) });
     return { success: true };
   }
 };

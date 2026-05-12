@@ -1,3 +1,4 @@
+import { logAdminAction } from '$lib/actions/adminAudit';
 import { createLocation, getLocationsCount } from '$lib/actions/locations';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
@@ -9,7 +10,7 @@ export const load: PageServerLoad = async () => {
 };
 
 export const actions: Actions = {
-  createLocation: async ({ request }) => {
+  createLocation: async ({ request, locals }) => {
     const formData = await request.formData();
     const name = formData.get('name') as string;
     const description = formData.get('description') as string;
@@ -29,6 +30,7 @@ export const actions: Actions = {
     });
 
     if (newLocation) {
+      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'create', targetType: 'location', targetId: newLocation.id, details: JSON.stringify({ name }) });
       return redirect(302, '/admin/locations');
     } else {
       return fail(500, { message: 'Failed to create location' });

@@ -1,3 +1,4 @@
+import { logAdminAction } from '$lib/actions/adminAudit';
 import { getLeaders, deleteLeader, convertLeaderToAlumnus } from '$lib/actions/leaders';
 import { fail } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
@@ -8,7 +9,7 @@ export const load: PageServerLoad = async () => {
 };
 
 export const actions: Actions = {
-  deleteLeader: async ({ request }) => {
+  deleteLeader: async ({ request, locals }) => {
     const formData = await request.formData();
     const id = formData.get('id');
 
@@ -17,6 +18,7 @@ export const actions: Actions = {
     }
 
     await deleteLeader(parseInt(id));
+    await logAdminAction({ adminId: parseInt(locals.user.id), action: 'delete', targetType: 'leader', targetId: parseInt(id) });
     return { success: true };
   },
   convertLeaderToAlumnus: async ({ request }) => {

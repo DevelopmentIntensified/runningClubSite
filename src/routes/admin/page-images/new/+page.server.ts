@@ -1,3 +1,4 @@
+import { logAdminAction } from '$lib/actions/adminAudit';
 import { db } from '$lib/server/db';
 import { pageImages } from '$lib/server/db/schema';
 import { fail, redirect } from '@sveltejs/kit';
@@ -6,7 +7,7 @@ import { put } from '@vercel/blob';
 import { BLOB_READ_WRITE_TOKEN } from '$env/static/private';
 
 export const actions: Actions = {
-  default: async ({ request }) => {
+  default: async ({ request, locals }) => {
     const formData = await request.formData();
     const locationName = formData.get('locationName');
     const alt = formData.get('alt');
@@ -37,7 +38,7 @@ export const actions: Actions = {
         alt: alt.toString(),
         imageUrl: finalImageUrl
       });
-
+      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'create', targetType: 'page_image', details: JSON.stringify({ locationName }) });
     } catch (err) {
       console.error('Error uploading image:', err);
       return fail(500, { message: 'Error uploading image' });

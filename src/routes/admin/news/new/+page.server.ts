@@ -1,3 +1,4 @@
+import { logAdminAction } from '$lib/actions/adminAudit';
 import { createNews } from '$lib/actions/news';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
@@ -36,7 +37,7 @@ export const actions: Actions = {
         content: content,
         createdBy: locals.user?.id!
       });
-
+      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'create', targetType: 'news', details: JSON.stringify({ title }) });
     } catch (error) {
       console.error('Error creating news item:', error);
       return fail(500, { message: 'Failed to create news item' });

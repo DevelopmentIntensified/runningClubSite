@@ -1,3 +1,4 @@
+import { logAdminAction } from '$lib/actions/adminAudit';
 import { getNewsItem, updateNews } from '$lib/actions/news';
 import { fail, redirect } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
@@ -13,7 +14,7 @@ export const load: PageServerLoad = async ({ params }) => {
 };
 
 export const actions: Actions = {
-  updateNews: async ({ request, params }) => {
+  updateNews: async ({ request, params, locals }) => {
     const formData = await request.formData();
     const title = formData.get('title') as string;
     const content = formData.get('content') as string;
@@ -48,7 +49,7 @@ export const actions: Actions = {
         imageUrl: finalImageUrl,
         content: content.toString()
       });
-
+      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'update', targetType: 'news', targetId: parseInt(params.id), details: JSON.stringify({ title }) });
     } catch (error) {
       console.error('Error updating news item:', error);
       return fail(500, { message: 'Failed to update news item' });

@@ -36,6 +36,13 @@
       "when": 1778800000000,
       "tag": "0004_dark_venom",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1778900000000,
+      "tag": "0005_azure_wild_pack",
+      "breakpoints": true
     }
   ]
 }

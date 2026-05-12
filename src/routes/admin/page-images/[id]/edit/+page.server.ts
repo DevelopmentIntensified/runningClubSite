@@ -1,3 +1,4 @@
+import { logAdminAction } from '$lib/actions/adminAudit';
 import { db } from '$lib/server/db';
 import { pageImages } from '$lib/server/db/schema';
 import { fail, redirect, error } from '@sveltejs/kit';
@@ -23,7 +24,7 @@ export const load: PageServerLoad = async ({ params }) => {
 };
 
 export const actions: Actions = {
-  default: async ({ request, params }) => {
+  default: async ({ request, params, locals }) => {
     const formData = await request.formData();
     const locationName = formData.get('locationName') as string;
     const alt = formData.get('alt') as string;
@@ -61,7 +62,7 @@ export const actions: Actions = {
           imageUrl: finalImageUrl
         })
         .where(eq(pageImages.id, parseInt(params.id)));
-
+      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'update', targetType: 'page_image', targetId: parseInt(params.id), details: JSON.stringify({ locationName }) });
     } catch (err) {
       console.error('Error updating image:', err);
       return fail(500, {

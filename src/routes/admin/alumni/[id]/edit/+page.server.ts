@@ -1,3 +1,4 @@
+import { logAdminAction } from '$lib/actions/adminAudit';
 import { getAlumnus, updateAlumnus } from '$lib/actions/alumni';
 import { fail, redirect } from '@sveltejs/kit';
 import { del, put } from '@vercel/blob';
@@ -13,7 +14,7 @@ export const load: PageServerLoad = async ({ params }) => {
 };
 
 export const actions: Actions = {
-  updateAlumnus: async ({ request, params }) => {
+  updateAlumnus: async ({ request, params, locals }) => {
     const formData = await request.formData();
     const name = formData.get('name') as string | null;
     const major = formData.get('major') as string | null;
@@ -53,6 +54,7 @@ export const actions: Actions = {
     const updatedAlumnus = await updateAlumnus(parseInt(params.id), updateData);
 
     if (updatedAlumnus) {
+      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'update', targetType: 'alumnus', targetId: parseInt(params.id), details: JSON.stringify({ name }) });
       throw redirect(302, '/admin/alumni');
     } else {
       return fail(500, { message: 'Failed to update alumnus' });

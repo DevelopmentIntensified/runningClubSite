@@ -1,3 +1,4 @@
+import { logAdminAction } from '$lib/actions/adminAudit';
 import { getEvent, updateEvent } from '$lib/actions/events';
 import { fail, redirect } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
@@ -12,7 +13,7 @@ export const load: PageServerLoad = async ({ params }: { params: { id: string } 
 };
 
 export const actions: Actions = {
-  updateEvent: async ({ request, params }: { request: Request; params: { id: string } }) => {
+  updateEvent: async ({ request, params, locals }: { request: Request; params: { id: string } }) => {
     const formData = await request.formData();
     const title = formData.get('title') as string | null;
     const start = formData.get('start') as string | null;
@@ -44,6 +45,7 @@ export const actions: Actions = {
     const updatedEvent = await updateEvent(parseInt(params.id), updateData);
 
     if (updatedEvent) {
+      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'update', targetType: 'event', targetId: parseInt(params.id) });
       throw redirect(302, '/admin/events');
     } else {
       return fail(500, { message: 'Failed to update event' });
