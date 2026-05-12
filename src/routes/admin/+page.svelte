@@ -5,13 +5,35 @@
 
   let searchTerm = $state('');
 
+  function detailsText(details: Record<string, any> | null, action: string): string {
+    if (!details) return '—';
+    if (action === 'create') {
+      const created = details.created || details;
+      const name = created.title || created.name || created.event || '';
+      return `Created ${name}`;
+    }
+    if (action === 'delete') {
+      return 'Deleted';
+    }
+    if (action === 'update') {
+      const parts: string[] = [];
+      for (const [field, change] of Object.entries(details)) {
+        const c = change as { old: any; new: any };
+        const label = field.replace(/_/g, ' ');
+        parts.push(`${label}: ${c.old ?? '(none)'} → ${c.new}`);
+      }
+      return parts.join('; ');
+    }
+    return JSON.stringify(details);
+  }
+
   let filteredLogs = $derived(
     data.logs.filter(log => {
       if (!searchTerm) return true;
       const s = searchTerm.toLowerCase();
       return log.action.toLowerCase().includes(s) ||
         (log.targetType || '').toLowerCase().includes(s) ||
-        (log.details || '').toLowerCase().includes(s) ||
+        detailsText(log.parsedDetails, log.action).toLowerCase().includes(s) ||
         String(log.targetId || '').includes(s);
     })
   );
@@ -72,7 +94,7 @@
                   </span>
                 </td>
                 <td class="whitespace-nowrap px-6 py-3 text-sm text-slate-600">{log.targetType || '—'}{log.targetId ? ` #${log.targetId}` : ''}</td>
-                <td class="px-6 py-3 text-sm text-slate-600 max-w-xs truncate" title={log.details || ''}>{log.details || '—'}</td>
+                <td class="px-6 py-3 text-sm text-slate-600 max-w-md" title={log.details || ''}>{detailsText(log.parsedDetails, log.action)}</td>
               </tr>
             {/each}
           </tbody>
