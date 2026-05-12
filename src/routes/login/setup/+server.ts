@@ -8,7 +8,7 @@ import { hash } from '@node-rs/argon2';
 
 export const POST: RequestHandler = async ({ request, cookies }) => {
   const body = await request.json();
-  const { firstName, lastName, stateOfOrigin, graduationYear, password, redirectUrl } = body;
+  const { firstName, lastName, stateOfOrigin, graduationYear, academicLevel, password, redirectUrl } = body;
 
   if (!firstName || !lastName || !stateOfOrigin || !graduationYear || !password) {
     return new Response(
@@ -35,6 +35,7 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
       if (session && user) {
         const setData: Record<string, any> = { firstName, lastName, stateOfOrigin, lastLogin: now };
         if (graduationYear) setData.graduationYear = parseInt(graduationYear);
+        if (academicLevel) setData.academicLevel = academicLevel;
         if (password) setData.hashedPassword = await hash(password);
         await db
           .update(users)
@@ -69,6 +70,7 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
           lastName,
           stateOfOrigin,
           graduationYear: parseInt(graduationYear),
+          academicLevel: academicLevel || null,
           hashedPassword,
           createdAt: now,
           lastLogin: now
@@ -78,7 +80,7 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
     } else {
       const updated = await db
         .update(users)
-        .set({ firstName, lastName, stateOfOrigin, graduationYear: parseInt(graduationYear), hashedPassword, lastLogin: now })
+        .set({ firstName, lastName, stateOfOrigin, graduationYear: parseInt(graduationYear), academicLevel: academicLevel || null, hashedPassword, lastLogin: now })
         .where(eq(users.email, email))
         .returning({ id: users.id });
       userId = updated[0].id;

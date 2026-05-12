@@ -15,6 +15,7 @@
   let password = '';
   let confirmPassword = '';
   let graduationYear = new Date().getFullYear() + 4;
+  let academicLevel = 'undergraduate';
 
   const usStates = [
     { name: 'Alabama', abbr: 'AL' }, { name: 'Alaska', abbr: 'AK' }, { name: 'Arizona', abbr: 'AZ' },
@@ -115,7 +116,7 @@
     const res = await fetch('/login/setup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ firstName: firstName.trim(), lastName: lastName.trim(), stateOfOrigin, graduationYear, password, redirectUrl })
+      body: JSON.stringify({ firstName: firstName.trim(), lastName: lastName.trim(), stateOfOrigin, graduationYear, academicLevel, password, redirectUrl })
     });
 
     const json = await res.json();
@@ -236,6 +237,19 @@
             {/each}
           </select>
         </div>
+      </div>
+
+      <div>
+        <label for="academicLevel" class="block text-sm font-medium text-gray-700">Academic Level</label>
+        <select
+          id="academicLevel"
+          name="academicLevel"
+          bind:value={academicLevel}
+          class="block w-full rounded-md border border-gray-300 bg-white py-2 px-3 leading-5 focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+        >
+          <option value="undergraduate">Undergraduate</option>
+          <option value="graduate">Graduate</option>
+        </select>
       </div>
 
       <div>

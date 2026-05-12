@@ -15,7 +15,7 @@
 		<div class="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-black/30 to-black/50">
 			<div class="px-4 text-center">
 				<h1 class="text-3xl font-bold text-white sm:text-4xl md:text-5xl">Privacy Policy</h1>
-				<p class="mt-2 text-sm text-white/90 sm:text-base">Last updated: April 1, 2026</p>
+				<p class="mt-2 text-sm text-white/90 sm:text-base">Last updated: May 11, 2026</p>
 			</div>
 		</div>
 	</div>
@@ -24,22 +24,32 @@
 		<div class="prose prose-slate max-w-none rounded-2xl bg-white p-6 shadow-sm sm:p-10">
 			<p class="lead text-slate-700">
 				This policy describes how Liberty Running Club (“we,” “our,” or “us”) handles information when you use our
-				website and related services, including when you sign in with your Liberty University email address.
+				website and related services, including when you sign in with your Liberty University email address and create
+				a profile.
 			</p>
 
 			<h2 class="mt-8 text-xl font-semibold text-slate-900">Information we collect</h2>
 			<ul class="mt-3 list-disc space-y-2 pl-5 text-slate-700">
 				<li>
-					<strong>Email address</strong> — When you request a login link or verification code, we collect the email
+					<strong>Email address</strong> — When you sign in, we collect the email
 					you provide (we expect a <code class="rounded bg-slate-100 px-1">@liberty.edu</code> address for sign-in).
 				</li>
 				<li>
+					<strong>Profile information</strong> — Your first name, last name, state of origin, graduation year, and
+					academic level (undergraduate/graduate) when you set up or update your profile.
+				</li>
+				<li>
 					<strong>Session and security data</strong> — We use cookies and similar technologies to keep you signed in
-					and to protect the site (for example, session identifiers managed by our authentication layer).
+					and to protect the site (for example, session identifiers managed by our authentication layer). A hashed
+					password is stored when you set a password for your account.
 				</li>
 				<li>
 					<strong>Content you submit</strong> — If you contact us or use features that accept input, we process that
 					information as needed to respond or operate the feature.
+				</li>
+				<li>
+					<strong>Activity logs</strong> — Profile changes (name, state, academic level) are logged and visible to
+					administrators. Administrative actions across the site are also logged for accountability and security.
 				</li>
 			</ul>
 
@@ -71,15 +81,18 @@
 
 			<h2 class="mt-8 text-xl font-semibold text-slate-900">How we use your information</h2>
 			<ul class="mt-3 list-disc space-y-2 pl-5 text-slate-700">
-				<li>To verify your identity and maintain your account session.</li>
+				<li>To verify your identity, authenticate logins, and maintain your account session.</li>
+				<li>To display member profiles (name, state, graduation year, academic level) for club purposes such as our "Where We're From" map and team rosters.</li>
 				<li>To send club communications and newsletters you would reasonably expect as a member or subscriber.</li>
 				<li>To improve the website, respond to inquiries, and keep the service secure.</li>
+				<li>To maintain audit logs of administrative actions and profile changes for security and accountability.</li>
 			</ul>
 
 			<h2 class="mt-8 text-xl font-semibold text-slate-900">Retention</h2>
 			<p class="mt-3 text-slate-700">
-				We retain information only as long as needed for these purposes or as required by law. Login verification
-				codes are short-lived and are not intended for long-term storage.
+				We retain your profile information for as long as your account is active. Login verification
+				codes are short-lived and deleted automatically. Audit logs and profile change records are retained
+				indefinitely for security and accountability purposes.
 			</p>
 
 			<h2 class="mt-8 text-xl font-semibold text-slate-900">Your choices</h2>

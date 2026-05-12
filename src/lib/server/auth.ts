@@ -26,6 +26,7 @@ export const lucia = new Lucia(adapter, {
       lastName: attributes.lastName,
       stateOfOrigin: attributes.stateOfOrigin,
       graduationYear: attributes.graduationYear,
+      academicLevel: attributes.academicLevel,
       lastUpdated: attributes.lastUpdated,
       createdAt: attributes.createdAt,
       lastLogin: attributes.lastLogin

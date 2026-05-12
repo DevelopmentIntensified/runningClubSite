@@ -22,6 +22,7 @@ export const actions: Actions = {
     const lastName = form.get('lastName') as string;
     const stateOfOrigin = form.get('stateOfOrigin') as string;
     const graduationYear = form.get('graduationYear') as string;
+    const academicLevel = form.get('academicLevel') as string;
 
     if (!firstName || !lastName || !stateOfOrigin) {
       return { success: false, error: 'All fields are required' };
@@ -29,6 +30,7 @@ export const actions: Actions = {
 
     const updateData: Record<string, any> = { firstName, lastName, stateOfOrigin };
     if (graduationYear) updateData.graduationYear = parseInt(graduationYear);
+    if (academicLevel) updateData.academicLevel = academicLevel;
 
     await updateUserProfile(parseInt(locals.user.id), updateData);
 

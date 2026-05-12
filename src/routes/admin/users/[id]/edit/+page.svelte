@@ -88,10 +88,21 @@
               {#each Array.from({ length: 7 }, (_, i) => new Date().getFullYear() + i) as year}
                 <option value={year} selected={User.graduationYear === year}>{year}</option>
               {/each}
-            </select>
-          </div>
-          <div>
-            <label for="isAdmin" class="block text-sm font-medium text-gray-700">Admin</label>
+          </select>
+        </div>
+        <div>
+          <label for="academicLevel" class="block text-sm font-medium text-gray-700">Academic Level</label>
+          <select
+            id="academicLevel" name="academicLevel"
+            class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+          >
+            <option value="">Not set</option>
+            <option value="undergraduate" selected={User.academicLevel === 'undergraduate'}>Undergraduate</option>
+            <option value="graduate" selected={User.academicLevel === 'graduate'}>Graduate</option>
+          </select>
+        </div>
+        <div>
+          <label for="isAdmin" class="block text-sm font-medium text-gray-700">Admin</label>
             <input
               type="text" id="isAdmin" name="isAdmin" value={User.isAdmin}
               class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"

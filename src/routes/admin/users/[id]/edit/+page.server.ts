@@ -30,6 +30,7 @@ export const actions: Actions = {
     const lastName = formData.get('lastName') as string | null;
     const stateOfOrigin = formData.get('stateOfOrigin') as string | null;
     const graduationYear = formData.get('graduationYear') as string | null;
+    const academicLevel = formData.get('academicLevel') as string | null;
 
     const userId = parseInt(params.id);
 
@@ -40,8 +41,9 @@ export const actions: Actions = {
     if (lastName) updateData.lastName = lastName;
     if (stateOfOrigin) updateData.stateOfOrigin = stateOfOrigin;
     if (graduationYear) updateData.graduationYear = parseInt(graduationYear);
+    if (academicLevel) updateData.academicLevel = academicLevel;
 
-    if (firstName || lastName || stateOfOrigin || graduationYear) {
+    if (firstName || lastName || stateOfOrigin || graduationYear || academicLevel) {
       await updateUserProfile(userId, updateData);
     }
 
