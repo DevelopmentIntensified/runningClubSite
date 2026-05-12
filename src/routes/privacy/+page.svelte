@@ -23,7 +23,7 @@
 	<div class="container mx-auto max-w-3xl px-4 py-10 sm:py-12">
 		<div class="prose prose-slate max-w-none rounded-2xl bg-white p-6 shadow-sm sm:p-10">
 			<p class="lead text-slate-700">
-				This policy describes how Liberty Running Club (“we,” “our,” or “us”) handles information when you use our
+				This policy describes how Liberty Running Club ("we," "our," or "us") handles information when you use our
 				website and related services, including when you sign in with your Liberty University email address and create
 				a profile.
 			</p>
@@ -70,6 +70,9 @@
 					>https://resend.com/legal/privacy-policy</a
 				>.
 			</p>
+			<p class="mt-3 text-slate-700">
+				You can unsubscribe from club emails and newsletters at any time using the unsubscribe link in any email we send.
+			</p>
 
 			<h2 class="mt-8 text-xl font-semibold text-slate-900">Alumni Newsletter Signup</h2>
 			<p class="mt-3 text-slate-700">
@@ -77,6 +80,18 @@
 			</p>
 			<p class="mt-3 text-slate-700">
 				We use this information to send you alumni-specific updates, event invitations, and club news. You can unsubscribe from alumni emails at any time using the unsubscribe link in any email we send.
+			</p>
+
+			<h2 class="mt-8 text-xl font-semibold text-slate-900">Who can see your data</h2>
+			<p class="mt-3 text-slate-700">
+				Your profile information (name, state, graduation year, academic level) is visible to club leaders and
+				administrators for safety and organizational purposes. This information may also be displayed publicly in
+				aggregate form, such as on our "Where We're From" map and team rosters.
+			</p>
+			<p class="mt-3 text-slate-700">
+				Club leaders and administrators may access your account information as needed to operate the club, maintain
+				the website, and ensure the safety of all members. Your data is not shared with third parties except as
+				described in this policy (e.g., Resend for email delivery).
 			</p>
 
 			<h2 class="mt-8 text-xl font-semibold text-slate-900">How we use your information</h2>
@@ -88,18 +103,20 @@
 				<li>To maintain audit logs of administrative actions and profile changes for security and accountability.</li>
 			</ul>
 
+			<h2 class="mt-8 text-xl font-semibold text-slate-900">Your data and choices</h2>
+			<p class="mt-3 text-slate-700">
+				You can view and update your profile information at any time through your
+				<a href="/settings" class="font-medium text-primary-600 underline decoration-primary-300 underline-offset-2 hover:text-primary-800">settings page</a>.
+				You may also delete your profile data by using the delete option on the settings page or by
+				contacting us through our
+				<a href="/contact1" class="font-medium text-primary-600 underline decoration-primary-300 underline-offset-2 hover:text-primary-800">contact page</a>.
+			</p>
+
 			<h2 class="mt-8 text-xl font-semibold text-slate-900">Retention</h2>
 			<p class="mt-3 text-slate-700">
 				We retain your profile information for as long as your account is active. Login verification
 				codes are short-lived and deleted automatically. Audit logs and profile change records are retained
 				indefinitely for security and accountability purposes.
-			</p>
-
-			<h2 class="mt-8 text-xl font-semibold text-slate-900">Your choices</h2>
-			<p class="mt-3 text-slate-700">
-				You may contact us to ask questions about this policy or your information. If you receive newsletters, you can
-				also use unsubscribe instructions when we include them in those messages, subject to transactional messages we
-				must send for security or legal reasons.
 			</p>
 
 			<h2 class="mt-8 text-xl font-semibold text-slate-900">Contact</h2>

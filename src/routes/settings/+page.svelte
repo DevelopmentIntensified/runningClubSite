@@ -180,5 +180,23 @@
         </button>
       </form>
     </div>
+
+    <div class="rounded-2xl bg-white p-6 shadow-xl border border-red-100">
+      <h2 class="mb-4 text-xl font-semibold text-red-700">Delete Account</h2>
+      <p class="mb-4 text-sm text-gray-600">This will permanently delete your profile data. You can also submit a deletion request through our <a href="/contact1" class="text-primary-600 hover:text-primary-800 underline">contact page</a>.</p>
+      <form action="?/deleteAccount" method="POST" use:enhance onsubmit={() => window.confirm('Are you sure? This cannot be undone.')}>
+        <button
+          type="submit"
+          onclick={() => window.confirm('Are you sure? This cannot be undone.')"
+          class="rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+        >
+          Delete My Account
+        </button>
+      </form>
+    </div>
+
+    <p class="text-center text-xs text-gray-400">
+      <a href="/privacy" class="hover:text-gray-600 underline">Privacy Policy</a>
+    </p>
   </div>
 </div>

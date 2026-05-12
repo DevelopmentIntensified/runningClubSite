@@ -5,6 +5,7 @@ import { users } from '$lib/server/db/schema';
 import { eq, sql } from 'drizzle-orm';
 import { hash, verify } from '@node-rs/argon2';
 import { updateUserProfile } from '$lib/actions/userProfile';
+import { lucia } from '$lib/server/auth';
 
 export const load: PageServerLoad = async ({ locals }) => {
   if (!locals.user) {
@@ -73,5 +74,17 @@ export const actions: Actions = {
       .where(eq(users.id, parseInt(locals.user.id)));
 
     return { success: true };
+  },
+
+  deleteAccount: async ({ locals, cookies }) => {
+    if (!locals.user) return { success: false, error: 'Not authenticated' };
+
+    await db.delete(users).where(eq(users.id, parseInt(locals.user.id)));
+
+    const sessionCookie = lucia.createBlankSessionCookie();
+    cookies.set(sessionCookie.name, sessionCookie.value, { path: '.', ...sessionCookie.attributes });
+    cookies.set('pendingSignupEmail', '', { path: '/', maxAge: 0 });
+
+    throw redirect(302, '/login');
   }
 };
