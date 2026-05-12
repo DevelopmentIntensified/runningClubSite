@@ -77,6 +77,7 @@
     <div class="text-center mb-8">
       <h1 class="text-3xl font-extrabold text-gray-900">Where We're From</h1>
       <p class="mt-2 text-gray-600">Our members have joined from across the country.</p>
+      <p class="mt-1 text-xs text-gray-400">Note: Members who joined before the site launched in 2025 appear under 2025 in the year filter.</p>
     </div>
 
     <div class="flex justify-center mb-6">
