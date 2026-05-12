@@ -14,6 +14,7 @@
   let stateTouched = false;
   let password = '';
   let confirmPassword = '';
+  let graduationYear = new Date().getFullYear() + 4;
 
   const usStates = [
     { name: 'Alabama', abbr: 'AL' }, { name: 'Alaska', abbr: 'AK' }, { name: 'Arizona', abbr: 'AZ' },
@@ -114,7 +115,7 @@
     const res = await fetch('/login/setup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ firstName: firstName.trim(), lastName: lastName.trim(), stateOfOrigin, password, redirectUrl })
+      body: JSON.stringify({ firstName: firstName.trim(), lastName: lastName.trim(), stateOfOrigin, graduationYear, password, redirectUrl })
     });
 
     const json = await res.json();
@@ -218,6 +219,23 @@
             {/each}
           </ul>
         {/if}
+      </div>
+
+      <div>
+        <label for="graduationYear" class="block text-sm font-medium text-gray-700">Graduation Year <span class="text-red-500">*</span></label>
+        <div class="relative mt-1 rounded-md shadow-sm">
+          <select
+            id="graduationYear"
+            name="graduationYear"
+            required
+            bind:value={graduationYear}
+            class="block w-full rounded-md border border-gray-300 bg-white py-2 px-3 leading-5 focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+          >
+            {#each Array.from({ length: 7 }, (_, i) => new Date().getFullYear() + i) as year}
+              <option value={year}>{year}</option>
+            {/each}
+          </select>
+        </div>
       </div>
 
       <div>

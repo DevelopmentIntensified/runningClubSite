@@ -4,6 +4,7 @@ import { db } from '$lib/server/db';
 import { users } from '$lib/server/db/schema';
 import { eq, sql } from 'drizzle-orm';
 import { hash, verify } from '@node-rs/argon2';
+import { updateUserProfile } from '$lib/actions/userProfile';
 
 export const load: PageServerLoad = async ({ locals }) => {
   if (!locals.user) {
@@ -20,14 +21,16 @@ export const actions: Actions = {
     const firstName = form.get('firstName') as string;
     const lastName = form.get('lastName') as string;
     const stateOfOrigin = form.get('stateOfOrigin') as string;
+    const graduationYear = form.get('graduationYear') as string;
 
     if (!firstName || !lastName || !stateOfOrigin) {
       return { success: false, error: 'All fields are required' };
     }
 
-    await db.update(users)
-      .set({ firstName, lastName, stateOfOrigin })
-      .where(eq(users.id, parseInt(locals.user.id)));
+    const updateData: Record<string, any> = { firstName, lastName, stateOfOrigin };
+    if (graduationYear) updateData.graduationYear = parseInt(graduationYear);
+
+    await updateUserProfile(parseInt(locals.user.id), updateData);
 
     return { success: true };
   },

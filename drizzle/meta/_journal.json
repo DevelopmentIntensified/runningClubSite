@@ -22,6 +22,20 @@
       "when": 1778600000000,
       "tag": "0002_icy_power_man",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1778700000000,
+      "tag": "0003_graceful_wild_pack",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1778800000000,
+      "tag": "0004_dark_venom",
+      "breakpoints": true
     }
   ]
 }

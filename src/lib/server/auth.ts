@@ -25,6 +25,8 @@ export const lucia = new Lucia(adapter, {
       firstName: attributes.firstName,
       lastName: attributes.lastName,
       stateOfOrigin: attributes.stateOfOrigin,
+      graduationYear: attributes.graduationYear,
+      lastUpdated: attributes.lastUpdated,
       createdAt: attributes.createdAt,
       lastLogin: attributes.lastLogin
     };

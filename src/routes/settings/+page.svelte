@@ -7,7 +7,6 @@
   let { user } = data;
 
   let profileSuccess = $state('');
-  let profileForm: HTMLFormElement | undefined;
   let passwordForm: HTMLFormElement | undefined;
   let passwordSuccess = $state('');
 
@@ -30,6 +29,10 @@
     { name: 'Virginia', abbr: 'VA' }, { name: 'Washington', abbr: 'WA' }, { name: 'West Virginia', abbr: 'WV' },
     { name: 'Wisconsin', abbr: 'WI' }, { name: 'Wyoming', abbr: 'WY' }
   ];
+
+  function confirmProfileChange() {
+    return window.confirm('Are you sure you want to update your profile? Your changes will be logged and visible to administrators.');
+  }
 </script>
 
 <svelte:head>
@@ -54,6 +57,7 @@
           };
         }}
         class="space-y-4"
+        onsubmit={confirmProfileChange}
       >
         <div>
           <label for="firstName" class="block text-sm font-medium text-gray-700">First Name</label>
@@ -82,6 +86,19 @@
               <option value={state.abbr} selected={user.stateOfOrigin === state.abbr}>{state.name}</option>
             {/each}
           </select>
+          <p class="mt-1 text-xs text-amber-600">Please do not change your state of origin unless it is incorrect.</p>
+        </div>
+        <div>
+          <label for="graduationYear" class="block text-sm font-medium text-gray-700">Graduation Year</label>
+          <select
+            id="graduationYear" name="graduationYear"
+            class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+          >
+            <option value="">Select graduation year</option>
+            {#each Array.from({ length: 7 }, (_, i) => new Date().getFullYear() + i) as year}
+              <option value={year} selected={user.graduationYear === year}>{year}</option>
+            {/each}
+          </select>
         </div>
         <div>
           <label class="block text-sm font-medium text-gray-700">Email</label>
@@ -90,12 +107,17 @@
         {#if profileSuccess}
           <p class="text-sm text-emerald-600">{profileSuccess}</p>
         {/if}
-        <button
-          type="submit"
-          class="rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
-        >
-          Save Profile
-        </button>
+        <div class="flex items-center gap-4">
+          <button
+            type="submit"
+            class="rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+          >
+            Save Profile
+          </button>
+          {#if user.lastUpdated}
+            <span class="text-xs text-gray-400">Last updated: {new Date(user.lastUpdated).toLocaleDateString()}</span>
+          {/if}
+        </div>
       </form>
     </div>
 

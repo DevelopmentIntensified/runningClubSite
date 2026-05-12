@@ -84,6 +84,7 @@
             <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Name</th>
             <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Email</th>
             <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">State</th>
+            <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Grad Year</th>
             <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Admin</th>
             <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Date Created</th>
             <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Last Login</th>
@@ -96,6 +97,7 @@
               <td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-slate-700">{user.firstName && user.lastName ? `${user.firstName} ${user.lastName}` : '—'}</td>
               <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-600">{user.email}</td>
               <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-600">{user.stateOfOrigin || '—'}</td>
+              <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-600">{user.graduationYear || '—'}</td>
               <td class="whitespace-nowrap px-6 py-4">
                 <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium {user.isAdmin ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-600'}">
                   {user.isAdmin ? 'Yes' : 'No'}

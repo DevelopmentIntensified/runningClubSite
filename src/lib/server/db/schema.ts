@@ -7,9 +7,22 @@ export const users = pgTable('user', {
   firstName: text('first_name'),
   lastName: text('last_name'),
   stateOfOrigin: text('state_of_origin'),
+  graduationYear: integer('graduation_year'),
   hashedPassword: text('hashed_password'),
   createdAt: timestamp('created_at').defaultNow().notNull(),
-  lastLogin: timestamp('last_login')
+  lastLogin: timestamp('last_login'),
+  lastUpdated: timestamp('last_updated')
+});
+
+export const userChangeLog = pgTable('user_change_log', {
+  id: serial('id').primaryKey(),
+  userId: integer('user_id')
+    .notNull()
+    .references(() => users.id, { onDelete: 'cascade' }),
+  field: text('field').notNull(),
+  oldValue: text('old_value'),
+  newValue: text('new_value'),
+  changedAt: timestamp('changed_at').defaultNow().notNull()
 });
 
 export const sessions = pgTable('session', {

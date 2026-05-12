@@ -8,9 +8,9 @@ import { hash } from '@node-rs/argon2';
 
 export const POST: RequestHandler = async ({ request, cookies }) => {
   const body = await request.json();
-  const { firstName, lastName, stateOfOrigin, password, redirectUrl } = body;
+  const { firstName, lastName, stateOfOrigin, graduationYear, password, redirectUrl } = body;
 
-  if (!firstName || !lastName || !stateOfOrigin || !password) {
+  if (!firstName || !lastName || !stateOfOrigin || !graduationYear || !password) {
     return new Response(
       JSON.stringify({ success: false, error: 'All fields are required' }),
       { status: 400 }
@@ -33,9 +33,12 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
     if (sessionId) {
       const { session, user } = await lucia.validateSession(sessionId);
       if (session && user) {
+        const setData: Record<string, any> = { firstName, lastName, stateOfOrigin, lastLogin: now };
+        if (graduationYear) setData.graduationYear = parseInt(graduationYear);
+        if (password) setData.hashedPassword = await hash(password);
         await db
           .update(users)
-          .set({ firstName, lastName, stateOfOrigin, hashedPassword, lastLogin: now })
+          .set(setData)
           .where(eq(users.id, parseInt(user.id)));
 
         return new Response(JSON.stringify({ success: true, redirectTo: redirectUrl || '/groupme' }), {
@@ -65,6 +68,7 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
           firstName,
           lastName,
           stateOfOrigin,
+          graduationYear: parseInt(graduationYear),
           hashedPassword,
           createdAt: now,
           lastLogin: now
@@ -74,7 +78,7 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
     } else {
       const updated = await db
         .update(users)
-        .set({ firstName, lastName, stateOfOrigin, hashedPassword, lastLogin: now })
+        .set({ firstName, lastName, stateOfOrigin, graduationYear: parseInt(graduationYear), hashedPassword, lastLogin: now })
         .where(eq(users.email, email))
         .returning({ id: users.id });
       userId = updated[0].id;
