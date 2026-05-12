@@ -51,6 +51,7 @@ export const POST: RequestHandler = async function(event) {
         status: 200
       });
     } else {
+      await db.execute(sql`UPDATE "user" SET last_login = NOW() WHERE id = ${result[0].id}`);
       const session = await lucia.createSession(result[0].id.toString(), {});
       const sessionCookie = lucia.createSessionCookie(session.id);
       headers.append('Set-Cookie', sessionCookie.serialize());

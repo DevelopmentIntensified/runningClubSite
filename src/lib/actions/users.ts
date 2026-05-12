@@ -1,6 +1,6 @@
 import { db } from '$lib/server/db';
 import { users, type User } from '$lib/server/db/schema';
-import { eq, asc, desc } from 'drizzle-orm';
+import { eq, asc, desc, sql } from 'drizzle-orm';
 
 export async function getUsers(sortBy: 'email' | 'createdAt' | 'lastLogin' = 'email') {
   let orderBy;
@@ -9,7 +9,7 @@ export async function getUsers(sortBy: 'email' | 'createdAt' | 'lastLogin' = 'em
       orderBy = desc(users.createdAt);
       break;
     case 'lastLogin':
-      orderBy = desc(users.lastLogin);
+      orderBy = sql`${users.lastLogin} DESC NULLS LAST`;
       break;
     default:
       orderBy = asc(users.email);

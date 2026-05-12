@@ -79,6 +79,7 @@ export const GET: RequestHandler = async function (event) {
       headers.append('Set-Cookie', `pendingSignupEmail=${encodeURIComponent(email)}; Path=/; Max-Age=900; HttpOnly; SameSite=Lax`);
       headers.append('Location', siteUrl + `/login/setup?redirectUrl=${encodeURIComponent(finalRedirect)}`);
     } else {
+      await db.execute(sql`UPDATE "user" SET last_login = NOW() WHERE id = ${userResult[0].id}`);
       const session = await lucia.createSession(userResult[0].id.toString(), {});
       const sessionCookie = lucia.createSessionCookie(session.id);
       headers.append('Set-Cookie', sessionCookie.serialize());
