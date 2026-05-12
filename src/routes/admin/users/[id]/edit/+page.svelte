@@ -1,6 +1,7 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
   import type { PageData } from './$types';
+  import { formatChangeDetails } from '$lib/utils/formatChangeDetails';
 
   export let data: PageData;
 
@@ -128,27 +129,21 @@
         {#if changeLog.length === 0}
           <p class="text-sm text-gray-500">No changes recorded.</p>
         {:else}
-          <div class="overflow-x-auto">
-            <table class="w-full">
-              <thead>
-                <tr class="border-b border-slate-200 bg-slate-50/50">
-                  <th class="px-4 py-2 text-left text-xs font-semibold uppercase text-slate-500">Field</th>
-                  <th class="px-4 py-2 text-left text-xs font-semibold uppercase text-slate-500">Old Value</th>
-                  <th class="px-4 py-2 text-left text-xs font-semibold uppercase text-slate-500">New Value</th>
-                  <th class="px-4 py-2 text-left text-xs font-semibold uppercase text-slate-500">Date</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-slate-100">
-                {#each changeLog as entry}
-                  <tr class="hover:bg-slate-50/50">
-                    <td class="px-4 py-2 text-sm text-slate-700">{entry.field}</td>
-                    <td class="px-4 py-2 text-sm text-slate-600">{entry.oldValue || '—'}</td>
-                    <td class="px-4 py-2 text-sm text-slate-600">{entry.newValue || '—'}</td>
-                    <td class="px-4 py-2 text-sm text-slate-600">{new Date(entry.changedAt).toLocaleDateString()}</td>
-                  </tr>
-                {/each}
-              </tbody>
-            </table>
+          <div class="space-y-3">
+            {#each changeLog as entry}
+              <div class="flex items-start gap-3 rounded-lg border border-slate-100 bg-slate-50/50 p-3">
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm text-slate-700">
+                    {@const label = entry.field.replace(/_/g, ' ')}
+                    <span class="font-medium">{label}:</span>
+                    <span class="text-slate-500">{entry.oldValue || '(none)'}</span>
+                    <span class="text-slate-400 mx-1">→</span>
+                    <span class="text-slate-800">{entry.newValue}</span>
+                  </p>
+                  <p class="mt-0.5 text-xs text-slate-400">{new Date(entry.changedAt).toLocaleString()}</p>
+                </div>
+              </div>
+            {/each}
           </div>
         {/if}
       </div>
