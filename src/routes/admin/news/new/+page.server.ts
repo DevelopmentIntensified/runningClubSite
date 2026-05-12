@@ -37,7 +37,7 @@ export const actions: Actions = {
         content: content,
         createdBy: locals.user?.id!
       });
-      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'create', targetType: 'news', details: JSON.stringify({ title }) });
+      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'create', targetType: 'news', details: JSON.stringify({ created: { title, imageUrl: finalImageUrl, content, createdBy: locals.user?.id } }) });
     } catch (error) {
       console.error('Error creating news item:', error);
       return fail(500, { message: 'Failed to create news item' });

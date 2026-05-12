@@ -6,6 +6,7 @@ import { eq } from 'drizzle-orm';
 import { del, put } from '@vercel/blob';
 import { BLOB_READ_WRITE_TOKEN } from '$env/static/private';
 import type { PageServerLoad, Actions } from './$types';
+import { objectDiff } from '$lib/utils/objectDiff';
 
 export const load: PageServerLoad = async ({ params }) => {
   const image = await db
@@ -41,6 +42,12 @@ export const actions: Actions = {
       return fail(400, { message: 'Order must be a number' });
     }
 
+    const [existingSlide] = await db
+      .select()
+      .from(slideShowImages)
+      .where(eq(slideShowImages.id, parseInt(params.id)))
+      .limit(1);
+
     const updateData: { title: string; order: number; imageUrl?: string } = {
       title,
       order: orderNum
@@ -60,7 +67,9 @@ export const actions: Actions = {
       .update(slideShowImages)
       .set(updateData)
       .where(eq(slideShowImages.id, parseInt(params.id)));
-    await logAdminAction({ adminId: parseInt(locals.user.id), action: 'update', targetType: 'slide', targetId: parseInt(params.id), details: JSON.stringify({ title }) });
+
+    const changes = objectDiff(existingSlide, updateData);
+    await logAdminAction({ adminId: parseInt(locals.user.id), action: 'update', targetType: 'slide', targetId: parseInt(params.id), details: JSON.stringify(changes) });
 
     throw redirect(303, '/admin/slideshow');
   }

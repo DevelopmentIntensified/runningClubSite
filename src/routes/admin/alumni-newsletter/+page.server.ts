@@ -16,7 +16,7 @@ export const actions: Actions = {
     
     if (id) {
       await db.delete(alumniNewsletter).where(eq(alumniNewsletter.id, parseInt(id as string)));
-      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'delete', targetType: 'alumni_newsletter', targetId: parseInt(id as string) });
+      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'delete', targetType: 'alumni_newsletter', targetId: parseInt(id as string), details: JSON.stringify({ targetType: 'alumni_newsletter', targetId: parseInt(id as string) }) });
     }
     return { success: true };
   }

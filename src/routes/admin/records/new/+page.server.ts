@@ -31,7 +31,7 @@ export const actions: Actions = {
     });
 
     if (newRecord) {
-      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'create', targetType: 'record', targetId: newRecord.id, details: JSON.stringify({ name, event }) });
+      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'create', targetType: 'record', targetId: newRecord.id, details: JSON.stringify({ created: { event: event.toString(), name: name.toString(), time: time.toString(), year, gender: gender.toString(), type: type.toString(), link: link || null } }) });
       throw redirect(302, '/admin/records');
     } else {
       return fail(500, { message: 'Failed to create record' });

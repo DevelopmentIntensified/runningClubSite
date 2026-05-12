@@ -4,6 +4,7 @@ import { fail, redirect } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
 import { put, del } from '@vercel/blob';
 import { BLOB_READ_WRITE_TOKEN } from '$env/static/private';
+import { objectDiff } from '$lib/utils/objectDiff';
 
 export const load: PageServerLoad = async ({ params }) => {
   const newsItem = await getNewsItem(parseInt(params.id));
@@ -26,6 +27,8 @@ export const actions: Actions = {
       return fail(400, { message: 'Title and content are required' });
     }
 
+    const existingNews = await getNewsItem(parseInt(params.id));
+
     try {
       let finalImageUrl = currentImageUrl;
 
@@ -44,12 +47,10 @@ export const actions: Actions = {
         finalImageUrl = imageUrl;
       }
 
-      const updatedNews = await updateNews(parseInt(params.id), {
-        title: title.toString(),
-        imageUrl: finalImageUrl,
-        content: content.toString()
-      });
-      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'update', targetType: 'news', targetId: parseInt(params.id), details: JSON.stringify({ title }) });
+      const updateData = { title: title.toString(), imageUrl: finalImageUrl, content: content.toString() };
+      const updatedNews = await updateNews(parseInt(params.id), updateData);
+      const changes = objectDiff(existingNews, updateData);
+      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'update', targetType: 'news', targetId: parseInt(params.id), details: JSON.stringify(changes) });
     } catch (error) {
       console.error('Error updating news item:', error);
       return fail(500, { message: 'Failed to update news item' });

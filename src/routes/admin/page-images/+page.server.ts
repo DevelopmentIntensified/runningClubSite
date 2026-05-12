@@ -27,7 +27,7 @@ export const actions: Actions = {
 
     await del(imageUrl, { token: BLOB_READ_WRITE_TOKEN });
     await db.delete(pageImages).where(eq(pageImages.id, parseInt(id)));
-    await logAdminAction({ adminId: parseInt(locals.user.id), action: 'delete', targetType: 'page_image', targetId: parseInt(id) });
+    await logAdminAction({ adminId: parseInt(locals.user.id), action: 'delete', targetType: 'page_image', targetId: parseInt(id), details: JSON.stringify({ targetType: 'page_image', targetId: parseInt(id) }) });
     return { success: true };
   }
 }; 

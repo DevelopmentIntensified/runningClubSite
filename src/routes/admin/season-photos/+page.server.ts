@@ -21,7 +21,7 @@ export const actions: Actions = {
 
     try {
       await db.delete(seasonImageLinks).where(eq(seasonImageLinks.id, parseInt(id)));
-      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'delete', targetType: 'season_photo', targetId: parseInt(id) });
+      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'delete', targetType: 'season_photo', targetId: parseInt(id), details: JSON.stringify({ targetType: 'season_photo', targetId: parseInt(id) }) });
     } catch (error) {
       return fail(500, { message: 'Failed to delete photo' });
     }

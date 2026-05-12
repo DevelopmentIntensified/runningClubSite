@@ -47,7 +47,7 @@ export const actions: Actions = {
         season,
         imageUrl: finalImageUrl
       });
-      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'create', targetType: 'season_photo', details: JSON.stringify({ title }) });
+      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'create', targetType: 'season_photo', details: JSON.stringify({ created: { title, link, season, imageUrl: finalImageUrl } }) });
       console.log('Inserted successfully');
     } catch (error) {
       console.error('Insert error:', error);

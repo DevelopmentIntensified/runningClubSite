@@ -25,7 +25,7 @@ export const actions: Actions = {
     });
 
     if (newuser) {
-      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'create', targetType: 'user', details: JSON.stringify({ name }) });
+      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'create', targetType: 'user', details: JSON.stringify({ created: { name: name.toString(), position: position.toString(), bio: bio?.toString() || null, imageUrl: imageUrl?.toString() || null } }) });
       throw redirect(302, '/admin/users');
     } else {
       return fail(500, { message: 'Failed to create user' });

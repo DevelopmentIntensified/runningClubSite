@@ -2,6 +2,7 @@ import { logAdminAction } from '$lib/actions/adminAudit';
 import { getRecord, updateRecord } from '$lib/actions/records';
 import { fail, redirect } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
+import { objectDiff } from '$lib/utils/objectDiff';
 
 export const load: PageServerLoad = async ({ params }) => {
   const record = await getRecord(parseInt(params.id));
@@ -40,10 +41,13 @@ export const actions: Actions = {
     if (type) updateData.type = type;
     if (link) updateData.link = link;
 
+    const existingRecord = await getRecord(parseInt(params.id));
+
     const updatedRecord = await updateRecord(parseInt(params.id), updateData);
 
     if (updatedRecord) {
-      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'update', targetType: 'record', targetId: parseInt(params.id) });
+      const changes = objectDiff(existingRecord, updateData);
+      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'update', targetType: 'record', targetId: parseInt(params.id), details: JSON.stringify(changes) });
       throw redirect(302, '/admin/records');
     } else {
       return fail(500, { message: 'Failed to update record' });

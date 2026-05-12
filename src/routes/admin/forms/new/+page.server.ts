@@ -31,7 +31,7 @@ export const actions: Actions = {
       active,
       createdBy: userId
     });
-    await logAdminAction({ adminId: parseInt(locals.user.id), action: 'create', targetType: 'form', details: JSON.stringify({ title }) });
+    await logAdminAction({ adminId: parseInt(locals.user.id), action: 'create', targetType: 'form', details: JSON.stringify({ created: { title, description, externalUrl, active } }) });
 
     throw redirect(302, '/admin/forms');
   }

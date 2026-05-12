@@ -31,7 +31,7 @@ export const actions: Actions = {
     });
 
     if (newEvent) {
-      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'create', targetType: 'event', targetId: newEvent.id, details: JSON.stringify({ title }) });
+      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'create', targetType: 'event', targetId: newEvent.id, details: JSON.stringify({ created: { title, start: start2.toString(), end: end2.toString(), location, type, description } }) });
       throw redirect(302, '/admin/events');
     } else {
       return fail(500, { message: 'Failed to create event' });

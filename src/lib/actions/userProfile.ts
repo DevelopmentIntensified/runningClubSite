@@ -4,7 +4,8 @@ import { eq, sql } from 'drizzle-orm';
 
 export async function updateUserProfile(
   userId: number,
-  updates: { firstName?: string; lastName?: string; stateOfOrigin?: string; graduationYear?: number }
+  updates: { firstName?: string; lastName?: string; stateOfOrigin?: string; graduationYear?: number; academicLevel?: string },
+  options?: { loggedByAdmin?: boolean }
 ) {
   const result = await db.execute(
     sql`SELECT first_name, last_name, state_of_origin, academic_level FROM "user" WHERE id = ${userId}`
@@ -37,13 +38,15 @@ export async function updateUserProfile(
 
   await db.update(users).set(setData).where(eq(users.id, userId));
 
-  for (const change of changes) {
-    await db.insert(userChangeLog).values({
-      userId,
-      field: change.field,
-      oldValue: change.oldValue,
-      newValue: change.newValue
-    });
+  if (!options?.loggedByAdmin) {
+    for (const change of changes) {
+      await db.insert(userChangeLog).values({
+        userId,
+        field: change.field,
+        oldValue: change.oldValue,
+        newValue: change.newValue
+      });
+    }
   }
 
   return { updated: true, changes };

@@ -39,7 +39,7 @@ export const actions: Actions = {
       imageUrl: finalImageUrl,
       order: orderNum
     });
-    await logAdminAction({ adminId: parseInt(locals.user.id), action: 'create', targetType: 'slide', details: JSON.stringify({ title }) });
+    await logAdminAction({ adminId: parseInt(locals.user.id), action: 'create', targetType: 'slide', details: JSON.stringify({ created: { title, imageUrl: finalImageUrl, order: orderNum } }) });
 
     throw redirect(303, '/admin/slideshow');
   }

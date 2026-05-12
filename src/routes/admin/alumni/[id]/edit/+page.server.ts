@@ -4,6 +4,7 @@ import { fail, redirect } from '@sveltejs/kit';
 import { del, put } from '@vercel/blob';
 import { BLOB_READ_WRITE_TOKEN } from '$env/static/private';
 import type { PageServerLoad, Actions } from './$types';
+import { objectDiff } from '$lib/utils/objectDiff';
 
 export const load: PageServerLoad = async ({ params }) => {
   const alumnus = await getAlumnus(parseInt(params.id));
@@ -51,10 +52,12 @@ export const actions: Actions = {
       updateData.imageUrl = imageUrl;
     }
 
+    const changes = objectDiff(alumnus, updateData);
+
     const updatedAlumnus = await updateAlumnus(parseInt(params.id), updateData);
 
     if (updatedAlumnus) {
-      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'update', targetType: 'alumnus', targetId: parseInt(params.id), details: JSON.stringify({ name }) });
+      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'update', targetType: 'alumnus', targetId: parseInt(params.id), details: JSON.stringify(changes) });
       throw redirect(302, '/admin/alumni');
     } else {
       return fail(500, { message: 'Failed to update alumnus' });

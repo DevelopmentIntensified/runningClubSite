@@ -38,7 +38,7 @@ export const actions: Actions = {
         alt: alt.toString(),
         imageUrl: finalImageUrl
       });
-      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'create', targetType: 'page_image', details: JSON.stringify({ locationName }) });
+      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'create', targetType: 'page_image', details: JSON.stringify({ created: { locationName: locationName.toString(), alt: alt.toString(), imageUrl: finalImageUrl } }) });
     } catch (err) {
       console.error('Error uploading image:', err);
       return fail(500, { message: 'Error uploading image' });

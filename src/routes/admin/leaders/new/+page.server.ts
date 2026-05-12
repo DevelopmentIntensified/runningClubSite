@@ -46,7 +46,7 @@ export const actions: Actions = {
     });
 
     if (newLeader) {
-      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'create', targetType: 'leader', targetId: newLeader.id, details: JSON.stringify({ name }) });
+      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'create', targetType: 'leader', targetId: newLeader.id, details: JSON.stringify({ created: { name, position, order: parseInt(order), bio, imageUrl: finalImageUrl, active } }) });
       throw redirect(302, '/admin/leaders');
     } else {
       return fail(500, { message: 'Failed to create leader' });

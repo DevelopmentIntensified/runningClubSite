@@ -7,6 +7,7 @@ import { userChangeLog } from '$lib/server/db/schema';
 import { eq, desc } from 'drizzle-orm';
 import { fail, redirect } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
+import { objectDiff } from '$lib/utils/objectDiff';
 
 export const load: PageServerLoad = async ({ params }) => {
   const User = await getUser(parseInt(params.id));
@@ -34,6 +35,8 @@ export const actions: Actions = {
 
     const userId = parseInt(params.id);
 
+    const existingUser = await getUser(userId);
+
     const updateData: Record<string, any> = {};
     if (email) updateData.email = email;
     if (isAdmin) updateData.isAdmin = isAdmin === 'true';
@@ -44,7 +47,7 @@ export const actions: Actions = {
     if (academicLevel) updateData.academicLevel = academicLevel;
 
     if (firstName || lastName || stateOfOrigin || graduationYear || academicLevel) {
-      await updateUserProfile(userId, updateData);
+      await updateUserProfile(userId, updateData, { loggedByAdmin: true });
     }
 
     if (email || isAdmin) {
@@ -53,7 +56,8 @@ export const actions: Actions = {
         await deleteUserSessions(userId);
       }
     }
-    await logAdminAction({ adminId: parseInt(locals.user.id), action: 'update', targetType: 'user', targetId: userId });
+    const changes = objectDiff(existingUser, updateData);
+    await logAdminAction({ adminId: parseInt(locals.user.id), action: 'update', targetType: 'user', targetId: userId, details: JSON.stringify(changes) });
 
     throw redirect(302, '/admin/users');
   }

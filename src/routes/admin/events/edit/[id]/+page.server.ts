@@ -3,6 +3,7 @@ import { getEvent, updateEvent } from '$lib/actions/events';
 import { fail, redirect } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
 import { DateTime } from 'luxon';
+import { objectDiff } from '$lib/utils/objectDiff';
 
 export const load: PageServerLoad = async ({ params }: { params: { id: string } }) => {
   const event = await getEvent(parseInt(params.id));
@@ -42,10 +43,13 @@ export const actions: Actions = {
       updateData.end = DateTime.fromISO(end.replace(" ", "T")).setZone('America/New_York').toString();
     }
 
+    const existingEvent = await getEvent(parseInt(params.id));
+
     const updatedEvent = await updateEvent(parseInt(params.id), updateData);
 
     if (updatedEvent) {
-      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'update', targetType: 'event', targetId: parseInt(params.id) });
+      const changes = objectDiff(existingEvent, updateData);
+      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'update', targetType: 'event', targetId: parseInt(params.id), details: JSON.stringify(changes) });
       throw redirect(302, '/admin/events');
     } else {
       return fail(500, { message: 'Failed to update event' });

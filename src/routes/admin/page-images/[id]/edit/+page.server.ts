@@ -6,6 +6,7 @@ import type { PageServerLoad, Actions } from './$types';
 import { eq } from 'drizzle-orm';
 import { put, del } from '@vercel/blob';
 import { BLOB_READ_WRITE_TOKEN } from '$env/static/private';
+import { objectDiff } from '$lib/utils/objectDiff';
 
 export const load: PageServerLoad = async ({ params }) => {
   const image = await db
@@ -38,6 +39,12 @@ export const actions: Actions = {
       });
     }
 
+    const [existingImage] = await db
+      .select()
+      .from(pageImages)
+      .where(eq(pageImages.id, parseInt(params.id)))
+      .limit(1);
+
     try {
       let finalImageUrl = currentImageUrl;
 
@@ -54,15 +61,13 @@ export const actions: Actions = {
         finalImageUrl = imageUrl;
       }
 
+      const updateData = { locationName: locationName.toString(), alt: alt.toString(), imageUrl: finalImageUrl };
       await db
         .update(pageImages)
-        .set({
-          locationName: locationName.toString(),
-          alt: alt.toString(),
-          imageUrl: finalImageUrl
-        })
+        .set(updateData)
         .where(eq(pageImages.id, parseInt(params.id)));
-      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'update', targetType: 'page_image', targetId: parseInt(params.id), details: JSON.stringify({ locationName }) });
+      const changes = objectDiff(existingImage, updateData);
+      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'update', targetType: 'page_image', targetId: parseInt(params.id), details: JSON.stringify(changes) });
     } catch (err) {
       console.error('Error updating image:', err);
       return fail(500, {

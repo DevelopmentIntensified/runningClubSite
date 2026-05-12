@@ -2,6 +2,7 @@ import { logAdminAction } from '$lib/actions/adminAudit';
 import { getLocation, getLocationsCount, updateLocation } from '$lib/actions/locations';
 import { fail, redirect } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
+import { objectDiff } from '$lib/utils/objectDiff';
 
 export const load: PageServerLoad = async ({ params }) => {
   const locationsCount = await getLocationsCount();
@@ -32,10 +33,13 @@ export const actions: Actions = {
     if (link) updateData.link = link;
     if (order) updateData.order = parseInt(order);
 
+    const existingLocation = await getLocation(parseInt(params.id));
+
     const updatedLocation = await updateLocation(parseInt(params.id), updateData);
 
     if (updatedLocation) {
-      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'update', targetType: 'location', targetId: parseInt(params.id) });
+      const changes = objectDiff(existingLocation, updateData);
+      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'update', targetType: 'location', targetId: parseInt(params.id), details: JSON.stringify(changes) });
       throw redirect(302, '/admin/locations');
     } else {
       return fail(500, { message: 'Failed to update location' });

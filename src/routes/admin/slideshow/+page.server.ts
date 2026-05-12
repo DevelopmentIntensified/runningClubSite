@@ -27,7 +27,7 @@ export const actions: Actions = {
 
     await del(imageUrl, { token: BLOB_READ_WRITE_TOKEN });
     await db.delete(slideShowImages).where(eq(slideShowImages.id,parseInt(id)));
-    await logAdminAction({ adminId: parseInt(locals.user.id), action: 'delete', targetType: 'slide', targetId: parseInt(id) });
+    await logAdminAction({ adminId: parseInt(locals.user.id), action: 'delete', targetType: 'slide', targetId: parseInt(id), details: JSON.stringify({ targetType: 'slide', targetId: parseInt(id) }) });
     return { success: true };
   }
 }; 

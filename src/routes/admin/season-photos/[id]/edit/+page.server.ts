@@ -6,6 +6,7 @@ import type { Actions, PageServerLoad } from './$types';
 import { eq } from 'drizzle-orm';
 import { put, del } from '@vercel/blob';
 import { BLOB_READ_WRITE_TOKEN } from '$env/static/private';
+import { objectDiff } from '$lib/utils/objectDiff';
 
 export const load: PageServerLoad = async ({ params }) => {
   const [link] = await db.select().from(seasonImageLinks).where(eq(seasonImageLinks.id, parseInt(params.id)));
@@ -54,11 +55,12 @@ export const actions: Actions = {
     }
 
     try {
+      const changes = objectDiff(currentLink, updateData);
       await db
         .update(seasonImageLinks)
         .set(updateData)
         .where(eq(seasonImageLinks.id, parseInt(params.id)));
-      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'update', targetType: 'season_photo', targetId: parseInt(params.id), details: JSON.stringify({ title }) });
+      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'update', targetType: 'season_photo', targetId: parseInt(params.id), details: JSON.stringify(changes) });
     } catch (error) {
       return fail(500, { message: 'Failed to update link' });
     }
