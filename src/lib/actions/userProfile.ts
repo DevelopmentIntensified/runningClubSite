@@ -1,6 +1,7 @@
 import { db } from '$lib/server/db';
 import { users, userChangeLog } from '$lib/server/db/schema';
 import { eq, sql } from 'drizzle-orm';
+import { objectDiff } from '$lib/utils/objectDiff';
 
 export async function updateUserProfile(
   userId: number,
@@ -12,25 +13,17 @@ export async function updateUserProfile(
   ) as any[];
 
   const current = result[0] || {};
-  const changes: { field: string; oldValue: string | null; newValue: string | null }[] = [];
 
-  if (updates.firstName !== undefined && updates.firstName !== current.first_name) {
-    changes.push({ field: 'first_name', oldValue: current.first_name, newValue: updates.firstName });
-  }
-  if (updates.lastName !== undefined && updates.lastName !== current.last_name) {
-    changes.push({ field: 'last_name', oldValue: current.last_name, newValue: updates.lastName });
-  }
-  if (updates.stateOfOrigin !== undefined && updates.stateOfOrigin !== current.state_of_origin) {
-    changes.push({ field: 'state_of_origin', oldValue: current.state_of_origin, newValue: updates.stateOfOrigin });
-  }
-  if (updates.academicLevel !== undefined && updates.academicLevel !== current.academic_level) {
-    changes.push({ field: 'academic_level', oldValue: current.academic_level, newValue: updates.academicLevel });
-  }
-  if (updates.graduationYear !== undefined && updates.graduationYear !== current.graduation_year) {
-    changes.push({ field: 'graduation_year', oldValue: current.graduation_year?.toString() ?? null, newValue: updates.graduationYear?.toString() ?? null });
-  }
+  const currentCamel: Record<string, any> = {};
+  if (current.first_name !== undefined) currentCamel.firstName = current.first_name;
+  if (current.last_name !== undefined) currentCamel.lastName = current.last_name;
+  if (current.state_of_origin !== undefined) currentCamel.stateOfOrigin = current.state_of_origin;
+  if (current.academic_level !== undefined) currentCamel.academicLevel = current.academic_level;
+  if (current.graduation_year !== undefined) currentCamel.graduationYear = current.graduation_year;
 
-  if (changes.length === 0 && !updates.graduationYear) return { updated: false };
+  const diff = objectDiff(currentCamel, updates as Record<string, any>);
+
+  if (Object.keys(diff).length === 0) return { updated: false };
 
   const setData: Record<string, any> = { lastUpdated: new Date() };
   if (updates.firstName !== undefined) setData.firstName = updates.firstName;
@@ -42,15 +35,23 @@ export async function updateUserProfile(
   await db.update(users).set(setData).where(eq(users.id, userId));
 
   if (!options?.loggedByAdmin) {
-    for (const change of changes) {
+    const fieldMap: Record<string, string> = {
+      firstName: 'first_name',
+      lastName: 'last_name',
+      stateOfOrigin: 'state_of_origin',
+      graduationYear: 'graduation_year',
+      academicLevel: 'academic_level'
+    };
+    for (const [field, change] of Object.entries(diff)) {
+      const dbField = fieldMap[field] || field;
       await db.insert(userChangeLog).values({
         userId,
-        field: change.field,
-        oldValue: change.oldValue,
-        newValue: change.newValue
+        field: dbField,
+        oldValue: change.old?.toString() ?? null,
+        newValue: change.new?.toString() ?? null
       });
     }
   }
 
-  return { updated: true, changes };
+  return { updated: true, changes: diff };
 }
