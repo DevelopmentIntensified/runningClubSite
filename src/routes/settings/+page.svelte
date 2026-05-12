@@ -31,7 +31,7 @@
   ];
 
   function confirmProfileChange() {
-    return window.confirm('Are you sure you want to update your profile? Your changes will be logged and visible to administrators.');
+    return window.confirm('Are you sure you want to update your profile?');
   }
 </script>
 
