@@ -86,21 +86,6 @@
     { href: '/contact1', label: 'Contact' }
   ];
 
-  const mobileAdminItems = [
-    { href: '/admin', label: 'Dashboard' },
-    { href: '/admin/users', label: 'Users' },
-    { href: '/admin/leaders', label: 'Leaders' },
-    { href: '/admin/alumni', label: 'Alumni' },
-    { href: '/admin/news', label: 'News' },
-    { href: '/admin/events', label: 'Events' },
-    { href: '/admin/locations', label: 'Locations' },
-    { href: '/admin/records', label: 'Records' },
-    { href: '/admin/season-photos', label: 'Season Photos' },
-    { href: '/admin/slideshow', label: 'Slideshow' },
-    { href: '/admin/page-images', label: 'Page Images' },
-    { href: '/admin/forms', label: 'Forms' },
-    { href: '/admin/alumni-newsletter', label: 'Alumni Newsletter' }
-  ];
 
   function toggleMenu() {
     isOpen = !isOpen;
@@ -289,18 +274,16 @@
           </a>
         {/each}
         {#if isAdmin}
-          {#each mobileAdminItems as item}
-            <a
-              href={item.href}
-              on:click={closeMenu}
-              class="block rounded-md px-3 py-2 text-center text-base font-medium hover:bg-primary-700 {$page
-                .url.pathname === item.href
-                ? 'bg-primary-700'
-                : ''}"
-            >
-              {item.label}
-            </a>
-          {/each}
+          <a
+            href="/admin"
+            on:click={closeMenu}
+            class="block rounded-md bg-primary-500 px-3 py-2 text-center text-base font-medium hover:bg-primary-700 {$page
+              .url.pathname.startsWith('/admin')
+              ? 'bg-primary-700'
+              : ''}"
+          >
+            Admin
+          </a>
         {/if}
         {#if isLoggedIn}
           <a
