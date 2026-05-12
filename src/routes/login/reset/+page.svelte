@@ -74,7 +74,7 @@
     {/if}
 
     {#if step === 'email'}
-      <form class="mt-8 space-y-6" on:submit|preventDefault={sendResetCode}>
+      <form class="mt-8 space-y-6" onsubmit={(e) => { e.preventDefault(); sendResetCode(); }}>
         <p class="text-sm text-gray-600">Enter your Liberty email and we'll send you a reset code.</p>
         <div>
           <label for="reset-email" class="block text-sm font-medium text-gray-700">Email address</label>
@@ -99,7 +99,7 @@
         </div>
       </form>
     {:else}
-      <form class="mt-8 space-y-6" on:submit|preventDefault={resetPassword}>
+      <form class="mt-8 space-y-6" onsubmit={(e) => { e.preventDefault(); resetPassword(); }}>
         <p class="text-sm text-gray-600">A code has been sent to your email. Enter it below with your new password.</p>
         <div>
           <label for="reset-code" class="block text-sm font-medium text-gray-700">Reset Code</label>

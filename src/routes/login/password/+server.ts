@@ -24,9 +24,9 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
   }
 
   try {
-    const result = await db.execute(sql`
+    const result = (await db.execute(sql`
       SELECT id, email, first_name, hashed_password FROM "user" WHERE email = ${email}
-    `);
+    `)) as any[];
 
     if (result.length === 0) {
       return new Response(

@@ -7,8 +7,8 @@
   let { user } = data;
 
   let profileSuccess = $state('');
-  let profileForm: HTMLFormElement;
-  let passwordForm: HTMLFormElement;
+  let profileForm: HTMLFormElement | undefined;
+  let passwordForm: HTMLFormElement | undefined;
   let passwordSuccess = $state('');
 
   const usStatesList = [
@@ -79,7 +79,7 @@
           >
             <option value="">Select a state</option>
             {#each usStatesList as state}
-              <option value={state.abbr} {selected={user.stateOfOrigin === state.abbr}}>{state.name}</option>
+              <option value={state.abbr} selected={user.stateOfOrigin === state.abbr}>{state.name}</option>
             {/each}
           </select>
         </div>

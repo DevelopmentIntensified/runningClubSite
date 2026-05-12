@@ -2,7 +2,7 @@ import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
 import { db } from '$lib/server/db';
 import { users } from '$lib/server/db/schema';
-import { eq } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
 import { hash, verify } from '@node-rs/argon2';
 
 export const load: PageServerLoad = async ({ locals }) => {
@@ -52,9 +52,7 @@ export const actions: Actions = {
       return { success: false, error: 'New passwords do not match' };
     }
 
-    const result = await db.execute(
-      `SELECT hashed_password FROM "user" WHERE id = ${locals.user.id}`
-    );
+    const result = await db.execute(sql`SELECT hashed_password FROM "user" WHERE id = ${parseInt(locals.user.id)}`);
 
     if (result.length === 0) return { success: false, error: 'User not found' };
 

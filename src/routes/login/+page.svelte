@@ -140,7 +140,7 @@
     {/if}
 
     {#if mode === 'code'}
-      <form class="mt-8 space-y-6" on:submit|preventDefault={emailSent ? handleCodeCheck : handleSendCode}>
+      <form class="mt-8 space-y-6" onsubmit={(e) => { e.preventDefault(); if (emailSent) handleCodeCheck(); else handleSendCode(); }}>
         {#if emailSent}
           <div>
             <label for="code" class="block text-sm font-medium text-gray-700">Verification Code</label>
@@ -232,7 +232,7 @@
         {/if}
       </form>
     {:else}
-      <form class="mt-8 space-y-6" on:submit|preventDefault={handlePasswordLogin}>
+      <form class="mt-8 space-y-6" onsubmit={(e) => { e.preventDefault(); handlePasswordLogin(); }}>
         <div>
           <label for="email-password" class="block text-sm font-medium text-gray-700">Email address</label>
           <div class="relative mt-1 rounded-md shadow-sm">
