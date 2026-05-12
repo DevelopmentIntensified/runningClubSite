@@ -18,36 +18,30 @@
       label: 'About',
       items: () => [
         { href: '/about', label: 'About' },
-        { href: '/stats', label: 'Where We\'re From' }
+        { href: '/stats', label: 'Where We\'re From' },
+        { href: '/alumni', label: 'Alumni' }
       ]
     },
     {
-      label: 'Practice',
+      label: 'Schedule',
       items: () => [
         { href: '/schedule', label: 'Schedule' },
         { href: '/locations', label: 'Locations' }
       ]
     },
     {
-      label: 'Team',
+      label: 'Results',
       items: () => [
         { href: '/records', label: 'Records' },
-        { href: '/alumni', label: 'Alumni' }
+        { href: '/season-photos', label: 'Season Photos' },
+        { href: '/news', label: 'News' }
       ]
     },
     {
-      label: 'Get Involved',
+      label: 'Join',
       items: () => [
         { href: '/trainingplan', label: 'Training Plan' },
-        { href: '/groupme', label: 'GroupMe' },
-        { href: '/season-photos', label: 'Season Photos' }
-      ]
-    },
-    {
-      label: 'News & Contact',
-      items: () => [
-        { href: '/news', label: 'News' },
-        { href: '/contact1', label: 'Contact' }
+        { href: '/groupme', label: 'GroupMe' }
       ]
     }
   ];
@@ -158,6 +152,13 @@
                 {/if}
               </div>
             {/each}
+
+            <a
+              href="/contact1"
+              class="rounded-md px-3 py-2 text-sm font-medium hover:bg-primary-700 {isActive('/contact1') ? 'bg-primary-700' : ''}"
+            >
+              Contact
+            </a>
 
             {#if isAdmin}
               <div class="relative">
