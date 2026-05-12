@@ -1,6 +1,7 @@
 <script lang="ts">
   import * as topojson from 'topojson-client';
   import { scaleThreshold } from 'd3-scale';
+  import { format } from 'd3-format';
   import { geoPath, geoAlbersUsa } from 'd3-geo';
   import { stateNames } from '$lib/data/stateNames';
   import usStates from '$lib/data/us-states.json';
@@ -9,19 +10,27 @@
   let { data }: { data: PageData } = $props();
 
   let stats: Record<string, { total: number; firstYear: number }> = $state(data.stats);
+  let totalMembers = $state(data.totalMembers);
   let years: string[] = data.years;
   let selectedYear = $state('all');
-  let hoveredState: { abbr: string; total: number; firstYear: number } | null = $state(null);
+  let hoveredState: { abbr: string; total: number; pct: number; firstYear: number } | null = $state(null);
   let mouseX = $state(0);
   let mouseY = $state(0);
 
+  const pctFormat = format('.1%');
+
+  function pct(count: number): number {
+    return totalMembers > 0 ? count / totalMembers : 0;
+  }
+
   const colorScale = scaleThreshold()
-    .domain([1, 6, 21, 51])
+    .domain([0.01, 0.05, 0.10, 0.20])
     .range(['#fee0d2', '#fc9272', '#ef4444', '#b91c1c', '#7f1d1d']);
 
   function getColor(abbr: string): string {
     const count = stats[abbr]?.total || 0;
-    return count === 0 ? '#d1d5db' : colorScale(count);
+    if (count === 0) return '#d1d5db';
+    return colorScale(pct(count));
   }
 
   async function fetchStats() {
@@ -30,6 +39,7 @@
     const res = await fetch(`/api/stats?${params}`);
     const json = await res.json();
     stats = json.data;
+    totalMembers = json.totalMembers;
   }
 
   const stateFipsToAbbr: Record<string, string> = {
@@ -94,7 +104,7 @@
             onmouseenter={(e) => {
               const total = stats[path.abbr]?.total || 0;
               const firstYear = stats[path.abbr]?.firstYear || 0;
-              hoveredState = { abbr: path.abbr, total, firstYear };
+              hoveredState = { abbr: path.abbr, total, pct: pct(total), firstYear };
               mouseX = e.clientX;
               mouseY = e.clientY;
             }}
@@ -108,7 +118,7 @@
       </svg>
 
       <div class="flex justify-center items-center gap-3 mt-6 text-sm text-gray-600">
-        <span>Fewer</span>
+        <span>0%</span>
         <div class="flex rounded overflow-hidden">
           <div class="w-8 h-4" style="background: #d1d5db"></div>
           <div class="w-8 h-4" style="background: #fee0d2"></div>
@@ -117,7 +127,7 @@
           <div class="w-8 h-4" style="background: #b91c1c"></div>
           <div class="w-8 h-4" style="background: #7f1d1d"></div>
         </div>
-        <span>More</span>
+        <span>20%+</span>
       </div>
     </div>
 
@@ -127,7 +137,7 @@
         style="left: {mouseX + 12}px; top: {mouseY + 12}px;"
       >
         <p class="font-semibold">{stateNames[hoveredState.abbr] || hoveredState.abbr}</p>
-        <p>{hoveredState.total} total member{hoveredState.total !== 1 ? 's' : ''}</p>
+        <p>{hoveredState.total} member{hoveredState.total !== 1 ? 's' : ''} ({pctFormat(hoveredState.pct)})</p>
         {#if hoveredState.firstYear}
           <p class="text-gray-300">First member: {hoveredState.firstYear}</p>
         {/if}

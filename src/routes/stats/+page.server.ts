@@ -16,10 +16,13 @@ export const load: PageServerLoad = async () => {
   `);
 
   const data: Record<string, { total: number; firstYear: number }> = {};
+  let totalMembers = 0;
   for (const row of result) {
     if (row.state) {
+      const count = parseInt(row.total as string);
+      totalMembers += count;
       data[row.state.toUpperCase()] = {
-        total: parseInt(row.total as string),
+        total: count,
         firstYear: parseInt(row.first_year as string)
       };
     }
@@ -32,5 +35,5 @@ export const load: PageServerLoad = async () => {
   `);
   const years = allYearsResult.map((r) => r.year as string);
 
-  return { stats: data, years };
+  return { stats: data, totalMembers, years };
 };

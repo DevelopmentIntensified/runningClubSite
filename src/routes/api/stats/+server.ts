@@ -69,11 +69,14 @@ export const GET: RequestHandler = async ({ url }) => {
 
   const result = await db.execute(query);
 
+  let totalMembers = 0;
   const data: Record<string, { total: number; firstYear: number }> = {};
   for (const row of result) {
     if (row.state) {
+      const count = parseInt(row.total as string);
+      totalMembers += count;
       data[row.state.toUpperCase()] = {
-        total: parseInt(row.total as string),
+        total: count,
         firstYear: parseInt(row.first_year as string)
       };
     }
@@ -86,7 +89,7 @@ export const GET: RequestHandler = async ({ url }) => {
   `);
   const years = allYearsResult.map((r) => r.year as string);
 
-  return new Response(JSON.stringify({ data, years }), {
+  return new Response(JSON.stringify({ data, totalMembers, years }), {
     headers: { 'Content-Type': 'application/json' }
   });
 };
