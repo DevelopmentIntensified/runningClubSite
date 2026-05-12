@@ -6,6 +6,7 @@ import { eq, sql } from 'drizzle-orm';
 import { hash, verify } from '@node-rs/argon2';
 import { updateUserProfile } from '$lib/actions/userProfile';
 import { lucia } from '$lib/server/auth';
+import { logAdminAction } from '$lib/actions/adminAudit';
 
 export const load: PageServerLoad = async ({ locals }) => {
   if (!locals.user) {
@@ -78,6 +79,15 @@ export const actions: Actions = {
 
   deleteAccount: async ({ locals, cookies }) => {
     if (!locals.user) return { success: false, error: 'Not authenticated' };
+
+    const userName = [locals.user.firstName, locals.user.lastName].filter(Boolean).join(' ') || locals.user.email;
+    await logAdminAction({
+      adminId: parseInt(locals.user.id),
+      action: 'delete',
+      targetType: 'user',
+      targetId: parseInt(locals.user.id),
+      details: JSON.stringify({ deletedOwnAccount: true, name: userName })
+    });
 
     await db.delete(users).where(eq(users.id, parseInt(locals.user.id)));
 
