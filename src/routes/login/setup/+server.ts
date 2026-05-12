@@ -4,20 +4,29 @@ import { users } from '$lib/server/db/schema';
 import { db } from '$lib/server/db/';
 import { sql } from 'drizzle-orm';
 import { eq } from 'drizzle-orm';
+import { hash } from '@node-rs/argon2';
 
 export const POST: RequestHandler = async ({ request, cookies }) => {
   const body = await request.json();
-  const { firstName, lastName, stateOfOrigin, redirectUrl } = body;
+  const { firstName, lastName, stateOfOrigin, password, redirectUrl } = body;
 
-  if (!firstName || !lastName || !stateOfOrigin) {
+  if (!firstName || !lastName || !stateOfOrigin || !password) {
     return new Response(
-      JSON.stringify({ success: false, error: 'First name, last name, and state of origin are required' }),
+      JSON.stringify({ success: false, error: 'All fields are required' }),
+      { status: 400 }
+    );
+  }
+
+  if (password.length < 8) {
+    return new Response(
+      JSON.stringify({ success: false, error: 'Password must be at least 8 characters' }),
       { status: 400 }
     );
   }
 
   try {
     const now = new Date();
+    const hashedPassword = await hash(password);
     const sessionId = cookies.get(lucia.sessionCookieName);
     const headers = new Headers();
 
@@ -26,7 +35,7 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
       if (session && user) {
         await db
           .update(users)
-          .set({ firstName, lastName, stateOfOrigin: stateOfOrigin || null, lastLogin: now })
+          .set({ firstName, lastName, stateOfOrigin, hashedPassword, lastLogin: now })
           .where(eq(users.id, parseInt(user.id)));
 
         return new Response(JSON.stringify({ success: true, redirectTo: redirectUrl || '/groupme' }), {
@@ -55,7 +64,8 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
           isAdmin: false,
           firstName,
           lastName,
-          stateOfOrigin: stateOfOrigin || null,
+          stateOfOrigin,
+          hashedPassword,
           createdAt: now,
           lastLogin: now
         })
@@ -64,7 +74,7 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
     } else {
       const updated = await db
         .update(users)
-        .set({ firstName, lastName, stateOfOrigin: stateOfOrigin || null, lastLogin: now })
+        .set({ firstName, lastName, stateOfOrigin, hashedPassword, lastLogin: now })
         .where(eq(users.email, email))
         .returning({ id: users.id });
       userId = updated[0].id;

@@ -7,6 +7,7 @@ export const users = pgTable('user', {
   firstName: text('first_name'),
   lastName: text('last_name'),
   stateOfOrigin: text('state_of_origin'),
+  hashedPassword: text('hashed_password'),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   lastLogin: timestamp('last_login')
 });

@@ -19,7 +19,14 @@ export const lucia = new Lucia(adapter, {
   },
   getUserAttributes: (attributes) => {
     return {
-      ...attributes
+      id: attributes.id,
+      email: attributes.email,
+      isAdmin: attributes.isAdmin,
+      firstName: attributes.firstName,
+      lastName: attributes.lastName,
+      stateOfOrigin: attributes.stateOfOrigin,
+      createdAt: attributes.createdAt,
+      lastLogin: attributes.lastLogin
     };
   }
 });

@@ -12,6 +12,8 @@
   let stateSearch = '';
   let stateDropdownOpen = false;
   let stateTouched = false;
+  let password = '';
+  let confirmPassword = '';
 
   const usStates = [
     { name: 'Alabama', abbr: 'AL' }, { name: 'Alaska', abbr: 'AK' }, { name: 'Arizona', abbr: 'AZ' },
@@ -93,13 +95,26 @@
       return;
     }
 
+    if (!password) {
+      error = 'Password is required';
+      return;
+    }
+    if (password.length < 8) {
+      error = 'Password must be at least 8 characters';
+      return;
+    }
+    if (password !== confirmPassword) {
+      error = 'Passwords do not match';
+      return;
+    }
+
     waiting = true;
     error = '';
 
     const res = await fetch('/login/setup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ firstName: firstName.trim(), lastName: lastName.trim(), stateOfOrigin, redirectUrl })
+      body: JSON.stringify({ firstName: firstName.trim(), lastName: lastName.trim(), stateOfOrigin, password, redirectUrl })
     });
 
     const json = await res.json();
@@ -203,6 +218,37 @@
             {/each}
           </ul>
         {/if}
+      </div>
+
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-700">Password <span class="text-red-500">*</span></label>
+        <div class="relative mt-1 rounded-md shadow-sm">
+          <input
+            id="password"
+            name="password"
+            type="password"
+            required
+            minlength={8}
+            bind:value={password}
+            placeholder="At least 8 characters"
+            class="block w-full rounded-md border border-gray-300 bg-white py-2 px-3 leading-5 placeholder-gray-500 focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+          />
+        </div>
+      </div>
+
+      <div>
+        <label for="confirmPassword" class="block text-sm font-medium text-gray-700">Confirm Password <span class="text-red-500">*</span></label>
+        <div class="relative mt-1 rounded-md shadow-sm">
+          <input
+            id="confirmPassword"
+            name="confirmPassword"
+            type="password"
+            required
+            bind:value={confirmPassword}
+            placeholder="Re-enter your password"
+            class="block w-full rounded-md border border-gray-300 bg-white py-2 px-3 leading-5 placeholder-gray-500 focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+          />
+        </div>
       </div>
 
       <div>
