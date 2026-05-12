@@ -134,8 +134,7 @@
               <div class="flex items-start gap-3 rounded-lg border border-slate-100 bg-slate-50/50 p-3">
                 <div class="flex-1 min-w-0">
                   <p class="text-sm text-slate-700">
-                    {@const label = entry.field.replace(/_/g, ' ')}
-                    <span class="font-medium">{label}:</span>
+                    <span class="font-medium">{entry.field.replace(/_/g, ' ')}:</span>
                     <span class="text-slate-500">{entry.oldValue || '(none)'}</span>
                     <span class="text-slate-400 mx-1">→</span>
                     <span class="text-slate-800">{entry.newValue}</span>
