@@ -209,6 +209,12 @@
       <div class="hidden lg:block">
         <div class="ml-4 flex items-center lg:ml-6">
           {#if isLoggedIn}
+            <a
+              href="/settings"
+              class="rounded-md px-3 py-2 text-sm font-medium hover:bg-primary-700"
+            >
+              Settings
+            </a>
             <form action="/api/logout" method="POST">
               <button
                 type="submit"
@@ -297,6 +303,13 @@
           {/each}
         {/if}
         {#if isLoggedIn}
+          <a
+            href="/settings"
+            on:click={closeMenu}
+            class="block rounded-md px-3 py-2 text-center text-base font-medium hover:bg-primary-700"
+          >
+            Settings
+          </a>
           <form action="/api/logout" method="POST" class="block">
             <button
               type="submit"
