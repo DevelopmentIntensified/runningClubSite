@@ -26,9 +26,12 @@ export const actions: Actions = {
     }
 
     let finalImageUrl: string | null = imageUrl;
-    
+
     if (imageFile && imageFile.size > 0) {
-      const { url } = await put(imageFile.name, imageFile, { access: "public", token: BLOB_READ_WRITE_TOKEN });
+      const { url } = await put(imageFile.name, imageFile, {
+        access: 'public',
+        token: BLOB_READ_WRITE_TOKEN
+      });
       finalImageUrl = url;
     }
 
@@ -46,7 +49,15 @@ export const actions: Actions = {
     });
 
     if (newLeader) {
-      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'create', targetType: 'leader', targetId: newLeader.id, details: JSON.stringify({ created: { name, position, order: parseInt(order), bio, imageUrl: finalImageUrl, active } }) });
+      await logAdminAction({
+        adminId: parseInt(locals.user!.id),
+        action: 'create',
+        targetType: 'leader',
+        targetId: newLeader.id,
+        details: JSON.stringify({
+          created: { name, position, order: parseInt(order), bio, imageUrl: finalImageUrl, active }
+        })
+      });
       throw redirect(302, '/admin/leaders');
     } else {
       return fail(500, { message: 'Failed to create leader' });

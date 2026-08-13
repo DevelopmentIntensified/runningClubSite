@@ -32,7 +32,7 @@
       <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
         <a
           href="/admin/forms/new"
-          class="inline-flex items-center justify-center rounded-md border border-transparent bg-primary-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 sm:w-auto"
+          class="bg-primary-600 hover:bg-primary-700 focus:ring-primary-500 inline-flex items-center justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white shadow-sm focus:ring-2 focus:ring-offset-2 focus:outline-none sm:w-auto"
         >
           Add Form
         </a>
@@ -40,17 +40,27 @@
     </div>
 
     <div class="mt-8 flex flex-col">
-      <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-          <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+          <div class="ring-opacity-5 overflow-hidden shadow ring-1 ring-black md:rounded-lg">
             <table class="min-w-full divide-y divide-gray-300">
               <thead class="bg-gray-50">
                 <tr>
-                  <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Title</th>
-                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Description</th>
-                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">URL</th>
-                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Status</th>
-                  <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                  <th
+                    scope="col"
+                    class="py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 sm:pl-6"
+                    >Title</th
+                  >
+                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                    >Description</th
+                  >
+                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                    >URL</th
+                  >
+                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                    >Status</th
+                  >
+                  <th scope="col" class="relative py-3.5 pr-4 pl-3 sm:pr-6">
                     <span class="sr-only">Actions</span>
                   </th>
                 </tr>
@@ -58,51 +68,104 @@
               <tbody class="divide-y divide-gray-200 bg-white">
                 {#each data.forms as form}
                   <tr>
-                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                    <td
+                      class="py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-gray-900 sm:pl-6"
+                    >
                       {form.title}
                     </td>
-                    <td class="px-3 py-4 text-sm text-gray-500 max-w-xs truncate" title={form.description || ''}>
+                    <td
+                      class="max-w-xs truncate px-3 py-4 text-sm text-gray-500"
+                      title={form.description || ''}
+                    >
                       {form.description || '-'}
                     </td>
-                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      <a href={form.externalUrl} target="_blank" rel="noopener noreferrer" class="text-primary-600 hover:text-primary-900">
+                    <td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500">
+                      <a
+                        href={form.externalUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-primary-600 hover:text-primary-900"
+                      >
                         View
                       </a>
                     </td>
-                    <td class="whitespace-nowrap px-3 py-4 text-sm">
+                    <td class="px-3 py-4 text-sm whitespace-nowrap">
                       {#if form.active}
-                        <span class="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">Active</span>
+                        <span
+                          class="inline-flex rounded-full bg-green-100 px-2 text-xs leading-5 font-semibold text-green-800"
+                          >Active</span
+                        >
                       {:else}
-                        <span class="inline-flex rounded-full bg-gray-100 px-2 text-xs font-semibold leading-5 text-gray-800">Inactive</span>
+                        <span
+                          class="inline-flex rounded-full bg-gray-100 px-2 text-xs leading-5 font-semibold text-gray-800"
+                          >Inactive</span
+                        >
                       {/if}
                     </td>
-                    <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                    <td
+                      class="relative py-4 pr-4 pl-3 text-right text-sm font-medium whitespace-nowrap sm:pr-6"
+                    >
                       <button
                         onclick={() => copyLink(form.id)}
                         class="text-primary-600 hover:text-primary-900 mr-4 inline-flex items-center gap-1"
                         title="Copy form link"
                       >
                         {#if copiedId === form.id}
-                          <svg class="h-4 w-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                          <svg
+                            class="h-4 w-4 text-green-600"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M5 13l4 4L19 7"
+                            />
                           </svg>
                           <span class="hidden sm:inline">Copied!</span>
                         {:else}
-                          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                          <svg
+                            class="h-4 w-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"
+                            />
                           </svg>
                           <span class="hidden sm:inline">Copy Link</span>
                         {/if}
                       </button>
-                      <a href="/forms/{form.id}" target="_blank" rel="noopener noreferrer" class="text-primary-600 hover:text-primary-900 mr-4 inline-flex items-center gap-1" title="Go to form">
+                      <a
+                        href="/forms/{form.id}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-primary-600 hover:text-primary-900 mr-4 inline-flex items-center gap-1"
+                        title="Go to form"
+                      >
                         <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                          />
                         </svg>
                       </a>
-                      <a href="/admin/forms/{form.id}/edit" class="text-primary-600 hover:text-primary-900 mr-4">Edit</a>
+                      <a
+                        href="/admin/forms/{form.id}/edit"
+                        class="text-primary-600 hover:text-primary-900 mr-4">Edit</a
+                      >
                       <form method="POST" action="?/deleteForm" use:enhance class="inline">
                         <input type="hidden" name="id" value={form.id} />
-                        <button type="submit" class="text-red-600 hover:text-red-900">Delete</button>
+                        <button type="submit" class="text-red-600 hover:text-red-900">Delete</button
+                        >
                       </form>
                     </td>
                   </tr>
@@ -110,7 +173,10 @@
                 {#if data.forms.length === 0}
                   <tr>
                     <td colspan="5" class="py-8 text-center text-sm text-gray-500">
-                      No forms yet. <a href="/admin/forms/new" class="text-primary-600 hover:text-primary-900">Create one</a>
+                      No forms yet. <a
+                        href="/admin/forms/new"
+                        class="text-primary-600 hover:text-primary-900">Create one</a
+                      >
                     </td>
                   </tr>
                 {/if}

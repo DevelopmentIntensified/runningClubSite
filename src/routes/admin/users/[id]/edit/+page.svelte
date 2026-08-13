@@ -9,25 +9,57 @@
   let error = '';
 
   const usStates = [
-    { name: 'Alabama', abbr: 'AL' }, { name: 'Alaska', abbr: 'AK' }, { name: 'Arizona', abbr: 'AZ' },
-    { name: 'Arkansas', abbr: 'AR' }, { name: 'California', abbr: 'CA' }, { name: 'Colorado', abbr: 'CO' },
-    { name: 'Connecticut', abbr: 'CT' }, { name: 'Delaware', abbr: 'DE' }, { name: 'Florida', abbr: 'FL' },
-    { name: 'Georgia', abbr: 'GA' }, { name: 'Hawaii', abbr: 'HI' }, { name: 'Idaho', abbr: 'ID' },
-    { name: 'Illinois', abbr: 'IL' }, { name: 'Indiana', abbr: 'IN' }, { name: 'Iowa', abbr: 'IA' },
-    { name: 'Kansas', abbr: 'KS' }, { name: 'Kentucky', abbr: 'KY' }, { name: 'Louisiana', abbr: 'LA' },
-    { name: 'Maine', abbr: 'ME' }, { name: 'Maryland', abbr: 'MD' }, { name: 'Massachusetts', abbr: 'MA' },
-    { name: 'Michigan', abbr: 'MI' }, { name: 'Minnesota', abbr: 'MN' }, { name: 'Mississippi', abbr: 'MS' },
-    { name: 'Missouri', abbr: 'MO' }, { name: 'Montana', abbr: 'MT' }, { name: 'Nebraska', abbr: 'NE' },
-    { name: 'Nevada', abbr: 'NV' }, { name: 'New Hampshire', abbr: 'NH' }, { name: 'New Jersey', abbr: 'NJ' },
-    { name: 'New Mexico', abbr: 'NM' }, { name: 'New York', abbr: 'NY' }, { name: 'North Carolina', abbr: 'NC' },
-    { name: 'North Dakota', abbr: 'ND' }, { name: 'Ohio', abbr: 'OH' }, { name: 'Oklahoma', abbr: 'OK' },
-    { name: 'Oregon', abbr: 'OR' }, { name: 'Pennsylvania', abbr: 'PA' }, { name: 'Rhode Island', abbr: 'RI' },
-    { name: 'South Carolina', abbr: 'SC' }, { name: 'South Dakota', abbr: 'SD' }, { name: 'Tennessee', abbr: 'TN' },
-    { name: 'Texas', abbr: 'TX' }, { name: 'Utah', abbr: 'UT' }, { name: 'Vermont', abbr: 'VT' },
-    { name: 'Virginia', abbr: 'VA' }, { name: 'Washington', abbr: 'WA' }, { name: 'West Virginia', abbr: 'WV' },
-    { name: 'Wisconsin', abbr: 'WI' }, { name: 'Wyoming', abbr: 'WY' }
+    { name: 'Alabama', abbr: 'AL' },
+    { name: 'Alaska', abbr: 'AK' },
+    { name: 'Arizona', abbr: 'AZ' },
+    { name: 'Arkansas', abbr: 'AR' },
+    { name: 'California', abbr: 'CA' },
+    { name: 'Colorado', abbr: 'CO' },
+    { name: 'Connecticut', abbr: 'CT' },
+    { name: 'Delaware', abbr: 'DE' },
+    { name: 'Florida', abbr: 'FL' },
+    { name: 'Georgia', abbr: 'GA' },
+    { name: 'Hawaii', abbr: 'HI' },
+    { name: 'Idaho', abbr: 'ID' },
+    { name: 'Illinois', abbr: 'IL' },
+    { name: 'Indiana', abbr: 'IN' },
+    { name: 'Iowa', abbr: 'IA' },
+    { name: 'Kansas', abbr: 'KS' },
+    { name: 'Kentucky', abbr: 'KY' },
+    { name: 'Louisiana', abbr: 'LA' },
+    { name: 'Maine', abbr: 'ME' },
+    { name: 'Maryland', abbr: 'MD' },
+    { name: 'Massachusetts', abbr: 'MA' },
+    { name: 'Michigan', abbr: 'MI' },
+    { name: 'Minnesota', abbr: 'MN' },
+    { name: 'Mississippi', abbr: 'MS' },
+    { name: 'Missouri', abbr: 'MO' },
+    { name: 'Montana', abbr: 'MT' },
+    { name: 'Nebraska', abbr: 'NE' },
+    { name: 'Nevada', abbr: 'NV' },
+    { name: 'New Hampshire', abbr: 'NH' },
+    { name: 'New Jersey', abbr: 'NJ' },
+    { name: 'New Mexico', abbr: 'NM' },
+    { name: 'New York', abbr: 'NY' },
+    { name: 'North Carolina', abbr: 'NC' },
+    { name: 'North Dakota', abbr: 'ND' },
+    { name: 'Ohio', abbr: 'OH' },
+    { name: 'Oklahoma', abbr: 'OK' },
+    { name: 'Oregon', abbr: 'OR' },
+    { name: 'Pennsylvania', abbr: 'PA' },
+    { name: 'Rhode Island', abbr: 'RI' },
+    { name: 'South Carolina', abbr: 'SC' },
+    { name: 'South Dakota', abbr: 'SD' },
+    { name: 'Tennessee', abbr: 'TN' },
+    { name: 'Texas', abbr: 'TX' },
+    { name: 'Utah', abbr: 'UT' },
+    { name: 'Vermont', abbr: 'VT' },
+    { name: 'Virginia', abbr: 'VA' },
+    { name: 'Washington', abbr: 'WA' },
+    { name: 'West Virginia', abbr: 'WV' },
+    { name: 'Wisconsin', abbr: 'WI' },
+    { name: 'Wyoming', abbr: 'WY' }
   ];
-
 </script>
 
 <svelte:head>
@@ -46,64 +78,91 @@
           <div>
             <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
             <input
-              type="email" id="email" name="email" value={User.email}
-              class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+              type="email"
+              id="email"
+              name="email"
+              value={User.email}
+              class="focus:border-primary-500 focus:ring-primary-500 mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
             />
           </div>
           <div>
-            <label for="firstName" class="block text-sm font-medium text-gray-700">First Name</label>
+            <label for="firstName" class="block text-sm font-medium text-gray-700">First Name</label
+            >
             <input
-              type="text" id="firstName" name="firstName" value={User.firstName || ''}
-              class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+              type="text"
+              id="firstName"
+              name="firstName"
+              value={User.firstName || ''}
+              class="focus:border-primary-500 focus:ring-primary-500 mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
             />
           </div>
           <div>
             <label for="lastName" class="block text-sm font-medium text-gray-700">Last Name</label>
             <input
-              type="text" id="lastName" name="lastName" value={User.lastName || ''}
-              class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+              type="text"
+              id="lastName"
+              name="lastName"
+              value={User.lastName || ''}
+              class="focus:border-primary-500 focus:ring-primary-500 mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
             />
           </div>
           <div>
-            <label for="stateOfOrigin" class="block text-sm font-medium text-gray-700">State of Origin</label>
+            <label for="stateOfOrigin" class="block text-sm font-medium text-gray-700"
+              >State of Origin</label
+            >
             <select
-              id="stateOfOrigin" name="stateOfOrigin"
-              class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+              id="stateOfOrigin"
+              name="stateOfOrigin"
+              class="focus:border-primary-500 focus:ring-primary-500 mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
             >
               <option value="">Select a state</option>
               {#each usStates as state}
-                <option value={state.abbr} selected={User.stateOfOrigin === state.abbr}>{state.name}</option>
+                <option value={state.abbr} selected={User.stateOfOrigin === state.abbr}
+                  >{state.name}</option
+                >
               {/each}
             </select>
           </div>
           <div>
-            <label for="graduationYear" class="block text-sm font-medium text-gray-700">Graduation Year</label>
+            <label for="graduationYear" class="block text-sm font-medium text-gray-700"
+              >Graduation Year</label
+            >
             <select
-              id="graduationYear" name="graduationYear"
-              class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+              id="graduationYear"
+              name="graduationYear"
+              class="focus:border-primary-500 focus:ring-primary-500 mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
             >
               <option value="">Not set</option>
               {#each Array.from({ length: 7 }, (_, i) => new Date().getFullYear() + i) as year}
                 <option value={year} selected={User.graduationYear === year}>{year}</option>
               {/each}
-          </select>
-        </div>
-        <div>
-          <label for="academicLevel" class="block text-sm font-medium text-gray-700">Academic Level</label>
-          <select
-            id="academicLevel" name="academicLevel"
-            class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
-          >
-            <option value="">Not set</option>
-            <option value="undergraduate" selected={User.academicLevel === 'undergraduate'}>Undergraduate</option>
-            <option value="graduate" selected={User.academicLevel === 'graduate'}>Graduate</option>
-          </select>
-        </div>
-        <div>
-          <label for="isAdmin" class="block text-sm font-medium text-gray-700">Admin</label>
+            </select>
+          </div>
+          <div>
+            <label for="academicLevel" class="block text-sm font-medium text-gray-700"
+              >Academic Level</label
+            >
+            <select
+              id="academicLevel"
+              name="academicLevel"
+              class="focus:border-primary-500 focus:ring-primary-500 mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
+            >
+              <option value="">Not set</option>
+              <option value="undergraduate" selected={User.academicLevel === 'undergraduate'}
+                >Undergraduate</option
+              >
+              <option value="graduate" selected={User.academicLevel === 'graduate'}>Graduate</option
+              >
+            </select>
+          </div>
+          <div>
+            <label for="isAdmin" class="block text-sm font-medium text-gray-700">Admin</label>
             <input
-              type="text" id="isAdmin" name="isAdmin" value={User.isAdmin}
-              class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+              type="text"
+              id="isAdmin"
+              name="isAdmin"
+              value={User.isAdmin}
+              class="focus:border-primary-500 focus:ring-primary-500 mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
             />
           </div>
           {#if error}
@@ -112,7 +171,7 @@
           <div>
             <button
               type="submit"
-              class="flex w-full justify-center rounded-md border border-transparent bg-primary-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+              class="bg-primary-600 hover:bg-primary-700 focus:ring-primary-500 flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white shadow-sm focus:ring-2 focus:ring-offset-2 focus:outline-none"
             >
               Update user
             </button>
@@ -131,15 +190,19 @@
         {:else}
           <div class="space-y-3">
             {#each changeLog as entry}
-              <div class="flex items-start gap-3 rounded-lg border border-slate-100 bg-slate-50/50 p-3">
-                <div class="flex-1 min-w-0">
+              <div
+                class="flex items-start gap-3 rounded-lg border border-slate-100 bg-slate-50/50 p-3"
+              >
+                <div class="min-w-0 flex-1">
                   <p class="text-sm text-slate-700">
                     <span class="font-medium">{entry.field.replace(/_/g, ' ')}:</span>
                     <span class="text-slate-500">{entry.oldValue || '(none)'}</span>
-                    <span class="text-slate-400 mx-1">→</span>
+                    <span class="mx-1 text-slate-400">→</span>
                     <span class="text-slate-800">{entry.newValue}</span>
                   </p>
-                  <p class="mt-0.5 text-xs text-slate-400">{new Date(entry.changedAt).toLocaleString()}</p>
+                  <p class="mt-0.5 text-xs text-slate-400">
+                    {new Date(entry.changedAt).toLocaleString()}
+                  </p>
                 </div>
               </div>
             {/each}

@@ -211,7 +211,12 @@ const eventsData = [
 
 export async function insertEvents() {
   try {
-    const result = await db.insert(events).values(eventsData);
+    const values = eventsData.map(({ start, end, ...rest }) => ({
+      ...rest,
+      start: start.toISOString(),
+      end: end.toISOString()
+    }));
+    const result = await db.insert(events).values(values);
     console.log('Events inserted successfully:', result);
   } catch (error) {
     console.error('Error inserting events:', error);

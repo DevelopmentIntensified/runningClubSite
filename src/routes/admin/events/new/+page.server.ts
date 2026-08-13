@@ -18,8 +18,8 @@ export const actions: Actions = {
       return fail(400, { message: 'All fields are required' });
     }
 
-    let start2 = DateTime.fromISO(start.replace(" ", "T")).setZone('America/New_York');
-    let end2 = DateTime.fromISO(end.replace(" ", "T")).setZone('America/New_York');
+    let start2 = DateTime.fromISO(start.replace(' ', 'T')).setZone('America/New_York');
+    let end2 = DateTime.fromISO(end.replace(' ', 'T')).setZone('America/New_York');
 
     const newEvent = await createEvent({
       description: description,
@@ -31,7 +31,22 @@ export const actions: Actions = {
     });
 
     if (newEvent) {
-      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'create', targetType: 'event', targetId: newEvent.id, details: JSON.stringify({ created: { title, start: start2.toString(), end: end2.toString(), location, type, description } }) });
+      await logAdminAction({
+        adminId: parseInt(locals.user!.id),
+        action: 'create',
+        targetType: 'event',
+        targetId: newEvent.id,
+        details: JSON.stringify({
+          created: {
+            title,
+            start: start2.toString(),
+            end: end2.toString(),
+            location,
+            type,
+            description
+          }
+        })
+      });
       throw redirect(302, '/admin/events');
     } else {
       return fail(500, { message: 'Failed to create event' });

@@ -30,7 +30,7 @@ export const actions: Actions = {
     const title = formData.get('title') as string;
     const image = formData.get('image') as File;
     const imageUrl = formData.get('imageUrl') as string | null;
-    const currentImageUrl = formData.get('currentImageUrl') as string || '';
+    const currentImageUrl = (formData.get('currentImageUrl') as string) || '';
     const order = formData.get('order') as string;
 
     if (!title || !order) {
@@ -57,7 +57,10 @@ export const actions: Actions = {
       if (currentImageUrl) {
         await del(currentImageUrl, { token: BLOB_READ_WRITE_TOKEN }).catch((e) => console.log(e));
       }
-      const { url } = await put(image.name, image, { access: "public", token: BLOB_READ_WRITE_TOKEN });
+      const { url } = await put(image.name, image, {
+        access: 'public',
+        token: BLOB_READ_WRITE_TOKEN
+      });
       updateData.imageUrl = url;
     } else if (imageUrl) {
       updateData.imageUrl = imageUrl;
@@ -69,7 +72,13 @@ export const actions: Actions = {
       .where(eq(slideShowImages.id, parseInt(params.id)));
 
     const changes = objectDiff(existingSlide, updateData);
-    await logAdminAction({ adminId: parseInt(locals.user.id), action: 'update', targetType: 'slide', targetId: parseInt(params.id), details: JSON.stringify(changes) });
+    await logAdminAction({
+      adminId: parseInt(locals.user!.id),
+      action: 'update',
+      targetType: 'slide',
+      targetId: parseInt(params.id),
+      details: JSON.stringify(changes)
+    });
 
     throw redirect(303, '/admin/slideshow');
   }

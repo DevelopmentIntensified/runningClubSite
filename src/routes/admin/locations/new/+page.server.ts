@@ -30,7 +30,13 @@ export const actions: Actions = {
     });
 
     if (newLocation) {
-      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'create', targetType: 'location', targetId: newLocation.id, details: JSON.stringify({ created: { name, order: parseInt(order), description, link } }) });
+      await logAdminAction({
+        adminId: parseInt(locals.user!.id),
+        action: 'create',
+        targetType: 'location',
+        targetId: newLocation.id,
+        details: JSON.stringify({ created: { name, order: parseInt(order), description, link } })
+      });
       return redirect(302, '/admin/locations');
     } else {
       return fail(500, { message: 'Failed to create location' });

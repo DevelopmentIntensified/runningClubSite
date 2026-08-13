@@ -14,7 +14,7 @@ export const load: PageServerLoad = async ({ params }: { params: { id: string } 
 };
 
 export const actions: Actions = {
-  updateEvent: async ({ request, params, locals }: { request: Request; params: { id: string } }) => {
+  updateEvent: async ({ request, params, locals }) => {
     const formData = await request.formData();
     const title = formData.get('title') as string | null;
     const start = formData.get('start') as string | null;
@@ -35,12 +35,16 @@ export const actions: Actions = {
     if (location) updateData.location = location;
     if (type) updateData.type = type;
     if (formData.get('description')) updateData.description = formData.get('description') as string;
-    
+
     if (start) {
-      updateData.start = DateTime.fromISO(start.replace(" ", "T")).setZone('America/New_York').toString();
+      updateData.start = DateTime.fromISO(start.replace(' ', 'T'))
+        .setZone('America/New_York')
+        .toString();
     }
     if (end) {
-      updateData.end = DateTime.fromISO(end.replace(" ", "T")).setZone('America/New_York').toString();
+      updateData.end = DateTime.fromISO(end.replace(' ', 'T'))
+        .setZone('America/New_York')
+        .toString();
     }
 
     const existingEvent = await getEvent(parseInt(params.id));
@@ -49,7 +53,13 @@ export const actions: Actions = {
 
     if (updatedEvent) {
       const changes = objectDiff(existingEvent, updateData);
-      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'update', targetType: 'event', targetId: parseInt(params.id), details: JSON.stringify(changes) });
+      await logAdminAction({
+        adminId: parseInt(locals.user!.id),
+        action: 'update',
+        targetType: 'event',
+        targetId: parseInt(params.id),
+        details: JSON.stringify(changes)
+      });
       throw redirect(302, '/admin/events');
     } else {
       return fail(500, { message: 'Failed to update event' });

@@ -68,7 +68,9 @@ export const GET: RequestHandler = async function (event) {
 
   try {
     const { email } = payload;
-    const userResult = await db.execute(sql`SELECT id, email, first_name FROM "user" WHERE email = ${email}`);
+    const userResult = (await db.execute(
+      sql`SELECT id, email, first_name FROM "user" WHERE email = ${email}`
+    )) as { id: number; email: string; first_name: string | null }[];
 
     const targetRedirect = event.cookies.get('redirectUrl');
     const finalRedirect = targetRedirect ? decodeURIComponent(targetRedirect) : '/groupme';
@@ -76,8 +78,14 @@ export const GET: RequestHandler = async function (event) {
     const headers = new Headers();
 
     if (userResult.length === 0 || !userResult[0].first_name) {
-      headers.append('Set-Cookie', `pendingSignupEmail=${encodeURIComponent(email)}; Path=/; Max-Age=900; HttpOnly; SameSite=Lax`);
-      headers.append('Location', siteUrl + `/login/setup?redirectUrl=${encodeURIComponent(finalRedirect)}`);
+      headers.append(
+        'Set-Cookie',
+        `pendingSignupEmail=${encodeURIComponent(email)}; Path=/; Max-Age=900; HttpOnly; SameSite=Lax`
+      );
+      headers.append(
+        'Location',
+        siteUrl + `/login/setup?redirectUrl=${encodeURIComponent(finalRedirect)}`
+      );
     } else {
       await db.execute(sql`UPDATE "user" SET last_login = NOW() WHERE id = ${userResult[0].id}`);
       const session = await lucia.createSession(userResult[0].id.toString(), {});

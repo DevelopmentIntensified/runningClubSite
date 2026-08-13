@@ -21,7 +21,10 @@ export const actions: Actions = {
     }
 
     if (!privacyAccepted) {
-      return fail(400, { message: 'You must accept the Privacy Policy to sign up', error: 'privacy_required' });
+      return fail(400, {
+        message: 'You must accept the Privacy Policy to sign up',
+        error: 'privacy_required'
+      });
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -30,9 +33,15 @@ export const actions: Actions = {
     }
 
     try {
-      const existing = await db.select().from(alumniNewsletter).where(eq(alumniNewsletter.email, email));
+      const existing = await db
+        .select()
+        .from(alumniNewsletter)
+        .where(eq(alumniNewsletter.email, email));
       if (existing.length > 0) {
-        return fail(400, { message: 'This email is already signed up for the alumni newsletter', error: 'already_signed_up' });
+        return fail(400, {
+          message: 'This email is already signed up for the alumni newsletter',
+          error: 'already_signed_up'
+        });
       }
 
       await db.insert(alumniNewsletter).values({

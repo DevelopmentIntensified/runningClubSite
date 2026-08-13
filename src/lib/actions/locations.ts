@@ -3,7 +3,7 @@ import { leaders, locations, type Location } from '$lib/server/db/schema';
 import { count, eq } from 'drizzle-orm';
 
 export async function getLocationsCount() {
-  return await db.select({ count: count() }).from(locations)
+  return await db.select({ count: count() }).from(locations);
 }
 
 export async function getLocations() {

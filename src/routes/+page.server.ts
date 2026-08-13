@@ -9,9 +9,8 @@ export const load: PageServerLoad = async () => {
     return {
       id: image.id,
       alt: image.title,
-      image: image.imageUrl,
+      image: image.imageUrl
     };
-  })
+  });
   return { slides };
 };
-

@@ -8,7 +8,7 @@
   const slides = data.slides;
   let clickCount = $state(0);
   let showSuperSpeed = $state(false);
-  
+
   onMount(() => {
     const interval = setInterval(() => {
       currentSlide = (currentSlide + 1) % slides.length;
@@ -35,16 +35,16 @@
 </svelte:head>
 
 {#if showSuperSpeed}
-  <div class="fixed inset-0 z-50 flex items-center justify-center bg-primary-700/90">
+  <div class="bg-primary-700/90 fixed inset-0 z-50 flex items-center justify-center">
     <div class="text-center text-white">
-      <div class="text-6xl animate-pulse">🏃💨💨💨</div>
+      <div class="animate-pulse text-6xl">🏃💨💨💨</div>
       <h2 class="mt-4 text-3xl font-bold">SUPER SPEED UNLOCKED!</h2>
       <p class="mt-2">You clicked {clickCount} times! Just like our founding members!</p>
     </div>
   </div>
 {/if}
 
-<div 
+<div
   class="relative h-screen cursor-pointer"
   role="button"
   tabindex="0"
@@ -62,19 +62,19 @@
   {/each}
 
   <div
-    class="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-50 text-center text-white"
+    class="bg-opacity-50 absolute inset-0 flex flex-col items-center justify-center bg-black text-center text-white"
   >
     <h1 class="mb-4 text-5xl font-bold">Liberty Running Club</h1>
     <p class="mb-8 text-2xl">Running and Glorifying God through every step</p>
     <a
       href="/about"
-      class="rounded bg-primary-700 px-4 py-2 font-bold text-white transition duration-300 hover:bg-primary-800"
+      class="bg-primary-700 hover:bg-primary-800 rounded px-4 py-2 font-bold text-white transition duration-300"
     >
       Learn More
     </a>
     <a
       href={data.isLoggedIn ? '/groupme' : '/login'}
-      class="mt-3 rounded bg-secondary-700 px-4 py-2 font-bold text-white transition duration-300 hover:bg-secondary-800"
+      class="bg-secondary-700 hover:bg-secondary-800 mt-3 rounded px-4 py-2 font-bold text-white transition duration-300"
     >
       Join Us
     </a>

@@ -18,9 +18,12 @@ export const actions: Actions = {
     }
 
     let finalImageUrl: string | null = null;
-    
+
     if (imageFile && imageFile.size > 0) {
-      const { url } = await put(imageFile.name, imageFile, { access: "public", token: BLOB_READ_WRITE_TOKEN });
+      const { url } = await put(imageFile.name, imageFile, {
+        access: 'public',
+        token: BLOB_READ_WRITE_TOKEN
+      });
       finalImageUrl = url;
     } else if (imageUrl) {
       finalImageUrl = imageUrl;
@@ -35,9 +38,16 @@ export const actions: Actions = {
         title: title,
         imageUrl: finalImageUrl,
         content: content,
-        createdBy: locals.user?.id!
+        createdBy: parseInt(locals.user!.id)
       });
-      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'create', targetType: 'news', details: JSON.stringify({ created: { title, imageUrl: finalImageUrl, content, createdBy: locals.user?.id } }) });
+      await logAdminAction({
+        adminId: parseInt(locals.user!.id),
+        action: 'create',
+        targetType: 'news',
+        details: JSON.stringify({
+          created: { title, imageUrl: finalImageUrl, content, createdBy: locals.user?.id }
+        })
+      });
     } catch (error) {
       console.error('Error creating news item:', error);
       return fail(500, { message: 'Failed to create news item' });

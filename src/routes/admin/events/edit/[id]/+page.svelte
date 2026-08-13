@@ -10,8 +10,10 @@
   let error = '';
 
   function formatDateForInput(date: string): string {
-
-    return DateTime.fromISO(date.replace(" ", "T")).setZone('America/New_York').toString().slice(0, 16);
+    return DateTime.fromISO(date.replace(' ', 'T'))
+      .setZone('America/New_York')
+      .toString()
+      .slice(0, 16);
   }
 </script>
 
@@ -34,7 +36,7 @@
               id="title"
               name="title"
               value={event.title}
-              class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+              class="focus:border-primary-500 focus:ring-primary-500 mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
             />
           </div>
           <div>
@@ -46,7 +48,7 @@
               id="start"
               name="start"
               value={formatDateForInput(event.start)}
-              class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+              class="focus:border-primary-500 focus:ring-primary-500 mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
             />
           </div>
           <div>
@@ -58,7 +60,7 @@
               id="end"
               name="end"
               value={formatDateForInput(event.end)}
-              class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+              class="focus:border-primary-500 focus:ring-primary-500 mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
             />
           </div>
           <div>
@@ -68,17 +70,19 @@
               id="location"
               name="location"
               value={event.location}
-              class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+              class="focus:border-primary-500 focus:ring-primary-500 mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
             />
           </div>
           <div>
-            <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+            <label for="description" class="block text-sm font-medium text-gray-700"
+              >Description</label
+            >
             <input
               type="text"
               id="description"
               name="description"
               value={event.description || ''}
-              class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+              class="focus:border-primary-500 focus:ring-primary-500 mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
             />
           </div>
           <div>
@@ -87,7 +91,7 @@
               id="type"
               name="type"
               value={event.type}
-              class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+              class="focus:border-primary-500 focus:ring-primary-500 mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
             >
               {#each typeOptions() as opt}
                 <option value={opt.value}>{opt.label}</option>
@@ -100,12 +104,17 @@
           <div>
             <button
               type="submit"
-              class="flex w-full justify-center rounded-md border border-transparent bg-primary-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+              class="bg-primary-600 hover:bg-primary-700 focus:ring-primary-500 flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white shadow-sm focus:ring-2 focus:ring-offset-2 focus:outline-none"
             >
               Update Event
             </button>
           </div>
-          <input type="hidden" class="hidden h-0 m-0 p-0" name="offset" value={new Date().getTimezoneOffset()/60} />
+          <input
+            type="hidden"
+            class="m-0 hidden h-0 p-0"
+            name="offset"
+            value={new Date().getTimezoneOffset() / 60}
+          />
         </form>
       </div>
     </div>

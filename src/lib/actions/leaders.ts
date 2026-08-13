@@ -4,12 +4,11 @@ import { count, eq } from 'drizzle-orm';
 import { createAlumnus } from '$lib/actions/alumni';
 
 export async function getLeadersCount() {
-  return await db.select({ count: count() }).from(leaders)
+  return await db.select({ count: count() }).from(leaders);
 }
 
 export async function getLeaders() {
-  return await db.select().from(leaders)
-    .orderBy(leaders.order);
+  return await db.select().from(leaders).orderBy(leaders.order);
 }
 
 export async function getLeader(id: number) {

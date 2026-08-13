@@ -16,11 +16,7 @@
 <div class="container mx-auto px-4 py-8">
   <div class="mb-12 grid gap-12 md:grid-cols-2">
     <div class="overflow-hidden rounded-2xl">
-      <img
-        src={data.image.imageUrl}
-        alt={data.image.alt}
-        class="h-full w-full object-cover"
-      />
+      <img src={data.image.imageUrl} alt={data.image.alt} class="h-full w-full object-cover" />
     </div>
     <div>
       <h2 class="mb-4 text-2xl font-semibold">Our Mission</h2>
@@ -55,8 +51,8 @@
         >
         connects running clubs nationwide through friendly competitions. NIRCA hosts a full cross-country
         season, a Cross Country Championship Series, the Road and Track Nationals, and all-club conferences.
-        Athletes may participate in as many or as few meets as they wish. Race fees are paid on race
-        day and refunded at the end of the season. If you wish to participate in NIRCA and have not already
+        Athletes may participate in as many or as few meets as they wish. Race fees are paid on race day
+        and refunded at the end of the season. If you wish to participate in NIRCA and have not already
         been onboarded, please fill out
         <a class="text-blue-500" href="https://forms.gle/39mTeUgKqwdDUCDW9">this form</a>
       </p>
@@ -67,7 +63,7 @@
           href="https://instagram.com/libertyrunningclub"
           target="_blank"
           rel="noopener noreferrer"
-          class="text-gray-800 transition duration-300 hover:text-primary-600"
+          class="hover:text-primary-600 text-gray-800 transition duration-300"
         >
           <InstagramIcon class="h-16 w-16" />
         </a>
@@ -75,7 +71,7 @@
           href="https://m.facebook.com/profile.php?id=61557970186364&name=xhp_nt__fb__action__open_user"
           target="_blank"
           rel="noopener noreferrer"
-          class="text-gray-800 transition duration-300 hover:text-primary-600"
+          class="hover:text-primary-600 text-gray-800 transition duration-300"
         >
           <FacebookIcon class="h-16 w-16" />
         </a>
@@ -83,7 +79,7 @@
           href="https://www.linkedin.com/company/liberty-running-club"
           target="_blank"
           rel="noopener noreferrer"
-          class="text-gray-800 transition duration-300 hover:text-primary-600"
+          class="hover:text-primary-600 text-gray-800 transition duration-300"
         >
           <LinkedInIcon class="h-16 w-16" />
         </a>
@@ -106,7 +102,7 @@
         <img src={leader.imageUrl} alt={leader.name} class="h-72 w-full object-cover" />
         <div class="p-6">
           <h3 class="mb-2 text-xl font-semibold">{leader.name}</h3>
-          <p class="mb-2 text-primary-600">{leader.position}</p>
+          <p class="text-primary-600 mb-2">{leader.position}</p>
           <p class="text-gray-700">{leader.bio}</p>
         </div>
       </div>

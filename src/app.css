@@ -1,3 +1,30 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import 'tailwindcss';
+@plugin '@tailwindcss/forms';
+
+@theme {
+  --color-primary: #b72025;
+  --color-primary-50: #fef2f2;
+  --color-primary-100: #fde3e4;
+  --color-primary-200: #fdcbcd;
+  --color-primary-300: #faa7aa;
+  --color-primary-400: #f57478;
+  --color-primary-500: #eb484d;
+  --color-primary-600: #d82a30;
+  --color-primary-700: #b72025;
+  --color-primary-800: #961e22;
+  --color-primary-900: #7d1f22;
+  --color-primary-950: #440b0d;
+
+  --color-secondary-50: #ecf9ff;
+  --color-secondary-100: #d5f0ff;
+  --color-secondary-200: #b4e7ff;
+  --color-secondary-300: #80d9ff;
+  --color-secondary-400: #45c1ff;
+  --color-secondary-500: #1aa0ff;
+  --color-secondary-600: #0280ff;
+  --color-secondary-700: #0068f9;
+  --color-secondary-800: #0453c9;
+  --color-secondary-900: #0b499d;
+  --color-secondary-950: #0a254e;
+  --color-secondary: #0a254e;
+}

@@ -30,11 +30,14 @@ test.describe('Admin Pages - Authentication & Authorization', () => {
 
   test.describe('Image Upload API', () => {
     test('returns 401 for unauthenticated requests', async ({ page }) => {
-      const response = await page.request.post('https://test.libertyrunningclub.com/api/blob/upload', {
-        json: {
-          blob: { size: 1000, type: 'image/jpeg', name: 'test.jpg' }
+      const response = await page.request.post(
+        'https://test.libertyrunningclub.com/api/blob/upload',
+        {
+          data: {
+            blob: { size: 1000, type: 'image/jpeg', name: 'test.jpg' }
+          }
         }
-      });
+      );
       expect(response.status()).toBeGreaterThanOrEqual(400);
     });
   });

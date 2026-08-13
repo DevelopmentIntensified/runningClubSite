@@ -67,10 +67,9 @@
     img.onload = () => {
       const actual = img.width / img.height;
       const ratio = actual / idealAspect;
-      if (ratio < (1 - aspectTolerance) || ratio > (1 + aspectTolerance)) {
-        const idealRatio = idealAspect < 1
-          ? `1:${Math.round(1 / idealAspect)}`
-          : `${Math.round(idealAspect)}:1`;
+      if (ratio < 1 - aspectTolerance || ratio > 1 + aspectTolerance) {
+        const idealRatio =
+          idealAspect < 1 ? `1:${Math.round(1 / idealAspect)}` : `${Math.round(idealAspect)}:1`;
         aspectWarning = `Ideal aspect ratio is ${idealRatio}. Image may appear cropped.`;
       }
     };
@@ -97,7 +96,7 @@
 
 <div>
   <label for={name} class="block text-sm font-medium text-gray-700">{label}</label>
-  
+
   <input
     bind:this={fileInput}
     type="file"
@@ -107,18 +106,14 @@
     class="hidden"
     onchange={handleInputChange}
   />
-  
+
   {#if previewUrl}
-    <div class="mt-2 relative inline-block">
-      <img 
-        src={previewUrl} 
-        alt="Preview" 
-        class="max-h-48 rounded-md border border-gray-300"
-      />
+    <div class="relative mt-2 inline-block">
+      <img src={previewUrl} alt="Preview" class="max-h-48 rounded-md border border-gray-300" />
       <button
         type="button"
         onclick={handleClear}
-        class="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1 text-xs hover:bg-red-600"
+        class="absolute top-0 right-0 rounded-full bg-red-500 p-1 text-xs text-white hover:bg-red-600"
       >
         ✕
       </button>
@@ -126,13 +121,13 @@
     {#if aspectWarning}
       <p class="mt-2 text-sm text-amber-600">⚠ {aspectWarning}</p>
     {/if}
-    <input type="hidden" name="imageUrl" value={value} />
+    <input type="hidden" name="imageUrl" {value} />
   {/if}
-  
+
   {#if !previewUrl}
     <div
       bind:this={dropArea}
-      class="mt-1 border-2 border-dashed rounded-md p-4 text-center cursor-pointer transition-colors"
+      class="mt-1 cursor-pointer rounded-md border-2 border-dashed p-4 text-center transition-colors"
       class:border-gray-300={!dragging}
       class:bg-gray-50={!dragging}
       class:border-primary-500={dragging}

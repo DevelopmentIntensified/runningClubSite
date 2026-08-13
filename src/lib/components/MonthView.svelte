@@ -37,7 +37,8 @@
   {#each legendItems() as item}
     <span
       class="inline-flex items-center rounded-full {item.chipBg} px-2.5 py-1 font-medium {item.chipText} ring-1 {item.chipRing}"
-    >{item.label}</span>
+      >{item.label}</span
+    >
   {/each}
 </div>
 
@@ -45,7 +46,7 @@
   <div class="grid min-w-[320px] grid-cols-7 gap-px bg-slate-200">
     {#each ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] as day}
       <div
-        class="bg-slate-100 px-1 py-2 text-center text-xs font-semibold uppercase tracking-wide text-slate-600 sm:px-2 sm:text-sm"
+        class="bg-slate-100 px-1 py-2 text-center text-xs font-semibold tracking-wide text-slate-600 uppercase sm:px-2 sm:text-sm"
       >
         {day}
       </div>
@@ -68,7 +69,7 @@
           {#if isAdmin}
             <a
               href="/admin/events/new?date={date.toFormat('yyyy-MM-dd')}"
-              class="rounded p-0.5 text-primary-600 opacity-0 transition-opacity hover:bg-primary-50 group-hover:opacity-100"
+              class="text-primary-600 hover:bg-primary-50 rounded p-0.5 opacity-0 transition-opacity group-hover:opacity-100"
               title="Add event on this day"
             >
               <svg
@@ -93,7 +94,7 @@
                 <div
                   onmouseenter={(e) => handleEventHover(event, e.currentTarget as HTMLElement)}
                   onmouseleave={handleEventLeave}
-                  class="truncate rounded-md px-1.5 py-0.5 text-[10px] font-medium ring-1 sm:text-xs cursor-pointer hover:opacity-80 {chipClass(
+                  class="cursor-pointer truncate rounded-md px-1.5 py-0.5 text-[10px] font-medium ring-1 hover:opacity-80 sm:text-xs {chipClass(
                     event.type
                   )}"
                 >
@@ -163,21 +164,25 @@
   <div
     class="fixed z-50 rounded-lg border border-slate-200 bg-white p-4 shadow-xl"
     style="left: {rect.left}px; top: {rect.bottom + 8}px; min-width: {Math.max(rect.width, 200)}px;"
-    onmouseenter={() => hoveredEvent = hoveredEvent}
+    onmouseenter={() => (hoveredEvent = hoveredEvent)}
     onmouseleave={handleEventLeave}
     role="tooltip"
   >
     <a
-      href={isAdmin ? `/admin/events/edit/${hoveredEvent.id}` : `/schedule/event/${hoveredEvent.id}`}
+      href={isAdmin
+        ? `/admin/events/edit/${hoveredEvent.id}`
+        : `/schedule/event/${hoveredEvent.id}`}
       class="block"
     >
-      <h4 class="mb-2 font-semibold text-slate-900 hover:text-primary-600">{hoveredEvent.title}</h4>
+      <h4 class="hover:text-primary-600 mb-2 font-semibold text-slate-900">{hoveredEvent.title}</h4>
     </a>
     <p class="mb-1 text-sm text-slate-600">
       {#if hoveredEvent.start.hasSame(hoveredEvent.end, 'day')}
         {hoveredEvent.start.toLocaleString(DateTime.DATETIME_FULL)}
       {:else}
-        {hoveredEvent.start.toLocaleString(DateTime.DATE_FULL)} - {hoveredEvent.end.toLocaleString(DateTime.DATE_FULL)}
+        {hoveredEvent.start.toLocaleString(DateTime.DATE_FULL)} - {hoveredEvent.end.toLocaleString(
+          DateTime.DATE_FULL
+        )}
       {/if}
     </p>
     {#if hoveredEvent.location}

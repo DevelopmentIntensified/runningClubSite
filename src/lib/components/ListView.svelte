@@ -31,8 +31,8 @@
   {#each filteredEvents as event}
     <div
       class="relative"
-      onmouseenter={() => hoveredEvent = event.id}
-      onmouseleave={() => hoveredEvent = null}
+      onmouseenter={() => (hoveredEvent = event.id)}
+      onmouseleave={() => (hoveredEvent = null)}
       role="group"
     >
       <a
@@ -40,7 +40,7 @@
         class="block"
       >
         <div
-          class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition-shadow hover:border-primary-200 hover:shadow-md"
+          class="hover:border-primary-200 rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md"
         >
           <div class="mb-2 flex flex-wrap items-start justify-between gap-2">
             <h3 class="text-lg font-semibold text-slate-900">{event.title}</h3>
@@ -55,9 +55,7 @@
             <p class="mb-3 text-slate-700">{event.description}</p>
           {/if}
           <div class="flex flex-wrap gap-1.5">
-            <span
-              class="rounded-md px-2 py-0.5 text-xs font-medium ring-1 {chipClass(event.type)}"
-            >
+            <span class="rounded-md px-2 py-0.5 text-xs font-medium ring-1 {chipClass(event.type)}">
               {event.type}
             </span>
           </div>
@@ -65,10 +63,10 @@
       </a>
 
       {#if hoveredEvent === event.id}
-        <div 
-          class="absolute left-0 right-0 top-full z-10 mt-2 rounded-lg border border-slate-200 bg-white p-4 shadow-lg"
-          onmouseenter={() => hoveredEvent = event.id}
-          onmouseleave={() => hoveredEvent = null}
+        <div
+          class="absolute top-full right-0 left-0 z-10 mt-2 rounded-lg border border-slate-200 bg-white p-4 shadow-lg"
+          onmouseenter={() => (hoveredEvent = event.id)}
+          onmouseleave={() => (hoveredEvent = null)}
           role="tooltip"
         >
           <h4 class="mb-2 font-semibold text-slate-900">{event.title}</h4>

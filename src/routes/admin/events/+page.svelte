@@ -59,10 +59,10 @@
         type="text"
         bind:value={searchTerm}
         placeholder="Search by title, location, or description"
-        class="w-full rounded-lg border border-slate-200 bg-white px-4 py-2.5 pr-10 text-sm text-slate-700 placeholder-slate-400 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20"
+        class="focus:border-primary-500 focus:ring-primary-500/20 w-full rounded-lg border border-slate-200 bg-white px-4 py-2.5 pr-10 text-sm text-slate-700 placeholder-slate-400 shadow-sm focus:ring-2 focus:outline-none"
       />
       <svg
-        class="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400"
+        class="absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 text-slate-400"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
@@ -78,7 +78,7 @@
 
     <a
       href="/admin/events/new"
-      class="inline-flex items-center justify-center gap-2 rounded-lg bg-primary-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:bg-primary-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+      class="bg-primary-600 hover:bg-primary-700 focus:ring-primary-500 inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:shadow-md focus:ring-2 focus:ring-offset-2 focus:outline-none"
     >
       <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -107,23 +107,23 @@
         <thead>
           <tr class="border-b border-slate-200 bg-slate-50/50">
             <th
-              class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500"
+              class="px-6 py-3.5 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase"
               >Title</th
             >
             <th
-              class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500"
+              class="px-6 py-3.5 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase"
               >Type</th
             >
             <th
-              class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500"
+              class="px-6 py-3.5 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase"
               >Date</th
             >
             <th
-              class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500"
+              class="px-6 py-3.5 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase"
               >Location</th
             >
             <th
-              class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500"
+              class="px-6 py-3.5 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase"
               >Actions</th
             >
           </tr>
@@ -131,25 +131,27 @@
         <tbody class="divide-y divide-slate-100">
           {#each filteredEvents as event (event.id)}
             <tr class="transition-colors hover:bg-slate-50/50">
-              <td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-slate-700"
+              <td class="px-6 py-4 text-sm font-medium whitespace-nowrap text-slate-700"
                 >{event.title}</td
               >
-              <td class="whitespace-nowrap px-6 py-4">
+              <td class="px-6 py-4 whitespace-nowrap">
                 <span
-                  class="inline-block rounded-md px-2 py-0.5 text-xs font-medium ring-1 {chipClass(event.type)}"
+                  class="inline-block rounded-md px-2 py-0.5 text-xs font-medium ring-1 {chipClass(
+                    event.type
+                  )}"
                 >
                   {event.type}
                 </span>
               </td>
-              <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-600"
+              <td class="px-6 py-4 text-sm whitespace-nowrap text-slate-600"
                 >{new Date(event.date).toLocaleDateString()}</td
               >
-              <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-600">{event.location}</td>
-              <td class="whitespace-nowrap px-6 py-4 text-sm">
+              <td class="px-6 py-4 text-sm whitespace-nowrap text-slate-600">{event.location}</td>
+              <td class="px-6 py-4 text-sm whitespace-nowrap">
                 <div class="flex items-center gap-3">
                   <a
                     href="/admin/events/edit/{event.id}"
-                    class="text-xs font-medium text-primary-600 hover:text-primary-800">Edit</a
+                    class="text-primary-600 hover:text-primary-800 text-xs font-medium">Edit</a
                   >
                   <span class="text-slate-300">|</span>
                   <form action="?/deleteEvent" method="POST" use:enhance class="inline">

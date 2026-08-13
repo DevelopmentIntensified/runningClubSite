@@ -11,16 +11,26 @@
 <div class="container mx-auto px-4 py-12">
   <h1 class="mb-8 text-center text-4xl font-bold">Our Alumni</h1>
   <h3 class="text-center text-xl">
-    Are you one of our alumni? Don't see yourself here? Feel free to <a class="text-primary-700 hover:text-primary-800" href="/contact1">Contact us</a> and ask us to add you. You should also join our
-    <a href="https://alumnicommunity.liberty.edu/groups/92/feed" class="text-primary-700 hover:text-primary-800">Alumni Group</a>. We look forward to seeing you there!
+    Are you one of our alumni? Don't see yourself here? Feel free to <a
+      class="text-primary-700 hover:text-primary-800"
+      href="/contact1">Contact us</a
+    >
+    and ask us to add you. You should also join our
+    <a
+      href="https://alumnicommunity.liberty.edu/groups/92/feed"
+      class="text-primary-700 hover:text-primary-800">Alumni Group</a
+    >. We look forward to seeing you there!
   </h3>
   <p class="mt-4 text-center">
-    <a href="/alumni-newsletter" class="inline-block rounded-lg bg-primary-600 px-6 py-3 text-white font-medium hover:bg-primary-700">
+    <a
+      href="/alumni-newsletter"
+      class="bg-primary-600 hover:bg-primary-700 inline-block rounded-lg px-6 py-3 font-medium text-white"
+    >
       Sign Up for Alumni Newsletter
     </a>
   </p>
 
-  <div class="grid gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3">
+  <div class="mt-8 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
     {#each data.alumni as alumnus}
       <div class="overflow-hidden rounded-lg bg-white shadow-lg">
         {#if alumnus.imageUrl}

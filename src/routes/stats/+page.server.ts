@@ -21,7 +21,7 @@ export const load: PageServerLoad = async () => {
     if (row.state) {
       const count = parseInt(row.total as string);
       totalMembers += count;
-      data[row.state.toUpperCase()] = {
+      data[String(row.state).toUpperCase()] = {
         total: count,
         firstYear: parseInt(row.first_year as string)
       };

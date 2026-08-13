@@ -9,8 +9,8 @@ const db = drizzle(client);
 const events = pgTable('events', {
   id: serial('id').primaryKey(),
   title: text('title').notNull(),
-  start: timestamp('start', { withTimezone: true, mode: "string" }).notNull(),
-  end: timestamp('end', { withTimezone: true, mode: "string" }).notNull(),
+  start: timestamp('start', { withTimezone: true, mode: 'string' }).notNull(),
+  end: timestamp('end', { withTimezone: true, mode: 'string' }).notNull(),
   description: text('description'),
   location: text('location'),
   created_at: timestamp('created_at').defaultNow().notNull(),
@@ -49,7 +49,8 @@ function isAfterDSTEnd(date: Date): boolean {
 }
 
 async function insertEventIfNotExists(eventData: EventData) {
-  const existingEvent = await db.select()
+  const existingEvent = await db
+    .select()
     .from(events)
     .where(
       and(
@@ -104,7 +105,8 @@ function createPractice(date: Date, day: 'tuesday' | 'thursday' | 'saturday'): E
         end: formatDate(date, 11, 0),
         location: 'toBeDetermined',
         type: 'Practice',
-        description: 'Saturday long run. We will have lunch at the Reber Thomas dining hall afterwards.'
+        description:
+          'Saturday long run. We will have lunch at the Reber Thomas dining hall afterwards.'
       };
   }
 }
@@ -136,7 +138,10 @@ export async function insertSemesterPractices() {
       end: `${semester.breakEnd.toISOString().split('T')[0]} 23:59:00`,
       location: 'N/A',
       type: 'Break',
-      description: semester.name === 'Fall 2026' ? 'No practice - Thanksgiving Break' : 'No practice - Spring Break'
+      description:
+        semester.name === 'Fall 2026'
+          ? 'No practice - Thanksgiving Break'
+          : 'No practice - Spring Break'
     });
 
     const current = new Date(semester.firstDate);
@@ -154,7 +159,11 @@ export async function insertSemesterPractices() {
       const dayAfterBreak = new Date(semester.breakEnd);
       dayAfterBreak.setDate(dayAfterBreak.getDate() + 1);
 
-      if (dayOfWeek === 6 && (current.getTime() === dayBeforeBreak.getTime() || current.getTime() === dayAfterBreak.getTime())) {
+      if (
+        dayOfWeek === 6 &&
+        (current.getTime() === dayBeforeBreak.getTime() ||
+          current.getTime() === dayAfterBreak.getTime())
+      ) {
         current.setDate(current.getDate() + 1);
         continue;
       }
@@ -176,4 +185,4 @@ export async function insertSemesterPractices() {
 
 await insertSemesterPractices()
   .then(() => console.log('Done!'))
-  .catch(error => console.error('Error:', error));
+  .catch((error) => console.error('Error:', error));

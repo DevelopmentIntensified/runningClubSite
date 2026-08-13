@@ -6,11 +6,12 @@ export const handle: Handle = async ({ event, resolve }) => {
   if (!sessionId) {
     event.locals.user = null;
     event.locals.session = null;
-    if (event.url.pathname.includes('/admin') 
-      || event.url.pathname.includes('/groupme') 
-      || event.url.pathname.includes('/trainingplan')
-      || event.url.pathname.includes('/season-photos')
-      || event.url.pathname.includes('/forms')
+    if (
+      event.url.pathname.includes('/admin') ||
+      event.url.pathname.includes('/groupme') ||
+      event.url.pathname.includes('/trainingplan') ||
+      event.url.pathname.includes('/season-photos') ||
+      event.url.pathname.includes('/forms')
     ) {
       const redirectUrl = event.url.pathname + event.url.search;
       throw redirect(302, `/login?redirectUrl=${encodeURIComponent(redirectUrl)}`);
@@ -34,11 +35,12 @@ export const handle: Handle = async ({ event, resolve }) => {
       path: '.',
       ...sessionCookie.attributes
     });
-    if (event.url.pathname.includes('/admin') 
-      || event.url.pathname.includes('/groupme') 
-      || event.url.pathname.includes('/trainingplan')
-      || event.url.pathname.includes('/season-photos')
-      || event.url.pathname.includes('/forms')
+    if (
+      event.url.pathname.includes('/admin') ||
+      event.url.pathname.includes('/groupme') ||
+      event.url.pathname.includes('/trainingplan') ||
+      event.url.pathname.includes('/season-photos') ||
+      event.url.pathname.includes('/forms')
     ) {
       const redirectUrl = event.url.pathname + event.url.search;
       throw redirect(302, `/login?redirectUrl=${encodeURIComponent(redirectUrl)}`);

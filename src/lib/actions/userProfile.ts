@@ -5,12 +5,18 @@ import { objectDiff } from '$lib/utils/objectDiff';
 
 export async function updateUserProfile(
   userId: number,
-  updates: { firstName?: string; lastName?: string; stateOfOrigin?: string; graduationYear?: number; academicLevel?: string },
+  updates: {
+    firstName?: string;
+    lastName?: string;
+    stateOfOrigin?: string;
+    graduationYear?: number;
+    academicLevel?: string;
+  },
   options?: { loggedByAdmin?: boolean }
 ) {
-  const result = await db.execute(
+  const result = (await db.execute(
     sql`SELECT first_name, last_name, state_of_origin, academic_level, graduation_year FROM "user" WHERE id = ${userId}`
-  ) as any[];
+  )) as any[];
 
   const current = result[0] || {};
 

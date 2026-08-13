@@ -18,10 +18,7 @@
 </script>
 
 <div class="flex min-h-screen flex-col">
-  <Navbar
-    isAdmin={!!data.user?.isAdmin}
-    isLoggedIn={data.isLoggedIn}
-  />
+  <Navbar isAdmin={!!data.user?.isAdmin} isLoggedIn={data.isLoggedIn} />
   {#key pathname}
     <main class="flex-grow" in:fade={{ duration: 300, delay: 200 }} out:fade={{ duration: 100 }}>
       <slot />
@@ -32,7 +29,8 @@
 <footer class="bg-gray-100 py-6 text-center text-sm text-slate-600">
   <p class="mb-2">&copy; {new Date().getFullYear()} Liberty Running Club. All rights reserved.</p>
   <p>
-    <a href="/privacy" class="font-medium text-primary-600 hover:text-primary-800">Privacy Policy</a>
+    <a href="/privacy" class="text-primary-600 hover:text-primary-800 font-medium">Privacy Policy</a
+    >
   </p>
 </footer>
 

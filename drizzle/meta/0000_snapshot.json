@@ -210,9 +210,7 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
         "codes_code_unique": {
-          "columns": [
-            "code"
-          ],
+          "columns": ["code"],
           "nullsNotDistinct": false,
           "name": "codes_code_unique"
         }
@@ -267,12 +265,8 @@
           "tableFrom": "news",
           "tableTo": "user",
           "schemaTo": "public",
-          "columnsFrom": [
-            "created_by"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["created_by"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -349,9 +343,7 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
         "user_email_unique": {
-          "columns": [
-            "email"
-          ],
+          "columns": ["email"],
           "nullsNotDistinct": false,
           "name": "user_email_unique"
         }
@@ -387,12 +379,8 @@
           "tableFrom": "session",
           "tableTo": "user",
           "schemaTo": "public",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -650,12 +638,8 @@
           "tableFrom": "forms",
           "tableTo": "user",
           "schemaTo": "public",
-          "columnsFrom": [
-            "created_by"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["created_by"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }

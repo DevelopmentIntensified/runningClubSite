@@ -10,22 +10,31 @@ export const POST = async (event: RequestEvent) => {
   const { email } = await event.request.json();
 
   if (!email) {
-    return new Response(JSON.stringify({ success: false, error: 'Email is required' }), { status: 400 });
+    return new Response(JSON.stringify({ success: false, error: 'Email is required' }), {
+      status: 400
+    });
   }
 
   const emailRegex = /^[a-zA-Z\d]+@liberty\.edu$/;
   if (!emailRegex.test(email)) {
-    return new Response(JSON.stringify({ success: false, error: 'Invalid email' }), { status: 400 });
+    return new Response(JSON.stringify({ success: false, error: 'Invalid email' }), {
+      status: 400
+    });
   }
 
   const result = await db.execute(sql`SELECT id FROM "user" WHERE email = ${email}`);
   if (result.length === 0) {
-    return new Response(JSON.stringify({ success: false, error: 'No account found with this email.' }), { status: 400 });
+    return new Response(
+      JSON.stringify({ success: false, error: 'No account found with this email.' }),
+      { status: 400 }
+    );
   }
 
   const nums = '0123456789';
   const random: RandomReader = {
-    read(bytes) { crypto.getRandomValues(bytes); }
+    read(bytes) {
+      crypto.getRandomValues(bytes as Uint8Array<ArrayBuffer>);
+    }
   };
   const code = generateRandomString(random, nums, 8);
 
@@ -46,8 +55,16 @@ export const POST = async (event: RequestEvent) => {
 <p style="font-size:14px;color:#52525b;">This code expires in 15 minutes. If you did not request this, you can ignore it.</p>
 </body></html>`;
 
-  await db.insert(codes).values([{ code, expiresAt: new Date(Date.now() + 15 * 60 * 1000), email }]);
-  await sendEmail({ to: email, from: CLUBEMAIL, subject: 'Your Liberty Running Club password reset code', text: plainText, html: htmlBody });
+  await db
+    .insert(codes)
+    .values([{ code, expiresAt: new Date(Date.now() + 15 * 60 * 1000), email }]);
+  await sendEmail({
+    to: email,
+    from: CLUBEMAIL,
+    subject: 'Your Liberty Running Club password reset code',
+    text: plainText,
+    html: htmlBody
+  });
 
   return new Response(JSON.stringify({ success: true }), { status: 200 });
 };

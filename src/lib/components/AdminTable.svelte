@@ -32,13 +32,13 @@
     defaultSort?: (a: T, b: T) => number;
   }
 
-  let { 
-    title, 
-    data, 
-    columns, 
-    searchPlaceholder = 'Search...', 
+  let {
+    title,
+    data,
+    columns,
+    searchPlaceholder = 'Search...',
     searchKeys = [],
-    addHref, 
+    addHref,
     addLabel = 'Add New',
     defaultSort
   }: Props<any> = $props();
@@ -49,8 +49,8 @@
 
   function handleSearch() {
     if (!searchKeys.length || !searchTerm) return data;
-    return data.filter((row: any) => 
-      searchKeys.some(key => {
+    return data.filter((row: any) =>
+      searchKeys.some((key) => {
         const value = row[key];
         return value && String(value).toLowerCase().includes(searchTerm.toLowerCase());
       })
@@ -68,16 +68,16 @@
 
   let filteredData = $derived.by(() => {
     let result = [...data];
-    
+
     if (searchTerm && searchKeys.length) {
-      result = result.filter((row: any) => 
-        searchKeys.some(key => {
+      result = result.filter((row: any) =>
+        searchKeys.some((key) => {
           const value = row[key];
           return value && String(value).toLowerCase().includes(searchTerm.toLowerCase());
         })
       );
     }
-    
+
     if (sortKey) {
       result.sort((a: any, b: any) => {
         const aVal = a[sortKey];
@@ -89,16 +89,16 @@
     } else if (defaultSort) {
       result.sort(defaultSort);
     }
-    
+
     return result;
   });
 </script>
 
-<div class="rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+<div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
   <div class="border-b border-slate-200 bg-slate-50/50 px-6 py-4">
     <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
       <h2 class="text-xl font-semibold text-slate-800">{title}</h2>
-      
+
       <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
         {#if searchKeys.length > 0}
           <div class="relative">
@@ -106,21 +106,36 @@
               type="text"
               bind:value={searchTerm}
               placeholder={searchPlaceholder}
-              class="w-full rounded-lg border border-slate-200 bg-white px-4 py-2.5 pr-10 text-sm text-slate-700 placeholder-slate-400 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20 sm:w-64"
+              class="focus:border-primary-500 focus:ring-primary-500/20 w-full rounded-lg border border-slate-200 bg-white px-4 py-2.5 pr-10 text-sm text-slate-700 placeholder-slate-400 shadow-sm focus:ring-2 focus:outline-none sm:w-64"
             />
-            <svg class="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            <svg
+              class="absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 text-slate-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
             </svg>
           </div>
         {/if}
-        
+
         {#if addHref}
           <a
             href={addHref}
-            class="inline-flex items-center justify-center gap-2 rounded-lg bg-primary-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:bg-primary-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+            class="bg-primary-600 hover:bg-primary-700 focus:ring-primary-500 inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:shadow-md focus:ring-2 focus:ring-offset-2 focus:outline-none"
           >
             <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 4v16m8-8H4"
+              />
             </svg>
             {addLabel}
           </a>
@@ -132,7 +147,12 @@
   {#if filteredData.length === 0}
     <div class="flex flex-col items-center justify-center py-16 text-center">
       <svg class="h-12 w-12 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1.5"
+          d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+        />
       </svg>
       <p class="mt-4 text-sm text-slate-500">No items found</p>
     </div>
@@ -142,7 +162,9 @@
         <thead>
           <tr class="border-b border-slate-200 bg-slate-50/50">
             {#each columns as column}
-              <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+              <th
+                class="px-6 py-3.5 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase"
+              >
                 {column.label}
               </th>
             {/each}
@@ -150,15 +172,21 @@
         </thead>
         <tbody class="divide-y divide-slate-100">
           {#each filteredData as row (row.id)}
-            <tr class="hover:bg-slate-50/50 transition-colors">
+            <tr class="transition-colors hover:bg-slate-50/50">
               {#each columns as column}
                 {@const value = row[column.key as keyof typeof row]}
-                <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-600">
+                <td class="px-6 py-4 text-sm whitespace-nowrap text-slate-600">
                   {#if column.image && value}
-                    <img src={value} alt={column.imageAlt ? column.imageAlt(row) : ''} class="h-12 w-16 rounded-lg object-cover shadow-sm" />
+                    <img
+                      src={value}
+                      alt={column.imageAlt ? column.imageAlt(row) : ''}
+                      class="h-12 w-16 rounded-lg object-cover shadow-sm"
+                    />
                   {:else if column.badge}
                     {@const badge = column.badge(row)}
-                    <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium {badge.class}">
+                    <span
+                      class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium {badge.class}"
+                    >
                       {badge.text}
                     </span>
                   {:else if column.render}
@@ -168,28 +196,43 @@
                   {/if}
                 </td>
               {/each}
-              {#if columns.some(c => c.actions)}
-                <td class="whitespace-nowrap px-6 py-4 text-sm">
+              {#if columns.some((c) => c.actions)}
+                <td class="px-6 py-4 text-sm whitespace-nowrap">
                   <div class="flex items-center gap-2">
                     {#each columns as column}
                       {#if column.actions}
                         {#each column.actions as action}
                           {#if action.formAction}
-                            <form action={action.formAction} method="POST" use:enhance class="inline">
+                            <form
+                              action={action.formAction}
+                              method="POST"
+                              use:enhance
+                              class="inline"
+                            >
                               {#if action.hiddenInput}
-                                <input type="hidden" name={action.hiddenInput.name} value={action.hiddenInput.value} />
+                                <input
+                                  type="hidden"
+                                  name={action.hiddenInput.name}
+                                  value={action.hiddenInput.value}
+                                />
                               {/if}
-                              <button 
-                                type="submit" 
-                                class="inline-flex items-center rounded-md px-3 py-1.5 text-xs font-medium transition-colors {action.variant === 'danger' ? 'text-red-600 hover:bg-red-50' : 'text-primary-600 hover:bg-primary-50'}"
+                              <button
+                                type="submit"
+                                class="inline-flex items-center rounded-md px-3 py-1.5 text-xs font-medium transition-colors {action.variant ===
+                                'danger'
+                                  ? 'text-red-600 hover:bg-red-50'
+                                  : 'text-primary-600 hover:bg-primary-50'}"
                               >
                                 {action.label}
                               </button>
                             </form>
                           {:else if action.href}
-                            <a 
+                            <a
                               href={action.href}
-                              class="inline-flex items-center rounded-md px-3 py-1.5 text-xs font-medium transition-colors {action.variant === 'danger' ? 'text-red-600 hover:bg-red-50' : 'text-primary-600 hover:bg-primary-50'}"
+                              class="inline-flex items-center rounded-md px-3 py-1.5 text-xs font-medium transition-colors {action.variant ===
+                              'danger'
+                                ? 'text-red-600 hover:bg-red-50'
+                                : 'text-primary-600 hover:bg-primary-50'}"
                             >
                               {action.label}
                             </a>

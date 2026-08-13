@@ -6,7 +6,7 @@ import type { InferInsertModel } from 'drizzle-orm';
 type News = InferInsertModel<typeof news>;
 
 export async function getNewsCount() {
-  return await db.select({ count: count() }).from(news)
+  return await db.select({ count: count() }).from(news);
 }
 
 export async function getNews() {
@@ -19,7 +19,10 @@ export async function getNewsItem(id: number) {
 }
 
 export async function createNews(data: Omit<News, 'id'>) {
-  const [createdNews] = await db.insert(news).values(data as News).returning();
+  const [createdNews] = await db
+    .insert(news)
+    .values(data as News)
+    .returning();
   return createdNews;
 }
 

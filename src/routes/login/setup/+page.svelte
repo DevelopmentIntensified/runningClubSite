@@ -18,32 +18,67 @@
   let academicLevel = 'undergraduate';
 
   const usStates = [
-    { name: 'Alabama', abbr: 'AL' }, { name: 'Alaska', abbr: 'AK' }, { name: 'Arizona', abbr: 'AZ' },
-    { name: 'Arkansas', abbr: 'AR' }, { name: 'California', abbr: 'CA' }, { name: 'Colorado', abbr: 'CO' },
-    { name: 'Connecticut', abbr: 'CT' }, { name: 'Delaware', abbr: 'DE' }, { name: 'Florida', abbr: 'FL' },
-    { name: 'Georgia', abbr: 'GA' }, { name: 'Hawaii', abbr: 'HI' }, { name: 'Idaho', abbr: 'ID' },
-    { name: 'Illinois', abbr: 'IL' }, { name: 'Indiana', abbr: 'IN' }, { name: 'Iowa', abbr: 'IA' },
-    { name: 'Kansas', abbr: 'KS' }, { name: 'Kentucky', abbr: 'KY' }, { name: 'Louisiana', abbr: 'LA' },
-    { name: 'Maine', abbr: 'ME' }, { name: 'Maryland', abbr: 'MD' }, { name: 'Massachusetts', abbr: 'MA' },
-    { name: 'Michigan', abbr: 'MI' }, { name: 'Minnesota', abbr: 'MN' }, { name: 'Mississippi', abbr: 'MS' },
-    { name: 'Missouri', abbr: 'MO' }, { name: 'Montana', abbr: 'MT' }, { name: 'Nebraska', abbr: 'NE' },
-    { name: 'Nevada', abbr: 'NV' }, { name: 'New Hampshire', abbr: 'NH' }, { name: 'New Jersey', abbr: 'NJ' },
-    { name: 'New Mexico', abbr: 'NM' }, { name: 'New York', abbr: 'NY' }, { name: 'North Carolina', abbr: 'NC' },
-    { name: 'North Dakota', abbr: 'ND' }, { name: 'Ohio', abbr: 'OH' }, { name: 'Oklahoma', abbr: 'OK' },
-    { name: 'Oregon', abbr: 'OR' }, { name: 'Pennsylvania', abbr: 'PA' }, { name: 'Rhode Island', abbr: 'RI' },
-    { name: 'South Carolina', abbr: 'SC' }, { name: 'South Dakota', abbr: 'SD' }, { name: 'Tennessee', abbr: 'TN' },
-    { name: 'Texas', abbr: 'TX' }, { name: 'Utah', abbr: 'UT' }, { name: 'Vermont', abbr: 'VT' },
-    { name: 'Virginia', abbr: 'VA' }, { name: 'Washington', abbr: 'WA' }, { name: 'West Virginia', abbr: 'WV' },
-    { name: 'Wisconsin', abbr: 'WI' }, { name: 'Wyoming', abbr: 'WY' }
+    { name: 'Alabama', abbr: 'AL' },
+    { name: 'Alaska', abbr: 'AK' },
+    { name: 'Arizona', abbr: 'AZ' },
+    { name: 'Arkansas', abbr: 'AR' },
+    { name: 'California', abbr: 'CA' },
+    { name: 'Colorado', abbr: 'CO' },
+    { name: 'Connecticut', abbr: 'CT' },
+    { name: 'Delaware', abbr: 'DE' },
+    { name: 'Florida', abbr: 'FL' },
+    { name: 'Georgia', abbr: 'GA' },
+    { name: 'Hawaii', abbr: 'HI' },
+    { name: 'Idaho', abbr: 'ID' },
+    { name: 'Illinois', abbr: 'IL' },
+    { name: 'Indiana', abbr: 'IN' },
+    { name: 'Iowa', abbr: 'IA' },
+    { name: 'Kansas', abbr: 'KS' },
+    { name: 'Kentucky', abbr: 'KY' },
+    { name: 'Louisiana', abbr: 'LA' },
+    { name: 'Maine', abbr: 'ME' },
+    { name: 'Maryland', abbr: 'MD' },
+    { name: 'Massachusetts', abbr: 'MA' },
+    { name: 'Michigan', abbr: 'MI' },
+    { name: 'Minnesota', abbr: 'MN' },
+    { name: 'Mississippi', abbr: 'MS' },
+    { name: 'Missouri', abbr: 'MO' },
+    { name: 'Montana', abbr: 'MT' },
+    { name: 'Nebraska', abbr: 'NE' },
+    { name: 'Nevada', abbr: 'NV' },
+    { name: 'New Hampshire', abbr: 'NH' },
+    { name: 'New Jersey', abbr: 'NJ' },
+    { name: 'New Mexico', abbr: 'NM' },
+    { name: 'New York', abbr: 'NY' },
+    { name: 'North Carolina', abbr: 'NC' },
+    { name: 'North Dakota', abbr: 'ND' },
+    { name: 'Ohio', abbr: 'OH' },
+    { name: 'Oklahoma', abbr: 'OK' },
+    { name: 'Oregon', abbr: 'OR' },
+    { name: 'Pennsylvania', abbr: 'PA' },
+    { name: 'Rhode Island', abbr: 'RI' },
+    { name: 'South Carolina', abbr: 'SC' },
+    { name: 'South Dakota', abbr: 'SD' },
+    { name: 'Tennessee', abbr: 'TN' },
+    { name: 'Texas', abbr: 'TX' },
+    { name: 'Utah', abbr: 'UT' },
+    { name: 'Vermont', abbr: 'VT' },
+    { name: 'Virginia', abbr: 'VA' },
+    { name: 'Washington', abbr: 'WA' },
+    { name: 'West Virginia', abbr: 'WV' },
+    { name: 'Wisconsin', abbr: 'WI' },
+    { name: 'Wyoming', abbr: 'WY' }
   ];
 
-  $: filteredStates = stateSearch === ''
-    ? usStates
-    : usStates.filter(s => s.name.toLowerCase().includes(stateSearch.toLowerCase()));
+  $: filteredStates =
+    stateSearch === ''
+      ? usStates
+      : usStates.filter((s) => s.name.toLowerCase().includes(stateSearch.toLowerCase()));
 
-  $: stateInputClass = stateTouched && !stateOfOrigin
-    ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
-    : 'border-gray-300 focus:border-primary-500 focus:ring-primary-500';
+  $: stateInputClass =
+    stateTouched && !stateOfOrigin
+      ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
+      : 'border-gray-300 focus:border-primary-500 focus:ring-primary-500';
 
   function selectState(state: { name: string; abbr: string }) {
     stateOfOrigin = state.abbr;
@@ -63,7 +98,7 @@
     setTimeout(() => {
       stateDropdownOpen = false;
       if (stateOfOrigin) return;
-      const exactMatch = usStates.find(s => s.name.toLowerCase() === stateSearch.toLowerCase());
+      const exactMatch = usStates.find((s) => s.name.toLowerCase() === stateSearch.toLowerCase());
       if (exactMatch) {
         selectState(exactMatch);
       }
@@ -86,7 +121,7 @@
     }
 
     if (stateSearch) {
-      const exactMatch = usStates.find(s => s.name.toLowerCase() === stateSearch.toLowerCase());
+      const exactMatch = usStates.find((s) => s.name.toLowerCase() === stateSearch.toLowerCase());
       if (exactMatch && !stateOfOrigin) {
         stateOfOrigin = exactMatch.abbr;
       }
@@ -116,7 +151,15 @@
     const res = await fetch('/login/setup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ firstName: firstName.trim(), lastName: lastName.trim(), stateOfOrigin, graduationYear, academicLevel, password, redirectUrl })
+      body: JSON.stringify({
+        firstName: firstName.trim(),
+        lastName: lastName.trim(),
+        stateOfOrigin,
+        graduationYear,
+        academicLevel,
+        password,
+        redirectUrl
+      })
     });
 
     const json = await res.json();
@@ -138,15 +181,26 @@
   <div class="w-full max-w-md space-y-8 rounded-2xl bg-white p-8 shadow-xl">
     <div class="text-center">
       <h2 class="text-3xl font-extrabold text-gray-900">Complete Your Profile</h2>
-      <p class="mt-2 text-sm text-gray-600">We just need a few more details to finish setting up your account.</p>
+      <p class="mt-2 text-sm text-gray-600">
+        We just need a few more details to finish setting up your account.
+      </p>
     </div>
 
     {#if error}
       <div class="rounded-md bg-red-50 p-4">
         <div class="flex">
           <div class="flex-shrink-0">
-            <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd" />
+            <svg
+              class="h-5 w-5 text-red-400"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z"
+                clip-rule="evenodd"
+              />
             </svg>
           </div>
           <div class="ml-3">
@@ -158,14 +212,16 @@
 
     <form class="mt-8 space-y-6" on:submit|preventDefault={handleSubmit}>
       <div>
-        <label for="firstName" class="block text-sm font-medium text-gray-700">First Name <span class="text-red-500">*</span></label>
+        <label for="firstName" class="block text-sm font-medium text-gray-700"
+          >First Name <span class="text-red-500">*</span></label
+        >
         <div class="relative mt-1 rounded-md shadow-sm">
           <input
             id="firstName"
             name="firstName"
             type="text"
             required
-            class="block w-full rounded-md border border-gray-300 bg-white py-2 px-3 leading-5 placeholder-gray-500 focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+            class="focus:border-primary-500 focus:ring-primary-500 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 leading-5 placeholder-gray-500 focus:outline-none sm:text-sm"
             placeholder="John"
             bind:value={firstName}
           />
@@ -173,14 +229,16 @@
       </div>
 
       <div>
-        <label for="lastName" class="block text-sm font-medium text-gray-700">Last Name <span class="text-red-500">*</span></label>
+        <label for="lastName" class="block text-sm font-medium text-gray-700"
+          >Last Name <span class="text-red-500">*</span></label
+        >
         <div class="relative mt-1 rounded-md shadow-sm">
           <input
             id="lastName"
             name="lastName"
             type="text"
             required
-            class="block w-full rounded-md border border-gray-300 bg-white py-2 px-3 leading-5 placeholder-gray-500 focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+            class="focus:border-primary-500 focus:ring-primary-500 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 leading-5 placeholder-gray-500 focus:outline-none sm:text-sm"
             placeholder="Doe"
             bind:value={lastName}
           />
@@ -188,31 +246,43 @@
       </div>
 
       <div class="relative">
-        <label for="stateOfOrigin" class="block text-sm font-medium text-gray-700">State of Origin <span class="text-red-500">*</span></label>
+        <label for="stateOfOrigin" class="block text-sm font-medium text-gray-700"
+          >State of Origin <span class="text-red-500">*</span></label
+        >
         <div class="relative mt-1">
           <input
             id="stateOfOrigin"
             name="stateOfOrigin"
             type="text"
-            class="block w-full rounded-md border bg-white py-2 pl-3 pr-10 leading-5 placeholder-gray-500 focus:outline-none focus:ring-1 sm:text-sm {stateInputClass}"
+            class="block w-full rounded-md border bg-white py-2 pr-10 pl-3 leading-5 placeholder-gray-500 focus:ring-1 focus:outline-none sm:text-sm {stateInputClass}"
             placeholder="Start typing to search..."
             value={stateSearch}
             on:input={handleStateInput}
-            on:focus={() => { stateDropdownOpen = true; }}
+            on:focus={() => {
+              stateDropdownOpen = true;
+            }}
             on:blur={handleStateBlur}
           />
           <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
             <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+              <path
+                fill-rule="evenodd"
+                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                clip-rule="evenodd"
+              />
             </svg>
           </div>
         </div>
 
         {#if stateDropdownOpen && filteredStates.length > 0}
-          <ul class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md border border-gray-300 bg-white py-1 text-base shadow-lg focus:outline-none sm:text-sm">
+          <ul
+            class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md border border-gray-300 bg-white py-1 text-base shadow-lg focus:outline-none sm:text-sm"
+          >
             {#each filteredStates as state}
               <li
-                class="cursor-pointer px-3 py-2 hover:bg-primary-100 {stateOfOrigin === state.abbr ? 'bg-primary-50' : ''}"
+                class="hover:bg-primary-100 cursor-pointer px-3 py-2 {stateOfOrigin === state.abbr
+                  ? 'bg-primary-50'
+                  : ''}"
                 on:mousedown={() => selectState(state)}
               >
                 {state.name}
@@ -223,14 +293,16 @@
       </div>
 
       <div>
-        <label for="graduationYear" class="block text-sm font-medium text-gray-700">Graduation Year <span class="text-red-500">*</span></label>
+        <label for="graduationYear" class="block text-sm font-medium text-gray-700"
+          >Graduation Year <span class="text-red-500">*</span></label
+        >
         <div class="relative mt-1 rounded-md shadow-sm">
           <select
             id="graduationYear"
             name="graduationYear"
             required
             bind:value={graduationYear}
-            class="block w-full rounded-md border border-gray-300 bg-white py-2 px-3 leading-5 focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+            class="focus:border-primary-500 focus:ring-primary-500 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 leading-5 focus:outline-none sm:text-sm"
           >
             {#each Array.from({ length: 7 }, (_, i) => new Date().getFullYear() + i) as year}
               <option value={year}>{year}</option>
@@ -240,12 +312,14 @@
       </div>
 
       <div>
-        <label for="academicLevel" class="block text-sm font-medium text-gray-700">Academic Level</label>
+        <label for="academicLevel" class="block text-sm font-medium text-gray-700"
+          >Academic Level</label
+        >
         <select
           id="academicLevel"
           name="academicLevel"
           bind:value={academicLevel}
-          class="block w-full rounded-md border border-gray-300 bg-white py-2 px-3 leading-5 focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+          class="focus:border-primary-500 focus:ring-primary-500 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 leading-5 focus:outline-none sm:text-sm"
         >
           <option value="undergraduate">Undergraduate</option>
           <option value="graduate">Graduate</option>
@@ -253,7 +327,9 @@
       </div>
 
       <div>
-        <label for="password" class="block text-sm font-medium text-gray-700">Password <span class="text-red-500">*</span></label>
+        <label for="password" class="block text-sm font-medium text-gray-700"
+          >Password <span class="text-red-500">*</span></label
+        >
         <div class="relative mt-1 rounded-md shadow-sm">
           <input
             id="password"
@@ -263,13 +339,15 @@
             minlength={8}
             bind:value={password}
             placeholder="At least 8 characters"
-            class="block w-full rounded-md border border-gray-300 bg-white py-2 px-3 leading-5 placeholder-gray-500 focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+            class="focus:border-primary-500 focus:ring-primary-500 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 leading-5 placeholder-gray-500 focus:outline-none sm:text-sm"
           />
         </div>
       </div>
 
       <div>
-        <label for="confirmPassword" class="block text-sm font-medium text-gray-700">Confirm Password <span class="text-red-500">*</span></label>
+        <label for="confirmPassword" class="block text-sm font-medium text-gray-700"
+          >Confirm Password <span class="text-red-500">*</span></label
+        >
         <div class="relative mt-1 rounded-md shadow-sm">
           <input
             id="confirmPassword"
@@ -278,7 +356,7 @@
             required
             bind:value={confirmPassword}
             placeholder="Re-enter your password"
-            class="block w-full rounded-md border border-gray-300 bg-white py-2 px-3 leading-5 placeholder-gray-500 focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+            class="focus:border-primary-500 focus:ring-primary-500 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 leading-5 placeholder-gray-500 focus:outline-none sm:text-sm"
           />
         </div>
       </div>
@@ -287,7 +365,7 @@
         <button
           type="submit"
           disabled={waiting}
-          class="group relative flex w-full justify-center rounded-md border border-transparent bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50"
+          class="group bg-primary-600 hover:bg-primary-700 focus:ring-primary-500 relative flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:opacity-50"
         >
           Complete Setup
         </button>

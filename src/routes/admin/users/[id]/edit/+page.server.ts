@@ -14,7 +14,8 @@ export const load: PageServerLoad = async ({ params }) => {
   if (!User) {
     throw redirect(302, '/admin/users');
   }
-  const changeLog = await db.select()
+  const changeLog = await db
+    .select()
     .from(userChangeLog)
     .where(eq(userChangeLog.userId, parseInt(params.id)))
     .orderBy(desc(userChangeLog.changedAt))
@@ -51,13 +52,22 @@ export const actions: Actions = {
     }
 
     if (email || isAdmin) {
-      const updatedUser = await updateUser(userId, { email, isAdmin: isAdmin === 'true' });
+      const updatedUser = await updateUser(userId, {
+        email: email ?? undefined,
+        isAdmin: isAdmin === 'true'
+      });
       if (updatedUser) {
         await deleteUserSessions(userId);
       }
     }
     const changes = objectDiff(existingUser, updateData);
-    await logAdminAction({ adminId: parseInt(locals.user.id), action: 'update', targetType: 'user', targetId: userId, details: JSON.stringify(changes) });
+    await logAdminAction({
+      adminId: parseInt(locals.user!.id),
+      action: 'update',
+      targetType: 'user',
+      targetId: userId,
+      details: JSON.stringify(changes)
+    });
 
     throw redirect(302, '/admin/users');
   }

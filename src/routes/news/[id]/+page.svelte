@@ -17,12 +17,12 @@
         class="mb-8 w-full rounded-lg object-cover shadow-lg"
       />
     {/if}
-    
+
     <h1 class="mb-4 text-4xl font-bold">{data.newsItem.title}</h1>
     <p class="mb-8 text-gray-500">{new Date(data.newsItem.createdAt).toLocaleDateString()}</p>
-    
+
     <div class="prose prose-lg max-w-none">
       {@html data.newsItem.content}
     </div>
   </article>
-</div> 
+</div>

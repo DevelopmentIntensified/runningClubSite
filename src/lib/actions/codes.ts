@@ -1,12 +1,12 @@
 import { db } from '$lib/server/db';
-import {codes, type Code } from '$lib/server/db/schema';
+import { codes, type Code } from '$lib/server/db/schema';
 import { eq, lt } from 'drizzle-orm';
 
 export async function getAlumni() {
-  return await db.select().from(codes)
+  return await db.select().from(codes);
 }
 
-export async function getCode(code:string) {
+export async function getCode(code: string) {
   const [alumnus] = await db.select().from(codes).where(eq(codes.code, code));
   return alumnus;
 }

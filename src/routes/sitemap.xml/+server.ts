@@ -1,16 +1,16 @@
 //https://sveltekit.io/blog/svelte-sitemaps
 const site = 'https://www.libertyrunningclub.com/'; // change this to reflect your domain
 const pages: string[] = [
-  "about",
-  "schedule",
-  "locations",
-  "records",
-  "stats",
-  "contact",
-  "login",
-  "news",
-  "alumni",
-  "privacy"
+  'about',
+  'schedule',
+  'locations',
+  'records',
+  'stats',
+  'contact',
+  'login',
+  'news',
+  'alumni',
+  'privacy'
 ]; // populate this with all the slugs you wish to include
 
 /** @type {import('./$types').RequestHandler} */

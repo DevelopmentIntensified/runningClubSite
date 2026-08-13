@@ -31,7 +31,10 @@
 <div class="container mx-auto px-4 py-12">
   <h1 class="mb-8 text-center text-4xl font-bold">Club Records</h1>
 
-  <a href="https://www.nationalrunningclubdatabase.com/teams/142" class="block text-center text-primary-600 hover:underline mb-8">
+  <a
+    href="https://www.nationalrunningclubdatabase.com/teams/142"
+    class="text-primary-600 mb-8 block text-center hover:underline"
+  >
     National Running Club Database
   </a>
 

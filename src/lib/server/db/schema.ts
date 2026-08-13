@@ -74,7 +74,7 @@ export const pageImages = pgTable('pageImages', {
   createdAt: timestamp('created_at').defaultNow().notNull(),
   imageUrl: text('imageUrl').notNull(),
   locationName: text('locationName').notNull()
-})
+});
 
 export const alumni = pgTable('alumni', {
   id: serial('id').primaryKey(),
@@ -103,11 +103,11 @@ export const events = pgTable('events', {
   title: text('title').notNull(),
   start: timestamp('start', {
     withTimezone: true,
-    mode: "string"
+    mode: 'string'
   }).notNull(),
   end: timestamp('end', {
     withTimezone: true,
-    mode: "string"
+    mode: 'string'
   }).notNull(),
   description: text('description'),
   location: text('location'),
@@ -120,7 +120,7 @@ export const locations = pgTable('locations', {
   name: text('name').notNull(),
   description: text('description'),
   link: text('link').notNull(),
-  order: integer('order'),
+  order: integer('order')
 });
 
 export const records = pgTable('records', {

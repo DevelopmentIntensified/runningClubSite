@@ -18,7 +18,7 @@
       label: 'About',
       items: () => [
         { href: '/about', label: 'About' },
-        { href: '/stats', label: 'Where We\'re From' },
+        { href: '/stats', label: "Where We're From" },
         { href: '/alumni', label: 'Alumni' }
       ]
     },
@@ -68,7 +68,7 @@
   const mobileNavItems = [
     { href: '/', label: 'Home' },
     { href: '/about', label: 'About' },
-    { href: '/stats', label: 'Where We\'re From' },
+    { href: '/stats', label: "Where We're From" },
     { href: '/schedule', label: 'Schedule' },
     { href: '/locations', label: 'Locations' },
     { href: '/records', label: 'Records' },
@@ -79,7 +79,6 @@
     { href: '/news', label: 'News' },
     { href: '/contact1', label: 'Contact' }
   ];
-
 
   function toggleMenu() {
     isOpen = !isOpen;
@@ -98,8 +97,8 @@
     return $page.url.pathname === path;
   }
 
-  function isCategoryActive(cat: typeof categories[0]): boolean {
-    return cat.items().some(item => isActive(item.href));
+  function isCategoryActive(cat: (typeof categories)[0]): boolean {
+    return cat.items().some((item) => isActive(item.href));
   }
 
   function handleClickOutside(e: MouseEvent) {
@@ -115,7 +114,7 @@
 </script>
 
 <nav class="bg-primary-600 text-white" bind:this={navElement}>
-  <div class="max-w-7xl px-4 md:px-6 lg:px-8 mx-auto">
+  <div class="mx-auto max-w-7xl px-4 md:px-6 lg:px-8">
     <div class="flex h-16 items-center justify-between">
       <div class="flex items-center">
         <a href="/" class="flex-shrink-0">
@@ -127,23 +126,42 @@
               <div class="relative">
                 <button
                   on:click={() => toggleDropdown(category.label)}
-                  class="rounded-md px-3 py-2 text-sm font-medium hover:bg-primary-700 flex items-center gap-1 {isCategoryActive(category) ? 'bg-primary-700' : ''}"
+                  class="hover:bg-primary-700 flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium {isCategoryActive(
+                    category
+                  )
+                    ? 'bg-primary-700'
+                    : ''}"
                 >
                   {category.label}
-                  <svg class="w-4 h-4 transition-transform" class:rotate-180={openDropdown === category.label} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                  <svg
+                    class="h-4 w-4 transition-transform"
+                    class:rotate-180={openDropdown === category.label}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 9l-7 7-7-7"
+                    />
                   </svg>
                 </button>
 
                 {#if openDropdown === category.label}
                   <div
-                    class="absolute z-50 mt-1 w-60 rounded-lg bg-white py-2 shadow-xl border border-gray-100"
+                    class="absolute z-50 mt-1 w-60 rounded-lg border border-gray-100 bg-white py-2 shadow-xl"
                   >
                     {#each category.items() as item}
                       <a
                         href={item.href}
-                        class="block px-5 py-3 text-base text-gray-700 hover:bg-primary-50 {isActive(item.href) ? 'bg-primary-50 text-primary-700 font-semibold' : ''}"
-                        on:click={() => openDropdown = null}
+                        class="hover:bg-primary-50 block px-5 py-3 text-base text-gray-700 {isActive(
+                          item.href
+                        )
+                          ? 'bg-primary-50 text-primary-700 font-semibold'
+                          : ''}"
+                        on:click={() => (openDropdown = null)}
                       >
                         {item.label}
                       </a>
@@ -155,7 +173,11 @@
 
             <a
               href="/contact1"
-              class="rounded-md px-3 py-2 text-sm font-medium hover:bg-primary-700 {isActive('/contact1') ? 'bg-primary-700' : ''}"
+              class="hover:bg-primary-700 rounded-md px-3 py-2 text-sm font-medium {isActive(
+                '/contact1'
+              )
+                ? 'bg-primary-700'
+                : ''}"
             >
               Contact
             </a>
@@ -164,23 +186,38 @@
               <div class="relative">
                 <button
                   on:click={() => toggleDropdown(adminCategory.label)}
-                  class="rounded-md px-3 py-2 text-sm font-medium hover:bg-primary-700 flex items-center gap-1 bg-primary-500"
+                  class="hover:bg-primary-700 bg-primary-500 flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium"
                 >
                   {adminCategory.label}
-                  <svg class="w-4 h-4 transition-transform" class:rotate-180={openDropdown === adminCategory.label} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                  <svg
+                    class="h-4 w-4 transition-transform"
+                    class:rotate-180={openDropdown === adminCategory.label}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 9l-7 7-7-7"
+                    />
                   </svg>
                 </button>
 
                 {#if openDropdown === adminCategory.label}
                   <div
-                    class="absolute z-50 mt-1 w-60 rounded-lg bg-white py-2 shadow-xl border border-gray-100 right-0"
+                    class="absolute right-0 z-50 mt-1 w-60 rounded-lg border border-gray-100 bg-white py-2 shadow-xl"
                   >
                     {#each adminCategory.items() as item}
                       <a
                         href={item.href}
-                        class="block px-5 py-3 text-base text-gray-700 hover:bg-primary-50 {isActive(item.href) ? 'bg-primary-50 text-primary-700 font-semibold' : ''}"
-                        on:click={() => openDropdown = null}
+                        class="hover:bg-primary-50 block px-5 py-3 text-base text-gray-700 {isActive(
+                          item.href
+                        )
+                          ? 'bg-primary-50 text-primary-700 font-semibold'
+                          : ''}"
+                        on:click={() => (openDropdown = null)}
                       >
                         {item.label}
                       </a>
@@ -197,20 +234,20 @@
           {#if isLoggedIn}
             <a
               href="/settings"
-              class="rounded-md px-3 py-2 text-sm font-medium hover:bg-primary-700"
+              class="hover:bg-primary-700 rounded-md px-3 py-2 text-sm font-medium"
             >
               Settings
             </a>
             <form action="/api/logout" method="POST">
               <button
                 type="submit"
-                class="rounded-md px-3 py-2 text-sm font-medium hover:bg-primary-700">Logout</button
+                class="hover:bg-primary-700 rounded-md px-3 py-2 text-sm font-medium">Logout</button
               >
             </form>
           {:else}
             <a
               href={'/login'}
-              class="rounded bg-primary-500 px-4 py-2 font-bold text-white transition duration-300 hover:bg-primary-700"
+              class="bg-primary-500 hover:bg-primary-700 rounded px-4 py-2 font-bold text-white transition duration-300"
             >
               Sign Up/Login
             </a>
@@ -220,7 +257,7 @@
       <div class="lg:hidden">
         <button
           on:click={toggleMenu}
-          class="inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+          class="hover:bg-primary-700 inline-flex items-center justify-center rounded-md p-2 text-white focus:ring-2 focus:ring-white focus:outline-none focus:ring-inset"
         >
           <span class="sr-only">Open main menu</span>
           {#if isOpen}
@@ -261,12 +298,12 @@
 
   {#if isOpen}
     <div transition:slide={{ duration: 300 }} class="lg:hidden">
-      <div class="space-y-1 px-2 pb-3 pt-2 lg:px-3">
+      <div class="space-y-1 px-2 pt-2 pb-3 lg:px-3">
         {#each mobileNavItems as item}
           <a
             href={item.href}
             on:click={closeMenu}
-            class="block rounded-md px-3 py-2 text-center text-base font-medium hover:bg-primary-700 {$page
+            class="hover:bg-primary-700 block rounded-md px-3 py-2 text-center text-base font-medium {$page
               .url.pathname === item.href
               ? 'bg-primary-700'
               : ''}"
@@ -278,8 +315,9 @@
           <a
             href="/admin"
             on:click={closeMenu}
-            class="block rounded-md bg-primary-500 px-3 py-2 text-center text-base font-medium hover:bg-primary-700 {$page
-              .url.pathname.startsWith('/admin')
+            class="bg-primary-500 hover:bg-primary-700 block rounded-md px-3 py-2 text-center text-base font-medium {$page.url.pathname.startsWith(
+              '/admin'
+            )
               ? 'bg-primary-700'
               : ''}"
           >
@@ -290,7 +328,7 @@
           <a
             href="/settings"
             on:click={closeMenu}
-            class="block rounded-md px-3 py-2 text-center text-base font-medium hover:bg-primary-700"
+            class="hover:bg-primary-700 block rounded-md px-3 py-2 text-center text-base font-medium"
           >
             Settings
           </a>
@@ -298,7 +336,7 @@
             <button
               type="submit"
               on:click={closeMenu}
-              class="w-full rounded-md px-3 py-2 text-center text-base font-medium hover:bg-primary-700"
+              class="hover:bg-primary-700 w-full rounded-md px-3 py-2 text-center text-base font-medium"
               >Logout</button
             >
           </form>
@@ -306,7 +344,7 @@
           <a
             href={'/login'}
             on:click={closeMenu}
-            class="block rounded-md bg-primary-600 px-3 py-2 text-center text-base font-medium hover:bg-primary-700 {$page
+            class="bg-primary-600 hover:bg-primary-700 block rounded-md px-3 py-2 text-center text-base font-medium {$page
               .url.pathname === '/login'
               ? 'bg-primary-700'
               : ''}"

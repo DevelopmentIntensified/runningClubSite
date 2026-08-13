@@ -18,14 +18,26 @@ export const actions: Actions = {
     const newuser = await createLeader({
       name: name.toString(),
       position: position.toString(),
-      bio: bio?.toString() || null,
-      imageUrl: imageUrl?.toString() || null,
+      bio: bio?.toString() || '',
+      imageUrl: imageUrl?.toString() || '',
       order: 0,
       active: true
     });
 
     if (newuser) {
-      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'create', targetType: 'user', details: JSON.stringify({ created: { name: name.toString(), position: position.toString(), bio: bio?.toString() || null, imageUrl: imageUrl?.toString() || null } }) });
+      await logAdminAction({
+        adminId: parseInt(locals.user!.id),
+        action: 'create',
+        targetType: 'user',
+        details: JSON.stringify({
+          created: {
+            name: name.toString(),
+            position: position.toString(),
+            bio: bio?.toString() || null,
+            imageUrl: imageUrl?.toString() || null
+          }
+        })
+      });
       throw redirect(302, '/admin/users');
     } else {
       return fail(500, { message: 'Failed to create user' });

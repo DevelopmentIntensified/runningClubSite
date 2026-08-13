@@ -22,8 +22,16 @@ export async function insertRecurringEvents() {
     const offset = new Date().getTimezoneOffset() / 60;
     await insertEventIfNotExists({
       title: 'Tuesday Practice',
-      start: new Date(weekStart.getTime() + (2 * 24 + 19) * 60 * 60 * 1000).toLocaleString("sv") + ".000-0" + offset + ":00",
-      end: new Date(weekStart.getTime() + (2 * 24 + 21) * 60 * 60 * 1000).toLocaleString("sv") + ".000-0" + offset + ":00",
+      start:
+        new Date(weekStart.getTime() + (2 * 24 + 19) * 60 * 60 * 1000).toLocaleString('sv') +
+        '.000-0' +
+        offset +
+        ':00',
+      end:
+        new Date(weekStart.getTime() + (2 * 24 + 21) * 60 * 60 * 1000).toLocaleString('sv') +
+        '.000-0' +
+        offset +
+        ':00',
       location: 'Outdoor Track',
       type: 'Practice',
       description: 'Our Regular Practice out on the track at 7pm under the lights.'
@@ -32,7 +40,8 @@ export async function insertRecurringEvents() {
 }
 
 export async function insertEventIfNotExists(eventData: EventData) {
-  const existingEvent = await db.select()
+  const existingEvent = await db
+    .select()
     .from(events)
     .where(
       and(
@@ -50,4 +59,3 @@ export async function insertEventIfNotExists(eventData: EventData) {
     console.log(`Event already exists: ${eventData.title} on ${eventData.start}`);
   }
 }
-

@@ -31,18 +31,22 @@ if (false) {
 if (false) {
   await insertRecurringEvents()
     .then(() => console.log('All recurring events for 16 weeks inserted successfully'))
-    .catch(error => console.error('Error inserting recurring events:', error))
+    .catch((error) => console.error('Error inserting recurring events:', error));
 
   // Log the current date for reference
   console.log('Script run date:', new Date().toISOString());
 }
 if (false) {
   await insertSemesterPractices()
-    .then(() => console.log('All semester practices for Fall 2026 and Spring 2027 inserted successfully'))
-    .catch(error => console.error('Error inserting semester practices:', error))
+    .then(() =>
+      console.log('All semester practices for Fall 2026 and Spring 2027 inserted successfully')
+    )
+    .catch((error) => console.error('Error inserting semester practices:', error));
 }
 if (false) {
   await deleteSemesterPractices()
-    .then(() => console.log('All semester practices for Fall 2026 and Spring 2027 deleted successfully'))
-    .catch(error => console.error('Error deleting semester practices:', error))
+    .then(() =>
+      console.log('All semester practices for Fall 2026 and Spring 2027 deleted successfully')
+    )
+    .catch((error) => console.error('Error deleting semester practices:', error));
 }

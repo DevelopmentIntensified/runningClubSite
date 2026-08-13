@@ -39,7 +39,13 @@ export const actions: Actions = {
 
     if (updatedLocation) {
       const changes = objectDiff(existingLocation, updateData);
-      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'update', targetType: 'location', targetId: parseInt(params.id), details: JSON.stringify(changes) });
+      await logAdminAction({
+        adminId: parseInt(locals.user!.id),
+        action: 'update',
+        targetType: 'location',
+        targetId: parseInt(params.id),
+        details: JSON.stringify(changes)
+      });
       throw redirect(302, '/admin/locations');
     } else {
       return fail(500, { message: 'Failed to update location' });

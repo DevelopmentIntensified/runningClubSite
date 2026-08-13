@@ -15,7 +15,7 @@ export async function getEvent(id: number) {
 }
 
 export async function createEvent(data: Omit<CalendarEvent, 'id'>) {
-  const [createdEvent] = await db.insert(events).values(data as Partial<CalendarEvent>).returning();
+  const [createdEvent] = await db.insert(events).values(data).returning();
   return createdEvent;
 }
 

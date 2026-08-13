@@ -11,7 +11,14 @@ import headOfLogisticsImg from '$lib/assets/images/leaders/headOfLogistics.jpeg'
 import { db } from '.';
 import { leaders } from './schema';
 
-const leadersData = [
+const leadersData: Array<{
+  name: string;
+  imageUrl: string;
+  position: string;
+  bio: string;
+  order?: number;
+  active?: boolean;
+}> = [
   {
     name: 'Cole Schwartz',
     imageUrl: presidentImg,
@@ -34,8 +41,7 @@ const leadersData = [
     name: 'Collin Rose',
     imageUrl: mediaManagerImg,
     position: 'Social Media Coordinator',
-    bio:
-      'Collin is a second-year student from Sunny Orlando, Florida, who loves middle and long-distance events, is a running shoe connoisseur, and a master on the Aux.'
+    bio: 'Collin is a second-year student from Sunny Orlando, Florida, who loves middle and long-distance events, is a running shoe connoisseur, and a master on the Aux.'
   },
   {
     name: 'Joshua Harden',
@@ -71,18 +77,14 @@ const leadersData = [
     name: 'George Crowder',
     imageUrl: nircaDirectorImg,
     position: 'NIRCA Coordinator',
-    bio:
-      'George Crowder is a first-year student at Liberty University from Winchester, Virginia. He is pursuing a degree in strength and conditioning with a concentration on coaching. George loves middle-distance events and enjoys mountain biking, rock climbing, caving and hiking.'
+    bio: 'George Crowder is a first-year student at Liberty University from Winchester, Virginia. He is pursuing a degree in strength and conditioning with a concentration on coaching. George loves middle-distance events and enjoys mountain biking, rock climbing, caving and hiking.'
   }
 ];
 
 export async function insertLeaders() {
-  for (let index = 0; index < leadersData.length; index++) {
-    const leader = leadersData[index];
-    leader.order = index;
-  }
+  const values = leadersData.map((leader, index) => ({ ...leader, order: index, active: true }));
   try {
-    const result = await db.insert(leaders).values(leadersData);
+    const result = await db.insert(leaders).values(values);
     console.log('Events inserted successfully:', result);
   } catch (error) {
     console.error('Error inserting events:', error);

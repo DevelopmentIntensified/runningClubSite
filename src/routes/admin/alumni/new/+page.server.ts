@@ -21,9 +21,12 @@ export const actions: Actions = {
     }
 
     let finalImageUrl: string | null = imageUrl;
-    
+
     if (imageFile && imageFile.size > 0) {
-      const { url } = await put(imageFile.name, imageFile, { access: "public", token: BLOB_READ_WRITE_TOKEN });
+      const { url } = await put(imageFile.name, imageFile, {
+        access: 'public',
+        token: BLOB_READ_WRITE_TOKEN
+      });
       finalImageUrl = url;
     }
 
@@ -37,7 +40,13 @@ export const actions: Actions = {
     });
 
     if (newAlumnus) {
-      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'create', targetType: 'alumnus', targetId: newAlumnus.id, details: JSON.stringify({ name }) });
+      await logAdminAction({
+        adminId: parseInt(locals.user!.id),
+        action: 'create',
+        targetType: 'alumnus',
+        targetId: newAlumnus.id,
+        details: JSON.stringify({ name })
+      });
       throw redirect(302, '/admin/alumni');
     } else {
       return fail(500, { message: 'Failed to create alumnus' });

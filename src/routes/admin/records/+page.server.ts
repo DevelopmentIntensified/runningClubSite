@@ -8,9 +8,9 @@ export const load: PageServerLoad = async () => {
   records = records.map((record) => {
     return {
       ...record,
-      year: record.year,
-    }
-  })
+      year: record.year
+    };
+  });
 
   return { records };
 };
@@ -25,7 +25,13 @@ export const actions: Actions = {
     }
 
     await deleteRecord(parseInt(id));
-    await logAdminAction({ adminId: parseInt(locals.user.id), action: 'delete', targetType: 'record', targetId: parseInt(id), details: JSON.stringify({ targetType: 'record', targetId: parseInt(id) }) });
+    await logAdminAction({
+      adminId: parseInt(locals.user!.id),
+      action: 'delete',
+      targetType: 'record',
+      targetId: parseInt(id),
+      details: JSON.stringify({ targetType: 'record', targetId: parseInt(id) })
+    });
     return { success: true };
   }
 };

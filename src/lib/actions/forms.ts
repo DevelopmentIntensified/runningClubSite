@@ -19,7 +19,10 @@ export async function getForm(id: number) {
 }
 
 export async function createForm(data: Omit<Form, 'id'>) {
-  const [createdForm] = await db.insert(forms).values(data as Form).returning();
+  const [createdForm] = await db
+    .insert(forms)
+    .values(data as Form)
+    .returning();
   return createdForm;
 }
 

@@ -3,7 +3,9 @@ import { test, expect } from '@playwright/test';
 test.describe('Public Page Tests', () => {
   test('Home page loads correctly', async ({ page }) => {
     await page.goto('/');
-    await expect(page.getByRole('heading', { name: 'Liberty Running Club', exact: true })).toBeVisible();
+    await expect(
+      page.getByRole('heading', { name: 'Liberty Running Club', exact: true })
+    ).toBeVisible();
   });
 
   test('About page loads correctly', async ({ page }) => {

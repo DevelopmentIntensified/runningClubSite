@@ -16,7 +16,13 @@
         <h2 class="text-center text-3xl font-extrabold text-white">Add New Alumnus</h2>
       </div>
       <div class="p-6 sm:p-8">
-        <form action="?/createAlumnus" method="POST" use:enhance class="space-y-6" enctype="multipart/form-data">
+        <form
+          action="?/createAlumnus"
+          method="POST"
+          use:enhance
+          class="space-y-6"
+          enctype="multipart/form-data"
+        >
           <div>
             <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
             <input
@@ -24,7 +30,7 @@
               id="name"
               name="name"
               required
-              class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+              class="focus:border-primary-500 focus:ring-primary-500 mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
             />
           </div>
           <div>
@@ -33,7 +39,7 @@
               type="text"
               id="major"
               name="major"
-              class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+              class="focus:border-primary-500 focus:ring-primary-500 mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
             />
           </div>
           <div>
@@ -44,7 +50,7 @@
               type="number"
               id="graduationYear"
               name="graduationYear"
-              class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+              class="focus:border-primary-500 focus:ring-primary-500 mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
             />
           </div>
           <div>
@@ -55,7 +61,7 @@
               id="achievements"
               name="achievements"
               rows="3"
-              class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+              class="focus:border-primary-500 focus:ring-primary-500 mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
             ></textarea>
           </div>
           <div>
@@ -66,11 +72,15 @@
               type="text"
               id="currentOccupation"
               name="currentOccupation"
-              class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+              class="focus:border-primary-500 focus:ring-primary-500 mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
             />
           </div>
           <div>
-            <ImageUpload name="image" label="Image (Accepts png, gif, jpeg, jpg)" idealAspect={2/3} />
+            <ImageUpload
+              name="image"
+              label="Image (Accepts png, gif, jpeg, jpg)"
+              idealAspect={2 / 3}
+            />
           </div>
           {#if error}
             <div class="text-sm text-red-500">{error}</div>
@@ -78,7 +88,7 @@
           <div>
             <button
               type="submit"
-              class="flex w-full justify-center rounded-md border border-transparent bg-primary-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+              class="bg-primary-600 hover:bg-primary-700 focus:ring-primary-500 flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white shadow-sm focus:ring-2 focus:ring-offset-2 focus:outline-none"
             >
               Add Alumnus
             </button>

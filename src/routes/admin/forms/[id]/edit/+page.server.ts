@@ -7,11 +7,11 @@ import { objectDiff } from '$lib/utils/objectDiff';
 export const load: PageServerLoad = async ({ params }) => {
   const id = parseInt(params.id);
   const form = await getForm(id);
-  
+
   if (!form) {
     throw error(404, 'Form not found');
   }
-  
+
   return { form };
 };
 
@@ -33,7 +33,13 @@ export const actions: Actions = {
     const updateData = { title, description, externalUrl, active };
     await updateForm(id, updateData);
     const changes = objectDiff(existingForm, updateData);
-    await logAdminAction({ adminId: parseInt(locals.user.id), action: 'update', targetType: 'form', targetId: id, details: JSON.stringify(changes) });
+    await logAdminAction({
+      adminId: parseInt(locals.user!.id),
+      action: 'update',
+      targetType: 'form',
+      targetId: id,
+      details: JSON.stringify(changes)
+    });
 
     throw redirect(302, '/admin/forms');
   }

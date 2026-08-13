@@ -31,7 +31,7 @@ export const actions: Actions = {
     const alt = formData.get('alt') as string;
     const image = formData.get('image') as File | null;
     const imageUrl = formData.get('imageUrl') as string | null;
-    const currentImageUrl = formData.get('currentImageUrl') as string || '';
+    const currentImageUrl = (formData.get('currentImageUrl') as string) || '';
 
     if (!locationName || !alt) {
       return fail(400, {
@@ -61,13 +61,23 @@ export const actions: Actions = {
         finalImageUrl = imageUrl;
       }
 
-      const updateData = { locationName: locationName.toString(), alt: alt.toString(), imageUrl: finalImageUrl };
+      const updateData = {
+        locationName: locationName.toString(),
+        alt: alt.toString(),
+        imageUrl: finalImageUrl
+      };
       await db
         .update(pageImages)
         .set(updateData)
         .where(eq(pageImages.id, parseInt(params.id)));
       const changes = objectDiff(existingImage, updateData);
-      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'update', targetType: 'page_image', targetId: parseInt(params.id), details: JSON.stringify(changes) });
+      await logAdminAction({
+        adminId: parseInt(locals.user!.id),
+        action: 'update',
+        targetType: 'page_image',
+        targetId: parseInt(params.id),
+        details: JSON.stringify(changes)
+      });
     } catch (err) {
       console.error('Error updating image:', err);
       return fail(500, {

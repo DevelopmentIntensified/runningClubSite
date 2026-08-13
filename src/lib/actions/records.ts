@@ -15,7 +15,7 @@ export async function getRecord(id: number) {
 }
 
 export async function createRecord(data: Omit<Records, 'id' | 'created_at'>) {
-  const [createdRecord] = await db.insert(records).values(data as Partial<Records>).returning();
+  const [createdRecord] = await db.insert(records).values(data).returning();
   return createdRecord;
 }
 

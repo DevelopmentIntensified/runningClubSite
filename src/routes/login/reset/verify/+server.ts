@@ -8,10 +8,9 @@ export const POST: RequestHandler = async ({ request }) => {
   const { code, email, password } = await request.json();
 
   if (!code || !email || !password) {
-    return new Response(
-      JSON.stringify({ success: false, error: 'All fields are required.' }),
-      { status: 400 }
-    );
+    return new Response(JSON.stringify({ success: false, error: 'All fields are required.' }), {
+      status: 400
+    });
   }
 
   if (password.length < 8) {
@@ -22,12 +21,15 @@ export const POST: RequestHandler = async ({ request }) => {
   }
 
   try {
-    const codeRecord = await db.select().from(codes).where(eq(codes.code, code)).then(rows => rows[0]);
+    const codeRecord = await db
+      .select()
+      .from(codes)
+      .where(eq(codes.code, code))
+      .then((rows) => rows[0]);
     if (!codeRecord || codeRecord.email !== email) {
-      return new Response(
-        JSON.stringify({ success: false, error: 'Invalid or expired code.' }),
-        { status: 400 }
-      );
+      return new Response(JSON.stringify({ success: false, error: 'Invalid or expired code.' }), {
+        status: 400
+      });
     }
 
     if (codeRecord.expiresAt < new Date()) {
@@ -39,7 +41,9 @@ export const POST: RequestHandler = async ({ request }) => {
 
     const hashedPassword = await hash(password);
 
-    await db.execute(sql`UPDATE "user" SET hashed_password = ${hashedPassword} WHERE email = ${email}`);
+    await db.execute(
+      sql`UPDATE "user" SET hashed_password = ${hashedPassword} WHERE email = ${email}`
+    );
 
     await db.delete(codes).where(eq(codes.code, code));
 

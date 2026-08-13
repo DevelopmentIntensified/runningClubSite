@@ -2,7 +2,9 @@ import pg from 'pg';
 const { Pool } = pg;
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL || 'postgresql://runningclub_owner:VQ2s6GzbfLqH@ep-fancy-river-a81zxdut.eastus2.azure.neon.tech/runningclub?sslmode=require'
+  connectionString:
+    process.env.DATABASE_URL ||
+    'postgresql://runningclub_owner:VQ2s6GzbfLqH@ep-fancy-river-a81zxdut.eastus2.azure.neon.tech/runningclub?sslmode=require'
 });
 
 export async function query(sql: string, params: any[] = []) {

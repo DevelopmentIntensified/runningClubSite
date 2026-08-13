@@ -20,7 +20,13 @@
         <h2 class="text-center text-3xl font-extrabold text-white">Add News</h2>
       </div>
       <div class="p-6 sm:p-8">
-        <form action="?/createNews" method="POST" use:enhance class="space-y-6" enctype="multipart/form-data">
+        <form
+          action="?/createNews"
+          method="POST"
+          use:enhance
+          class="space-y-6"
+          enctype="multipart/form-data"
+        >
           <div>
             <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
             <input
@@ -28,7 +34,7 @@
               id="title"
               name="title"
               required
-              class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+              class="focus:border-primary-500 focus:ring-primary-500 mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
             />
           </div>
           <div>
@@ -37,7 +43,7 @@
             <input type="hidden" name="content" value={content} />
           </div>
           <div>
-            <ImageUpload name="image" label="Image" required={true} idealAspect={16/9} />
+            <ImageUpload name="image" label="Image" required={true} idealAspect={16 / 9} />
           </div>
           {#if error}
             <div class="text-sm text-red-500">{error}</div>
@@ -45,7 +51,7 @@
           <div class="flex justify-end">
             <button
               type="submit"
-              class="inline-flex items-center rounded-md border border-transparent bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+              class="bg-primary-600 hover:bg-primary-700 focus:ring-primary-500 inline-flex items-center rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white focus:ring-2 focus:ring-offset-2 focus:outline-none"
             >
               Add News
             </button>

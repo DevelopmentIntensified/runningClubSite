@@ -16,11 +16,16 @@ export function formatICSDate(dt: DateTime): string {
 export function escapeICS(str: string): string {
   return str.replace(/[\\;,\n]/g, (match) => {
     switch (match) {
-      case '\\': return '\\\\';
-      case ';': return '\\;';
-      case ',': return '\\,';
-      case '\n': return '\\n';
-      default: return match;
+      case '\\':
+        return '\\\\';
+      case ';':
+        return '\\;';
+      case ',':
+        return '\\,';
+      case '\n':
+        return '\\n';
+      default:
+        return match;
     }
   });
 }
@@ -56,9 +61,12 @@ export function getSchoolYearEvents(events: CalendarEvent[]): CalendarEvent[] {
   const now = DateTime.now();
   const year = now.month >= 8 ? now.year : now.year - 1;
   const startOfYear = DateTime.fromObject({ year, month: 8, day: 1 }, { zone: 'America/New_York' });
-  const endOfYear = DateTime.fromObject({ year: year + 1, month: 5, day: 31 }, { zone: 'America/New_York' });
+  const endOfYear = DateTime.fromObject(
+    { year: year + 1, month: 5, day: 31 },
+    { zone: 'America/New_York' }
+  );
 
-  return events.filter(event => {
+  return events.filter((event) => {
     const eventDate = event.start;
     return eventDate >= startOfYear && eventDate <= endOfYear;
   });
@@ -66,7 +74,7 @@ export function getSchoolYearEvents(events: CalendarEvent[]): CalendarEvent[] {
 
 export function downloadSchoolYearEventsICS(events: CalendarEvent[]): void {
   const schoolYearEvents = getSchoolYearEvents(events);
-  
+
   if (schoolYearEvents.length === 0) {
     alert('No events found for the current school year (August - May)');
     return;
@@ -81,7 +89,7 @@ export function downloadSchoolYearEventsICS(events: CalendarEvent[]): void {
     'VERSION:2.0',
     'PRODID:-//Liberty Running Club//Schedule//EN',
     'CALSCALE:GREGORIAN',
-    'METHOD:PUBLISH',
+    'METHOD:PUBLISH'
   ];
 
   for (const event of schoolYearEvents) {
@@ -115,7 +123,7 @@ export function getGoogleCalendarUrl(event: CalendarEvent): string {
     text: event.title,
     dates: `${event.start.toUTC().toFormat("yyyyMMdd'T'HHmmss'Z'")}/${event.end.toUTC().toFormat("yyyyMMdd'T'HHmmss'Z")}`,
     details: event.description || '',
-    location: event.location || '',
+    location: event.location || ''
   });
   return `${baseUrl}&${params.toString()}`;
 }

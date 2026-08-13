@@ -52,10 +52,14 @@
       alt={data.image.alt}
       class="absolute inset-0 h-full w-full object-cover"
     />
-    <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-black/40 to-black/60">
+    <div
+      class="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-black/40 to-black/60"
+    >
       <div class="px-4 text-center">
         <h1 class="text-3xl font-bold text-white sm:text-4xl md:text-5xl">Schedule</h1>
-        <p class="mt-2 text-sm text-white/90 sm:text-base">Weekly and season events in calendar view.</p>
+        <p class="mt-2 text-sm text-white/90 sm:text-base">
+          Weekly and season events in calendar view.
+        </p>
       </div>
     </div>
   </div>
@@ -63,10 +67,15 @@
   <div class="mb-6">
     <button
       onclick={handleDownloadSchoolYear}
-      class="inline-flex items-center gap-2 rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700"
+      class="bg-primary-600 hover:bg-primary-700 inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-white"
     >
       <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+        />
       </svg>
       Download School Year Events (.ics)
     </button>

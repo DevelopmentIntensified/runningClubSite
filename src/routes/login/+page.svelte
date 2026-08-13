@@ -102,23 +102,32 @@
   <div class="w-full max-w-md space-y-8 rounded-2xl bg-white p-8 shadow-xl">
     <div class="text-center">
       <h2 class="text-3xl font-extrabold text-gray-900">Sign in to your account</h2>
-      <p class="mt-2 text-sm text-gray-600">
-        Please use your Liberty email for verification.
-      </p>
+      <p class="mt-2 text-sm text-gray-600">Please use your Liberty email for verification.</p>
     </div>
 
-    <div class="flex justify-center gap-2 bg-gray-100 rounded-lg p-1">
+    <div class="flex justify-center gap-2 rounded-lg bg-gray-100 p-1">
       <button
         type="button"
-        class="flex-1 rounded-md px-3 py-2 text-sm font-medium transition-colors {mode === 'code' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'}"
-        onclick={() => { mode = 'code'; error = ''; }}
+        class="flex-1 rounded-md px-3 py-2 text-sm font-medium transition-colors {mode === 'code'
+          ? 'bg-white text-gray-900 shadow-sm'
+          : 'text-gray-500 hover:text-gray-700'}"
+        onclick={() => {
+          mode = 'code';
+          error = '';
+        }}
       >
         Sign in with Code
       </button>
       <button
         type="button"
-        class="flex-1 rounded-md px-3 py-2 text-sm font-medium transition-colors {mode === 'password' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'}"
-        onclick={() => { mode = 'password'; error = ''; }}
+        class="flex-1 rounded-md px-3 py-2 text-sm font-medium transition-colors {mode ===
+        'password'
+          ? 'bg-white text-gray-900 shadow-sm'
+          : 'text-gray-500 hover:text-gray-700'}"
+        onclick={() => {
+          mode = 'password';
+          error = '';
+        }}
       >
         Sign in with Password
       </button>
@@ -128,8 +137,17 @@
       <div class="rounded-md bg-red-50 p-4">
         <div class="flex">
           <div class="flex-shrink-0">
-            <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd" />
+            <svg
+              class="h-5 w-5 text-red-400"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z"
+                clip-rule="evenodd"
+              />
             </svg>
           </div>
           <div class="ml-3">
@@ -140,14 +158,33 @@
     {/if}
 
     {#if mode === 'code'}
-      <form class="mt-8 space-y-6" onsubmit={(e) => { e.preventDefault(); if (emailSent) handleCodeCheck(); else handleSendCode(); }}>
+      <form
+        class="mt-8 space-y-6"
+        onsubmit={(e) => {
+          e.preventDefault();
+          if (emailSent) handleCodeCheck();
+          else handleSendCode();
+        }}
+      >
         {#if emailSent}
           <div>
-            <label for="code" class="block text-sm font-medium text-gray-700">Verification Code</label>
+            <label for="code" class="block text-sm font-medium text-gray-700"
+              >Verification Code</label
+            >
             <div class="relative mt-1 rounded-md shadow-sm">
               <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                <svg class="h-5 w-5 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path>
+                <svg
+                  class="h-5 w-5 text-gray-400"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"
+                  ></path>
                 </svg>
               </div>
               <input
@@ -155,7 +192,7 @@
                 name="code"
                 type="text"
                 required
-                class="block w-full rounded-md border border-gray-300 bg-white py-2 pl-10 pr-3 leading-5 placeholder-gray-500 focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+                class="focus:border-primary-500 focus:ring-primary-500 block w-full rounded-md border border-gray-300 bg-white py-2 pr-3 pl-10 leading-5 placeholder-gray-500 focus:outline-none sm:text-sm"
                 placeholder="Enter verification code"
                 bind:value={code}
               />
@@ -168,7 +205,7 @@
             <button
               type="submit"
               disabled={waiting}
-              class="group relative flex w-full justify-center rounded-md border border-transparent bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+              class="group bg-primary-600 hover:bg-primary-700 focus:ring-primary-500 relative flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white focus:ring-2 focus:ring-offset-2 focus:outline-none"
             >
               Verify Code
             </button>
@@ -178,18 +215,30 @@
               type="button"
               disabled={waiting}
               onclick={handleSendCode}
-              class="text-sm text-primary-600 hover:text-primary-500"
+              class="text-primary-600 hover:text-primary-500 text-sm"
             >
               Resend verification email
             </button>
           </div>
         {:else}
           <div>
-            <label for="email-address" class="block text-sm font-medium text-gray-700">Email address</label>
+            <label for="email-address" class="block text-sm font-medium text-gray-700"
+              >Email address</label
+            >
             <div class="relative mt-1 rounded-md shadow-sm">
               <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                <svg class="h-5 w-5 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <svg
+                  class="h-5 w-5 text-gray-400"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                  ></path>
                   <polyline points="22,6 12,13 2,6"></polyline>
                 </svg>
               </div>
@@ -199,7 +248,7 @@
                 type="email"
                 autocomplete="email"
                 required
-                class="block w-full rounded-md border border-gray-300 bg-white py-2 pl-10 pr-3 leading-5 placeholder-gray-500 focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+                class="focus:border-primary-500 focus:ring-primary-500 block w-full rounded-md border border-gray-300 bg-white py-2 pr-3 pl-10 leading-5 placeholder-gray-500 focus:outline-none sm:text-sm"
                 placeholder="your.name@liberty.edu"
                 bind:value={email}
               />
@@ -212,11 +261,15 @@
               type="checkbox"
               bind:checked={privacyAccepted}
               required
-              class="mt-1 h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+              class="text-primary-600 focus:ring-primary-500 mt-1 h-4 w-4 rounded border-gray-300"
             />
             <label for="privacy" class="text-sm text-gray-700">
               I agree to the
-              <a href="/privacy" class="font-medium text-primary-600 underline hover:text-primary-800">Privacy Policy</a>
+              <a
+                href="/privacy"
+                class="text-primary-600 hover:text-primary-800 font-medium underline"
+                >Privacy Policy</a
+              >
               and understand how my data is used, including club emails sent via Resend.
             </label>
           </div>
@@ -224,7 +277,7 @@
             <button
               type="submit"
               disabled={waiting}
-              class="group relative flex w-full justify-center rounded-md border border-transparent bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+              class="group bg-primary-600 hover:bg-primary-700 focus:ring-primary-500 relative flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white focus:ring-2 focus:ring-offset-2 focus:outline-none"
             >
               Send Code
             </button>
@@ -232,13 +285,31 @@
         {/if}
       </form>
     {:else}
-      <form class="mt-8 space-y-6" onsubmit={(e) => { e.preventDefault(); handlePasswordLogin(); }}>
+      <form
+        class="mt-8 space-y-6"
+        onsubmit={(e) => {
+          e.preventDefault();
+          handlePasswordLogin();
+        }}
+      >
         <div>
-          <label for="email-password" class="block text-sm font-medium text-gray-700">Email address</label>
+          <label for="email-password" class="block text-sm font-medium text-gray-700"
+            >Email address</label
+          >
           <div class="relative mt-1 rounded-md shadow-sm">
             <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-              <svg class="h-5 w-5 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <svg
+                class="h-5 w-5 text-gray-400"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                ></path>
                 <polyline points="22,6 12,13 2,6"></polyline>
               </svg>
             </div>
@@ -248,7 +319,7 @@
               type="email"
               autocomplete="email"
               required
-              class="block w-full rounded-md border border-gray-300 bg-white py-2 pl-10 pr-3 leading-5 placeholder-gray-500 focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+              class="focus:border-primary-500 focus:ring-primary-500 block w-full rounded-md border border-gray-300 bg-white py-2 pr-3 pl-10 leading-5 placeholder-gray-500 focus:outline-none sm:text-sm"
               placeholder="your.name@liberty.edu"
               bind:value={email}
             />
@@ -258,8 +329,18 @@
           <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
           <div class="relative mt-1 rounded-md shadow-sm">
             <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-              <svg class="h-5 w-5 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 004.561 21h14.878a2 2 0 001.94-1.515L22 17"></path>
+              <svg
+                class="h-5 w-5 text-gray-400"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 004.561 21h14.878a2 2 0 001.94-1.515L22 17"
+                ></path>
               </svg>
             </div>
             <input
@@ -268,7 +349,7 @@
               type="password"
               autocomplete="current-password"
               required
-              class="block w-full rounded-md border border-gray-300 bg-white py-2 pl-10 pr-3 leading-5 placeholder-gray-500 focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+              class="focus:border-primary-500 focus:ring-primary-500 block w-full rounded-md border border-gray-300 bg-white py-2 pr-3 pl-10 leading-5 placeholder-gray-500 focus:outline-none sm:text-sm"
               placeholder="Enter your password"
               bind:value={password}
             />
@@ -281,11 +362,13 @@
             type="checkbox"
             bind:checked={privacyAccepted}
             required
-            class="mt-1 h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+            class="text-primary-600 focus:ring-primary-500 mt-1 h-4 w-4 rounded border-gray-300"
           />
           <label for="privacy-password" class="text-sm text-gray-700">
             I agree to the
-            <a href="/privacy" class="font-medium text-primary-600 underline hover:text-primary-800">Privacy Policy</a>
+            <a href="/privacy" class="text-primary-600 hover:text-primary-800 font-medium underline"
+              >Privacy Policy</a
+            >
             and understand how my data is used.
           </label>
         </div>
@@ -293,13 +376,15 @@
           <button
             type="submit"
             disabled={waiting}
-            class="group relative flex w-full justify-center rounded-md border border-transparent bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+            class="group bg-primary-600 hover:bg-primary-700 focus:ring-primary-500 relative flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white focus:ring-2 focus:ring-offset-2 focus:outline-none"
           >
             Sign in
           </button>
         </div>
         <div class="text-center">
-          <a href="/login/reset" class="text-sm text-primary-600 hover:text-primary-500">Forgot your password?</a>
+          <a href="/login/reset" class="text-primary-600 hover:text-primary-500 text-sm"
+            >Forgot your password?</a
+          >
         </div>
       </form>
     {/if}

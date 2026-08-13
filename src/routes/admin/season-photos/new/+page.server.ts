@@ -15,7 +15,7 @@ export const actions: Actions = {
     console.log('season:', formData.get('season'));
     console.log('image (file):', formData.get('image'));
     console.log('imageUrl:', formData.get('imageUrl'));
-    
+
     const title = formData.get('title') as string;
     const link = formData.get('link') as string;
     const season = formData.get('season') as string;
@@ -30,10 +30,13 @@ export const actions: Actions = {
     }
 
     let finalImageUrl: string | null = imageUrl;
-    
+
     if (imageFile && imageFile.size > 0) {
       console.log('Uploading file to blob...');
-      const { url } = await put(imageFile.name, imageFile, { access: "public", token: BLOB_READ_WRITE_TOKEN });
+      const { url } = await put(imageFile.name, imageFile, {
+        access: 'public',
+        token: BLOB_READ_WRITE_TOKEN
+      });
       console.log('Blob url:', url);
       finalImageUrl = url;
     }
@@ -47,7 +50,12 @@ export const actions: Actions = {
         season,
         imageUrl: finalImageUrl
       });
-      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'create', targetType: 'season_photo', details: JSON.stringify({ created: { title, link, season, imageUrl: finalImageUrl } }) });
+      await logAdminAction({
+        adminId: parseInt(locals.user!.id),
+        action: 'create',
+        targetType: 'season_photo',
+        details: JSON.stringify({ created: { title, link, season, imageUrl: finalImageUrl } })
+      });
       console.log('Inserted successfully');
     } catch (error) {
       console.error('Insert error:', error);
@@ -56,4 +64,4 @@ export const actions: Actions = {
 
     throw redirect(303, '/admin/season-photos');
   }
-}; 
+};

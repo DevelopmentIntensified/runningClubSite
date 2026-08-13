@@ -4,7 +4,9 @@ import { fail } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
 
 export const load: PageServerLoad = async ({ url }) => {
-  const sortBy = (url.searchParams.get('sort') as 'email' | 'createdAt' | 'lastLogin' | 'lastUpdated') || 'email';
+  const sortBy =
+    (url.searchParams.get('sort') as 'email' | 'createdAt' | 'lastLogin' | 'lastUpdated') ||
+    'email';
   const users = await getUsers(sortBy);
   return { users, sortBy };
 };
@@ -19,7 +21,13 @@ export const actions: Actions = {
     }
 
     await deleteUser(parseInt(id));
-    await logAdminAction({ adminId: parseInt(locals.user.id), action: 'delete', targetType: 'user', targetId: parseInt(id), details: JSON.stringify({ targetType: 'user', targetId: parseInt(id) }) });
+    await logAdminAction({
+      adminId: parseInt(locals.user!.id),
+      action: 'delete',
+      targetType: 'user',
+      targetId: parseInt(id),
+      details: JSON.stringify({ targetType: 'user', targetId: parseInt(id) })
+    });
     return { success: true };
   }
 };

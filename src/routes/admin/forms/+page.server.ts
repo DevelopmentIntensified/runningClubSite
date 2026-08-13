@@ -18,7 +18,13 @@ export const actions: Actions = {
     }
 
     await deleteForm(parseInt(id));
-    await logAdminAction({ adminId: parseInt(locals.user.id), action: 'delete', targetType: 'form', targetId: parseInt(id), details: JSON.stringify({ targetType: 'form', targetId: parseInt(id) }) });
+    await logAdminAction({
+      adminId: parseInt(locals.user!.id),
+      action: 'delete',
+      targetType: 'form',
+      targetId: parseInt(id),
+      details: JSON.stringify({ targetType: 'form', targetId: parseInt(id) })
+    });
     return { success: true };
   }
 };

@@ -1,6 +1,16 @@
-export function formatChangeDetails(details: Record<string, any> | null | string, action: string): string {
-  if (typeof details === 'string') {
-    try { details = JSON.parse(details); } catch { return details; }
+export function formatChangeDetails(
+  raw: Record<string, any> | null | string,
+  action: string
+): string {
+  let details: Record<string, any> | null;
+  if (typeof raw === 'string') {
+    try {
+      details = JSON.parse(raw);
+    } catch {
+      return raw;
+    }
+  } else {
+    details = raw;
   }
   if (!details) return '—';
 

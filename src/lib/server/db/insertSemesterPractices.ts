@@ -32,7 +32,8 @@ function isAfterDSTEnd(date: Date): boolean {
 }
 
 async function insertEventIfNotExists(eventData: EventData) {
-  const existingEvent = await db.select()
+  const existingEvent = await db
+    .select()
     .from(events)
     .where(
       and(
@@ -88,7 +89,8 @@ function createPractice(date: Date, day: 'tuesday' | 'thursday' | 'saturday'): E
         end: formatDate(date, 11, 0),
         location: 'toBeDetermined',
         type: 'Practice',
-        description: 'Saturday long run. We will have lunch at the Reber Thomas dining hall afterwards.'
+        description:
+          'Saturday long run. We will have lunch at the Reber Thomas dining hall afterwards.'
       };
   }
 }
@@ -120,7 +122,10 @@ export async function insertSemesterPractices() {
       end: `${semester.breakEnd.toISOString().split('T')[0]} 23:59:00`,
       location: 'N/A',
       type: 'Break',
-      description: semester.name === 'Fall 2026' ? 'No practice - Thanksgiving Break' : 'No practice - Spring Break'
+      description:
+        semester.name === 'Fall 2026'
+          ? 'No practice - Thanksgiving Break'
+          : 'No practice - Spring Break'
     });
 
     const current = new Date(semester.firstDate);
@@ -138,7 +143,11 @@ export async function insertSemesterPractices() {
       const dayAfterBreak = new Date(semester.breakEnd);
       dayAfterBreak.setDate(dayAfterBreak.getDate() + 1);
 
-      if (dayOfWeek === 6 && (current.getTime() === dayBeforeBreak.getTime() || current.getTime() === dayAfterBreak.getTime())) {
+      if (
+        dayOfWeek === 6 &&
+        (current.getTime() === dayBeforeBreak.getTime() ||
+          current.getTime() === dayAfterBreak.getTime())
+      ) {
         current.setDate(current.getDate() + 1);
         continue;
       }
@@ -152,7 +161,7 @@ export async function insertSemesterPractices() {
       }
 
       current.setDate(current.getDate() + 1);
-  }
+    }
   }
 }
 
@@ -161,18 +170,19 @@ export async function deleteSemesterPractices() {
     {
       name: 'Fall 2026',
       firstDate: new Date('2026-08-25'),
-      lastDate: new Date('2026-12-15'),
+      lastDate: new Date('2026-12-15')
     },
     {
       name: 'Spring 2027',
       firstDate: new Date('2027-01-19'),
-      lastDate: new Date('2027-05-11'),
+      lastDate: new Date('2027-05-11')
     }
   ];
 
   for (const semester of semesters) {
     console.log(`\nDeleting events for ${semester.name}...`);
-    const result = await db.delete(events)
+    const result = await db
+      .delete(events)
       .where(
         and(
           gte(events.start, semester.firstDate.toISOString()),

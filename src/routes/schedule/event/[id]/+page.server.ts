@@ -12,7 +12,7 @@ export const load: PageServerLoad = async (e) => {
     .orderBy(events.start);
 
   const eventData = eventsData[0];
-  
+
   if (!eventData) {
     throw error(404, 'Event not found');
   }
@@ -22,7 +22,7 @@ export const load: PageServerLoad = async (e) => {
       date: new Date(eventData.start),
       ...eventData,
       start: new Date(eventData.start),
-      end: new Date(eventData.end),
+      end: new Date(eventData.end)
     }
   };
 };

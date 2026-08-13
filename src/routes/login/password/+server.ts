@@ -9,18 +9,16 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
   const { email, password, redirectUrl } = body;
 
   if (!email || !password) {
-    return new Response(
-      JSON.stringify({ success: false, error: 'Invalid email or password' }),
-      { status: 400 }
-    );
+    return new Response(JSON.stringify({ success: false, error: 'Invalid email or password' }), {
+      status: 400
+    });
   }
 
   const emailRegex = /^[a-zA-Z\d]+@liberty\.edu$/;
   if (!emailRegex.test(email)) {
-    return new Response(
-      JSON.stringify({ success: false, error: 'Invalid email' }),
-      { status: 400 }
-    );
+    return new Response(JSON.stringify({ success: false, error: 'Invalid email' }), {
+      status: 400
+    });
   }
 
   try {
@@ -29,27 +27,28 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
     `)) as any[];
 
     if (result.length === 0) {
-      return new Response(
-        JSON.stringify({ success: false, error: 'Invalid email or password' }),
-        { status: 400 }
-      );
+      return new Response(JSON.stringify({ success: false, error: 'Invalid email or password' }), {
+        status: 400
+      });
     }
 
     const user = result[0];
 
     if (!user.hashed_password) {
       return new Response(
-        JSON.stringify({ success: false, error: 'No password set. Please sign in with a code, then set a password in settings.' }),
+        JSON.stringify({
+          success: false,
+          error: 'No password set. Please sign in with a code, then set a password in settings.'
+        }),
         { status: 400 }
       );
     }
 
     const validPassword = await verify(user.hashed_password as string, password);
     if (!validPassword) {
-      return new Response(
-        JSON.stringify({ success: false, error: 'Invalid email or password' }),
-        { status: 400 }
-      );
+      return new Response(JSON.stringify({ success: false, error: 'Invalid email or password' }), {
+        status: 400
+      });
     }
 
     const headers = new Headers();

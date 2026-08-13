@@ -47,7 +47,13 @@ export const actions: Actions = {
 
     if (updatedRecord) {
       const changes = objectDiff(existingRecord, updateData);
-      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'update', targetType: 'record', targetId: parseInt(params.id), details: JSON.stringify(changes) });
+      await logAdminAction({
+        adminId: parseInt(locals.user!.id),
+        action: 'update',
+        targetType: 'record',
+        targetId: parseInt(params.id),
+        details: JSON.stringify(changes)
+      });
       throw redirect(302, '/admin/records');
     } else {
       return fail(500, { message: 'Failed to update record' });

@@ -43,7 +43,10 @@ export const actions: Actions = {
     if (currentOccupation !== null) updateData.currentOccupation = currentOccupation || null;
 
     if (imageFile && imageFile.size > 0) {
-      const { url } = await put(imageFile.name, imageFile, { access: "public", token: BLOB_READ_WRITE_TOKEN });
+      const { url } = await put(imageFile.name, imageFile, {
+        access: 'public',
+        token: BLOB_READ_WRITE_TOKEN
+      });
       if (currentImageUrl) {
         del(currentImageUrl, { token: BLOB_READ_WRITE_TOKEN }).catch((e) => console.log(e));
       }
@@ -57,7 +60,13 @@ export const actions: Actions = {
     const updatedAlumnus = await updateAlumnus(parseInt(params.id), updateData);
 
     if (updatedAlumnus) {
-      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'update', targetType: 'alumnus', targetId: parseInt(params.id), details: JSON.stringify(changes) });
+      await logAdminAction({
+        adminId: parseInt(locals.user!.id),
+        action: 'update',
+        targetType: 'alumnus',
+        targetId: parseInt(params.id),
+        details: JSON.stringify(changes)
+      });
       throw redirect(302, '/admin/alumni');
     } else {
       return fail(500, { message: 'Failed to update alumnus' });

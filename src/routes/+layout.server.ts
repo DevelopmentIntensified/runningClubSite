@@ -7,8 +7,8 @@ import { sql } from 'drizzle-orm';
 import { redirect } from '@sveltejs/kit';
 
 export const load: LayoutServerLoad = async (event) => {
-  const newsCount = await getNewsCount()
-  const alumniCount = await getAlumniCount()
+  const newsCount = await getNewsCount();
+  const alumniCount = await getAlumniCount();
 
   const user = event.locals.user;
 

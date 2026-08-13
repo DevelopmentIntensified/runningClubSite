@@ -11,23 +11,56 @@
   let passwordSuccess = $state('');
 
   const usStatesList = [
-    { name: 'Alabama', abbr: 'AL' }, { name: 'Alaska', abbr: 'AK' }, { name: 'Arizona', abbr: 'AZ' },
-    { name: 'Arkansas', abbr: 'AR' }, { name: 'California', abbr: 'CA' }, { name: 'Colorado', abbr: 'CO' },
-    { name: 'Connecticut', abbr: 'CT' }, { name: 'Delaware', abbr: 'DE' }, { name: 'Florida', abbr: 'FL' },
-    { name: 'Georgia', abbr: 'GA' }, { name: 'Hawaii', abbr: 'HI' }, { name: 'Idaho', abbr: 'ID' },
-    { name: 'Illinois', abbr: 'IL' }, { name: 'Indiana', abbr: 'IN' }, { name: 'Iowa', abbr: 'IA' },
-    { name: 'Kansas', abbr: 'KS' }, { name: 'Kentucky', abbr: 'KY' }, { name: 'Louisiana', abbr: 'LA' },
-    { name: 'Maine', abbr: 'ME' }, { name: 'Maryland', abbr: 'MD' }, { name: 'Massachusetts', abbr: 'MA' },
-    { name: 'Michigan', abbr: 'MI' }, { name: 'Minnesota', abbr: 'MN' }, { name: 'Mississippi', abbr: 'MS' },
-    { name: 'Missouri', abbr: 'MO' }, { name: 'Montana', abbr: 'MT' }, { name: 'Nebraska', abbr: 'NE' },
-    { name: 'Nevada', abbr: 'NV' }, { name: 'New Hampshire', abbr: 'NH' }, { name: 'New Jersey', abbr: 'NJ' },
-    { name: 'New Mexico', abbr: 'NM' }, { name: 'New York', abbr: 'NY' }, { name: 'North Carolina', abbr: 'NC' },
-    { name: 'North Dakota', abbr: 'ND' }, { name: 'Ohio', abbr: 'OH' }, { name: 'Oklahoma', abbr: 'OK' },
-    { name: 'Oregon', abbr: 'OR' }, { name: 'Pennsylvania', abbr: 'PA' }, { name: 'Rhode Island', abbr: 'RI' },
-    { name: 'South Carolina', abbr: 'SC' }, { name: 'South Dakota', abbr: 'SD' }, { name: 'Tennessee', abbr: 'TN' },
-    { name: 'Texas', abbr: 'TX' }, { name: 'Utah', abbr: 'UT' }, { name: 'Vermont', abbr: 'VT' },
-    { name: 'Virginia', abbr: 'VA' }, { name: 'Washington', abbr: 'WA' }, { name: 'West Virginia', abbr: 'WV' },
-    { name: 'Wisconsin', abbr: 'WI' }, { name: 'Wyoming', abbr: 'WY' }
+    { name: 'Alabama', abbr: 'AL' },
+    { name: 'Alaska', abbr: 'AK' },
+    { name: 'Arizona', abbr: 'AZ' },
+    { name: 'Arkansas', abbr: 'AR' },
+    { name: 'California', abbr: 'CA' },
+    { name: 'Colorado', abbr: 'CO' },
+    { name: 'Connecticut', abbr: 'CT' },
+    { name: 'Delaware', abbr: 'DE' },
+    { name: 'Florida', abbr: 'FL' },
+    { name: 'Georgia', abbr: 'GA' },
+    { name: 'Hawaii', abbr: 'HI' },
+    { name: 'Idaho', abbr: 'ID' },
+    { name: 'Illinois', abbr: 'IL' },
+    { name: 'Indiana', abbr: 'IN' },
+    { name: 'Iowa', abbr: 'IA' },
+    { name: 'Kansas', abbr: 'KS' },
+    { name: 'Kentucky', abbr: 'KY' },
+    { name: 'Louisiana', abbr: 'LA' },
+    { name: 'Maine', abbr: 'ME' },
+    { name: 'Maryland', abbr: 'MD' },
+    { name: 'Massachusetts', abbr: 'MA' },
+    { name: 'Michigan', abbr: 'MI' },
+    { name: 'Minnesota', abbr: 'MN' },
+    { name: 'Mississippi', abbr: 'MS' },
+    { name: 'Missouri', abbr: 'MO' },
+    { name: 'Montana', abbr: 'MT' },
+    { name: 'Nebraska', abbr: 'NE' },
+    { name: 'Nevada', abbr: 'NV' },
+    { name: 'New Hampshire', abbr: 'NH' },
+    { name: 'New Jersey', abbr: 'NJ' },
+    { name: 'New Mexico', abbr: 'NM' },
+    { name: 'New York', abbr: 'NY' },
+    { name: 'North Carolina', abbr: 'NC' },
+    { name: 'North Dakota', abbr: 'ND' },
+    { name: 'Ohio', abbr: 'OH' },
+    { name: 'Oklahoma', abbr: 'OK' },
+    { name: 'Oregon', abbr: 'OR' },
+    { name: 'Pennsylvania', abbr: 'PA' },
+    { name: 'Rhode Island', abbr: 'RI' },
+    { name: 'South Carolina', abbr: 'SC' },
+    { name: 'South Dakota', abbr: 'SD' },
+    { name: 'Tennessee', abbr: 'TN' },
+    { name: 'Texas', abbr: 'TX' },
+    { name: 'Utah', abbr: 'UT' },
+    { name: 'Vermont', abbr: 'VT' },
+    { name: 'Virginia', abbr: 'VA' },
+    { name: 'Washington', abbr: 'WA' },
+    { name: 'West Virginia', abbr: 'WV' },
+    { name: 'Wisconsin', abbr: 'WI' },
+    { name: 'Wyoming', abbr: 'WY' }
   ];
 
   function confirmProfileChange() {
@@ -62,37 +95,54 @@
         <div>
           <label for="firstName" class="block text-sm font-medium text-gray-700">First Name</label>
           <input
-            id="firstName" name="firstName" type="text" required
+            id="firstName"
+            name="firstName"
+            type="text"
+            required
             value={user.firstName || ''}
-            class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+            class="focus:border-primary-500 focus:ring-primary-500 mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
           />
         </div>
         <div>
           <label for="lastName" class="block text-sm font-medium text-gray-700">Last Name</label>
           <input
-            id="lastName" name="lastName" type="text" required
+            id="lastName"
+            name="lastName"
+            type="text"
+            required
             value={user.lastName || ''}
-            class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+            class="focus:border-primary-500 focus:ring-primary-500 mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
           />
         </div>
         <div>
-          <label for="stateOfOrigin" class="block text-sm font-medium text-gray-700">State of Origin</label>
+          <label for="stateOfOrigin" class="block text-sm font-medium text-gray-700"
+            >State of Origin</label
+          >
           <select
-            id="stateOfOrigin" name="stateOfOrigin" required
-            class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+            id="stateOfOrigin"
+            name="stateOfOrigin"
+            required
+            class="focus:border-primary-500 focus:ring-primary-500 mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
           >
             <option value="">Select a state</option>
             {#each usStatesList as state}
-              <option value={state.abbr} selected={user.stateOfOrigin === state.abbr}>{state.name}</option>
+              <option value={state.abbr} selected={user.stateOfOrigin === state.abbr}
+                >{state.name}</option
+              >
             {/each}
           </select>
-          <p class="mt-1 text-xs text-amber-600">Please do not change your state of origin unless it is incorrect.</p>
+          <p class="mt-1 text-xs text-amber-600">
+            Please do not change your state of origin unless it is incorrect.
+          </p>
         </div>
         <div>
-          <label for="graduationYear" class="block text-sm font-medium text-gray-700">Graduation Year</label>
+          <label for="graduationYear" class="block text-sm font-medium text-gray-700"
+            >Graduation Year</label
+          >
           <select
-            id="graduationYear" name="graduationYear"
-            class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+            id="graduationYear"
+            name="graduationYear"
+            class="focus:border-primary-500 focus:ring-primary-500 mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
           >
             <option value="">Select graduation year</option>
             {#each Array.from({ length: 7 }, (_, i) => new Date().getFullYear() + i) as year}
@@ -101,13 +151,18 @@
           </select>
         </div>
         <div>
-          <label for="academicLevel" class="block text-sm font-medium text-gray-700">Academic Level</label>
+          <label for="academicLevel" class="block text-sm font-medium text-gray-700"
+            >Academic Level</label
+          >
           <select
-            id="academicLevel" name="academicLevel"
-            class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+            id="academicLevel"
+            name="academicLevel"
+            class="focus:border-primary-500 focus:ring-primary-500 mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
           >
             <option value="">Select</option>
-            <option value="undergraduate" selected={user.academicLevel === 'undergraduate'}>Undergraduate</option>
+            <option value="undergraduate" selected={user.academicLevel === 'undergraduate'}
+              >Undergraduate</option
+            >
             <option value="graduate" selected={user.academicLevel === 'graduate'}>Graduate</option>
           </select>
         </div>
@@ -121,12 +176,14 @@
         <div class="flex items-center gap-4">
           <button
             type="submit"
-            class="rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+            class="bg-primary-600 hover:bg-primary-700 focus:ring-primary-500 rounded-md px-4 py-2 text-sm font-medium text-white focus:ring-2 focus:ring-offset-2 focus:outline-none"
           >
             Save Profile
           </button>
           {#if user.lastUpdated}
-            <span class="text-xs text-gray-400">Last updated: {new Date(user.lastUpdated).toLocaleDateString()}</span>
+            <span class="text-xs text-gray-400"
+              >Last updated: {new Date(user.lastUpdated).toLocaleDateString()}</span
+            >
           {/if}
         </div>
       </form>
@@ -149,24 +206,40 @@
         class="space-y-4"
       >
         <div>
-          <label for="currentPassword" class="block text-sm font-medium text-gray-700">Current Password</label>
+          <label for="currentPassword" class="block text-sm font-medium text-gray-700"
+            >Current Password</label
+          >
           <input
-            id="currentPassword" name="currentPassword" type="password" required
-            class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+            id="currentPassword"
+            name="currentPassword"
+            type="password"
+            required
+            class="focus:border-primary-500 focus:ring-primary-500 mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
           />
         </div>
         <div>
-          <label for="newPassword" class="block text-sm font-medium text-gray-700">New Password</label>
+          <label for="newPassword" class="block text-sm font-medium text-gray-700"
+            >New Password</label
+          >
           <input
-            id="newPassword" name="newPassword" type="password" required minlength={8}
-            class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+            id="newPassword"
+            name="newPassword"
+            type="password"
+            required
+            minlength={8}
+            class="focus:border-primary-500 focus:ring-primary-500 mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
           />
         </div>
         <div>
-          <label for="confirmPassword" class="block text-sm font-medium text-gray-700">Confirm New Password</label>
+          <label for="confirmPassword" class="block text-sm font-medium text-gray-700"
+            >Confirm New Password</label
+          >
           <input
-            id="confirmPassword" name="confirmPassword" type="password" required
-            class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+            id="confirmPassword"
+            name="confirmPassword"
+            type="password"
+            required
+            class="focus:border-primary-500 focus:ring-primary-500 mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
           />
         </div>
         {#if passwordSuccess}
@@ -174,21 +247,31 @@
         {/if}
         <button
           type="submit"
-          class="rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+          class="bg-primary-600 hover:bg-primary-700 focus:ring-primary-500 rounded-md px-4 py-2 text-sm font-medium text-white focus:ring-2 focus:ring-offset-2 focus:outline-none"
         >
           Change Password
         </button>
       </form>
     </div>
 
-    <div class="rounded-2xl bg-white p-6 shadow-xl border border-red-100">
+    <div class="rounded-2xl border border-red-100 bg-white p-6 shadow-xl">
       <h2 class="mb-4 text-xl font-semibold text-red-700">Delete Account</h2>
-      <p class="mb-4 text-sm text-gray-600">This will permanently delete your profile data. You can also submit a deletion request through our <a href="/contact1" class="text-primary-600 hover:text-primary-800 underline">contact page</a>.</p>
-      <form action="?/deleteAccount" method="POST" use:enhance onsubmit={() => window.confirm('Are you sure? This cannot be undone.')}>
+      <p class="mb-4 text-sm text-gray-600">
+        This will permanently delete your profile data. You can also submit a deletion request
+        through our <a href="/contact1" class="text-primary-600 hover:text-primary-800 underline"
+          >contact page</a
+        >.
+      </p>
+      <form
+        action="?/deleteAccount"
+        method="POST"
+        use:enhance
+        onsubmit={() => window.confirm('Are you sure? This cannot be undone.')}
+      >
         <button
           type="submit"
-            onclick={() => window.confirm('Are you sure? This cannot be undone.')}
-          class="rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+          onclick={() => window.confirm('Are you sure? This cannot be undone.')}
+          class="rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:outline-none"
         >
           Delete My Account
         </button>
@@ -196,7 +279,7 @@
     </div>
 
     <p class="text-center text-xs text-gray-400">
-      <a href="/privacy" class="hover:text-gray-600 underline">Privacy Policy</a>
+      <a href="/privacy" class="underline hover:text-gray-600">Privacy Policy</a>
     </p>
   </div>
 </div>

@@ -35,7 +35,10 @@ export const actions: Actions = {
     let finalImageUrl = currentImageUrl;
 
     if (imageFile && imageFile.size > 0) {
-      const { url } = await put(imageFile.name, imageFile, { access: "public", token: BLOB_READ_WRITE_TOKEN });
+      const { url } = await put(imageFile.name, imageFile, {
+        access: 'public',
+        token: BLOB_READ_WRITE_TOKEN
+      });
       if (currentImageUrl) {
         await del(currentImageUrl, { token: BLOB_READ_WRITE_TOKEN }).catch((e) => {
           console.log(e);
@@ -46,12 +49,25 @@ export const actions: Actions = {
       finalImageUrl = imageUrl;
     }
 
-    const updateData = { name, position, order: parseInt(order), bio, imageUrl: finalImageUrl, active };
+    const updateData = {
+      name,
+      position,
+      order: parseInt(order),
+      bio,
+      imageUrl: finalImageUrl,
+      active
+    };
     const updatedLeader = await updateLeader(parseInt(params.id), updateData);
 
     if (updatedLeader) {
       const changes = objectDiff(existingLeader, updateData);
-      await logAdminAction({ adminId: parseInt(locals.user.id), action: 'update', targetType: 'leader', targetId: parseInt(params.id), details: JSON.stringify(changes) });
+      await logAdminAction({
+        adminId: parseInt(locals.user!.id),
+        action: 'update',
+        targetType: 'leader',
+        targetId: parseInt(params.id),
+        details: JSON.stringify(changes)
+      });
       throw redirect(302, '/admin/leaders');
     } else {
       return fail(500, { message: 'Failed to update leader' });

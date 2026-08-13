@@ -16,7 +16,9 @@
       alt={data.image.alt}
       class="absolute inset-0 h-full w-full object-cover"
     />
-    <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-black/40 to-black/60">
+    <div
+      class="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-black/40 to-black/60"
+    >
       <div class="px-4 text-center">
         <h1 class="text-3xl font-bold text-white sm:text-4xl md:text-5xl">Summer Training</h1>
         <p class="mt-2 text-sm text-white/90 sm:text-base">Get ready for the upcoming season</p>
@@ -24,7 +26,7 @@
     </div>
   </div>
 
-  <div class="overflow-hidden rounded-2xl bg-white shadow-xl p-6">
+  <div class="overflow-hidden rounded-2xl bg-white p-6 shadow-xl">
     <p class="mb-6 text-lg">
       We're excited to offer individualized summer training. Whether you are:
     </p>
@@ -32,14 +34,17 @@
       <li>Just Starting to run</li>
       <li>A former NCAA athlete who wants to continue competing</li>
       <li>Training for a marathon, half marathon, or any other distance</li>
-      <li>Gearing up for cross-country (XC) this fall (we have plenty of competitive opportunities)</li>
+      <li>
+        Gearing up for cross-country (XC) this fall (we have plenty of competitive opportunities)
+      </li>
       <li>Trying to walk on to the NCAA team</li>
     </ul>
     <p class="mb-4 text-lg">
-      Click the link below to get started. The form will take about 30-40 minutes. If you have any questions, DM George Crowder, Jill Crunkilton, or Evan O'Connor on groupme!
+      Click the link below to get started. The form will take about 30-40 minutes. If you have any
+      questions, DM George Crowder, Jill Crunkilton, or Evan O'Connor on groupme!
     </p>
     <div class="mt-6 w-full">
-      <iframe 
+      <iframe
         src="https://docs.google.com/forms/d/e/1FAIpQLSdYpov_P1dT_fnmX4S6CEEqdwHx2KCBMKx4zqwne1t3LzdhZA/viewform?embedded=true"
         class="h-[800px] w-full border-0"
         title="Summer Training Signup"

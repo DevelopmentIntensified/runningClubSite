@@ -10,28 +10,31 @@ import { RESENDAPIKEY } from '$env/static/private';
 const resend = new Resend(RESENDAPIKEY);
 const GENERAL_SEGMENT_ID = '708d2ae5-c8c6-41b8-94d4-8a9693b237c9';
 
-export const POST: RequestHandler = async function(event) {
+export const POST: RequestHandler = async function (event) {
   const siteUrl = getUrl();
   const body = await event.request.json();
   const code = body.code;
   const redirectUrl = body.redirectUrl || '/groupme';
 
   try {
-    await deleteDeadCodes()
+    await deleteDeadCodes();
   } catch (e) {
-    console.error('deleteDeadCodes error:', e)
+    console.error('deleteDeadCodes error:', e);
   }
 
-  const codeToCheck = await getCode(code)
+  const codeToCheck = await getCode(code);
   if (!codeToCheck) {
     return new Response(
-      JSON.stringify({ success: false, error: 'Invalid or expired code. Please request a new one.' }),
+      JSON.stringify({
+        success: false,
+        error: 'Invalid or expired code. Please request a new one.'
+      }),
       { status: 400 }
     );
   }
 
   try {
-    const email = codeToCheck.email
+    const email = codeToCheck.email;
     if (!email) {
       return new Response(
         JSON.stringify({ success: false, error: 'Unexpected error, please try again' }),
@@ -39,7 +42,9 @@ export const POST: RequestHandler = async function(event) {
       );
     }
 
-    const result = await db.execute(sql`SELECT id, email, first_name FROM "user" WHERE email = ${email}`)
+    const result = (await db.execute(
+      sql`SELECT id, email, first_name FROM "user" WHERE email = ${email}`
+    )) as { id: number; email: string; first_name: string | null }[];
 
     const headers = new Headers();
 
@@ -74,7 +79,11 @@ export const POST: RequestHandler = async function(event) {
   } catch (error) {
     console.error('Login error:', error);
     return new Response(
-      JSON.stringify({ success: false, error: 'Unexpected error, please try again', details: error instanceof Error ? error.message : String(error) }),
+      JSON.stringify({
+        success: false,
+        error: 'Unexpected error, please try again',
+        details: error instanceof Error ? error.message : String(error)
+      }),
       { status: 500 }
     );
   }

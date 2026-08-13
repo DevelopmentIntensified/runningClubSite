@@ -8,13 +8,20 @@ import { hash } from '@node-rs/argon2';
 
 export const POST: RequestHandler = async ({ request, cookies }) => {
   const body = await request.json();
-  const { firstName, lastName, stateOfOrigin, graduationYear, academicLevel, password, redirectUrl } = body;
+  const {
+    firstName,
+    lastName,
+    stateOfOrigin,
+    graduationYear,
+    academicLevel,
+    password,
+    redirectUrl
+  } = body;
 
   if (!firstName || !lastName || !stateOfOrigin || !graduationYear || !password) {
-    return new Response(
-      JSON.stringify({ success: false, error: 'All fields are required' }),
-      { status: 400 }
-    );
+    return new Response(JSON.stringify({ success: false, error: 'All fields are required' }), {
+      status: 400
+    });
   }
 
   if (password.length < 8) {
@@ -42,10 +49,13 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
           .set(setData)
           .where(eq(users.id, parseInt(user.id)));
 
-        return new Response(JSON.stringify({ success: true, redirectTo: redirectUrl || '/groupme' }), {
-          headers,
-          status: 200
-        });
+        return new Response(
+          JSON.stringify({ success: true, redirectTo: redirectUrl || '/groupme' }),
+          {
+            headers,
+            status: 200
+          }
+        );
       }
     }
 
@@ -80,7 +90,15 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
     } else {
       const updated = await db
         .update(users)
-        .set({ firstName, lastName, stateOfOrigin, graduationYear: parseInt(graduationYear), academicLevel: academicLevel || null, hashedPassword, lastLogin: now })
+        .set({
+          firstName,
+          lastName,
+          stateOfOrigin,
+          graduationYear: parseInt(graduationYear),
+          academicLevel: academicLevel || null,
+          hashedPassword,
+          lastLogin: now
+        })
         .where(eq(users.email, email))
         .returning({ id: users.id });
       userId = updated[0].id;

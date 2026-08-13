@@ -1,129 +1,157 @@
 <svelte:head>
-	<title>Privacy Policy - Liberty Running Club</title>
-	<meta
-		name="description"
-		content="How Liberty Running Club collects and uses personal information, including email and newsletters sent via Resend."
-	/>
+  <title>Privacy Policy - Liberty Running Club</title>
+  <meta
+    name="description"
+    content="How Liberty Running Club collects and uses personal information, including email and newsletters sent via Resend."
+  />
 </svelte:head>
 
 <div class="min-h-screen bg-gray-50">
-	<div class="relative h-48 sm:h-64 md:h-80">
-		<div
-			class="absolute inset-0 bg-gradient-to-br from-primary-700 via-primary-600 to-secondary-600"
-			aria-hidden="true"
-		></div>
-		<div class="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-black/30 to-black/50">
-			<div class="px-4 text-center">
-				<h1 class="text-3xl font-bold text-white sm:text-4xl md:text-5xl">Privacy Policy</h1>
-				<p class="mt-2 text-sm text-white/90 sm:text-base">Last updated: May 11, 2026</p>
-			</div>
-		</div>
-	</div>
+  <div class="relative h-48 sm:h-64 md:h-80">
+    <div
+      class="from-primary-700 via-primary-600 to-secondary-600 absolute inset-0 bg-gradient-to-br"
+      aria-hidden="true"
+    ></div>
+    <div
+      class="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-black/30 to-black/50"
+    >
+      <div class="px-4 text-center">
+        <h1 class="text-3xl font-bold text-white sm:text-4xl md:text-5xl">Privacy Policy</h1>
+        <p class="mt-2 text-sm text-white/90 sm:text-base">Last updated: May 11, 2026</p>
+      </div>
+    </div>
+  </div>
 
-	<div class="container mx-auto max-w-3xl px-4 py-10 sm:py-12">
-		<div class="prose prose-slate max-w-none rounded-2xl bg-white p-6 shadow-sm sm:p-10">
-			<p class="lead text-slate-700">
-				This policy describes how Liberty Running Club ("we," "our," or "us") handles information when you use our
-				website and related services, including when you sign in with your Liberty University email address and create
-				a profile.
-			</p>
+  <div class="container mx-auto max-w-3xl px-4 py-10 sm:py-12">
+    <div class="prose prose-slate max-w-none rounded-2xl bg-white p-6 shadow-sm sm:p-10">
+      <p class="lead text-slate-700">
+        This policy describes how Liberty Running Club ("we," "our," or "us") handles information
+        when you use our website and related services, including when you sign in with your Liberty
+        University email address and create a profile.
+      </p>
 
-			<h2 class="mt-8 text-xl font-semibold text-slate-900">Information we collect</h2>
-			<ul class="mt-3 list-disc space-y-2 pl-5 text-slate-700">
-				<li>
-					<strong>Email address</strong> — When you sign in, we collect the email
-					you provide (we expect a <code class="rounded bg-slate-100 px-1">@liberty.edu</code> address for sign-in).
-				</li>
-				<li>
-					<strong>Profile information</strong> — Your first name, last name, state of origin, graduation year, and
-					academic level (undergraduate/graduate) when you set up or update your profile.
-				</li>
-				<li>
-					<strong>Session and security data</strong> — We use cookies and similar technologies to keep you signed in
-					and to protect the site (for example, session identifiers managed by our authentication layer). A hashed
-					password is stored when you set a password for your account.
-				</li>
-				<li>
-					<strong>Content you submit</strong> — If you contact us or use features that accept input, we process that
-					information as needed to respond or operate the feature.
-				</li>
-				<li>
-					<strong>Activity logs</strong> — Profile changes (name, state, academic level) are logged and visible to
-					administrators. Administrative actions across the site are also logged for accountability and security.
-				</li>
-			</ul>
+      <h2 class="mt-8 text-xl font-semibold text-slate-900">Information we collect</h2>
+      <ul class="mt-3 list-disc space-y-2 pl-5 text-slate-700">
+        <li>
+          <strong>Email address</strong> — When you sign in, we collect the email you provide (we
+          expect a <code class="rounded bg-slate-100 px-1">@liberty.edu</code> address for sign-in).
+        </li>
+        <li>
+          <strong>Profile information</strong> — Your first name, last name, state of origin, graduation
+          year, and academic level (undergraduate/graduate) when you set up or update your profile.
+        </li>
+        <li>
+          <strong>Session and security data</strong> — We use cookies and similar technologies to keep
+          you signed in and to protect the site (for example, session identifiers managed by our authentication
+          layer). A hashed password is stored when you set a password for your account.
+        </li>
+        <li>
+          <strong>Content you submit</strong> — If you contact us or use features that accept input, we
+          process that information as needed to respond or operate the feature.
+        </li>
+        <li>
+          <strong>Activity logs</strong> — Profile changes (name, state, academic level) are logged and
+          visible to administrators. Administrative actions across the site are also logged for accountability
+          and security.
+        </li>
+      </ul>
 
-			<h2 class="mt-8 text-xl font-semibold text-slate-900">Newsletter and email delivery</h2>
-			<p class="mt-3 text-slate-700">
-				We use your email address to send transactional messages (such as login verification codes) and, where you
-				are part of our community outreach, club updates and newsletters. Transactional and newsletter email is
-				delivered using <strong>Resend</strong>, a third-party email service provider.
-			</p>
-			<p class="mt-3 text-slate-700">
-				When we process data through Resend, Resend may process certain technical and delivery-related data as
-				described in their own policy. You can read Resend's privacy policy here:
-				<a
-					href="https://resend.com/legal/privacy-policy"
-					class="font-medium text-primary-600 underline decoration-primary-300 underline-offset-2 hover:text-primary-800"
-					target="_blank"
-					rel="noopener noreferrer"
-					>https://resend.com/legal/privacy-policy</a
-				>.
-			</p>
-			<p class="mt-3 text-slate-700">
-				You can unsubscribe from club emails and newsletters at any time using the unsubscribe link in any email we send.
-			</p>
+      <h2 class="mt-8 text-xl font-semibold text-slate-900">Newsletter and email delivery</h2>
+      <p class="mt-3 text-slate-700">
+        We use your email address to send transactional messages (such as login verification codes)
+        and, where you are part of our community outreach, club updates and newsletters.
+        Transactional and newsletter email is delivered using <strong>Resend</strong>, a third-party
+        email service provider.
+      </p>
+      <p class="mt-3 text-slate-700">
+        When we process data through Resend, Resend may process certain technical and
+        delivery-related data as described in their own policy. You can read Resend's privacy policy
+        here:
+        <a
+          href="https://resend.com/legal/privacy-policy"
+          class="text-primary-600 decoration-primary-300 hover:text-primary-800 font-medium underline underline-offset-2"
+          target="_blank"
+          rel="noopener noreferrer">https://resend.com/legal/privacy-policy</a
+        >.
+      </p>
+      <p class="mt-3 text-slate-700">
+        You can unsubscribe from club emails and newsletters at any time using the unsubscribe link
+        in any email we send.
+      </p>
 
-			<h2 class="mt-8 text-xl font-semibold text-slate-900">Alumni Newsletter Signup</h2>
-			<p class="mt-3 text-slate-700">
-				When you sign up for our alumni newsletter, we collect your first name, last name, and email address. This information is stored in our database and added to our alumni email list via Resend.
-			</p>
-			<p class="mt-3 text-slate-700">
-				We use this information to send you alumni-specific updates, event invitations, and club news. You can unsubscribe from alumni emails at any time using the unsubscribe link in any email we send.
-			</p>
+      <h2 class="mt-8 text-xl font-semibold text-slate-900">Alumni Newsletter Signup</h2>
+      <p class="mt-3 text-slate-700">
+        When you sign up for our alumni newsletter, we collect your first name, last name, and email
+        address. This information is stored in our database and added to our alumni email list via
+        Resend.
+      </p>
+      <p class="mt-3 text-slate-700">
+        We use this information to send you alumni-specific updates, event invitations, and club
+        news. You can unsubscribe from alumni emails at any time using the unsubscribe link in any
+        email we send.
+      </p>
 
-			<h2 class="mt-8 text-xl font-semibold text-slate-900">Who can see your data</h2>
-			<p class="mt-3 text-slate-700">
-				Your profile information (name, state, graduation year, academic level) is visible to club leaders and
-				administrators for safety and organizational purposes. This information may also be displayed publicly in
-				aggregate form, such as on our "Where We're From" map and team rosters.
-			</p>
-			<p class="mt-3 text-slate-700">
-				Club leaders and administrators may access your account information as needed to operate the club, maintain
-				the website, and ensure the safety of all members. Your data is not shared with third parties except as
-				described in this policy (e.g., Resend for email delivery).
-			</p>
+      <h2 class="mt-8 text-xl font-semibold text-slate-900">Who can see your data</h2>
+      <p class="mt-3 text-slate-700">
+        Your profile information (name, state, graduation year, academic level) is visible to club
+        leaders and administrators for safety and organizational purposes. This information may also
+        be displayed publicly in aggregate form, such as on our "Where We're From" map and team
+        rosters.
+      </p>
+      <p class="mt-3 text-slate-700">
+        Club leaders and administrators may access your account information as needed to operate the
+        club, maintain the website, and ensure the safety of all members. Your data is not shared
+        with third parties except as described in this policy (e.g., Resend for email delivery).
+      </p>
 
-			<h2 class="mt-8 text-xl font-semibold text-slate-900">How we use your information</h2>
-			<ul class="mt-3 list-disc space-y-2 pl-5 text-slate-700">
-				<li>To verify your identity, authenticate logins, and maintain your account session.</li>
-				<li>To display member profiles (name, state, graduation year, academic level) for club purposes such as our "Where We're From" map and team rosters.</li>
-				<li>To send club communications and newsletters you would reasonably expect as a member or subscriber.</li>
-				<li>To improve the website, respond to inquiries, and keep the service secure.</li>
-				<li>To maintain audit logs of administrative actions and profile changes for security and accountability.</li>
-			</ul>
+      <h2 class="mt-8 text-xl font-semibold text-slate-900">How we use your information</h2>
+      <ul class="mt-3 list-disc space-y-2 pl-5 text-slate-700">
+        <li>To verify your identity, authenticate logins, and maintain your account session.</li>
+        <li>
+          To display member profiles (name, state, graduation year, academic level) for club
+          purposes such as our "Where We're From" map and team rosters.
+        </li>
+        <li>
+          To send club communications and newsletters you would reasonably expect as a member or
+          subscriber.
+        </li>
+        <li>To improve the website, respond to inquiries, and keep the service secure.</li>
+        <li>
+          To maintain audit logs of administrative actions and profile changes for security and
+          accountability.
+        </li>
+      </ul>
 
-			<h2 class="mt-8 text-xl font-semibold text-slate-900">Your data and choices</h2>
-			<p class="mt-3 text-slate-700">
-				You can view and update your profile information at any time through your
-				<a href="/settings" class="font-medium text-primary-600 underline decoration-primary-300 underline-offset-2 hover:text-primary-800">settings page</a>.
-				You may also delete your profile data by using the delete option on the settings page or by
-				contacting us through our
-				<a href="/contact1" class="font-medium text-primary-600 underline decoration-primary-300 underline-offset-2 hover:text-primary-800">contact page</a>.
-			</p>
+      <h2 class="mt-8 text-xl font-semibold text-slate-900">Your data and choices</h2>
+      <p class="mt-3 text-slate-700">
+        You can view and update your profile information at any time through your
+        <a
+          href="/settings"
+          class="text-primary-600 decoration-primary-300 hover:text-primary-800 font-medium underline underline-offset-2"
+          >settings page</a
+        >. You may also delete your profile data by using the delete option on the settings page or
+        by contacting us through our
+        <a
+          href="/contact1"
+          class="text-primary-600 decoration-primary-300 hover:text-primary-800 font-medium underline underline-offset-2"
+          >contact page</a
+        >.
+      </p>
 
-			<h2 class="mt-8 text-xl font-semibold text-slate-900">Retention</h2>
-			<p class="mt-3 text-slate-700">
-				We retain your profile information for as long as your account is active. Login verification
-				codes are short-lived and deleted automatically. Audit logs and profile change records are retained
-				indefinitely for security and accountability purposes.
-			</p>
+      <h2 class="mt-8 text-xl font-semibold text-slate-900">Retention</h2>
+      <p class="mt-3 text-slate-700">
+        We retain your profile information for as long as your account is active. Login verification
+        codes are short-lived and deleted automatically. Audit logs and profile change records are
+        retained indefinitely for security and accountability purposes.
+      </p>
 
-			<h2 class="mt-8 text-xl font-semibold text-slate-900">Contact</h2>
-			<p class="mt-3 text-slate-700">
-				For privacy-related questions, reach out through our
-				<a href="/contact1" class="font-medium text-primary-600 hover:text-primary-800">contact page</a>.
-			</p>
-		</div>
-	</div>
+      <h2 class="mt-8 text-xl font-semibold text-slate-900">Contact</h2>
+      <p class="mt-3 text-slate-700">
+        For privacy-related questions, reach out through our
+        <a href="/contact1" class="text-primary-600 hover:text-primary-800 font-medium"
+          >contact page</a
+        >.
+      </p>
+    </div>
+  </div>
 </div>

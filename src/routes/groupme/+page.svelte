@@ -7,7 +7,7 @@
 </svelte:head>
 
 <div
-  class="min-h-screen bg-gradient-to-b from-primary-100 to-primary-200 px-4 py-12 sm:px-6 lg:px-8"
+  class="from-primary-100 to-primary-200 min-h-screen bg-gradient-to-b px-4 py-12 sm:px-6 lg:px-8"
 >
   <div class="mx-auto max-w-3xl">
     <div class="overflow-hidden rounded-lg bg-white shadow-xl">
@@ -23,7 +23,7 @@
             href="https://groupme.com/join_group/86746915/q0pqDpY8"
             target="_blank"
             rel="noopener noreferrer"
-            class="mb-8 inline-flex items-center rounded-md border border-transparent bg-primary-600 px-6 py-3 text-base font-medium text-white transition duration-150 ease-in-out hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+            class="bg-primary-600 hover:bg-primary-700 focus:ring-primary-500 mb-8 inline-flex items-center rounded-md border border-transparent px-6 py-3 text-base font-medium text-white transition duration-150 ease-in-out focus:ring-2 focus:ring-offset-2 focus:outline-none"
           >
             Join GroupMe
             <svg
@@ -40,7 +40,7 @@
             </svg>
           </a>
           <div class="h-48 w-48 sm:h-64 sm:w-64">
-            <GroupmeIcon class="h-full w-full text-primary-600" />
+            <GroupmeIcon class="text-primary-600 h-full w-full" />
           </div>
         </div>
       </div>

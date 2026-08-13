@@ -13,7 +13,8 @@
   let totalMembers = $state(data.totalMembers);
   let years: string[] = data.years;
   let selectedYear = $state('all');
-  let hoveredState: { abbr: string; total: number; pct: number; firstYear: number } | null = $state(null);
+  let hoveredState: { abbr: string; total: number; pct: number; firstYear: number } | null =
+    $state(null);
   let mouseX = $state(0);
   let mouseY = $state(0);
 
@@ -23,8 +24,8 @@
     return totalMembers > 0 ? count / totalMembers : 0;
   }
 
-  const colorScale = scaleThreshold()
-    .domain([0.01, 0.05, 0.10, 0.20])
+  const colorScale = scaleThreshold<number, string>()
+    .domain([0.01, 0.05, 0.1, 0.2])
     .range(['#fee0d2', '#fc9272', '#ef4444', '#b91c1c', '#7f1d1d']);
 
   function getColor(abbr: string): string {
@@ -43,20 +44,60 @@
   }
 
   const stateFipsToAbbr: Record<string, string> = {
-    '01': 'AL', '02': 'AK', '04': 'AZ', '05': 'AR', '06': 'CA',
-    '08': 'CO', '09': 'CT', '10': 'DE', '11': 'DC', '12': 'FL',
-    '13': 'GA', '15': 'HI', '16': 'ID', '17': 'IL', '18': 'IN',
-    '19': 'IA', '20': 'KS', '21': 'KY', '22': 'LA', '23': 'ME',
-    '24': 'MD', '25': 'MA', '26': 'MI', '27': 'MN', '28': 'MS',
-    '29': 'MO', '30': 'MT', '31': 'NE', '32': 'NV', '33': 'NH',
-    '34': 'NJ', '35': 'NM', '36': 'NY', '37': 'NC', '38': 'ND',
-    '39': 'OH', '40': 'OK', '41': 'OR', '42': 'PA', '44': 'RI',
-    '45': 'SC', '46': 'SD', '47': 'TN', '48': 'TX', '49': 'UT',
-    '50': 'VT', '51': 'VA', '53': 'WA', '54': 'WV', '55': 'WI',
+    '01': 'AL',
+    '02': 'AK',
+    '04': 'AZ',
+    '05': 'AR',
+    '06': 'CA',
+    '08': 'CO',
+    '09': 'CT',
+    '10': 'DE',
+    '11': 'DC',
+    '12': 'FL',
+    '13': 'GA',
+    '15': 'HI',
+    '16': 'ID',
+    '17': 'IL',
+    '18': 'IN',
+    '19': 'IA',
+    '20': 'KS',
+    '21': 'KY',
+    '22': 'LA',
+    '23': 'ME',
+    '24': 'MD',
+    '25': 'MA',
+    '26': 'MI',
+    '27': 'MN',
+    '28': 'MS',
+    '29': 'MO',
+    '30': 'MT',
+    '31': 'NE',
+    '32': 'NV',
+    '33': 'NH',
+    '34': 'NJ',
+    '35': 'NM',
+    '36': 'NY',
+    '37': 'NC',
+    '38': 'ND',
+    '39': 'OH',
+    '40': 'OK',
+    '41': 'OR',
+    '42': 'PA',
+    '44': 'RI',
+    '45': 'SC',
+    '46': 'SD',
+    '47': 'TN',
+    '48': 'TX',
+    '49': 'UT',
+    '50': 'VT',
+    '51': 'VA',
+    '53': 'WA',
+    '54': 'WV',
+    '55': 'WI',
     '56': 'WY'
   };
 
-  const geojson = topojson.feature(usStates, usStates.objects.states as any);
+  const geojson = topojson.feature(usStates as any, (usStates as any).objects.states as any);
   const projection = geoAlbersUsa().fitSize([975, 610], geojson);
   const pathGen = geoPath().projection(projection);
   const features = (geojson as any).features;
@@ -74,17 +115,20 @@
 
 <div class="min-h-screen bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
   <div class="mx-auto max-w-5xl">
-    <div class="text-center mb-8">
+    <div class="mb-8 text-center">
       <h1 class="text-3xl font-extrabold text-gray-900">Where We're From</h1>
       <p class="mt-2 text-gray-600">Our members have joined from across the country.</p>
-      <p class="mt-1 text-xs text-gray-400">Note: Members who joined before the site launched in 2025 appear under 2025 in the year filter.</p>
+      <p class="mt-1 text-xs text-gray-400">
+        Note: Members who joined before the site launched in 2025 appear under 2025 in the year
+        filter.
+      </p>
     </div>
 
-    <div class="flex justify-center mb-6">
+    <div class="mb-6 flex justify-center">
       <select
         bind:value={selectedYear}
         onchange={fetchStats}
-        class="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm text-gray-700 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20"
+        class="focus:border-primary-500 focus:ring-primary-500/20 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm text-gray-700 shadow-sm focus:ring-2 focus:outline-none"
       >
         <option value="all">All Years</option>
         {#each years as year}
@@ -93,7 +137,7 @@
       </select>
     </div>
 
-    <div class="bg-white rounded-2xl shadow-xl p-6">
+    <div class="rounded-2xl bg-white p-6 shadow-xl">
       <svg viewBox="0 0 975 610" class="w-full">
         {#each svgPaths as path}
           <path
@@ -113,20 +157,22 @@
               mouseX = e.clientX;
               mouseY = e.clientY;
             }}
-            onmouseleave={() => { hoveredState = null; }}
+            onmouseleave={() => {
+              hoveredState = null;
+            }}
           />
         {/each}
       </svg>
 
-      <div class="flex justify-center items-center gap-3 mt-6 text-sm text-gray-600">
+      <div class="mt-6 flex items-center justify-center gap-3 text-sm text-gray-600">
         <span>0%</span>
-        <div class="flex rounded overflow-hidden">
-          <div class="w-8 h-4" style="background: #d1d5db"></div>
-          <div class="w-8 h-4" style="background: #fee0d2"></div>
-          <div class="w-8 h-4" style="background: #fc9272"></div>
-          <div class="w-8 h-4" style="background: #ef4444"></div>
-          <div class="w-8 h-4" style="background: #b91c1c"></div>
-          <div class="w-8 h-4" style="background: #7f1d1d"></div>
+        <div class="flex overflow-hidden rounded">
+          <div class="h-4 w-8" style="background: #d1d5db"></div>
+          <div class="h-4 w-8" style="background: #fee0d2"></div>
+          <div class="h-4 w-8" style="background: #fc9272"></div>
+          <div class="h-4 w-8" style="background: #ef4444"></div>
+          <div class="h-4 w-8" style="background: #b91c1c"></div>
+          <div class="h-4 w-8" style="background: #7f1d1d"></div>
         </div>
         <span>20%+</span>
       </div>
@@ -134,11 +180,15 @@
 
     {#if hoveredState}
       <div
-        class="fixed z-50 pointer-events-none bg-gray-900 text-white rounded-lg px-4 py-3 shadow-lg text-sm"
+        class="pointer-events-none fixed z-50 rounded-lg bg-gray-900 px-4 py-3 text-sm text-white shadow-lg"
         style="left: {mouseX + 12}px; top: {mouseY + 12}px;"
       >
         <p class="font-semibold">{stateNames[hoveredState.abbr] || hoveredState.abbr}</p>
-        <p>{hoveredState.total} member{hoveredState.total !== 1 ? 's' : ''} ({pctFormat(hoveredState.pct)})</p>
+        <p>
+          {hoveredState.total} member{hoveredState.total !== 1 ? 's' : ''} ({pctFormat(
+            hoveredState.pct
+          )})
+        </p>
         {#if hoveredState.firstYear}
           <p class="text-gray-300">First member: {hoveredState.firstYear}</p>
         {/if}

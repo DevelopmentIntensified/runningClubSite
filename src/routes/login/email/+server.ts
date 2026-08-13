@@ -17,9 +17,12 @@ export const POST = async (event: RequestEvent) => {
   const email = data.email;
 
   if (data.privacyAccepted !== true) {
-    return new Response(JSON.stringify({ success: false, error: 'You must accept the Privacy Policy to continue.' }), {
-      status: 400
-    });
+    return new Response(
+      JSON.stringify({ success: false, error: 'You must accept the Privacy Policy to continue.' }),
+      {
+        status: 400
+      }
+    );
   }
 
   const emailRegex = /^[a-zA-Z\d]+@liberty\.edu$/;
@@ -34,7 +37,7 @@ export const POST = async (event: RequestEvent) => {
 
   const random: RandomReader = {
     read(bytes) {
-      crypto.getRandomValues(bytes);
+      crypto.getRandomValues(bytes as Uint8Array<ArrayBuffer>);
     }
   };
 

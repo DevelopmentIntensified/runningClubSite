@@ -28,7 +28,7 @@
           </div>
         {/if}
         <div class="p-6">
-          <h2 class="mb-2 text-xl font-semibold text-gray-900 group-hover:text-primary-600">
+          <h2 class="group-hover:text-primary-600 mb-2 text-xl font-semibold text-gray-900">
             {newsItem.title}
           </h2>
           <p class="mb-4 text-sm text-gray-500">

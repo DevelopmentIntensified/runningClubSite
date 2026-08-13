@@ -20,8 +20,7 @@
 </svelte:head>
 
 <div class="container mx-auto px-4 py-12">
-    <div class="relative mb-8 h-48 overflow-hidden rounded-2xl sm:h-64 md:h-80">
-
+  <div class="relative mb-8 h-48 overflow-hidden rounded-2xl sm:h-64 md:h-80">
     <img
       src={trainingImg}
       alt="Runners training"
@@ -65,7 +64,7 @@
         <div class="overflow-hidden rounded-2xl bg-white shadow-xl">
           <div class="bg-primary-600 px-6 py-4">
             <h3 class="text-xl font-semibold text-white">Send us a Message</h3>
-            <p class="mt-1 text-sm text-primary-100">
+            <p class="text-primary-100 mt-1 text-sm">
               Fill out the form below and we'll respond ASAP.
             </p>
           </div>
@@ -98,7 +97,7 @@
                   bind:value={formData.name}
                   name="name"
                   required
-                  class="block w-full rounded-lg border border-gray-300 px-4 py-3 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20"
+                  class="focus:border-primary-500 focus:ring-primary-500/20 block w-full rounded-lg border border-gray-300 px-4 py-3 shadow-sm focus:ring-2 focus:outline-none"
                   placeholder="Your name"
                 />
               </div>
@@ -113,7 +112,7 @@
                   name="email"
                   bind:value={formData.email}
                   required
-                  class="block w-full rounded-lg border border-gray-300 px-4 py-3 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20"
+                  class="focus:border-primary-500 focus:ring-primary-500/20 block w-full rounded-lg border border-gray-300 px-4 py-3 shadow-sm focus:ring-2 focus:outline-none"
                   placeholder="your.email@example.com"
                 />
               </div>
@@ -128,15 +127,14 @@
                   bind:value={formData.message}
                   required
                   rows="5"
-                  class="block w-full rounded-lg border border-gray-300 px-4 py-3 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20"
-                  placeholder="Your message..."
-                ></textarea>
+                  class="focus:border-primary-500 focus:ring-primary-500/20 block w-full rounded-lg border border-gray-300 px-4 py-3 shadow-sm focus:ring-2 focus:outline-none"
+                  placeholder="Your message..."></textarea>
               </div>
             </div>
 
             <button
               type="submit"
-              class="w-full rounded-lg bg-primary-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition-all hover:bg-primary-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+              class="bg-primary-600 hover:bg-primary-700 focus:ring-primary-500 w-full rounded-lg px-4 py-3 text-sm font-semibold text-white shadow-sm transition-all hover:shadow-md focus:ring-2 focus:ring-offset-2 focus:outline-none"
             >
               Send Message
             </button>

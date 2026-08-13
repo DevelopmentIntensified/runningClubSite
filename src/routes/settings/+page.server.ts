@@ -34,7 +34,7 @@ export const actions: Actions = {
     if (graduationYear) updateData.graduationYear = parseInt(graduationYear);
     if (academicLevel) updateData.academicLevel = academicLevel;
 
-    await updateUserProfile(parseInt(locals.user.id), updateData);
+    await updateUserProfile(parseInt(locals.user!.id), updateData);
 
     return { success: true };
   },
@@ -59,7 +59,9 @@ export const actions: Actions = {
       return { success: false, error: 'New passwords do not match' };
     }
 
-    const result = await db.execute(sql`SELECT hashed_password FROM "user" WHERE id = ${parseInt(locals.user.id)}`);
+    const result = await db.execute(
+      sql`SELECT hashed_password FROM "user" WHERE id = ${parseInt(locals.user!.id)}`
+    );
 
     if (result.length === 0) return { success: false, error: 'User not found' };
 
@@ -70,9 +72,10 @@ export const actions: Actions = {
     }
 
     const hashedPassword = await hash(newPassword);
-    await db.update(users)
+    await db
+      .update(users)
       .set({ hashedPassword })
-      .where(eq(users.id, parseInt(locals.user.id)));
+      .where(eq(users.id, parseInt(locals.user!.id)));
 
     return { success: true };
   },
@@ -80,19 +83,23 @@ export const actions: Actions = {
   deleteAccount: async ({ locals, cookies }) => {
     if (!locals.user) return { success: false, error: 'Not authenticated' };
 
-    const userName = [locals.user.firstName, locals.user.lastName].filter(Boolean).join(' ') || locals.user.email;
+    const userName =
+      [locals.user.firstName, locals.user.lastName].filter(Boolean).join(' ') || locals.user.email;
     await logAdminAction({
-      adminId: parseInt(locals.user.id),
+      adminId: parseInt(locals.user!.id),
       action: 'delete',
       targetType: 'user',
-      targetId: parseInt(locals.user.id),
+      targetId: parseInt(locals.user!.id),
       details: JSON.stringify({ deletedOwnAccount: true, name: userName })
     });
 
-    await db.delete(users).where(eq(users.id, parseInt(locals.user.id)));
+    await db.delete(users).where(eq(users.id, parseInt(locals.user!.id)));
 
     const sessionCookie = lucia.createBlankSessionCookie();
-    cookies.set(sessionCookie.name, sessionCookie.value, { path: '.', ...sessionCookie.attributes });
+    cookies.set(sessionCookie.name, sessionCookie.value, {
+      path: '.',
+      ...sessionCookie.attributes
+    });
     cookies.set('pendingSignupEmail', '', { path: '/', maxAge: 0 });
 
     throw redirect(302, '/login');
