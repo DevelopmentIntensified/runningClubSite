@@ -138,72 +138,44 @@ const eventsData = [
       'Season-ending track festival hosted by George Mason University, celebrating the sport with a mix of competitive events and fun activities.'
   },
   {
-    title: 'Elite Gymnastics Open Gym Night',
-    start: new Date(2025, 0, 30, 20, 0), // January 30th, 2025, 8:00 PM
-    end: new Date(2025, 0, 30, 22, 0), // January 30th, 2025, 10:00 PM
-    location: 'Elite Gymnastics',
-    type: 'Social Event'
-  },
-  {
-    title: 'Frozen on Ice',
-    start: new Date(2025, 1, 7, 19, 0), // February 7th, 2025, 7:00 PM
-    end: new Date(2025, 1, 7, 21, 0), // February 7th, 2025, 9:00 PM
-    location: 'Student Activities Center',
-    type: 'Social Event'
-  },
-  {
-    title: 'Elite Gymnastics Night',
-    start: new Date(2025, 1, 13, 20, 0), // February 13th, 2025, 8:00 PM
-    end: new Date(2025, 1, 13, 22, 0), // February 13th, 2025, 10:00 PM
-    location: 'Elite Gymnastics',
-    type: 'Social Event'
-  },
-  {
-    title: 'Josiah Queen Concert',
-    start: new Date(2025, 1, 21, 19, 0), // February 21st, 2025, 7:00 PM
-    end: new Date(2025, 1, 21, 22, 0), // February 21st, 2025, 10:00 PM
-    location: 'Concert Hall',
-    type: 'Social Event'
-  },
-  {
-    title: 'Sunrise Hike at Sharp Top',
-    start: new Date(2025, 2, 1, 6, 0), // March 1st, 2025, 6:00 AM
-    end: new Date(2025, 2, 1, 9, 0), // March 1st, 2025, 9:00 AM
-    location: 'Sharp Top Mountain',
-    type: 'Social Event'
-  },
-  {
-    title: 'Spring Break',
-    start: new Date(2025, 2, 9, 0, 0), // March 9th, 2025, 12:00 AM
-    end: new Date(2025, 2, 14, 23, 59), // March 14th, 2025, 11:59 PM
-    location: 'Liberty University',
-    type: 'Social Event'
-  },
-  {
-    title: 'Class of Coffeehouse',
-    start: new Date(2025, 2, 22, 19, 0), // March 22nd, 2025, 7:00 PM
-    end: new Date(2025, 2, 22, 22, 0), // March 22nd, 2025, 10:00 PM
-    location: 'Student Center',
-    type: 'Social Event'
-  },
-  {
-    title: 'Tubing at Snowflex',
-    start: new Date(2025, 2, 29, 18, 0), // March 29th, 2025, 6:00 PM
-    end: new Date(2025, 2, 29, 21, 0), // March 29th, 2025, 9:00 PM
-    location: 'Snowflex Centre',
-    type: 'Social Event'
-  },
-  {
-    title: 'Outside Movie Night',
-    start: new Date(2025, 3, 11, 20, 0), // April 11th, 2025, 8:00 PM
-    end: new Date(2025, 3, 11, 23, 0), // April 11th, 2025, 11:00 PM
+    title: 'Back to School Hike',
+    start: new Date(2026, 7, 29, 12, 0), // August 29th, 2026, 12:00 PM
+    end: new Date(2026, 7, 29, 15, 0), // August 29th, 2026, 3:00 PM
     location: 'TBD',
     type: 'Social Event'
   },
   {
-    title: 'Spring Formal',
-    start: new Date(2025, 3, 25, 18, 0), // April 25th, 2025, 6:00 PM
-    end: new Date(2025, 3, 25, 21, 0), // April 25th, 2025, 9:00 PM
+    title: 'Campfire',
+    start: new Date(2026, 8, 11, 19, 0), // September 11th, 2026, 7:00 PM
+    end: new Date(2026, 8, 11, 21, 0), // September 11th, 2026, 9:00 PM
+    location: 'TBD',
+    type: 'Social Event'
+  },
+  {
+    title: 'Fall Festival',
+    start: new Date(2026, 9, 10, 14, 0), // October 10th, 2026, 2:00 PM
+    end: new Date(2026, 9, 10, 17, 0), // October 10th, 2026, 5:00 PM
+    location: 'TBD',
+    type: 'Social Event'
+  },
+  {
+    title: 'Scaremare',
+    start: new Date(2026, 9, 29, 18, 0), // October 29th, 2026, 6:00 PM
+    end: new Date(2026, 9, 29, 21, 0), // October 29th, 2026, 9:00 PM
+    location: 'TBD',
+    type: 'Social Event'
+  },
+  {
+    title: 'Game Night',
+    start: new Date(2026, 10, 13, 19, 0), // November 13th, 2026, 7:00 PM
+    end: new Date(2026, 10, 13, 22, 0), // November 13th, 2026, 10:00 PM
+    location: 'TBD',
+    type: 'Social Event'
+  },
+  {
+    title: 'Christmas Party',
+    start: new Date(2026, 11, 5, 18, 0), // December 5th, 2026, 6:00 PM
+    end: new Date(2026, 11, 5, 21, 0), // December 5th, 2026, 9:00 PM
     location: 'TBD',
     type: 'Social Event'
   }
