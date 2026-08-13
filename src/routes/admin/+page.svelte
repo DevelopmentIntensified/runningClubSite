@@ -13,6 +13,7 @@
       return (
         log.action.toLowerCase().includes(s) ||
         log.adminName?.toLowerCase().includes(s) ||
+        log.targetName?.toLowerCase().includes(s) ||
         (log.targetType || '').toLowerCase().includes(s) ||
         formatChangeDetails(log.parsedDetails, log.action).toLowerCase().includes(s) ||
         String(log.targetId || '').includes(s)
@@ -117,7 +118,9 @@
                   </span>
                 </td>
                 <td class="px-6 py-3 text-sm whitespace-nowrap text-slate-600"
-                  >{log.targetType || '—'}{log.targetId ? ` #${log.targetId}` : ''}</td
+                  >{log.targetName || log.targetType || '—'}{log.targetId && !log.targetName
+                    ? ` #${log.targetId}`
+                    : ''}</td
                 >
                 <td class="max-w-md px-6 py-3 text-sm text-slate-600" title={log.details || ''}
                   >{formatChangeDetails(log.parsedDetails, log.action)}</td
