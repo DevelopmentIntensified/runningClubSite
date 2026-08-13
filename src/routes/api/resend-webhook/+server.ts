@@ -1,6 +1,6 @@
 import { json, error } from '@sveltejs/kit';
 import { Resend, type ListAttachmentsResponseSuccess } from 'resend';
-import { CLUBEMAIL, RESEND_API_KEY, RESEND_WEBHOOK_SECRET } from '$env/static/private';
+import { CLUBEMAIL, DOMAIN, RESEND_API_KEY, RESEND_WEBHOOK_SECRET } from '$env/static/private';
 
 const resend = new Resend(RESEND_API_KEY);
 
@@ -39,7 +39,7 @@ export async function POST({ request }) {
   );
 
   await resend.emails.send({
-    from: event.data.from,
+    from: `${event.data.from} via <forwarder@${DOMAIN}>`,
     to: [CLUBEMAIL],
     subject: email?.subject ?? '',
     html: email?.html ?? '',
