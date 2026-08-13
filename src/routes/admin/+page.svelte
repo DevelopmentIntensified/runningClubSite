@@ -12,6 +12,7 @@
       const s = searchTerm.toLowerCase();
       return (
         log.action.toLowerCase().includes(s) ||
+        log.adminName?.toLowerCase().includes(s) ||
         (log.targetType || '').toLowerCase().includes(s) ||
         formatChangeDetails(log.parsedDetails, log.action).toLowerCase().includes(s) ||
         String(log.targetId || '').includes(s)
@@ -100,7 +101,9 @@
                 <td class="px-6 py-3 text-sm whitespace-nowrap text-slate-600"
                   >{new Date(log.createdAt).toLocaleString()}</td
                 >
-                <td class="px-6 py-3 text-sm whitespace-nowrap text-slate-700">{log.adminId}</td>
+                <td class="px-6 py-3 text-sm whitespace-nowrap text-slate-700"
+                  >{log.adminName || `#${log.adminId}`}</td
+                >
                 <td class="px-6 py-3 whitespace-nowrap">
                   <span
                     class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium {log.action ===
