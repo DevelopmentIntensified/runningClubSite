@@ -111,7 +111,7 @@
               >Admin</th
             >
             <th
-              class="px-6 py-3.5 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase"
+              class="px-6 py-3.5 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase hidden md:table-cell"
               >Last Login</th
             >
             <th
@@ -136,7 +136,7 @@
                   {user.isAdmin ? 'Yes' : 'No'}
                 </span>
               </td>
-              <td class="px-6 py-4 text-sm whitespace-nowrap text-slate-600"
+              <td class="px-6 py-4 text-sm whitespace-nowrap text-slate-600 hidden md:table-cell"
                 >{formatDate(user.lastLogin)}</td
               >
               <td class="px-6 py-4 text-sm whitespace-nowrap">

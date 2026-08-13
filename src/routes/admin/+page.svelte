@@ -87,11 +87,11 @@
                 >Action</th
               >
               <th
-                class="px-6 py-3.5 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase"
+                class="px-6 py-3.5 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase hidden md:table-cell"
                 >Target</th
               >
               <th
-                class="px-6 py-3.5 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase"
+                class="px-6 py-3.5 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase hidden md:table-cell"
                 >Details</th
               >
             </tr>
@@ -117,12 +117,12 @@
                     {log.action}
                   </span>
                 </td>
-                <td class="px-6 py-3 text-sm whitespace-nowrap text-slate-600"
+                <td class="px-6 py-3 text-sm whitespace-nowrap text-slate-600 hidden md:table-cell"
                   >{log.targetName || log.targetType || '—'}{log.targetId && !log.targetName
                     ? ` #${log.targetId}`
                     : ''}</td
                 >
-                <td class="max-w-md px-6 py-3 text-sm text-slate-600" title={log.details || ''}
+                <td class="max-w-md px-6 py-3 text-sm text-slate-600 hidden md:table-cell" title={log.details || ''}
                   >{formatChangeDetails(log.parsedDetails, log.action)}</td
                 >
               </tr>

@@ -36,7 +36,7 @@
     </div>
   </div>
 
-  <div class="container mx-auto px-4 py-8">
+  <div class="container mx-auto px-4 py-8 sm:px-6">
     <div class="mx-auto max-w-2xl">
       {#if form?.success || submitted}
         <div class="rounded-2xl border border-green-200 bg-green-50 p-8 text-center">

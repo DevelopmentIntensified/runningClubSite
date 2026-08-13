@@ -8,7 +8,7 @@
 </svelte:head>
 
 <div class="min-h-screen bg-gray-100 px-4 py-12 sm:px-6 lg:px-8">
-  <div class="mx-auto max-w-7xl">
+  <div class="mx-auto w-full max-w-2xl">
     <div class="overflow-hidden rounded-lg bg-white shadow-xl">
       <div class="bg-primary-600 px-4 py-6 sm:px-6">
         <h2 class="text-center text-3xl font-extrabold text-white">Add New Slideshow Image</h2>
@@ -42,16 +42,16 @@
             />
           </div>
 
-          <div class="flex justify-end space-x-4">
+          <div class="flex flex-col gap-3 sm:flex-row sm:justify-end">
             <a
               href="/admin/slideshow"
-              class="focus:ring-primary-500 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:ring-2 focus:ring-offset-2 focus:outline-none"
+              class="focus:ring-primary-500 inline-flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:ring-2 focus:ring-offset-2 focus:outline-none sm:w-auto"
             >
               Cancel
             </a>
             <button
               type="submit"
-              class="bg-primary-600 hover:bg-primary-700 focus:ring-primary-500 inline-flex items-center rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white focus:ring-2 focus:ring-offset-2 focus:outline-none"
+              class="bg-primary-600 hover:bg-primary-700 focus:ring-primary-500 inline-flex w-full items-center justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white focus:ring-2 focus:ring-offset-2 focus:outline-none sm:w-auto"
             >
               Add Image
             </button>

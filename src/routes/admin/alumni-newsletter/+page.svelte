@@ -33,11 +33,11 @@
         <thead>
           <tr class="border-b border-slate-200 bg-slate-50/50">
             <th
-              class="px-6 py-3.5 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase"
+              class="px-6 py-3.5 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase hidden md:table-cell"
               >First Name</th
             >
             <th
-              class="px-6 py-3.5 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase"
+              class="px-6 py-3.5 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase hidden md:table-cell"
               >Last Name</th
             >
             <th
@@ -45,7 +45,7 @@
               >Email</th
             >
             <th
-              class="px-6 py-3.5 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase"
+              class="px-6 py-3.5 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase hidden md:table-cell"
               >Signed Up</th
             >
             <th
@@ -57,12 +57,12 @@
         <tbody class="divide-y divide-slate-100">
           {#each data.signups as signup (signup.id)}
             <tr class="transition-colors hover:bg-slate-50/50">
-              <td class="px-6 py-4 text-sm font-medium whitespace-nowrap text-slate-700"
+              <td class="px-6 py-4 text-sm font-medium whitespace-nowrap text-slate-700 hidden md:table-cell"
                 >{signup.firstName}</td
               >
-              <td class="px-6 py-4 text-sm whitespace-nowrap text-slate-600">{signup.lastName}</td>
+              <td class="px-6 py-4 text-sm whitespace-nowrap text-slate-600 hidden md:table-cell">{signup.lastName}</td>
               <td class="px-6 py-4 text-sm whitespace-nowrap text-slate-600">{signup.email}</td>
-              <td class="px-6 py-4 text-sm whitespace-nowrap text-slate-600">
+              <td class="px-6 py-4 text-sm whitespace-nowrap text-slate-600 hidden md:table-cell">
                 {new Date(signup.createdAt).toLocaleDateString()}
               </td>
               <td class="px-6 py-4 text-right text-sm whitespace-nowrap">

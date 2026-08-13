@@ -12,7 +12,7 @@
 </svelte:head>
 
 <div class="min-h-screen bg-gray-100 px-4 py-12 sm:px-6 lg:px-8">
-  <div class="mx-auto max-w-3xl">
+  <div class="mx-auto w-full max-w-2xl">
     <div class="overflow-hidden rounded-lg bg-white shadow-xl">
       <div class="bg-primary-600 px-4 py-6 sm:px-6">
         <h2 class="text-center text-3xl font-extrabold text-white">Add New Season Photo Album</h2>
@@ -65,7 +65,7 @@
           <div class="flex justify-end">
             <button
               type="submit"
-              class="bg-primary-600 hover:bg-primary-700 focus:ring-primary-500 inline-flex items-center rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white focus:ring-2 focus:ring-offset-2 focus:outline-none"
+              class="bg-primary-600 hover:bg-primary-700 focus:ring-primary-500 inline-flex w-full items-center justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white focus:ring-2 focus:ring-offset-2 focus:outline-none sm:w-auto"
             >
               Add Photo Album
             </button>

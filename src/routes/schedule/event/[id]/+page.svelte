@@ -40,7 +40,7 @@
     Back to Calendar
   </button>
   <div class="rounded-lg bg-white p-6 shadow-lg">
-    <h1 class="mb-4 text-3xl font-bold text-gray-800">{event.title}</h1>
+    <h1 class="mb-4 text-2xl font-bold text-gray-800 sm:text-3xl">{event.title}</h1>
     <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
       <div>
         <p class="text-gray-600">
@@ -83,7 +83,7 @@
         {#if event.type.includes('Road Race')}
           <span class="rounded bg-amber-300 p-1">{event.type}</span>
         {/if}
-        <div class="mt-4 flex flex-wrap gap-2">
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-2">
           <a
             href={getGoogleCalendarUrl({
               id: event.id,
@@ -95,7 +95,7 @@
             })}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-sm font-medium text-white hover:bg-blue-600"
+            class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-sm font-medium text-white hover:bg-blue-600 sm:w-auto"
           >
             <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
               <path
@@ -115,7 +115,7 @@
           </a>
           <button
             onclick={handleDownloadICS}
-            class="bg-primary-600 hover:bg-primary-700 inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-white"
+            class="bg-primary-600 hover:bg-primary-700 inline-flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-white sm:w-auto"
           >
             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path

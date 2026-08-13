@@ -116,7 +116,7 @@
 <div class="min-h-screen bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
   <div class="mx-auto max-w-5xl">
     <div class="mb-8 text-center">
-      <h1 class="text-3xl font-extrabold text-gray-900">Where We're From</h1>
+      <h1 class="text-3xl font-bold text-gray-900 sm:text-4xl">Where We're From</h1>
       <p class="mt-2 text-gray-600">Our members have joined from across the country.</p>
       <p class="mt-1 text-xs text-gray-400">
         Note: Members who joined before the site launched in 2025 appear under 2025 in the year

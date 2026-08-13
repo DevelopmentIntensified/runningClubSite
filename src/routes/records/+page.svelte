@@ -29,7 +29,7 @@
 </svelte:head>
 
 <div class="container mx-auto px-4 py-12">
-  <h1 class="mb-8 text-center text-4xl font-bold">Club Records</h1>
+  <h1 class="mb-8 text-center text-3xl font-bold sm:text-4xl">Club Records</h1>
 
   <a
     href="https://www.nationalrunningclubdatabase.com/teams/142"
@@ -38,7 +38,7 @@
     National Running Club Database
   </a>
 
-  <div class="mb-8 flex justify-center space-x-4">
+  <div class="mb-8 flex flex-wrap justify-center gap-2 sm:gap-4">
     <button
       class="rounded-full px-4 py-2 {activeSection === 'men'
         ? 'bg-primary-600 text-white'
@@ -70,7 +70,7 @@
         </h2>
       </div>
 
-      <div class="mb-8 flex justify-center space-x-4">
+      <div class="mb-8 flex flex-wrap justify-center gap-2 sm:gap-4">
         <button
           class="rounded-full px-4 py-2 {activeType === 'cross_country'
             ? 'bg-secondary-600 text-white'
@@ -120,7 +120,7 @@
               <th class="px-4 py-2 text-left">Event</th>
               <th class="px-4 py-2 text-left">Name</th>
               <th class="px-4 py-2 text-left">Time/Mark</th>
-              <th class="px-4 py-2 text-left">Year</th>
+              <th class="hidden px-4 py-2 text-left md:table-cell">Year</th>
             </tr>
           </thead>
           <tbody>
@@ -140,7 +140,7 @@
                   {/if}
                 </td>
                 <td class="px-4 py-2">{record.time}</td>
-                <td class="px-4 py-2">{record.year || 'N/A'}</td>
+                <td class="hidden px-4 py-2 md:table-cell">{record.year || 'N/A'}</td>
               </tr>
             {/each}
           </tbody>
@@ -160,7 +160,7 @@
         </h2>
       </div>
 
-      <div class="mb-8 flex justify-center space-x-4">
+      <div class="mb-8 flex flex-wrap justify-center gap-2 sm:gap-4">
         <button
           class="rounded-full px-4 py-2 {activeType === 'cross_country'
             ? 'bg-secondary-600 text-white'
@@ -210,7 +210,7 @@
               <th class="px-4 py-2 text-left">Event</th>
               <th class="px-4 py-2 text-left">Name</th>
               <th class="px-4 py-2 text-left">Time/Mark</th>
-              <th class="px-4 py-2 text-left">Year</th>
+              <th class="hidden px-4 py-2 text-left md:table-cell">Year</th>
             </tr>
           </thead>
           <tbody>
@@ -230,7 +230,7 @@
                   {/if}
                 </td>
                 <td class="px-4 py-2">{record.time}</td>
-                <td class="px-4 py-2">{record.year || 'N/A'}</td>
+                <td class="hidden px-4 py-2 md:table-cell">{record.year || 'N/A'}</td>
               </tr>
             {/each}
           </tbody>

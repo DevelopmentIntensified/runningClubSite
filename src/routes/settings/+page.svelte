@@ -74,7 +74,7 @@
 
 <div class="min-h-screen bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
   <div class="mx-auto max-w-2xl space-y-8">
-    <h1 class="text-3xl font-extrabold text-gray-900">Settings</h1>
+    <h1 class="text-2xl font-extrabold text-gray-900 sm:text-3xl">Settings</h1>
 
     <div class="rounded-2xl bg-white p-6 shadow-xl">
       <h2 class="mb-6 text-xl font-semibold text-gray-900">Profile</h2>
@@ -168,15 +168,15 @@
         </div>
         <div>
           <label class="block text-sm font-medium text-gray-700">Email</label>
-          <p class="mt-1 text-sm text-gray-500">{user.email}</p>
+          <p class="mt-1 text-sm break-all text-gray-500">{user.email}</p>
         </div>
         {#if profileSuccess}
           <p class="text-sm text-emerald-600">{profileSuccess}</p>
         {/if}
-        <div class="flex items-center gap-4">
+        <div class="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-4">
           <button
             type="submit"
-            class="bg-primary-600 hover:bg-primary-700 focus:ring-primary-500 rounded-md px-4 py-2 text-sm font-medium text-white focus:ring-2 focus:ring-offset-2 focus:outline-none"
+            class="bg-primary-600 hover:bg-primary-700 focus:ring-primary-500 w-full rounded-md px-4 py-2 text-sm font-medium text-white focus:ring-2 focus:ring-offset-2 focus:outline-none sm:w-auto"
           >
             Save Profile
           </button>
@@ -247,9 +247,9 @@
         {/if}
         <button
           type="submit"
-          class="bg-primary-600 hover:bg-primary-700 focus:ring-primary-500 rounded-md px-4 py-2 text-sm font-medium text-white focus:ring-2 focus:ring-offset-2 focus:outline-none"
-        >
-          Change Password
+class="bg-primary-600 hover:bg-primary-700 focus:ring-primary-500 w-full rounded-md px-4 py-2 text-sm font-medium text-white focus:ring-2 focus:ring-offset-2 focus:outline-none sm:w-auto"
+          >
+            Change Password
         </button>
       </form>
     </div>
@@ -271,7 +271,7 @@
         <button
           type="submit"
           onclick={() => window.confirm('Are you sure? This cannot be undone.')}
-          class="rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:outline-none"
+          class="w-full rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:outline-none sm:w-auto"
         >
           Delete My Account
         </button>

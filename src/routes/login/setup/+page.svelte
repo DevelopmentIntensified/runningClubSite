@@ -178,9 +178,9 @@
 </svelte:head>
 
 <div class="flex min-h-screen items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
-  <div class="w-full max-w-md space-y-8 rounded-2xl bg-white p-8 shadow-xl">
+  <div class="w-full max-w-md space-y-8 rounded-2xl bg-white px-4 py-8 shadow-xl sm:px-6">
     <div class="text-center">
-      <h2 class="text-3xl font-extrabold text-gray-900">Complete Your Profile</h2>
+      <h2 class="text-2xl font-extrabold text-gray-900 sm:text-3xl">Complete Your Profile</h2>
       <p class="mt-2 text-sm text-gray-600">
         We just need a few more details to finish setting up your account.
       </p>

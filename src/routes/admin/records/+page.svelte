@@ -138,11 +138,11 @@
                   >Time</th
                 >
                 <th
-                  class="px-4 py-3 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase"
+                  class="px-4 py-3 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase hidden md:table-cell"
                   >Year</th
                 >
                 <th
-                  class="px-4 py-3 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase"
+                  class="px-4 py-3 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase hidden md:table-cell"
                   >Gender</th
                 >
                 <th
@@ -157,8 +157,8 @@
                   <td class="px-4 py-3 text-sm whitespace-nowrap text-slate-600">{record.event}</td>
                   <td class="px-4 py-3 text-sm whitespace-nowrap text-slate-600">{record.name}</td>
                   <td class="px-4 py-3 text-sm whitespace-nowrap text-slate-600">{record.time}</td>
-                  <td class="px-4 py-3 text-sm whitespace-nowrap text-slate-600">{record.year}</td>
-                  <td class="px-4 py-3 text-sm whitespace-nowrap text-slate-600">{record.gender}</td
+                  <td class="px-4 py-3 text-sm whitespace-nowrap text-slate-600 hidden md:table-cell">{record.year}</td>
+                  <td class="px-4 py-3 text-sm whitespace-nowrap text-slate-600 hidden md:table-cell">{record.gender}</td
                   >
                   <td class="px-4 py-3 text-sm whitespace-nowrap">
                     <div class="flex items-center gap-2">
@@ -207,11 +207,11 @@
                   >Time</th
                 >
                 <th
-                  class="px-4 py-3 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase"
+                  class="px-4 py-3 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase hidden md:table-cell"
                   >Year</th
                 >
                 <th
-                  class="px-4 py-3 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase"
+                  class="px-4 py-3 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase hidden md:table-cell"
                   >Gender</th
                 >
                 <th
@@ -226,8 +226,8 @@
                   <td class="px-4 py-3 text-sm whitespace-nowrap text-slate-600">{record.event}</td>
                   <td class="px-4 py-3 text-sm whitespace-nowrap text-slate-600">{record.name}</td>
                   <td class="px-4 py-3 text-sm whitespace-nowrap text-slate-600">{record.time}</td>
-                  <td class="px-4 py-3 text-sm whitespace-nowrap text-slate-600">{record.year}</td>
-                  <td class="px-4 py-3 text-sm whitespace-nowrap text-slate-600">{record.gender}</td
+                  <td class="px-4 py-3 text-sm whitespace-nowrap text-slate-600 hidden md:table-cell">{record.year}</td>
+                  <td class="px-4 py-3 text-sm whitespace-nowrap text-slate-600 hidden md:table-cell">{record.gender}</td
                   >
                   <td class="px-4 py-3 text-sm whitespace-nowrap">
                     <div class="flex items-center gap-2">
@@ -276,11 +276,11 @@
                   >Time</th
                 >
                 <th
-                  class="px-4 py-3 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase"
+                  class="px-4 py-3 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase hidden md:table-cell"
                   >Year</th
                 >
                 <th
-                  class="px-4 py-3 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase"
+                  class="px-4 py-3 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase hidden md:table-cell"
                   >Gender</th
                 >
                 <th
@@ -295,8 +295,8 @@
                   <td class="px-4 py-3 text-sm whitespace-nowrap text-slate-600">{record.event}</td>
                   <td class="px-4 py-3 text-sm whitespace-nowrap text-slate-600">{record.name}</td>
                   <td class="px-4 py-3 text-sm whitespace-nowrap text-slate-600">{record.time}</td>
-                  <td class="px-4 py-3 text-sm whitespace-nowrap text-slate-600">{record.year}</td>
-                  <td class="px-4 py-3 text-sm whitespace-nowrap text-slate-600">{record.gender}</td
+                  <td class="px-4 py-3 text-sm whitespace-nowrap text-slate-600 hidden md:table-cell">{record.year}</td>
+                  <td class="px-4 py-3 text-sm whitespace-nowrap text-slate-600 hidden md:table-cell">{record.gender}</td
                   >
                   <td class="px-4 py-3 text-sm whitespace-nowrap">
                     <div class="flex items-center gap-2">
@@ -345,11 +345,11 @@
                   >Time</th
                 >
                 <th
-                  class="px-4 py-3 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase"
+                  class="px-4 py-3 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase hidden md:table-cell"
                   >Year</th
                 >
                 <th
-                  class="px-4 py-3 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase"
+                  class="px-4 py-3 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase hidden md:table-cell"
                   >Gender</th
                 >
                 <th
@@ -364,8 +364,8 @@
                   <td class="px-4 py-3 text-sm whitespace-nowrap text-slate-600">{record.event}</td>
                   <td class="px-4 py-3 text-sm whitespace-nowrap text-slate-600">{record.name}</td>
                   <td class="px-4 py-3 text-sm whitespace-nowrap text-slate-600">{record.time}</td>
-                  <td class="px-4 py-3 text-sm whitespace-nowrap text-slate-600">{record.year}</td>
-                  <td class="px-4 py-3 text-sm whitespace-nowrap text-slate-600">{record.gender}</td
+                  <td class="px-4 py-3 text-sm whitespace-nowrap text-slate-600 hidden md:table-cell">{record.year}</td>
+                  <td class="px-4 py-3 text-sm whitespace-nowrap text-slate-600 hidden md:table-cell">{record.gender}</td
                   >
                   <td class="px-4 py-3 text-sm whitespace-nowrap">
                     <div class="flex items-center gap-2">

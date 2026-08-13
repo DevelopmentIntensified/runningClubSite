@@ -14,8 +14,8 @@
   ];
 </script>
 
-<div class="container mx-auto px-4 py-8">
-  <div class="mx-auto max-w-2xl">
+<div class="container mx-auto px-4 py-8 sm:px-6">
+  <div class="mx-auto w-full max-w-2xl">
     <h1 class="mb-8 text-3xl font-bold">Add New Page Image</h1>
 
     <form method="POST" enctype="multipart/form-data" use:enhance class="space-y-6">
@@ -51,20 +51,20 @@
         <ImageUpload name="image" label="Image" required={true} />
       </div>
 
-      <div class="flex justify-end space-x-4">
-        <a
-          href="/admin/page-images"
-          class="rounded-md border border-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none"
-        >
-          Cancel
-        </a>
-        <button
-          type="submit"
-          class="rounded-md border border-transparent bg-blue-600 px-4 py-2 text-white shadow-sm hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none"
-        >
-          Upload Image
-        </button>
-      </div>
+<div class="flex flex-col gap-3 sm:flex-row sm:justify-end">
+    <a
+      href="/admin/page-images"
+      class="flex w-full items-center justify-center rounded-md border border-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none sm:w-auto"
+    >
+      Cancel
+    </a>
+    <button
+      type="submit"
+      class="flex w-full items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-white shadow-sm hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none sm:w-auto"
+    >
+      Upload Image
+    </button>
+  </div>
     </form>
   </div>
 </div>

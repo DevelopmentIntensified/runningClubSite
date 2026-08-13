@@ -96,11 +96,11 @@
               >Name</th
             >
             <th
-              class="px-6 py-3.5 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase"
+              class="px-6 py-3.5 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase hidden md:table-cell"
               >Order</th
             >
             <th
-              class="px-6 py-3.5 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase"
+              class="px-6 py-3.5 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase hidden md:table-cell"
               >Description</th
             >
             <th
@@ -115,8 +115,8 @@
               <td class="px-6 py-4 text-sm font-medium whitespace-nowrap text-slate-700"
                 >{location.name}</td
               >
-              <td class="px-6 py-4 text-sm whitespace-nowrap text-slate-600">{location.order}</td>
-              <td class="max-w-xs px-6 py-4 text-sm text-slate-600">
+              <td class="px-6 py-4 text-sm whitespace-nowrap text-slate-600 hidden md:table-cell">{location.order}</td>
+              <td class="max-w-xs px-6 py-4 text-sm text-slate-600 hidden md:table-cell">
                 <div class="truncate">{location.description}</div>
               </td>
               <td class="px-6 py-4 text-sm whitespace-nowrap">

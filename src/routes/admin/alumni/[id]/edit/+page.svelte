@@ -95,16 +95,16 @@
           {#if error}
             <div class="text-sm text-red-500">{error}</div>
           {/if}
-          <div class="flex justify-end space-x-4">
+          <div class="flex flex-col gap-3 sm:flex-row sm:justify-end">
             <a
               href="/admin/alumni"
-              class="focus:ring-primary-500 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:ring-2 focus:ring-offset-2 focus:outline-none"
+              class="focus:ring-primary-500 inline-flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:ring-2 focus:ring-offset-2 focus:outline-none sm:w-auto"
             >
               Cancel
             </a>
             <button
               type="submit"
-              class="bg-primary-600 hover:bg-primary-700 focus:ring-primary-500 inline-flex items-center rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white focus:ring-2 focus:ring-offset-2 focus:outline-none"
+              class="bg-primary-600 hover:bg-primary-700 focus:ring-primary-500 inline-flex w-full items-center justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white focus:ring-2 focus:ring-offset-2 focus:outline-none sm:w-auto"
             >
               Update Alumnus
             </button>

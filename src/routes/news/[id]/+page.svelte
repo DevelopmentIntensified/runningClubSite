@@ -18,10 +18,10 @@
       />
     {/if}
 
-    <h1 class="mb-4 text-4xl font-bold">{data.newsItem.title}</h1>
+    <h1 class="mb-4 text-2xl font-bold sm:text-3xl">{data.newsItem.title}</h1>
     <p class="mb-8 text-gray-500">{new Date(data.newsItem.createdAt).toLocaleDateString()}</p>
 
-    <div class="prose prose-lg max-w-none">
+    <div class="prose prose-lg max-w-none break-words [&_img]:h-auto [&_img]:max-w-full [&_pre]:break-words [&_pre]:whitespace-pre-wrap">
       {@html data.newsItem.content}
     </div>
   </article>

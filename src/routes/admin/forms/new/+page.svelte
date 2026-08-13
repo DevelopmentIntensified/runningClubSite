@@ -11,7 +11,7 @@
 </svelte:head>
 
 <div class="min-h-screen bg-gray-100 px-4 py-12 sm:px-6 lg:px-8">
-  <div class="mx-auto max-w-3xl">
+  <div class="mx-auto w-full max-w-2xl">
     <div class="overflow-hidden rounded-lg bg-white shadow-xl">
       <div class="bg-primary-600 px-4 py-6 sm:px-6">
         <h2 class="text-center text-3xl font-extrabold text-white">Add New Form</h2>

@@ -27,10 +27,10 @@
   </div>
 
   <div class="overflow-hidden rounded-2xl bg-white p-6 shadow-xl">
-    <p class="mb-6 text-lg">
+    <p class="mb-6 text-base sm:text-lg">
       We're excited to offer individualized summer training. Whether you are:
     </p>
-    <ul class="mb-8 list-disc pl-8 text-lg">
+    <ul class="mb-8 list-disc pl-8 text-base sm:text-lg">
       <li>Just Starting to run</li>
       <li>A former NCAA athlete who wants to continue competing</li>
       <li>Training for a marathon, half marathon, or any other distance</li>
@@ -39,7 +39,7 @@
       </li>
       <li>Trying to walk on to the NCAA team</li>
     </ul>
-    <p class="mb-4 text-lg">
+    <p class="mb-4 text-base sm:text-lg">
       Click the link below to get started. The form will take about 30-40 minutes. If you have any
       questions, DM George Crowder, Jill Crunkilton, or Evan O'Connor on groupme!
     </p>

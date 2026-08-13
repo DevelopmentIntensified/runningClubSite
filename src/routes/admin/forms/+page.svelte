@@ -51,7 +51,7 @@
                     class="py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 sm:pl-6"
                     >Title</th
                   >
-                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 hidden md:table-cell"
                     >Description</th
                   >
                   <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
@@ -74,7 +74,7 @@
                       {form.title}
                     </td>
                     <td
-                      class="max-w-xs truncate px-3 py-4 text-sm text-gray-500"
+                      class="max-w-xs truncate px-3 py-4 text-sm text-gray-500 hidden md:table-cell"
                       title={form.description || ''}
                     >
                       {form.description || '-'}

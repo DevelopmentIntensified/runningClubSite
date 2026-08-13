@@ -33,7 +33,7 @@
       </ul>
       <h2 class="mb-4 text-2xl font-semibold">Competition</h2>
       <p class="mb-4">
-        We compete in several local races including several comunity 5ks and trail races along with
+        We compete in several local races including several community 5ks and trail races along with
         a few NCAA meets. Our main competitions are the <a class="text-blue-500" href="#nirca"
           >NIRCA</a
         > races. Please see that section for more details
@@ -57,7 +57,7 @@
         <a class="text-blue-500" href="https://forms.gle/39mTeUgKqwdDUCDW9">this form</a>
       </p>
 
-      <h2 class="mb-4 text-2xl font-semibold" id="nirca">Our Socials</h2>
+      <h2 class="mb-4 text-2xl font-semibold">Our Socials</h2>
       <div class="flex space-x-4">
         <a
           href="https://instagram.com/libertyrunningclub"

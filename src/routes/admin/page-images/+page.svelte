@@ -55,7 +55,7 @@
               >Location</th
             >
             <th
-              class="px-6 py-3.5 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase"
+              class="px-6 py-3.5 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase hidden md:table-cell"
               >Alt Text</th
             >
             <th
@@ -77,7 +77,7 @@
               <td class="px-6 py-4 text-sm font-medium whitespace-nowrap text-slate-700"
                 >{image.locationName}</td
               >
-              <td class="px-6 py-4 text-sm text-slate-600">{image.alt}</td>
+              <td class="px-6 py-4 text-sm text-slate-600 hidden md:table-cell">{image.alt}</td>
               <td class="px-6 py-4 text-sm whitespace-nowrap">
                 <div class="flex items-center gap-3">
                   <a

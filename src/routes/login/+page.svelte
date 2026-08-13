@@ -99,16 +99,16 @@
 </svelte:head>
 
 <div class="flex min-h-screen items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
-  <div class="w-full max-w-md space-y-8 rounded-2xl bg-white p-8 shadow-xl">
+  <div class="w-full max-w-md space-y-8 rounded-2xl bg-white px-4 py-8 shadow-xl sm:px-6">
     <div class="text-center">
-      <h2 class="text-3xl font-extrabold text-gray-900">Sign in to your account</h2>
+      <h2 class="text-2xl font-extrabold text-gray-900 sm:text-3xl">Sign in to your account</h2>
       <p class="mt-2 text-sm text-gray-600">Please use your Liberty email for verification.</p>
     </div>
 
-    <div class="flex justify-center gap-2 rounded-lg bg-gray-100 p-1">
+    <div class="flex justify-center gap-1 rounded-lg bg-gray-100 p-1">
       <button
         type="button"
-        class="flex-1 rounded-md px-3 py-2 text-sm font-medium transition-colors {mode === 'code'
+        class="flex-1 rounded-md px-2 py-2 text-sm font-medium transition-colors {mode === 'code'
           ? 'bg-white text-gray-900 shadow-sm'
           : 'text-gray-500 hover:text-gray-700'}"
         onclick={() => {
@@ -120,7 +120,7 @@
       </button>
       <button
         type="button"
-        class="flex-1 rounded-md px-3 py-2 text-sm font-medium transition-colors {mode ===
+        class="flex-1 rounded-md px-2 py-2 text-sm font-medium transition-colors {mode ===
         'password'
           ? 'bg-white text-gray-900 shadow-sm'
           : 'text-gray-500 hover:text-gray-700'}"

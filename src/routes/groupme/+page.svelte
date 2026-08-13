@@ -15,7 +15,7 @@
         <h2 class="text-center text-3xl font-extrabold text-white">Join Our GroupMe</h2>
       </div>
       <div class="p-6 sm:p-8">
-        <p class="mb-8 text-center text-xl text-gray-700">
+        <p class="mb-8 text-center text-base text-gray-700 sm:text-lg md:text-xl">
           Stay updated on events and join the social shenanigans!
         </p>
         <div class="flex flex-col items-center">
