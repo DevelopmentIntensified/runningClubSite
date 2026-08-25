@@ -156,6 +156,17 @@
             </select>
           </div>
           <div>
+            <label for="isAlumni" class="block text-sm font-medium text-gray-700">Alumni</label>
+            <select
+              id="isAlumni"
+              name="isAlumni"
+              class="focus:border-primary-500 focus:ring-primary-500 mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
+            >
+              <option value="false" selected={!User.isAlumni}>No</option>
+              <option value="true" selected={User.isAlumni}>Yes</option>
+            </select>
+          </div>
+          <div>
             <label for="isAdmin" class="block text-sm font-medium text-gray-700">Admin</label>
             <input
               type="text"

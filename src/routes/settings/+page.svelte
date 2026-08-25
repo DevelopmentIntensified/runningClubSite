@@ -137,8 +137,14 @@
         </div>
         <div>
           <label for="graduationYear" class="block text-sm font-medium text-gray-700"
-            >Graduation Year</label
-          >
+            >Graduation Year
+            {#if user.isAlumni}
+              <span
+                class="bg-primary-100 text-primary-800 ml-1 inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium"
+                >Alumni</span
+              >
+            {/if}
+          </label>
           <select
             id="graduationYear"
             name="graduationYear"
@@ -247,9 +253,9 @@
         {/if}
         <button
           type="submit"
-class="bg-primary-600 hover:bg-primary-700 focus:ring-primary-500 w-full rounded-md px-4 py-2 text-sm font-medium text-white focus:ring-2 focus:ring-offset-2 focus:outline-none sm:w-auto"
-          >
-            Change Password
+          class="bg-primary-600 hover:bg-primary-700 focus:ring-primary-500 w-full rounded-md px-4 py-2 text-sm font-medium text-white focus:ring-2 focus:ring-offset-2 focus:outline-none sm:w-auto"
+        >
+          Change Password
         </button>
       </form>
     </div>

@@ -14,8 +14,11 @@
   let stateTouched = false;
   let password = '';
   let confirmPassword = '';
-  let graduationYear = new Date().getFullYear() + 4;
+  let graduationYear = '';
   let academicLevel = 'undergraduate';
+
+  const currentYear = new Date().getFullYear();
+  const gradYears = Array.from({ length: currentYear - 2022 + 1 }, (_, i) => currentYear - i);
 
   const usStates = [
     { name: 'Alabama', abbr: 'AL' },
@@ -132,6 +135,11 @@
       return;
     }
 
+    if (!graduationYear) {
+      error = 'Please select your graduation year or choose Alumni';
+      return;
+    }
+
     if (!password) {
       error = 'Password is required';
       return;
@@ -155,7 +163,8 @@
         firstName: firstName.trim(),
         lastName: lastName.trim(),
         stateOfOrigin,
-        graduationYear,
+        graduationYear: graduationYear === 'alumni' ? null : Number(graduationYear),
+        isAlumni: graduationYear === 'alumni',
         academicLevel,
         password,
         redirectUrl
@@ -304,9 +313,11 @@
             bind:value={graduationYear}
             class="focus:border-primary-500 focus:ring-primary-500 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 leading-5 focus:outline-none sm:text-sm"
           >
-            {#each Array.from({ length: 7 }, (_, i) => new Date().getFullYear() + i) as year}
+            <option value="" disabled>Select graduation year or Alumni</option>
+            {#each gradYears as year}
               <option value={year}>{year}</option>
             {/each}
+            <option value="alumni">Alumni</option>
           </select>
         </div>
       </div>

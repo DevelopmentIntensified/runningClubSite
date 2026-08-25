@@ -17,11 +17,27 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
     password,
     redirectUrl
   } = body;
+  const isAlumni = body.isAlumni === true;
 
-  if (!firstName || !lastName || !stateOfOrigin || !graduationYear || !password) {
+  if (!firstName || !lastName || !stateOfOrigin || !password || (!graduationYear && !isAlumni)) {
     return new Response(JSON.stringify({ success: false, error: 'All fields are required' }), {
       status: 400
     });
+  }
+
+  const currentYear = new Date().getFullYear();
+  let parsedGraduationYear: number | null = null;
+  if (!isAlumni) {
+    parsedGraduationYear = parseInt(graduationYear);
+    if (
+      Number.isNaN(parsedGraduationYear) ||
+      parsedGraduationYear < 2022 ||
+      parsedGraduationYear > currentYear
+    ) {
+      return new Response(JSON.stringify({ success: false, error: 'Invalid graduation year' }), {
+        status: 400
+      });
+    }
   }
 
   if (password.length < 8) {
@@ -41,7 +57,8 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
       const { session, user } = await lucia.validateSession(sessionId);
       if (session && user) {
         const setData: Record<string, any> = { firstName, lastName, stateOfOrigin, lastLogin: now };
-        if (graduationYear) setData.graduationYear = parseInt(graduationYear);
+        setData.graduationYear = parsedGraduationYear;
+        setData.isAlumni = isAlumni;
         if (academicLevel) setData.academicLevel = academicLevel;
         if (password) setData.hashedPassword = await hash(password);
         await db
@@ -79,7 +96,8 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
           firstName,
           lastName,
           stateOfOrigin,
-          graduationYear: parseInt(graduationYear),
+          graduationYear: parsedGraduationYear,
+          isAlumni,
           academicLevel: academicLevel || null,
           hashedPassword,
           createdAt: now,
@@ -94,7 +112,8 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
           firstName,
           lastName,
           stateOfOrigin,
-          graduationYear: parseInt(graduationYear),
+          graduationYear: parsedGraduationYear,
+          isAlumni,
           academicLevel: academicLevel || null,
           hashedPassword,
           lastLogin: now

@@ -11,11 +11,12 @@ export async function updateUserProfile(
     stateOfOrigin?: string;
     graduationYear?: number;
     academicLevel?: string;
+    isAlumni?: boolean;
   },
   options?: { loggedByAdmin?: boolean }
 ) {
   const result = (await db.execute(
-    sql`SELECT first_name, last_name, state_of_origin, academic_level, graduation_year FROM "user" WHERE id = ${userId}`
+    sql`SELECT first_name, last_name, state_of_origin, academic_level, graduation_year, is_alumni FROM "user" WHERE id = ${userId}`
   )) as any[];
 
   const current = result[0] || {};
@@ -26,6 +27,7 @@ export async function updateUserProfile(
   if (current.state_of_origin !== undefined) currentCamel.stateOfOrigin = current.state_of_origin;
   if (current.academic_level !== undefined) currentCamel.academicLevel = current.academic_level;
   if (current.graduation_year !== undefined) currentCamel.graduationYear = current.graduation_year;
+  if (current.is_alumni !== undefined) currentCamel.isAlumni = current.is_alumni;
 
   const diff = objectDiff(currentCamel, updates as Record<string, any>);
 
@@ -37,6 +39,7 @@ export async function updateUserProfile(
   if (updates.stateOfOrigin !== undefined) setData.stateOfOrigin = updates.stateOfOrigin;
   if (updates.graduationYear !== undefined) setData.graduationYear = updates.graduationYear;
   if (updates.academicLevel !== undefined) setData.academicLevel = updates.academicLevel;
+  if (updates.isAlumni !== undefined) setData.isAlumni = updates.isAlumni;
 
   await db.update(users).set(setData).where(eq(users.id, userId));
 
@@ -46,7 +49,8 @@ export async function updateUserProfile(
       lastName: 'last_name',
       stateOfOrigin: 'state_of_origin',
       graduationYear: 'graduation_year',
-      academicLevel: 'academic_level'
+      academicLevel: 'academic_level',
+      isAlumni: 'is_alumni'
     };
     for (const [field, change] of Object.entries(diff)) {
       const dbField = fieldMap[field] || field;
