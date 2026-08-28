@@ -15,7 +15,8 @@
   let openDropdown: string | null = null;
   let navElement: HTMLElement;
 
-  // Only keep nav links the user can actually access (hide things they can't).
+  // Hide feature links the user can't access (Season Photos, Training Plan,
+  // GroupMe), but always keep the parent group visible.
   function canShow(href: string): boolean {
     if (href.startsWith('/season-photos')) return !!canAccess['season-photos'];
     if (href.startsWith('/trainingplan')) return !!canAccess['trainingplan'];
@@ -48,7 +49,7 @@
       ]
     },
     {
-      label: 'Join',
+      label: 'Member Links',
       items: () => [
         { href: '/trainingplan', label: 'Training Plan' },
         { href: '/groupme', label: 'GroupMe' }
