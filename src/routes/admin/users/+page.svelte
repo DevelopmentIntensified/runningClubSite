@@ -111,7 +111,11 @@
               >Admin</th
             >
             <th
-              class="px-6 py-3.5 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase hidden md:table-cell"
+              class="px-6 py-3.5 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase"
+              >Status</th
+            >
+            <th
+              class="hidden px-6 py-3.5 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase md:table-cell"
               >Last Login</th
             >
             <th
@@ -136,7 +140,16 @@
                   {user.isAdmin ? 'Yes' : 'No'}
                 </span>
               </td>
-              <td class="px-6 py-4 text-sm whitespace-nowrap text-slate-600 hidden md:table-cell"
+              <td class="px-6 py-4 whitespace-nowrap">
+                <span
+                  class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium {user.banned
+                    ? 'bg-red-100 text-red-700'
+                    : 'bg-emerald-100 text-emerald-700'}"
+                >
+                  {user.banned ? 'Banned' : 'Active'}
+                </span>
+              </td>
+              <td class="hidden px-6 py-4 text-sm whitespace-nowrap text-slate-600 md:table-cell"
                 >{formatDate(user.lastLogin)}</td
               >
               <td class="px-6 py-4 text-sm whitespace-nowrap">
@@ -145,6 +158,28 @@
                     href="/admin/users/{user.id}/edit"
                     class="text-primary-600 hover:text-primary-800 text-xs font-medium">Edit</a
                   >
+                  <span class="text-slate-300">|</span>
+                  {#if user.banned}
+                    <form action="?/unbanUser" method="POST" use:enhance class="inline">
+                      <input type="hidden" name="id" value={user.id} />
+                      <button type="submit" class="text-xs text-emerald-600 hover:text-emerald-800"
+                        >Unban</button
+                      >
+                    </form>
+                  {:else}
+                    <form
+                      action="?/banUser"
+                      method="POST"
+                      use:enhance
+                      class="inline"
+                      onsubmit={() => confirm(`Ban ${user.email}? This logs them out immediately.`)}
+                    >
+                      <input type="hidden" name="id" value={user.id} />
+                      <button type="submit" class="text-xs text-red-600 hover:text-red-800"
+                        >Ban</button
+                      >
+                    </form>
+                  {/if}
                   <span class="text-slate-300">|</span>
                   <form action="?/deleteUser" method="POST" use:enhance class="inline">
                     <input type="hidden" name="id" value={user.id} />

@@ -1,4 +1,13 @@
-import { pgTable, serial, text, integer, numeric, timestamp, boolean } from 'drizzle-orm/pg-core';
+import {
+  pgTable,
+  serial,
+  text,
+  integer,
+  numeric,
+  timestamp,
+  boolean,
+  uniqueIndex
+} from 'drizzle-orm/pg-core';
 
 export const users = pgTable('user', {
   id: serial('id').primaryKey(),
@@ -11,6 +20,7 @@ export const users = pgTable('user', {
   academicLevel: text('academic_level'),
   isAlumni: boolean('is_alumni').default(false).notNull(),
   hashedPassword: text('hashed_password'),
+  banned: boolean('banned').default(false).notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   lastLogin: timestamp('last_login'),
   lastUpdated: timestamp('last_updated')
@@ -168,6 +178,30 @@ export const adminAuditLog = pgTable('admin_audit_log', {
   createdAt: timestamp('created_at').defaultNow().notNull()
 });
 
+export const featureAccess = pgTable('feature_access', {
+  id: serial('id').primaryKey(),
+  key: text('key').notNull().unique(),
+  name: text('name').notNull(),
+  description: text('description'),
+  // 'public' | 'login' | 'admin' | 'restricted'
+  mode: text('mode').notNull().default('login')
+});
+
+export const featureAccessUsers = pgTable(
+  'feature_access_users',
+  {
+    id: serial('id').primaryKey(),
+    featureKey: text('feature_key')
+      .notNull()
+      .references(() => featureAccess.key, { onDelete: 'cascade' }),
+    userId: integer('user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    createdAt: timestamp('created_at').defaultNow().notNull()
+  },
+  (t) => [uniqueIndex('feature_access_users_feature_user_unique').on(t.featureKey, t.userId)]
+);
+
 export type Session = typeof sessions.$inferSelect;
 
 export type Records = typeof records.$inferSelect;
@@ -178,3 +212,8 @@ export type Alumni = typeof alumni.$inferSelect;
 export type Code = typeof codes.$inferSelect;
 export type News = typeof news.$inferSelect;
 export type Leader = typeof leaders.$inferSelect;
+
+export type FeatureAccess = typeof featureAccess.$inferSelect;
+export type FeatureAccessUser = typeof featureAccessUsers.$inferSelect;
+
+export type FeatureMode = 'public' | 'login' | 'admin' | 'restricted';

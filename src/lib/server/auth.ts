@@ -28,6 +28,7 @@ export const lucia = new Lucia(adapter, {
       graduationYear: attributes.graduationYear,
       isAlumni: attributes.isAlumni,
       academicLevel: attributes.academicLevel,
+      banned: attributes.banned,
       lastUpdated: attributes.lastUpdated,
       createdAt: attributes.createdAt,
       lastLogin: attributes.lastLogin

@@ -23,7 +23,7 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
 
   try {
     const result = (await db.execute(sql`
-      SELECT id, email, first_name, hashed_password FROM "user" WHERE email = ${email}
+      SELECT id, email, first_name, hashed_password, banned FROM "user" WHERE email = ${email}
     `)) as any[];
 
     if (result.length === 0) {
@@ -33,6 +33,16 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
     }
 
     const user = result[0];
+
+    if (user.banned) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: 'This account has been banned. Contact the admin if you believe this is a mistake.'
+        }),
+        { status: 403 }
+      );
+    }
 
     if (!user.hashed_password) {
       return new Response(

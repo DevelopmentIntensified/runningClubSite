@@ -57,6 +57,20 @@
       "when": 1787690914448,
       "tag": "0007_add_is_alumni",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1787947550135,
+      "tag": "0008_add_banned",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1787947952555,
+      "tag": "0009_add_feature_access",
+      "breakpoints": true
     }
   ]
 }

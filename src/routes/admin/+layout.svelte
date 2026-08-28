@@ -20,7 +20,8 @@
     { href: '/admin/slideshow', label: 'Slideshow', icon: 'image' },
     { href: '/admin/locations', label: 'Locations', icon: 'map' },
     { href: '/admin/page-images', label: 'Page Images', icon: 'image' },
-    { href: '/admin/season-photos', label: 'Season Photos', icon: 'camera' }
+    { href: '/admin/season-photos', label: 'Season Photos', icon: 'camera' },
+    { href: '/admin/feature-access', label: 'Feature Access', icon: 'lock' }
   ];
 
   function isActive(href: string) {

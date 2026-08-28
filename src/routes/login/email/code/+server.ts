@@ -43,10 +43,20 @@ export const POST: RequestHandler = async function (event) {
     }
 
     const result = (await db.execute(
-      sql`SELECT id, email, first_name FROM "user" WHERE email = ${email}`
-    )) as { id: number; email: string; first_name: string | null }[];
+      sql`SELECT id, email, first_name, banned FROM "user" WHERE email = ${email}`
+    )) as { id: number; email: string; first_name: string | null; banned: boolean | null }[];
 
     const headers = new Headers();
+
+    if (result.length > 0 && result[0].banned) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: 'This account has been banned. Contact the admin if you believe this is a mistake.'
+        }),
+        { status: 403 }
+      );
+    }
 
     if (result.length === 0 || !result[0].first_name) {
       event.cookies.set('pendingSignupEmail', email, { path: '/', maxAge: 900 });
