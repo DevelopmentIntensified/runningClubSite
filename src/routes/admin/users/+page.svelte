@@ -10,11 +10,13 @@
   // Per-user feature denial modal state (checked = user is denied this feature).
   let accessUser = $state<{ id: number; email: string } | null>(null);
   let accessSelection = $state<Record<string, boolean>>({});
+  let accessSaveState = $state<'idle' | 'saving' | 'saved'>('idle');
 
   const editableFeatures = $derived((data.features || []).filter((f) => f.key !== 'admin'));
 
   function openAccess(user: { id: number; email: string }) {
     accessUser = { id: user.id, email: user.email };
+    accessSaveState = 'idle';
     const denied = new Set(data.deniedFeatureMap[user.id] || []);
     const next: Record<string, boolean> = {};
     for (const f of editableFeatures) {
@@ -25,6 +27,7 @@
 
   function closeAccess() {
     accessUser = null;
+    accessSaveState = 'idle';
   }
 
   let filteredUsers = $derived.by(() => {
@@ -200,7 +203,11 @@
                       method="POST"
                       use:enhance
                       class="inline"
-                      onsubmit={() => confirm(`Ban ${user.email}? This logs them out immediately.`)}
+                      onsubmit={(e) => {
+                        if (!confirm(`Ban ${user.email}? This logs them out immediately.`)) {
+                          e.preventDefault();
+                        }
+                      }}
                     >
                       <input type="hidden" name="id" value={user.id} />
                       <button type="submit" class="text-xs text-red-600 hover:text-red-800"
@@ -246,8 +253,10 @@
         action="?/updateUserFeatureAccess"
         method="POST"
         use:enhance={() => {
-          return async ({ update }) => {
+          accessSaveState = 'saving';
+          return async ({ update, result }) => {
             await update({ reset: false });
+            accessSaveState = result.type === 'success' ? 'saved' : 'idle';
           };
         }}
         class="space-y-4 p-6"
@@ -256,6 +265,42 @@
           Tick a feature to <strong>revoke {accessUser.email}'s</strong> access to it. This overrides
           the feature's global mode. Leave unticked to follow the global setting. Admins are never affected.
         </p>
+        {#if accessSaveState === 'saving'}
+          <div
+            class="flex items-center gap-2 rounded-lg border border-sky-200 bg-sky-50 px-3 py-2 text-sm text-sky-700"
+          >
+            <svg class="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none">
+              <circle
+                class="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="4"
+              ></circle>
+              <path
+                class="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+              ></path>
+            </svg>
+            Saving access changes…
+          </div>
+        {:else if accessSaveState === 'saved'}
+          <div
+            class="flex items-center gap-2 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-700"
+          >
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            Access changes saved for {accessUser.email}.
+          </div>
+        {/if}
         <input type="hidden" name="userId" value={accessUser.id} />
         <div class="max-h-72 space-y-2 overflow-y-auto">
           {#each editableFeatures as feature}
@@ -289,9 +334,10 @@
           </button>
           <button
             type="submit"
-            class="bg-primary-600 hover:bg-primary-700 rounded-lg px-4 py-2 text-sm font-medium text-white"
+            disabled={accessSaveState === 'saving'}
+            class="bg-primary-600 hover:bg-primary-700 rounded-lg px-4 py-2 text-sm font-medium text-white disabled:cursor-not-allowed disabled:opacity-60"
           >
-            Save
+            {accessSaveState === 'saving' ? 'Saving…' : 'Save'}
           </button>
         </div>
       </form>
