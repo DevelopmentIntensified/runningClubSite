@@ -119,7 +119,7 @@
               >Date</th
             >
             <th
-              class="px-6 py-3.5 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase hidden md:table-cell"
+              class="hidden px-6 py-3.5 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase md:table-cell"
               >Location</th
             >
             <th
@@ -146,7 +146,34 @@
               <td class="px-6 py-4 text-sm whitespace-nowrap text-slate-600"
                 >{new Date(event.date).toLocaleDateString()}</td
               >
-              <td class="px-6 py-4 text-sm whitespace-nowrap text-slate-600 hidden md:table-cell">{event.location}</td>
+              <td class="hidden px-6 py-4 text-sm whitespace-nowrap text-slate-600 md:table-cell">
+                {#if event.locationLink}
+                  <a
+                    href={event.locationLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-primary-600 hover:text-primary-800 inline-flex items-center gap-1"
+                  >
+                    {event.locationName || event.location}
+                    <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                      />
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                    </svg>
+                  </a>
+                {:else}
+                  {event.location}
+                {/if}
+              </td>
               <td class="px-6 py-4 text-sm whitespace-nowrap">
                 <div class="flex items-center gap-3">
                   <a

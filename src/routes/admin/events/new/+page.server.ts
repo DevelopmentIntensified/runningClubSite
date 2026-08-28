@@ -1,5 +1,5 @@
 import { logAdminAction } from '$lib/actions/adminAudit';
-import { createEvent } from '$lib/actions/events';
+import { createEvent, resolveLocationId } from '$lib/actions/events';
 import { getLocations } from '$lib/actions/locations';
 import { fail, redirect } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
@@ -17,11 +17,22 @@ export const actions: Actions = {
     const start = formData.get('start') as string;
     const end = formData.get('end') as string;
     const location = formData.get('location') as string;
+    const locationIdRaw = formData.get('locationId') as string | null;
     const type = formData.get('type') as string;
     const description = formData.get('description') as string;
 
     if (!title || !start || !end || !location || !type) {
       return fail(400, { message: 'All fields are required' });
+    }
+
+    // Use the explicit selected id if present, otherwise try to auto-link by name.
+    let locationId: number | null = null;
+    if (locationIdRaw) {
+      const parsed = parseInt(locationIdRaw, 10);
+      if (!Number.isNaN(parsed)) locationId = parsed;
+    }
+    if (locationId === null) {
+      locationId = await resolveLocationId(location);
     }
 
     let start2 = DateTime.fromISO(start.replace(' ', 'T')).setZone('America/New_York');
@@ -33,6 +44,7 @@ export const actions: Actions = {
       start: start2.toString(),
       end: end2.toString(),
       location: location,
+      locationId: locationId,
       type: type
     });
 
@@ -48,6 +60,7 @@ export const actions: Actions = {
             start: start2.toString(),
             end: end2.toString(),
             location,
+            locationId,
             type,
             description
           }

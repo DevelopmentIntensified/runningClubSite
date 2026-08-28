@@ -1,17 +1,9 @@
 import type { PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
-import { db } from '$lib/server/db';
-import { events } from '$lib/server/db/schema';
-import { eq } from 'drizzle-orm';
+import { getEvent } from '$lib/actions/events';
 
 export const load: PageServerLoad = async (e) => {
-  const eventsData = await db
-    .select()
-    .from(events)
-    .where(eq(events.id, Number(e.params.id)))
-    .orderBy(events.start);
-
-  const eventData = eventsData[0];
+  const eventData = await getEvent(Number(e.params.id));
 
   if (!eventData) {
     throw error(404, 'Event not found');

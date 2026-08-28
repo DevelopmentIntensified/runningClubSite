@@ -1,17 +1,51 @@
 import { db } from '$lib/server/db';
-import { events } from '$lib/server/db/schema';
-import { eq } from 'drizzle-orm';
+import { events, locations } from '$lib/server/db/schema';
+import { eq, asc, ilike } from 'drizzle-orm';
 import type { InferInsertModel } from 'drizzle-orm';
 
 type CalendarEvent = InferInsertModel<typeof events>;
 
+/** Resolve a location id matching the given name, or null if none matches. */
+export async function resolveLocationId(name: string | null | undefined): Promise<number | null> {
+  if (!name) return null;
+  const [row] = await db
+    .select({ id: locations.id })
+    .from(locations)
+    .where(ilike(locations.name, name.trim()))
+    .limit(1);
+  return row?.id ?? null;
+}
+
 export async function getEvents() {
-  return await db.select().from(events).orderBy(events.start);
+  const rows = await db
+    .select({ event: events, location: locations })
+    .from(events)
+    .leftJoin(locations, eq(events.locationId, locations.id))
+    .orderBy(asc(events.start));
+
+  return rows.map((r) => ({
+    ...r.event,
+    locationName: r.location?.name ?? null,
+    locationLink: r.location?.link ?? null,
+    locationDescription: r.location?.description ?? null
+  }));
 }
 
 export async function getEvent(id: number) {
-  const [event] = await db.select().from(events).where(eq(events.id, id));
-  return event;
+  const [row] = await db
+    .select({ event: events, location: locations })
+    .from(events)
+    .leftJoin(locations, eq(events.locationId, locations.id))
+    .where(eq(events.id, id));
+
+  if (!row) return null;
+
+  return {
+    ...row.event,
+    locationName: row.location?.name ?? null,
+    locationLink: row.location?.link ?? null,
+    locationDescription: row.location?.description ?? null
+  };
 }
 
 export async function createEvent(data: Omit<CalendarEvent, 'id'>) {

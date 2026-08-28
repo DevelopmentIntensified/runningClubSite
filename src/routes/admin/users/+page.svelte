@@ -7,6 +7,26 @@
 
   let searchTerm = $state('');
 
+  // Per-user feature access modal state.
+  let accessUser = $state<{ id: number; email: string } | null>(null);
+  let accessSelection = $state<Record<string, boolean>>({});
+
+  const editableFeatures = $derived((data.features || []).filter((f) => f.key !== 'admin'));
+
+  function openAccess(user: { id: number; email: string }) {
+    accessUser = { id: user.id, email: user.email };
+    const granted = new Set(data.userFeatureMap[user.id] || []);
+    const next: Record<string, boolean> = {};
+    for (const f of editableFeatures) {
+      next[f.key] = granted.has(f.key);
+    }
+    accessSelection = next;
+  }
+
+  function closeAccess() {
+    accessUser = null;
+  }
+
   let filteredUsers = $derived.by(() => {
     let result = [...data.users];
     if (searchTerm) {
@@ -159,6 +179,14 @@
                     class="text-primary-600 hover:text-primary-800 text-xs font-medium">Edit</a
                   >
                   <span class="text-slate-300">|</span>
+                  <button
+                    type="button"
+                    onclick={() => openAccess(user)}
+                    class="text-primary-600 hover:text-primary-800 text-xs font-medium"
+                  >
+                    Access
+                  </button>
+                  <span class="text-slate-300">|</span>
                   {#if user.banned}
                     <form action="?/unbanUser" method="POST" use:enhance class="inline">
                       <input type="hidden" name="id" value={user.id} />
@@ -196,3 +224,68 @@
     </div>
   {/if}
 </div>
+
+{#if accessUser}
+  <div
+    class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+    role="dialog"
+    aria-modal="true"
+    onclick={closeAccess}
+  >
+    <div
+      class="w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-xl"
+      onclick={(e) => e.stopPropagation()}
+    >
+      <div class="flex items-center justify-between border-b border-slate-200 px-6 py-4">
+        <h3 class="text-lg font-semibold text-slate-800">Feature Access</h3>
+        <button type="button" onclick={closeAccess} class="text-slate-400 hover:text-slate-600"
+          >✕</button
+        >
+      </div>
+      <form action="?/updateUserFeatureAccess" method="POST" use:enhance class="space-y-4 p-6">
+        <p class="text-sm text-slate-600">
+          Grant <strong>{accessUser.email}</strong> access to features. Changes apply when a feature
+          is set to <em>Specific users</em>.
+        </p>
+        <input type="hidden" name="userId" value={accessUser.id} />
+        <div class="max-h-72 space-y-2 overflow-y-auto">
+          {#each editableFeatures as feature}
+            <label
+              class="flex cursor-pointer items-center justify-between rounded-lg border border-slate-200 px-3 py-2.5 transition-colors hover:bg-slate-50"
+            >
+              <span>
+                <span class="block text-sm font-medium text-slate-700">{feature.name}</span>
+                <span class="block text-xs text-slate-500">{feature.description}</span>
+              </span>
+              <input
+                type="checkbox"
+                name="grant"
+                value={feature.key}
+                checked={accessSelection[feature.key]}
+                onchange={(e) => {
+                  accessSelection[feature.key] = (e.target as HTMLInputElement).checked;
+                }}
+                class="text-primary-600 focus:ring-primary-500 h-4 w-4 rounded border-slate-300"
+              />
+            </label>
+          {/each}
+        </div>
+        <div class="flex justify-end gap-3 pt-2">
+          <button
+            type="button"
+            onclick={closeAccess}
+            class="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            class="bg-primary-600 hover:bg-primary-700 rounded-lg px-4 py-2 text-sm font-medium text-white"
+          >
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+{/if}

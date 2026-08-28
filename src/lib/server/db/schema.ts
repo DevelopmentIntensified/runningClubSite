@@ -122,6 +122,7 @@ export const events = pgTable('events', {
   }).notNull(),
   description: text('description'),
   location: text('location'),
+  locationId: integer('location_id').references(() => locations.id, { onDelete: 'set null' }),
   created_at: timestamp('created_at').defaultNow().notNull(),
   type: text('type').notNull()
 });

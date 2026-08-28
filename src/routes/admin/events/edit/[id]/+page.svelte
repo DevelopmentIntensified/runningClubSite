@@ -4,10 +4,36 @@
   import type { PageData } from './$types';
   import { typeOptions } from '$lib/events';
 
-  export let data: PageData;
+  let { data }: { data: PageData } = $props();
 
   let { event, locations } = data;
-  let error = '';
+  let error = $state('');
+
+  // Location combobox state. Init from the event's linked location (if any).
+  let selectedLocationId = $state(event.locationId ? String(event.locationId) : 'custom');
+  let customLocation = $state(event.locationId ? '' : event.location || '');
+  // If the current value is a saved location, select it; otherwise default to custom.
+  const initialMatch = event.locationId
+    ? locations.find((l) => l.id === event.locationId)
+    : locations.find((l) => l.name === event.location);
+  if (!initialMatch) selectedLocationId = 'custom';
+  let selectedLoc = $state<{ id: number; name: string } | null>(initialMatch ?? null);
+  let locationName = $derived(
+    selectedLocationId === 'custom' ? customLocation : (selectedLoc?.name ?? '')
+  );
+  let locationIdValue = $derived(
+    selectedLocationId !== 'custom' && selectedLocationId ? String(selectedLocationId) : ''
+  );
+
+  function onLocationChange() {
+    if (selectedLocationId === 'custom') {
+      selectedLoc = null;
+      return;
+    }
+    const found = locations.find((l) => String(l.id) === String(selectedLocationId));
+    selectedLoc = found ?? null;
+    if (found) selectedLocationId = String(found.id);
+  }
 
   function formatDateForInput(date: string): string {
     return DateTime.fromISO(date.replace(' ', 'T'))
@@ -65,19 +91,30 @@
           </div>
           <div>
             <label for="location" class="block text-sm font-medium text-gray-700">Location</label>
-            <input
-              type="text"
+            <select
               id="location"
-              name="location"
-              value={event.location}
-              list="locations-list"
+              bind:value={selectedLocationId}
+              onchange={onLocationChange}
               class="focus:border-primary-500 focus:ring-primary-500 mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
-            />
-            <datalist id="locations-list">
+            >
+              <option value="custom">Other / Custom location…</option>
               {#each locations as loc}
-                <option value={loc.name}></option>
+                <option value={loc.id}
+                  >{loc.name}{loc.description ? ` — ${loc.description}` : ''}</option
+                >
               {/each}
-            </datalist>
+            </select>
+            {#if selectedLocationId === 'custom'}
+              <input
+                type="text"
+                id="location-custom"
+                placeholder="Enter a custom location"
+                bind:value={customLocation}
+                class="focus:border-primary-500 focus:ring-primary-500 mt-2 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
+              />
+            {/if}
+            <input type="hidden" name="locationId" value={locationIdValue} />
+            <input type="hidden" name="location" value={locationName} />
           </div>
           <div>
             <label for="description" class="block text-sm font-medium text-gray-700"

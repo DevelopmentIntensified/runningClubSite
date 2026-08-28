@@ -14,6 +14,28 @@
   let startDate = $state('');
   let endDate = $state('');
 
+  // Location combobox state. selectedLocationId is the numeric id or 'custom'.
+  let selectedLocationId = $state('');
+  let customLocation = $state('');
+  let selectedLoc = $state<{ id: number; name: string } | null>(null);
+  // Effective location name submitted to the server.
+  let locationName = $derived(
+    selectedLocationId === 'custom' ? customLocation : (selectedLoc?.name ?? '')
+  );
+  let locationIdValue = $derived(
+    selectedLocationId !== 'custom' && selectedLocationId ? String(selectedLocationId) : ''
+  );
+
+  function onLocationChange() {
+    if (selectedLocationId === 'custom') {
+      selectedLoc = null;
+      return;
+    }
+    const found = locations.find((l) => String(l.id) === String(selectedLocationId));
+    selectedLoc = found ?? null;
+    if (found) selectedLocationId = String(found.id);
+  }
+
   onMount(() => {
     const params = new URLSearchParams(window.location.search);
     const dateParam = params.get('date');
@@ -77,19 +99,31 @@
           </div>
           <div>
             <label for="location" class="block text-sm font-medium text-gray-700">Location</label>
-            <input
-              type="text"
+            <select
               id="location"
-              name="location"
-              required
-              list="locations-list"
+              bind:value={selectedLocationId}
+              onchange={onLocationChange}
               class="focus:border-primary-500 focus:ring-primary-500 mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
-            />
-            <datalist id="locations-list">
+            >
+              <option value="" disabled>Select a location…</option>
               {#each locations as loc}
-                <option value={loc.name}></option>
+                <option value={loc.id}
+                  >{loc.name}{loc.description ? ` — ${loc.description}` : ''}</option
+                >
               {/each}
-            </datalist>
+              <option value="custom">Other / Custom location…</option>
+            </select>
+            {#if selectedLocationId === 'custom'}
+              <input
+                type="text"
+                id="location-custom"
+                placeholder="Enter a custom location"
+                bind:value={customLocation}
+                class="focus:border-primary-500 focus:ring-primary-500 mt-2 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
+              />
+            {/if}
+            <input type="hidden" name="locationId" value={locationIdValue} />
+            <input type="hidden" name="location" value={locationName} />
           </div>
           <div>
             <label for="description" class="block text-sm font-medium text-gray-700"

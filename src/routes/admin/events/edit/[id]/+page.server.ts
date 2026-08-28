@@ -1,5 +1,5 @@
 import { logAdminAction } from '$lib/actions/adminAudit';
-import { getEvent, updateEvent } from '$lib/actions/events';
+import { getEvent, updateEvent, resolveLocationId } from '$lib/actions/events';
 import { getLocations } from '$lib/actions/locations';
 import { fail, redirect } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
@@ -22,6 +22,7 @@ export const actions: Actions = {
     const start = formData.get('start') as string | null;
     const end = formData.get('end') as string | null;
     const location = formData.get('location') as string | null;
+    const locationIdRaw = formData.get('locationId') as string | null;
     const type = formData.get('type') as string | null;
 
     const updateData: {
@@ -29,6 +30,7 @@ export const actions: Actions = {
       start?: string;
       end?: string;
       location?: string;
+      locationId?: number | null;
       type?: string;
       description?: string;
     } = {};
@@ -37,6 +39,14 @@ export const actions: Actions = {
     if (location) updateData.location = location;
     if (type) updateData.type = type;
     if (formData.get('description')) updateData.description = formData.get('description') as string;
+
+    // Use the explicit selected id if present, otherwise auto-link by name.
+    if (locationIdRaw) {
+      const parsed = parseInt(locationIdRaw, 10);
+      updateData.locationId = Number.isNaN(parsed) ? null : parsed;
+    } else if (location) {
+      updateData.locationId = await resolveLocationId(location);
+    }
 
     if (start) {
       updateData.start = DateTime.fromISO(start.replace(' ', 'T'))
@@ -54,7 +64,7 @@ export const actions: Actions = {
     const updatedEvent = await updateEvent(parseInt(params.id), updateData);
 
     if (updatedEvent) {
-      const changes = objectDiff(existingEvent, updateData);
+      const changes = objectDiff(existingEvent ?? {}, updateData);
       await logAdminAction({
         adminId: parseInt(locals.user!.id),
         action: 'update',

@@ -111,6 +111,40 @@ export async function isUserGranted(featureKey: string, userId: number): Promise
   return rows.length > 0;
 }
 
+/** Keys of all features a specific user is explicitly granted access to. */
+export async function getUserFeatureKeys(userId: number): Promise<string[]> {
+  const rows = await db
+    .select({ featureKey: featureAccessUsers.featureKey })
+    .from(featureAccessUsers)
+    .where(eq(featureAccessUsers.userId, userId));
+  return rows.map((r) => r.featureKey);
+}
+
+/**
+ * Sync a user's explicit feature grants to exactly the given set of keys.
+ * Features not present are revoked.
+ */
+export async function setUserFeatureKeys(userId: number, keys: string[]) {
+  const current = new Set(await getUserFeatureKeys(userId));
+  const desired = new Set(keys);
+  await db.transaction(async (tx) => {
+    for (const key of current) {
+      if (!desired.has(key)) {
+        await tx
+          .delete(featureAccessUsers)
+          .where(
+            and(eq(featureAccessUsers.featureKey, key), eq(featureAccessUsers.userId, userId))
+          );
+      }
+    }
+    for (const key of desired) {
+      if (!current.has(key)) {
+        await tx.insert(featureAccessUsers).values({ featureKey: key, userId });
+      }
+    }
+  });
+}
+
 /**
  * Resolve whether a user may access a feature.
  * Admins always have access. Non-admins are checked against the feature's mode.

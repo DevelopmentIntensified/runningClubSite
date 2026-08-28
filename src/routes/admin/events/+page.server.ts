@@ -1,12 +1,10 @@
 import { logAdminAction } from '$lib/actions/adminAudit';
-import { db } from '$lib/server/db';
-import { events } from '$lib/server/db/schema';
-import { deleteEvent } from '$lib/actions/events';
+import { getEvents, deleteEvent } from '$lib/actions/events';
 import { fail } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
 
 export const load: PageServerLoad = async () => {
-  const eventsData = await db.select().from(events).orderBy(events.start);
+  const eventsData = await getEvents();
 
   return {
     events: eventsData.map((e) => ({
