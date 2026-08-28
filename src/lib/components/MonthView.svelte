@@ -191,5 +191,16 @@
     {#if hoveredEvent.description}
       <p class="text-sm text-slate-700">{hoveredEvent.description}</p>
     {/if}
+    <a
+      href={isAdmin
+        ? `/admin/events/edit/${hoveredEvent.id}`
+        : `/schedule/event/${hoveredEvent.id}`}
+      class="hover:text-primary-700 text-primary-600 mt-3 inline-flex items-center gap-1 text-sm font-semibold"
+    >
+      Click for more details
+      <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
+    </a>
   </div>
 {/if}
