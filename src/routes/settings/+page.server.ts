@@ -83,17 +83,26 @@ export const actions: Actions = {
   deleteAccount: async ({ locals, cookies }) => {
     if (!locals.user) return { success: false, error: 'Not authenticated' };
 
+    const userId = parseInt(locals.user!.id);
     const userName =
       [locals.user.firstName, locals.user.lastName].filter(Boolean).join(' ') || locals.user.email;
     await logAdminAction({
-      adminId: parseInt(locals.user!.id),
+      adminId: userId,
       action: 'delete',
       targetType: 'user',
-      targetId: parseInt(locals.user!.id),
+      targetId: userId,
       details: JSON.stringify({ deletedOwnAccount: true, name: userName })
     });
 
-    await db.delete(users).where(eq(users.id, parseInt(locals.user!.id)));
+    await db.delete(users).where(eq(users.id, userId));
+
+    // Properly log the user out: the blank cookie alone isn't enough to fully
+    // clear the session. Invalidate the server-side session and clear locals.
+    if (locals.session) {
+      await lucia.invalidateSession(locals.session.id);
+    }
+    locals.session = null;
+    locals.user = null;
 
     const sessionCookie = lucia.createBlankSessionCookie();
     cookies.set(sessionCookie.name, sessionCookie.value, {
