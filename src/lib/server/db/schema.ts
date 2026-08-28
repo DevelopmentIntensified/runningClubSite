@@ -169,9 +169,7 @@ export const alumniNewsletter = pgTable('alumni_newsletter', {
 
 export const adminAuditLog = pgTable('admin_audit_log', {
   id: serial('id').primaryKey(),
-  adminId: integer('admin_id')
-    .notNull()
-    .references(() => users.id),
+  adminId: integer('admin_id').references(() => users.id, { onDelete: 'set null' }),
   action: text('action').notNull(),
   targetType: text('target_type'),
   targetId: integer('target_id'),
