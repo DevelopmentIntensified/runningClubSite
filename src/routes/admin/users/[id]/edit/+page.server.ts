@@ -3,11 +3,12 @@ import { getUser, updateUser } from '$lib/actions/users';
 import { deleteUserSessions } from '$lib/actions/sessions';
 import { updateUserProfile } from '$lib/actions/userProfile';
 import { db } from '$lib/server/db';
-import { userChangeLog } from '$lib/server/db/schema';
+import { users, userChangeLog } from '$lib/server/db/schema';
 import { eq, desc } from 'drizzle-orm';
 import { fail, redirect } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
 import { objectDiff } from '$lib/utils/objectDiff';
+import { hash } from '@node-rs/argon2';
 
 export const load: PageServerLoad = async ({ params }) => {
   const User = await getUser(parseInt(params.id));
@@ -34,8 +35,18 @@ export const actions: Actions = {
     const graduationYear = formData.get('graduationYear') as string | null;
     const academicLevel = formData.get('academicLevel') as string | null;
     const isAlumni = formData.get('isAlumni') as string | null;
+    const newPassword = formData.get('newPassword') as string | null;
+    const confirmPassword = formData.get('confirmPassword') as string | null;
 
     const userId = parseInt(params.id);
+
+    if (newPassword && newPassword !== confirmPassword) {
+      return fail(400, { message: 'New passwords do not match' });
+    }
+
+    if (newPassword && newPassword.length < 8) {
+      return fail(400, { message: 'Password must be at least 8 characters' });
+    }
 
     const existingUser = await getUser(userId);
 
@@ -48,6 +59,12 @@ export const actions: Actions = {
     if (graduationYear) updateData.graduationYear = parseInt(graduationYear);
     if (academicLevel) updateData.academicLevel = academicLevel;
     if (isAlumni === 'true' || isAlumni === 'false') updateData.isAlumni = isAlumni === 'true';
+
+    if (newPassword) {
+      const hashedPassword = await hash(newPassword);
+      await db.update(users).set({ hashedPassword }).where(eq(users.id, userId));
+      await deleteUserSessions(userId);
+    }
 
     if (
       firstName ||

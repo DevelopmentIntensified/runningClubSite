@@ -1,5 +1,6 @@
 import { logAdminAction } from '$lib/actions/adminAudit';
 import { getEvent, updateEvent } from '$lib/actions/events';
+import { getLocations } from '$lib/actions/locations';
 import { fail, redirect } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
 import { DateTime } from 'luxon';
@@ -10,7 +11,8 @@ export const load: PageServerLoad = async ({ params }: { params: { id: string } 
   if (!event) {
     throw redirect(302, '/admin/events');
   }
-  return { event };
+  const locations = await getLocations();
+  return { event, locations };
 };
 
 export const actions: Actions = {

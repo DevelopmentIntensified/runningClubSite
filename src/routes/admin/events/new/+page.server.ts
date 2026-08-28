@@ -1,8 +1,14 @@
 import { logAdminAction } from '$lib/actions/adminAudit';
 import { createEvent } from '$lib/actions/events';
+import { getLocations } from '$lib/actions/locations';
 import { fail, redirect } from '@sveltejs/kit';
-import type { Actions } from './$types';
+import type { PageServerLoad, Actions } from './$types';
 import { DateTime } from 'luxon';
+
+export const load: PageServerLoad = async () => {
+  const locations = await getLocations();
+  return { locations };
+};
 
 export const actions: Actions = {
   createEvent: async ({ request, locals }) => {

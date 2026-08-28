@@ -1,12 +1,18 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
-  import type { PageData } from './$types';
+  import type { PageData, ActionData } from './$types';
   import { formatChangeDetails } from '$lib/utils/formatChangeDetails';
 
-  export let data: PageData;
+  let { data, form }: { data: PageData; form: ActionData } = $props();
 
   let { User, changeLog } = data;
-  let error = '';
+  let error = $state('');
+
+  $effect(() => {
+    if (form?.message) {
+      error = form.message;
+    }
+  });
 
   const usStates = [
     { name: 'Alabama', abbr: 'AL' },
@@ -173,6 +179,32 @@
               id="isAdmin"
               name="isAdmin"
               value={User.isAdmin}
+              class="focus:border-primary-500 focus:ring-primary-500 mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
+            />
+          </div>
+          <div>
+            <label for="newPassword" class="block text-sm font-medium text-gray-700"
+              >New Password</label
+            >
+            <input
+              type="password"
+              id="newPassword"
+              name="newPassword"
+              autocomplete="new-password"
+              placeholder="Leave blank to keep current password"
+              class="focus:border-primary-500 focus:ring-primary-500 mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
+            />
+          </div>
+          <div>
+            <label for="confirmPassword" class="block text-sm font-medium text-gray-700"
+              >Confirm New Password</label
+            >
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              autocomplete="new-password"
+              placeholder="Re-enter new password"
               class="focus:border-primary-500 focus:ring-primary-500 mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
             />
           </div>

@@ -6,7 +6,7 @@
 
   export let data: PageData;
 
-  let { event } = data;
+  let { event, locations } = data;
   let error = '';
 
   function formatDateForInput(date: string): string {
@@ -70,8 +70,14 @@
               id="location"
               name="location"
               value={event.location}
+              list="locations-list"
               class="focus:border-primary-500 focus:ring-primary-500 mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
             />
+            <datalist id="locations-list">
+              {#each locations as loc}
+                <option value={loc.name}></option>
+              {/each}
+            </datalist>
           </div>
           <div>
             <label for="description" class="block text-sm font-medium text-gray-700"
