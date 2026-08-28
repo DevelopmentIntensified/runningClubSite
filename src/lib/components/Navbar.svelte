@@ -49,7 +49,7 @@
       ]
     },
     {
-      label: 'Member Links',
+      label: 'Join',
       items: () => [
         { href: '/trainingplan', label: 'Training Plan' },
         { href: '/groupme', label: 'GroupMe' }
