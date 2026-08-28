@@ -1,6 +1,7 @@
 import { parseJWT, validateJWT } from 'oslo/jwt';
 import type { RequestHandler } from './$types';
 import { getUrl } from '$lib/utils/getUrl';
+import { sanitizeRedirectUrl } from '$lib/utils/sanitizeRedirect';
 import { EMAILSECRET } from '$env/static/private';
 import type { EmailTokenPayload } from '../+server';
 import { lucia } from '$lib/server/auth';
@@ -73,7 +74,9 @@ export const GET: RequestHandler = async function (event) {
     )) as { id: number; email: string; first_name: string | null }[];
 
     const targetRedirect = event.cookies.get('redirectUrl');
-    const finalRedirect = targetRedirect ? decodeURIComponent(targetRedirect) : '/groupme';
+    const finalRedirect = targetRedirect
+      ? sanitizeRedirectUrl(decodeURIComponent(targetRedirect))
+      : '/groupme';
 
     const headers = new Headers();
 

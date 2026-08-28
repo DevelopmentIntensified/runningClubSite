@@ -5,6 +5,7 @@ import { db } from '$lib/server/db/';
 import { sql } from 'drizzle-orm';
 import { eq } from 'drizzle-orm';
 import { hash } from '@node-rs/argon2';
+import { sanitizeRedirectUrl } from '$lib/utils/sanitizeRedirect';
 
 export const POST: RequestHandler = async ({ request, cookies }) => {
   const body = await request.json();
@@ -67,7 +68,7 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
           .where(eq(users.id, parseInt(user.id)));
 
         return new Response(
-          JSON.stringify({ success: true, redirectTo: redirectUrl || '/groupme' }),
+          JSON.stringify({ success: true, redirectTo: sanitizeRedirectUrl(redirectUrl) }),
           {
             headers,
             status: 200
@@ -130,10 +131,13 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
     headers.append('Set-Cookie', sessionCookie.serialize());
     headers.append('Set-Cookie', clearPending);
 
-    return new Response(JSON.stringify({ success: true, redirectTo: redirectUrl || '/groupme' }), {
-      headers,
-      status: 200
-    });
+    return new Response(
+      JSON.stringify({ success: true, redirectTo: sanitizeRedirectUrl(redirectUrl) }),
+      {
+        headers,
+        status: 200
+      }
+    );
   } catch (error) {
     console.error('Error creating user:', error);
     return new Response(

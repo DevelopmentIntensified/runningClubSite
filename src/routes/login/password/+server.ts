@@ -3,10 +3,12 @@ import { lucia } from '$lib/server/auth';
 import { db } from '$lib/server/db';
 import { sql } from 'drizzle-orm';
 import { verify } from '@node-rs/argon2';
+import { sanitizeRedirectUrl } from '$lib/utils/sanitizeRedirect';
 
 export const POST: RequestHandler = async ({ request, cookies }) => {
   const body = await request.json();
-  const { email, password, redirectUrl } = body;
+  const { email, password } = body;
+  const redirectUrl = sanitizeRedirectUrl(body.redirectUrl);
 
   if (!email || !password) {
     return new Response(JSON.stringify({ success: false, error: 'Invalid email or password' }), {
@@ -65,7 +67,7 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
 
     if (!user.first_name) {
       cookies.set('pendingSignupEmail', email, { path: '/', maxAge: 900 });
-      const setupUrl = `/login/setup?redirectUrl=${encodeURIComponent(redirectUrl || '/groupme')}`;
+      const setupUrl = `/login/setup?redirectUrl=${encodeURIComponent(redirectUrl)}`;
       return new Response(JSON.stringify({ success: true, redirectTo: setupUrl }), {
         headers,
         status: 200
@@ -79,7 +81,7 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
     headers.append('Set-Cookie', sessionCookie.serialize());
     headers.append('Set-Cookie', 'redirectUrl=; Path=/; Max-Age=0');
 
-    return new Response(JSON.stringify({ success: true, redirectTo: redirectUrl || '/groupme' }), {
+    return new Response(JSON.stringify({ success: true, redirectTo: redirectUrl }), {
       headers,
       status: 200
     });

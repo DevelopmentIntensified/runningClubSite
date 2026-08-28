@@ -6,6 +6,7 @@ import { sql } from 'drizzle-orm';
 import { deleteCode, deleteDeadCodes, getCode } from '$lib/actions/codes';
 import { Resend } from 'resend';
 import { RESENDAPIKEY } from '$env/static/private';
+import { sanitizeRedirectUrl } from '$lib/utils/sanitizeRedirect';
 
 const resend = new Resend(RESENDAPIKEY);
 const GENERAL_SEGMENT_ID = '708d2ae5-c8c6-41b8-94d4-8a9693b237c9';
@@ -14,7 +15,7 @@ export const POST: RequestHandler = async function (event) {
   const siteUrl = getUrl();
   const body = await event.request.json();
   const code = body.code;
-  const redirectUrl = body.redirectUrl || '/groupme';
+  const redirectUrl = sanitizeRedirectUrl(body.redirectUrl);
 
   try {
     await deleteDeadCodes();

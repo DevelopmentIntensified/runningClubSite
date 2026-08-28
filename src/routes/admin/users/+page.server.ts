@@ -30,13 +30,21 @@ export const actions: Actions = {
       return fail(400, { message: 'Invalid User ID' });
     }
 
-    await deleteUser(parseInt(id));
+    const userId = parseInt(id, 10);
+    if (Number.isNaN(userId)) {
+      return fail(400, { message: 'Invalid User ID' });
+    }
+    if (userId === parseInt(locals.user!.id)) {
+      return fail(400, { message: 'You cannot delete your own account' });
+    }
+
+    await deleteUser(userId);
     await logAdminAction({
       adminId: parseInt(locals.user!.id),
       action: 'delete',
       targetType: 'user',
-      targetId: parseInt(id),
-      details: JSON.stringify({ targetType: 'user', targetId: parseInt(id) })
+      targetId: userId,
+      details: JSON.stringify({ targetType: 'user', targetId: userId })
     });
     return { success: true };
   },
