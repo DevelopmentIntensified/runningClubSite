@@ -242,7 +242,16 @@
           >✕</button
         >
       </div>
-      <form action="?/updateUserFeatureAccess" method="POST" use:enhance class="space-y-4 p-6">
+      <form
+        action="?/updateUserFeatureAccess"
+        method="POST"
+        use:enhance={() => {
+          return async ({ update }) => {
+            await update({ reset: false });
+          };
+        }}
+        class="space-y-4 p-6"
+      >
         <p class="text-sm text-slate-600">
           Tick a feature to <strong>revoke {accessUser.email}'s</strong> access to it. This overrides
           the feature's global mode. Leave unticked to follow the global setting. Admins are never affected.
