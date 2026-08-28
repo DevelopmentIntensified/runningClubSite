@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import { page } from '$app/stores';
   import type { PageData } from './$types';
 
   let { data }: { data: PageData } = $props();
@@ -73,7 +74,7 @@
       Learn More
     </a>
     <a
-      href={data.isLoggedIn ? '/groupme' : '/login'}
+      href={$page.data.canAccess?.['groupme'] ? '/groupme' : '/login'}
       class="bg-secondary-700 hover:bg-secondary-800 mt-3 rounded px-4 py-2 font-bold text-white transition duration-300"
     >
       Join Us

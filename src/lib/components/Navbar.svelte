@@ -6,12 +6,22 @@
 
   export let isAdmin: boolean;
   export let isLoggedIn: boolean;
+  // Map of feature key -> whether the current user can access it.
+  export let canAccess: Record<string, boolean> = {};
 
   console.warn('DEBUGPRINT[2]: Navbar.svelte:7: isAdmin=', isAdmin);
 
   let isOpen = false;
   let openDropdown: string | null = null;
   let navElement: HTMLElement;
+
+  // Only keep nav links the user can actually access (hide things they can't).
+  function canShow(href: string): boolean {
+    if (href.startsWith('/season-photos')) return !!canAccess['season-photos'];
+    if (href.startsWith('/trainingplan')) return !!canAccess['trainingplan'];
+    if (href.startsWith('/groupme')) return !!canAccess['groupme'];
+    return true;
+  }
 
   const categories = [
     {
@@ -45,6 +55,13 @@
       ]
     }
   ];
+
+  const visibleCategories = categories
+    .map((category) => ({
+      ...category,
+      items: () => category.items().filter((item) => canShow(item.href))
+    }))
+    .filter((category) => category.items().length > 0);
 
   const adminCategory = {
     label: 'Admin',
@@ -122,7 +139,7 @@
         </a>
         <div class="hidden lg:block">
           <div class="ml-10 flex items-baseline space-x-1">
-            {#each categories as category}
+            {#each visibleCategories as category}
               <div class="relative">
                 <button
                   on:click={() => toggleDropdown(category.label)}
@@ -299,7 +316,7 @@
   {#if isOpen}
     <div transition:slide={{ duration: 300 }} class="lg:hidden">
       <div class="space-y-1 px-2 pt-2 pb-3 lg:px-3">
-        {#each mobileNavItems as item}
+        {#each mobileNavItems.filter((item) => canShow(item.href)) as item}
           <a
             href={item.href}
             on:click={closeMenu}
