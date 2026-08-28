@@ -15,12 +15,21 @@
   let openDropdown: string | null = null;
   let navElement: HTMLElement;
 
+  function isJoinFeature(href: string): boolean {
+    return href.startsWith('/trainingplan') || href.startsWith('/groupme');
+  }
+
   // Hide feature links the user can't access (Season Photos, Training Plan,
-  // GroupMe), but always keep the parent group visible.
+  // GroupMe), but always keep the parent group visible. When logged out, the
+  // member-links (Join) still show but point at the login page instead.
   function canShow(href: string): boolean {
     if (href.startsWith('/season-photos')) return !!canAccess['season-photos'];
-    if (href.startsWith('/trainingplan')) return !!canAccess['trainingplan'];
-    if (href.startsWith('/groupme')) return !!canAccess['groupme'];
+    if (isJoinFeature(href)) {
+      if (!isLoggedIn) return true;
+      return href.startsWith('/trainingplan')
+        ? !!canAccess['trainingplan']
+        : !!canAccess['groupme'];
+    }
     return true;
   }
 
@@ -59,7 +68,13 @@
 
   const visibleCategories = categories.map((category) => ({
     ...category,
-    items: () => category.items().filter((item) => canShow(item.href))
+    items: () =>
+      category
+        .items()
+        .filter((item) => canShow(item.href))
+        .map((item) =>
+          !isLoggedIn && isJoinFeature(item.href) ? { ...item, href: '/login' } : item
+        )
   }));
 
   const adminCategory = {
@@ -315,7 +330,9 @@
   {#if isOpen}
     <div transition:slide={{ duration: 300 }} class="lg:hidden">
       <div class="space-y-1 px-2 pt-2 pb-3 lg:px-3">
-        {#each mobileNavItems.filter((item) => canShow(item.href)) as item}
+        {#each mobileNavItems
+          .filter((item) => canShow(item.href))
+          .map( (item) => (!isLoggedIn && isJoinFeature(item.href) ? { ...item, href: '/login' } : item) ) as item}
           <a
             href={item.href}
             on:click={closeMenu}
