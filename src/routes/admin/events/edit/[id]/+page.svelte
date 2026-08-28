@@ -99,7 +99,7 @@
             >
               <option value="custom">Other / Custom location…</option>
               {#each locations as loc}
-                <option value={loc.id}
+                <option value={String(loc.id)}
                   >{loc.name}{loc.description ? ` — ${loc.description}` : ''}</option
                 >
               {/each}
