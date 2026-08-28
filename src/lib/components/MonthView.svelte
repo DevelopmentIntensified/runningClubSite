@@ -161,9 +161,20 @@
 
 {#if hoveredEvent && hoveredEventElement}
   {@const rect = hoveredEventElement.getBoundingClientRect()}
+  {@const gap = 8}
+  <!-- Invisible bridge over the gap between the pill and the tooltip so the cursor can move from the event onto the tooltip without the hover being interrupted. -->
+  <div
+    class="fixed z-50"
+    style="left: {rect.left}px; top: {rect.bottom}px; width: {rect.width}px; height: {gap}px;"
+    onmouseenter={() => (hoveredEvent = hoveredEvent)}
+    onmouseleave={handleEventLeave}
+  ></div>
   <div
     class="fixed z-50 rounded-lg border border-slate-200 bg-white p-4 shadow-xl"
-    style="left: {rect.left}px; top: {rect.bottom + 8}px; min-width: {Math.max(rect.width, 200)}px;"
+    style="left: {rect.left}px; top: {rect.bottom + gap}px; min-width: {Math.max(
+      rect.width,
+      200
+    )}px;"
     onmouseenter={() => (hoveredEvent = hoveredEvent)}
     onmouseleave={handleEventLeave}
     role="tooltip"
