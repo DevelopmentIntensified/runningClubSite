@@ -56,12 +56,10 @@
     }
   ];
 
-  const visibleCategories = categories
-    .map((category) => ({
-      ...category,
-      items: () => category.items().filter((item) => canShow(item.href))
-    }))
-    .filter((category) => category.items().length > 0);
+  const visibleCategories = categories.map((category) => ({
+    ...category,
+    items: () => category.items().filter((item) => canShow(item.href))
+  }));
 
   const adminCategory = {
     label: 'Admin',
