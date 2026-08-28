@@ -1,7 +1,7 @@
 import { logAdminAction } from '$lib/actions/adminAudit';
 import { getUsers, deleteUser, updateUser } from '$lib/actions/users';
 import { deleteUserSessions } from '$lib/actions/sessions';
-import { getFeatures, getUserFeatureKeys, setUserFeatureKeys } from '$lib/actions/featureAccess';
+import { getFeatures, getUserDeniedKeys, setUserDeniedKeys } from '$lib/actions/featureAccess';
 import { fail, redirect } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
 
@@ -11,14 +11,14 @@ export const load: PageServerLoad = async ({ url }) => {
     'email';
   const users = await getUsers(sortBy);
   const features = await getFeatures();
-  // Build a map of userId -> granted feature keys.
-  const userFeatureMap: Record<number, string[]> = {};
+  // Build a map of userId -> denied feature keys.
+  const deniedFeatureMap: Record<number, string[]> = {};
   await Promise.all(
     users.map(async (u) => {
-      userFeatureMap[u.id] = await getUserFeatureKeys(u.id);
+      deniedFeatureMap[u.id] = await getUserDeniedKeys(u.id);
     })
   );
-  return { users, sortBy, features, userFeatureMap };
+  return { users, sortBy, features, deniedFeatureMap };
 };
 
 export const actions: Actions = {
@@ -93,19 +93,19 @@ export const actions: Actions = {
       return fail(400, { message: 'Invalid User ID' });
     }
 
-    // Collect granted keys from the posted checkboxes.
-    const granted: string[] = [];
-    for (const value of formData.getAll('grant')) {
-      granted.push(value as string);
+    // Collect denied keys from the posted checkboxes.
+    const denied: string[] = [];
+    for (const value of formData.getAll('denied')) {
+      denied.push(value as string);
     }
 
-    await setUserFeatureKeys(userId, granted);
+    await setUserDeniedKeys(userId, denied);
     await logAdminAction({
       adminId: parseInt(locals.user!.id),
       action: 'updateFeatureAccess',
       targetType: 'user',
       targetId: userId,
-      details: JSON.stringify({ targetType: 'user', targetId: userId, granted })
+      details: JSON.stringify({ targetType: 'user', targetId: userId, denied })
     });
     return { success: true };
   }

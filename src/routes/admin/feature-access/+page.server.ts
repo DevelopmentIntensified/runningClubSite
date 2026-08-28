@@ -14,15 +14,15 @@ import type { FeatureMode } from '$lib/server/db/schema';
 export const load: PageServerLoad = async () => {
   const features = await getFeatures();
   const users = await getUsers('email');
-  const featureUserMap: Record<string, number[]> = {};
+  const deniedUserMap: Record<string, number[]> = {};
   for (const feature of features) {
     const rows = await getFeatureUsers(feature.key);
-    featureUserMap[feature.key] = rows.map((r) => r.userId);
+    deniedUserMap[feature.key] = rows.map((r) => r.userId);
   }
-  return { features, users, featureUserMap };
+  return { features, users, deniedUserMap };
 };
 
-const VALID_MODES: FeatureMode[] = ['public', 'login', 'admin', 'restricted'];
+const VALID_MODES: FeatureMode[] = ['public', 'login', 'admin'];
 
 export const actions: Actions = {
   setMode: async ({ request, locals }) => {
@@ -32,6 +32,9 @@ export const actions: Actions = {
 
     if (!key || !VALID_MODES.includes(mode as FeatureMode)) {
       return fail(400, { message: 'Invalid feature or mode' });
+    }
+    if (key === 'admin' && mode !== 'admin') {
+      return fail(400, { message: 'The admin feature cannot be changed' });
     }
 
     await setFeatureMode(key, mode as FeatureMode);
@@ -44,7 +47,7 @@ export const actions: Actions = {
     throw redirect(302, '/admin/feature-access');
   },
 
-  addUser: async ({ request, locals }) => {
+  denyUser: async ({ request, locals }) => {
     const formData = await request.formData();
     const key = formData.get('key') as string;
     const userId = formData.get('userId') as string;
@@ -58,12 +61,12 @@ export const actions: Actions = {
       adminId: parseInt(locals.user!.id),
       action: 'update',
       targetType: 'feature',
-      details: JSON.stringify({ feature: key, addUser: parseInt(userId) })
+      details: JSON.stringify({ feature: key, denyUser: parseInt(userId) })
     });
     throw redirect(302, '/admin/feature-access');
   },
 
-  removeUser: async ({ request, locals }) => {
+  allowUser: async ({ request, locals }) => {
     const formData = await request.formData();
     const key = formData.get('key') as string;
     const userId = formData.get('userId') as string;
@@ -77,7 +80,7 @@ export const actions: Actions = {
       adminId: parseInt(locals.user!.id),
       action: 'update',
       targetType: 'feature',
-      details: JSON.stringify({ feature: key, removeUser: parseInt(userId) })
+      details: JSON.stringify({ feature: key, allowUser: parseInt(userId) })
     });
     throw redirect(302, '/admin/feature-access');
   }

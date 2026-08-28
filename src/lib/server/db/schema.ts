@@ -184,7 +184,7 @@ export const featureAccess = pgTable('feature_access', {
   key: text('key').notNull().unique(),
   name: text('name').notNull(),
   description: text('description'),
-  // 'public' | 'login' | 'admin' | 'restricted'
+  // 'public' | 'login' | 'admin'
   mode: text('mode').notNull().default('login')
 });
 
@@ -217,4 +217,4 @@ export type Leader = typeof leaders.$inferSelect;
 export type FeatureAccess = typeof featureAccess.$inferSelect;
 export type FeatureAccessUser = typeof featureAccessUsers.$inferSelect;
 
-export type FeatureMode = 'public' | 'login' | 'admin' | 'restricted';
+export type FeatureMode = 'public' | 'login' | 'admin';

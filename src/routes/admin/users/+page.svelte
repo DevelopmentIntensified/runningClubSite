@@ -7,7 +7,7 @@
 
   let searchTerm = $state('');
 
-  // Per-user feature access modal state.
+  // Per-user feature denial modal state (checked = user is denied this feature).
   let accessUser = $state<{ id: number; email: string } | null>(null);
   let accessSelection = $state<Record<string, boolean>>({});
 
@@ -15,10 +15,10 @@
 
   function openAccess(user: { id: number; email: string }) {
     accessUser = { id: user.id, email: user.email };
-    const granted = new Set(data.userFeatureMap[user.id] || []);
+    const denied = new Set(data.deniedFeatureMap[user.id] || []);
     const next: Record<string, boolean> = {};
     for (const f of editableFeatures) {
-      next[f.key] = granted.has(f.key);
+      next[f.key] = denied.has(f.key);
     }
     accessSelection = next;
   }
@@ -244,8 +244,8 @@
       </div>
       <form action="?/updateUserFeatureAccess" method="POST" use:enhance class="space-y-4 p-6">
         <p class="text-sm text-slate-600">
-          Grant <strong>{accessUser.email}</strong> access to features. Changes apply when a feature
-          is set to <em>Specific users</em>.
+          Tick a feature to <strong>revoke {accessUser.email}'s</strong> access to it. This overrides
+          the feature's global mode. Leave unticked to follow the global setting. Admins are never affected.
         </p>
         <input type="hidden" name="userId" value={accessUser.id} />
         <div class="max-h-72 space-y-2 overflow-y-auto">
@@ -259,13 +259,13 @@
               </span>
               <input
                 type="checkbox"
-                name="grant"
+                name="denied"
                 value={feature.key}
                 checked={accessSelection[feature.key]}
                 onchange={(e) => {
                   accessSelection[feature.key] = (e.target as HTMLInputElement).checked;
                 }}
-                class="text-primary-600 focus:ring-primary-500 h-4 w-4 rounded border-slate-300"
+                class="h-4 w-4 rounded border-slate-300 text-red-600 focus:ring-red-500"
               />
             </label>
           {/each}

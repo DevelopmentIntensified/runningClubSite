@@ -101,7 +101,8 @@ export async function removeFeatureUser(key: string, userId: number) {
     .where(and(eq(featureAccessUsers.featureKey, key), eq(featureAccessUsers.userId, userId)));
 }
 
-export async function isUserGranted(featureKey: string, userId: number): Promise<boolean> {
+/** Whether a specific user has been explicitly denied a feature. */
+export async function isUserDenied(featureKey: string, userId: number): Promise<boolean> {
   const rows = await db
     .select({ id: featureAccessUsers.id })
     .from(featureAccessUsers)
@@ -111,8 +112,8 @@ export async function isUserGranted(featureKey: string, userId: number): Promise
   return rows.length > 0;
 }
 
-/** Keys of all features a specific user is explicitly granted access to. */
-export async function getUserFeatureKeys(userId: number): Promise<string[]> {
+/** Keys of all features a specific user is explicitly denied access to. */
+export async function getUserDeniedKeys(userId: number): Promise<string[]> {
   const rows = await db
     .select({ featureKey: featureAccessUsers.featureKey })
     .from(featureAccessUsers)
@@ -121,11 +122,11 @@ export async function getUserFeatureKeys(userId: number): Promise<string[]> {
 }
 
 /**
- * Sync a user's explicit feature grants to exactly the given set of keys.
- * Features not present are revoked.
+ * Sync a user's explicit denials to exactly the given set of keys.
+ * Features not present are allowed (follow the global mode).
  */
-export async function setUserFeatureKeys(userId: number, keys: string[]) {
-  const current = new Set(await getUserFeatureKeys(userId));
+export async function setUserDeniedKeys(userId: number, keys: string[]) {
+  const current = new Set(await getUserDeniedKeys(userId));
   const desired = new Set(keys);
   await db.transaction(async (tx) => {
     for (const key of current) {
@@ -147,7 +148,8 @@ export async function setUserFeatureKeys(userId: number, keys: string[]) {
 
 /**
  * Resolve whether a user may access a feature.
- * Admins always have access. Non-admins are checked against the feature's mode.
+ * Admins always have access. Otherwise the global mode applies unless the
+ * user has been explicitly denied the feature (per-user deny override).
  */
 export async function canAccessFeature(
   featureKey: string,
@@ -159,18 +161,20 @@ export async function canAccessFeature(
   const feature = await getFeature(featureKey);
   if (!feature) return false;
 
+  // mode 'admin' is never accessible to non-admins.
+  if (feature.mode === 'admin') return false;
+
+  // Non-admin users can be denied a feature regardless of its global mode.
+  if (user && user.id) {
+    const userId = typeof user.id === 'string' ? parseInt(user.id, 10) : user.id;
+    if (await isUserDenied(featureKey, userId)) return false;
+  }
+
   switch (feature.mode) {
     case 'public':
       return true;
     case 'login':
       return !!user && !!user.id;
-    case 'admin':
-      return false; // handled above
-    case 'restricted': {
-      if (!user || !user.id) return false;
-      const userId = typeof user.id === 'string' ? parseInt(user.id, 10) : user.id;
-      return isUserGranted(featureKey, userId);
-    }
     default:
       return false;
   }
