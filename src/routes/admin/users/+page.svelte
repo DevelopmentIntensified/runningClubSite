@@ -7,6 +7,60 @@
 
   let searchTerm = $state('');
 
+  // US state abbreviations -> full names, so state search matches "VA" or "Virginia".
+  const stateNames: Record<string, string> = {
+    AL: 'Alabama',
+    AK: 'Alaska',
+    AZ: 'Arizona',
+    AR: 'Arkansas',
+    CA: 'California',
+    CO: 'Colorado',
+    CT: 'Connecticut',
+    DE: 'Delaware',
+    FL: 'Florida',
+    GA: 'Georgia',
+    HI: 'Hawaii',
+    ID: 'Idaho',
+    IL: 'Illinois',
+    IN: 'Indiana',
+    IA: 'Iowa',
+    KS: 'Kansas',
+    KY: 'Kentucky',
+    LA: 'Louisiana',
+    ME: 'Maine',
+    MD: 'Maryland',
+    MA: 'Massachusetts',
+    MI: 'Michigan',
+    MN: 'Minnesota',
+    MS: 'Mississippi',
+    MO: 'Missouri',
+    MT: 'Montana',
+    NE: 'Nebraska',
+    NV: 'Nevada',
+    NH: 'New Hampshire',
+    NJ: 'New Jersey',
+    NM: 'New Mexico',
+    NY: 'New York',
+    NC: 'North Carolina',
+    ND: 'North Dakota',
+    OH: 'Ohio',
+    OK: 'Oklahoma',
+    OR: 'Oregon',
+    PA: 'Pennsylvania',
+    RI: 'Rhode Island',
+    SC: 'South Carolina',
+    SD: 'South Dakota',
+    TN: 'Tennessee',
+    TX: 'Texas',
+    UT: 'Utah',
+    VT: 'Vermont',
+    VA: 'Virginia',
+    WA: 'Washington',
+    WV: 'West Virginia',
+    WI: 'Wisconsin',
+    WY: 'Wyoming'
+  };
+
   // Per-user feature denial modal state (checked = user is denied this feature).
   let accessUser = $state<{ id: number; email: string } | null>(null);
   let accessSelection = $state<Record<string, boolean>>({});
@@ -33,12 +87,18 @@
   let filteredUsers = $derived.by(() => {
     let result = [...data.users];
     if (searchTerm) {
-      result = result.filter(
-        (user) =>
-          user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          (user.firstName && user.firstName.toLowerCase().includes(searchTerm.toLowerCase())) ||
-          (user.lastName && user.lastName.toLowerCase().includes(searchTerm.toLowerCase()))
-      );
+      const q = searchTerm.toLowerCase().trim();
+      result = result.filter((user) => {
+        const stateAbbr = user.stateOfOrigin?.toLowerCase() ?? '';
+        const stateName = (stateNames[user.stateOfOrigin?.toUpperCase() ?? ''] ?? '').toLowerCase();
+        return (
+          user.email.toLowerCase().includes(q) ||
+          (user.firstName && user.firstName.toLowerCase().includes(q)) ||
+          (user.lastName && user.lastName.toLowerCase().includes(q)) ||
+          stateAbbr.includes(q) ||
+          stateName.includes(q)
+        );
+      });
     }
     return result;
   });
@@ -73,7 +133,7 @@
           <input
             type="text"
             bind:value={searchTerm}
-            placeholder="Search by email"
+            placeholder="Search by email, name, or state"
             class="focus:border-primary-500 focus:ring-primary-500/20 w-full rounded-lg border border-slate-200 bg-white px-4 py-2.5 pr-10 text-sm text-slate-700 placeholder-slate-400 shadow-sm focus:ring-2 focus:outline-none sm:w-64"
           />
           <svg
@@ -138,6 +198,10 @@
               >Status</th
             >
             <th
+              class="px-6 py-3.5 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase"
+              >State</th
+            >
+            <th
               class="hidden px-6 py-3.5 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase md:table-cell"
               >Last Login</th
             >
@@ -172,6 +236,11 @@
                   {user.banned ? 'Banned' : 'Active'}
                 </span>
               </td>
+              <td class="px-6 py-4 text-sm whitespace-nowrap text-slate-600"
+                >{user.stateOfOrigin
+                  ? (stateNames[user.stateOfOrigin.toUpperCase()] ?? user.stateOfOrigin)
+                  : '—'}</td
+              >
               <td class="hidden px-6 py-4 text-sm whitespace-nowrap text-slate-600 md:table-cell"
                 >{formatDate(user.lastLogin)}</td
               >
