@@ -35,8 +35,10 @@ export const actions: Actions = {
       locationId = await resolveLocationId(location);
     }
 
-    let start2 = DateTime.fromISO(start.replace(' ', 'T')).setZone('America/New_York');
-    let end2 = DateTime.fromISO(end.replace(' ', 'T')).setZone('America/New_York');
+    let start2 = DateTime.fromISO(start.replace(' ', 'T'), {
+      zone: 'America/New_York'
+    });
+    let end2 = DateTime.fromISO(end.replace(' ', 'T'), { zone: 'America/New_York' });
 
     const newEvent = await createEvent({
       description: description,

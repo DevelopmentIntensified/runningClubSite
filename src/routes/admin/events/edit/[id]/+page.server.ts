@@ -49,14 +49,14 @@ export const actions: Actions = {
     }
 
     if (start) {
-      updateData.start = DateTime.fromISO(start.replace(' ', 'T'))
-        .setZone('America/New_York')
-        .toString();
+      updateData.start = DateTime.fromISO(start.replace(' ', 'T'), {
+        zone: 'America/New_York'
+      }).toString();
     }
     if (end) {
-      updateData.end = DateTime.fromISO(end.replace(' ', 'T'))
-        .setZone('America/New_York')
-        .toString();
+      updateData.end = DateTime.fromISO(end.replace(' ', 'T'), {
+        zone: 'America/New_York'
+      }).toString();
     }
 
     const existingEvent = await getEvent(parseInt(params.id));
