@@ -10,6 +10,7 @@ declare module '$env/static/private' {
   export const EMAILSECRET: string;
   export const BLOB_READ_WRITE_TOKEN: string;
   export const CLUBEMAIL: string;
+  export const CLUB_INBOX_EMAIL: string;
 }
 
 declare global {

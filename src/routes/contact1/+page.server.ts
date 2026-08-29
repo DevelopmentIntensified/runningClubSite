@@ -1,5 +1,5 @@
 import { Resend } from 'resend';
-import { RESENDAPIKEY, CLUBEMAIL } from '$env/static/private';
+import { RESENDAPIKEY, CLUB_INBOX_EMAIL } from '$env/static/private';
 import type { Actions } from './$types';
 
 const resend = new Resend(RESENDAPIKEY);
@@ -26,7 +26,7 @@ export const actions = {
 
     const res = await resend.emails.send({
       from: 'Liberty Running Club Contact <libertyrunningclub@libertyrunningclub.com>',
-      to: [CLUBEMAIL],
+      to: [CLUB_INBOX_EMAIL],
       subject: 'LRC Contact Form from ' + name,
       html:
         '<p><strong>Name:</strong> ' +
