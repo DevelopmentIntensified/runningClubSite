@@ -14,18 +14,23 @@
     }
     waiting = true;
     error = '';
-    const res = await fetch('/login/reset/send', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email })
-    });
-    const json = await res.json();
-    if (!json.success) {
-      error = json.error;
-    } else {
-      step = 'reset';
+    try {
+      const res = await fetch('/login/reset/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+      const json = await res.json();
+      if (!json.success) {
+        error = json.error;
+      } else {
+        step = 'reset';
+      }
+    } catch (e) {
+      error = 'Network error. Please check your connection and try again.';
+    } finally {
+      waiting = false;
     }
-    waiting = false;
   }
 
   async function resetPassword() {
@@ -43,20 +48,25 @@
     }
     waiting = true;
     error = '';
-    const res = await fetch('/login/reset/verify', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ code, email, password })
-    });
-    const json = await res.json();
-    if (!json.success) {
-      error = json.error;
-    } else {
-      error = '';
-      step = 'email';
-      window.location.href = '/login';
+    try {
+      const res = await fetch('/login/reset/verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code, email, password })
+      });
+      const json = await res.json();
+      if (!json.success) {
+        error = json.error;
+      } else {
+        error = '';
+        step = 'email';
+        window.location.href = '/login';
+      }
+    } catch (e) {
+      error = 'Network error. Please check your connection and try again.';
+    } finally {
+      waiting = false;
     }
-    waiting = false;
   }
 </script>
 

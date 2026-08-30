@@ -11,8 +11,9 @@
     message: ''
   };
 
-  let submitted = false;
-  let honeypot = '';
+  let submitted = $state(false);
+  let submitError = $state('');
+  let honeypot = $state('');
 </script>
 
 <svelte:head>
@@ -69,12 +70,26 @@
             </p>
           </div>
 
+          {#if form && form.success === false}
+            <div class="border-b border-red-100 bg-red-50 px-6 py-3">
+              <p class="text-sm font-medium text-red-700">
+                Sorry, we couldn't send your message. Please try again.
+              </p>
+            </div>
+          {/if}
+
           <form
             method="post"
             use:enhance={() => {
-              return async ({ update }) => {
-                await update();
-                submitted = true;
+              return async ({ result }) => {
+                submitted = false;
+                submitError = '';
+                const data = (result as { data?: { success?: boolean; error?: string } }).data;
+                if (result.type === 'success' && data?.success) {
+                  submitted = true;
+                } else {
+                  submitError = data?.error || 'Sorry, something went wrong. Please try again.';
+                }
               };
             }}
             class="space-y-6 p-6"
@@ -131,6 +146,10 @@
                   placeholder="Your message..."></textarea>
               </div>
             </div>
+
+            {#if submitError}
+              <p class="text-sm font-medium text-red-600">{submitError}</p>
+            {/if}
 
             <button
               type="submit"

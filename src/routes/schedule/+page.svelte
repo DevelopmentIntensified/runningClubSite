@@ -43,6 +43,10 @@
 
 <svelte:head>
   <title>Schedule - Liberty Running Club</title>
+  <meta
+    name="description"
+    content="See Liberty Running Club's weekly and season events in calendar view, including group runs, races, and socials."
+  />
 </svelte:head>
 
 <div class="container mx-auto px-4 py-12">

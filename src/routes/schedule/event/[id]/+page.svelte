@@ -25,6 +25,10 @@
   }
 </script>
 
+<svelte:head>
+  <title>{event.title} - Liberty Running Club</title>
+</svelte:head>
+
 <div class="container mx-auto p-4">
   <button onclick={goBack} class="text-primary-700 hover:text-primary-800 mb-4 flex items-center">
     <svg

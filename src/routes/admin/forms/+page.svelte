@@ -162,7 +162,17 @@
                         href="/admin/forms/{form.id}/edit"
                         class="text-primary-600 hover:text-primary-900 mr-4">Edit</a
                       >
-                      <form method="POST" action="?/deleteForm" use:enhance class="inline">
+                      <form
+                        method="POST"
+                        action="?/deleteForm"
+                        use:enhance
+                        class="inline"
+                        onsubmit={(e) => {
+                          if (!confirm('Delete this form?')) {
+                            e.preventDefault();
+                          }
+                        }}
+                      >
                         <input type="hidden" name="id" value={form.id} />
                         <button type="submit" class="text-red-600 hover:text-red-900">Delete</button
                         >

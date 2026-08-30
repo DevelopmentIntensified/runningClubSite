@@ -16,6 +16,10 @@
 
 <svelte:head>
   <title>Season Photos - Liberty Running Club</title>
+  <meta
+    name="description"
+    content="Browse photo galleries from past Liberty University Running Club seasons and relive the memories."
+  />
 </svelte:head>
 
 <div class="container mx-auto px-4 py-12">
@@ -60,7 +64,27 @@
     </div>
   </div>
 
-  {#if filteredLinks.length}
+  {#if data.links.length === 0}
+    <div class="rounded-2xl border border-slate-200 bg-white p-12 text-center shadow-sm">
+      <svg
+        class="mx-auto h-16 w-16 text-slate-300"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1.5"
+          d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+        />
+      </svg>
+      <p class="mt-4 text-lg font-medium text-slate-600">No season photos yet</p>
+      <p class="mt-1 text-sm text-slate-500">
+        Check back soon — photos from each season will appear here
+      </p>
+    </div>
+  {:else if filteredLinks.length}
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {#each filteredLinks as link}
         <a
@@ -74,12 +98,16 @@
               <img
                 src={link.imageUrl}
                 alt={link.title}
+                loading="lazy"
+                decoding="async"
                 class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
             {:else}
               <img
                 src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=600&h=450&fit=crop"
                 alt={link.title}
+                loading="lazy"
+                decoding="async"
                 class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
             {/if}

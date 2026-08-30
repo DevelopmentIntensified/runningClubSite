@@ -4,6 +4,10 @@
 
 <svelte:head>
   <title>Join Our GroupMe - Liberty Running Club</title>
+  <meta
+    name="description"
+    content="Join the Liberty Running Club GroupMe to stay updated on events and join the social shenanigans."
+  />
 </svelte:head>
 
 <div

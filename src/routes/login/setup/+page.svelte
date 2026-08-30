@@ -156,29 +156,34 @@
     waiting = true;
     error = '';
 
-    const res = await fetch('/login/setup', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        firstName: firstName.trim(),
-        lastName: lastName.trim(),
-        stateOfOrigin,
-        graduationYear: graduationYear === 'alumni' ? null : Number(graduationYear),
-        isAlumni: graduationYear === 'alumni',
-        academicLevel,
-        password,
-        redirectUrl
-      })
-    });
+    try {
+      const res = await fetch('/login/setup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstName: firstName.trim(),
+          lastName: lastName.trim(),
+          stateOfOrigin,
+          graduationYear: graduationYear === 'alumni' ? null : Number(graduationYear),
+          isAlumni: graduationYear === 'alumni',
+          academicLevel,
+          password,
+          redirectUrl
+        })
+      });
 
-    const json = await res.json();
-    if (json.error) {
-      error = json.error;
-    } else {
-      await goto(json.redirectTo || redirectUrl);
-      location.reload();
+      const json = await res.json();
+      if (json.error) {
+        error = json.error;
+      } else {
+        await goto(json.redirectTo || redirectUrl);
+        location.reload();
+      }
+    } catch (e) {
+      error = 'Network error. Please check your connection and try again.';
+    } finally {
+      waiting = false;
     }
-    waiting = false;
   }
 </script>
 

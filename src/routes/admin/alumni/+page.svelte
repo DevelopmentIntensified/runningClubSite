@@ -140,7 +140,17 @@
                     class="text-primary-600 hover:text-primary-800 text-xs font-medium">Edit</a
                   >
                   <span class="text-slate-300">|</span>
-                  <form action="?/deleteAlumnus" method="POST" use:enhance class="inline">
+                  <form
+                    action="?/deleteAlumnus"
+                    method="POST"
+                    use:enhance
+                    class="inline"
+                    onsubmit={(e) => {
+                      if (!confirm('Delete this alumnus?')) {
+                        e.preventDefault();
+                      }
+                    }}
+                  >
                     <input type="hidden" name="id" value={alumnus.id} />
                     <button type="submit" class="text-xs text-red-600 hover:text-red-800"
                       >Delete</button

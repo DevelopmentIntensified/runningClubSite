@@ -9,6 +9,7 @@
   let { children }: Props = $props();
 
   const adminLinks = [
+    { href: '/admin', label: 'Dashboard', icon: 'dashboard' },
     { href: '/admin/users', label: 'Users', icon: 'users' },
     { href: '/admin/news', label: 'News', icon: 'newspaper' },
     { href: '/admin/alumni', label: 'Alumni', icon: 'graduation' },
@@ -60,7 +61,23 @@
               ? 'bg-primary-100'
               : ''}"
           >
-            {#if link.icon === 'users'}
+            {#if link.icon === 'dashboard'}
+              <svg
+                class="group-hover:text-primary-600 h-5 w-5 text-slate-600 {isActive(link.href)
+                  ? 'text-primary-600'
+                  : ''}"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M3 12l9-9 9 9M5 10v10a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V10"
+                />
+              </svg>
+            {:else if link.icon === 'users'}
               <svg
                 class="group-hover:text-primary-600 h-5 w-5 text-slate-600 {isActive(link.href)
                   ? 'text-primary-600'

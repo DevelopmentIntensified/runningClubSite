@@ -27,6 +27,10 @@
 
 <svelte:head>
   <title>Running Locations - Liberty Running Club</title>
+  <meta
+    name="description"
+    content="Find Liberty Running Club members' favorite running locations and destinations for your next run."
+  />
 </svelte:head>
 
 <div class="container mx-auto px-4 py-12">

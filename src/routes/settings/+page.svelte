@@ -7,8 +7,10 @@
   let { user } = data;
 
   let profileSuccess = $state('');
+  let profileError = $state('');
   let passwordForm: HTMLFormElement | undefined;
   let passwordSuccess = $state('');
+  let passwordError = $state('');
 
   const usStatesList = [
     { name: 'Alabama', abbr: 'AL' },
@@ -83,9 +85,13 @@
         method="POST"
         use:enhance={() => {
           profileSuccess = '';
+          profileError = '';
           return async ({ result }) => {
-            if (result.type === 'success') {
+            const data = (result as { data?: { success?: boolean; error?: string } }).data;
+            if (result.type === 'success' && data?.success) {
               profileSuccess = 'Profile updated.';
+            } else {
+              profileError = data?.error || 'Failed to update profile. Please try again.';
             }
           };
         }}
@@ -148,9 +154,15 @@
           <select
             id="graduationYear"
             name="graduationYear"
-            class="focus:border-primary-500 focus:ring-primary-500 mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
+            disabled={user.isAlumni}
+            class="focus:border-primary-500 focus:ring-primary-500 mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none sm:text-sm {user.isAlumni
+              ? 'bg-gray-100 text-gray-500'
+              : ''}"
           >
             <option value="">Select graduation year</option>
+            {#if user.graduationYear && user.graduationYear < new Date().getFullYear()}
+              <option value={user.graduationYear} selected>{user.graduationYear}</option>
+            {/if}
             {#each Array.from({ length: 7 }, (_, i) => new Date().getFullYear() + i) as year}
               <option value={year} selected={user.graduationYear === year}>{year}</option>
             {/each}
@@ -179,6 +191,9 @@
         {#if profileSuccess}
           <p class="text-sm text-emerald-600">{profileSuccess}</p>
         {/if}
+        {#if profileError}
+          <p class="text-sm text-red-600">{profileError}</p>
+        {/if}
         <div class="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-4">
           <button
             type="submit"
@@ -202,10 +217,14 @@
         method="POST"
         use:enhance={() => {
           passwordSuccess = '';
+          passwordError = '';
           return async ({ result }) => {
-            if (result.type === 'success' && result.data?.success) {
+            const data = (result as { data?: { success?: boolean; error?: string } }).data;
+            if (result.type === 'success' && data?.success) {
               passwordSuccess = 'Password changed.';
               passwordForm?.reset();
+            } else {
+              passwordError = data?.error || 'Failed to change password. Please try again.';
             }
           };
         }}
@@ -250,6 +269,9 @@
         </div>
         {#if passwordSuccess}
           <p class="text-sm text-emerald-600">{passwordSuccess}</p>
+        {/if}
+        {#if passwordError}
+          <p class="text-sm text-red-600">{passwordError}</p>
         {/if}
         <button
           type="submit"

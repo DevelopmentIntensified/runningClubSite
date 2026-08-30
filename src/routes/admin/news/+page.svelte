@@ -119,7 +119,17 @@
                     class="text-primary-600 hover:text-primary-800 text-xs font-medium">Edit</a
                   >
                   <span class="text-slate-300">|</span>
-                  <form action="?/deleteNews" method="POST" use:enhance class="inline">
+                  <form
+                    action="?/deleteNews"
+                    method="POST"
+                    use:enhance
+                    class="inline"
+                    onsubmit={(e) => {
+                      if (!confirm('Delete this news post?')) {
+                        e.preventDefault();
+                      }
+                    }}
+                  >
                     <input type="hidden" name="id" value={newsItem.id} />
                     <button type="submit" class="text-xs text-red-600 hover:text-red-800"
                       >Delete</button

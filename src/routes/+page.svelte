@@ -11,9 +11,9 @@
   let showSuperSpeed = $state(false);
 
   onMount(() => {
+    if (slides.length === 0) return;
     const interval = setInterval(() => {
       currentSlide = (currentSlide + 1) % slides.length;
-      console.log(currentSlide);
     }, 3500);
 
     return () => clearInterval(interval);
@@ -33,6 +33,10 @@
 
 <svelte:head>
   <title>Liberty Running Club - Running for God's Glory</title>
+  <meta
+    name="description"
+    content="Liberty University's official running club. Run, worship, and glorify God through every step. See the schedule, join our community, and check out our records."
+  />
 </svelte:head>
 
 {#if showSuperSpeed}
@@ -47,7 +51,6 @@
 
 <div
   class="relative h-screen cursor-pointer"
-  role="button"
   tabindex="0"
   on:click={handleHeroClick}
   on:keydown={(e) => e.key === 'Enter' && handleHeroClick()}

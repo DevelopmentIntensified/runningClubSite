@@ -6,6 +6,10 @@
 
 <svelte:head>
   <title>Alumni Newsletter Signup - Liberty Running Club</title>
+  <meta
+    name="description"
+    content="Sign up for the Liberty University Running Club alumni newsletter to stay connected with events, reunions, and club news."
+  />
 </svelte:head>
 
 <div class="min-h-screen bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
@@ -92,6 +96,7 @@
               type="checkbox"
               id="privacyAccepted"
               name="privacyAccepted"
+              required
               class="text-primary-600 focus:ring-primary-500 mt-1 h-4 w-4 rounded border-gray-300"
             />
             <label for="privacyAccepted" class="ml-2 block text-sm text-gray-700">

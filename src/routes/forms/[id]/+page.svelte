@@ -17,6 +17,16 @@
           ← Back to Forms
         </a>
       </div>
+    {:else}
+      <div class="mb-8">
+        <a
+          href="/"
+          on:click|preventDefault={() => history.back()}
+          class="text-primary-600 hover:text-primary-900 text-sm"
+        >
+          ← Back
+        </a>
+      </div>
     {/if}
 
     <div class="overflow-hidden rounded-lg bg-white shadow">

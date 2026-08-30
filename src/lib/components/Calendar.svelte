@@ -18,28 +18,26 @@
 >
   <div class="mb-6 flex flex-col items-stretch justify-between gap-4 sm:flex-row sm:items-center">
     <DateSelector {currentDate} />
-    {#if !isAdmin}
-      <div class="flex justify-center gap-2 sm:justify-end">
-        <button
-          type="button"
-          class="rounded-lg px-4 py-2 text-sm font-medium transition-colors {view === 'month'
-            ? 'bg-primary-600 text-white shadow-sm'
-            : 'bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50'}"
-          onclick={() => (view = 'month')}
-        >
-          Month
-        </button>
-        <button
-          type="button"
-          class="rounded-lg px-4 py-2 text-sm font-medium transition-colors {view === 'list'
-            ? 'bg-primary-600 text-white shadow-sm'
-            : 'bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50'}"
-          onclick={() => (view = 'list')}
-        >
-          List
-        </button>
-      </div>
-    {/if}
+    <div class="flex justify-center gap-2 sm:justify-end">
+      <button
+        type="button"
+        class="rounded-lg px-4 py-2 text-sm font-medium transition-colors {view === 'month'
+          ? 'bg-primary-600 text-white shadow-sm'
+          : 'bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50'}"
+        onclick={() => (view = 'month')}
+      >
+        Month
+      </button>
+      <button
+        type="button"
+        class="rounded-lg px-4 py-2 text-sm font-medium transition-colors {view === 'list'
+          ? 'bg-primary-600 text-white shadow-sm'
+          : 'bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50'}"
+        onclick={() => (view = 'list')}
+      >
+        List
+      </button>
+    </div>
   </div>
   {#if view === 'month'}
     <MonthView {currentDate} {events} {isAdmin} />

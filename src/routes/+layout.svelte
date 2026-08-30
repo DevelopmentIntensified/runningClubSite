@@ -6,7 +6,6 @@
   import { onMount } from 'svelte';
 
   export let data: LayoutData;
-  console.warn('DEBUGPRINT[3]: +layout.svelte:6: data=', data);
   $: pathname = data.pathname;
 
   onMount(async () => {

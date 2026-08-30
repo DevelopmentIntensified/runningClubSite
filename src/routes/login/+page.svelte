@@ -14,20 +14,26 @@
 
   async function handleCodeCheck() {
     waiting = true;
-    const res = await fetch('/login/email/code', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ code, redirectUrl })
-    });
+    error = '';
+    try {
+      const res = await fetch('/login/email/code', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code, redirectUrl })
+      });
 
-    const json = await res.json();
-    if (!json.success) {
-      error = json.error;
-    } else {
-      await goto(json.redirectTo || redirectUrl);
-      location.reload();
+      const json = await res.json();
+      if (!json.success) {
+        error = json.error;
+      } else {
+        await goto(json.redirectTo || redirectUrl);
+        location.reload();
+      }
+    } catch (e) {
+      error = 'Network error. Please check your connection and try again.';
+    } finally {
+      waiting = false;
     }
-    waiting = false;
   }
 
   async function handleSendCode() {
@@ -37,18 +43,23 @@
     }
     waiting = true;
     error = '';
-    const res = await fetch('/login/email', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, privacyAccepted: emailSent || privacyAccepted })
-    });
-    const json = await res.json();
-    if (json.error) {
-      error = json.error;
-    } else {
-      emailSent = true;
+    try {
+      const res = await fetch('/login/email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, privacyAccepted: emailSent || privacyAccepted })
+      });
+      const json = await res.json();
+      if (json.error) {
+        error = json.error;
+      } else {
+        emailSent = true;
+      }
+    } catch (e) {
+      error = 'Network error. Please check your connection and try again.';
+    } finally {
+      waiting = false;
     }
-    waiting = false;
   }
 
   async function handlePasswordLogin() {
@@ -62,19 +73,24 @@
     }
     waiting = true;
     error = '';
-    const res = await fetch('/login/password', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password, redirectUrl })
-    });
-    const json = await res.json();
-    if (!json.success) {
-      error = json.error;
-    } else {
-      await goto(json.redirectTo || redirectUrl);
-      location.reload();
+    try {
+      const res = await fetch('/login/password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password, redirectUrl })
+      });
+      const json = await res.json();
+      if (!json.success) {
+        error = json.error;
+      } else {
+        await goto(json.redirectTo || redirectUrl);
+        location.reload();
+      }
+    } catch (e) {
+      error = 'Network error. Please check your connection and try again.';
+    } finally {
+      waiting = false;
     }
-    waiting = false;
   }
 
   onMount(() => {

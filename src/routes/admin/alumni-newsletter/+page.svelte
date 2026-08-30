@@ -66,7 +66,17 @@
                 {new Date(signup.createdAt).toLocaleDateString()}
               </td>
               <td class="px-6 py-4 text-right text-sm whitespace-nowrap">
-                <form action="?/deleteSignup" method="POST" use:enhance class="inline">
+                <form
+                  action="?/deleteSignup"
+                  method="POST"
+                  use:enhance
+                  class="inline"
+                  onsubmit={(e) => {
+                    if (!confirm('Delete this newsletter signup?')) {
+                      e.preventDefault();
+                    }
+                  }}
+                >
                   <input type="hidden" name="id" value={signup.id} />
                   <button type="submit" class="text-xs text-red-600 hover:text-red-800"
                     >Delete</button

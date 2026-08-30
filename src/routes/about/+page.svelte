@@ -11,6 +11,10 @@
 
 <svelte:head>
   <title>About Liberty Running Club</title>
+  <meta
+    name="description"
+    content="Liberty Running Club is Liberty University's running club, bringing together runners of all levels through weekly group runs, social events, and NIRCA races."
+  />
 </svelte:head>
 
 <div class="container mx-auto px-4 py-8">
@@ -99,7 +103,13 @@
   <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
     {#each leaders as leader}
       <div class="overflow-hidden rounded-lg bg-white shadow-lg">
-        <img src={leader.imageUrl} alt={leader.name} class="h-72 w-full object-cover" />
+        <img
+          src={leader.imageUrl}
+          alt={leader.name}
+          loading="lazy"
+          decoding="async"
+          class="h-72 w-full object-cover"
+        />
         <div class="p-6">
           <h3 class="mb-2 text-xl font-semibold">{leader.name}</h3>
           <p class="text-primary-600 mb-2">{leader.position}</p>

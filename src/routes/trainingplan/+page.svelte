@@ -7,6 +7,10 @@
 
 <svelte:head>
   <title>Summer Training - Liberty Running Club</title>
+  <meta
+    name="description"
+    content="Sign up for Liberty Running Club's individualized summer training plan and get ready for the upcoming season."
+  />
 </svelte:head>
 
 <div class="container mx-auto px-4 py-12">
@@ -46,6 +50,7 @@
     <div class="mt-6 w-full">
       <iframe
         src="https://docs.google.com/forms/d/e/1FAIpQLSdYpov_P1dT_fnmX4S6CEEqdwHx2KCBMKx4zqwne1t3LzdhZA/viewform?embedded=true"
+        loading="lazy"
         class="h-[800px] w-full border-0"
         title="Summer Training Signup"
       >

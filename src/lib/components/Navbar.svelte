@@ -9,8 +9,6 @@
   // Map of feature key -> whether the current user can access it.
   export let canAccess: Record<string, boolean> = {};
 
-  console.warn('DEBUGPRINT[2]: Navbar.svelte:7: isAdmin=', isAdmin);
-
   let isOpen = false;
   let openDropdown: string | null = null;
   let navElement: HTMLElement;

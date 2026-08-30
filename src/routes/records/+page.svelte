@@ -26,6 +26,10 @@
 
 <svelte:head>
   <title>Club Records - Liberty Running Club</title>
+  <meta
+    name="description"
+    content="Browse Liberty Running Club's men's and women's records across cross country, track, field, trail, and road events."
+  />
 </svelte:head>
 
 <div class="container mx-auto px-4 py-12">
@@ -113,39 +117,73 @@
         </button>
       </div>
 
-      <div class="overflow-hidden rounded-lg bg-white shadow-lg">
-        <table class="w-full">
-          <thead class="bg-gray-100">
-            <tr>
-              <th class="px-4 py-2 text-left">Event</th>
-              <th class="px-4 py-2 text-left">Name</th>
-              <th class="px-4 py-2 text-left">Time/Mark</th>
-              <th class="hidden px-4 py-2 text-left md:table-cell">Year</th>
-            </tr>
-          </thead>
-          <tbody>
-            {#each filteredMenRecords as record}
-              <tr class="border-b">
-                <td class="px-4 py-2">{record.event}</td>
-                <td class="px-4 py-2">
-                  {#if record.link}
-                    <a
-                      href={record.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="text-primary-600 hover:underline">{record.name}</a
-                    >
-                  {:else}
-                    {record.name}
-                  {/if}
-                </td>
-                <td class="px-4 py-2">{record.time}</td>
-                <td class="hidden px-4 py-2 md:table-cell">{record.year || 'N/A'}</td>
+      {#if filteredMenRecords.length > 0}
+        <div class="overflow-hidden rounded-lg bg-white shadow-lg">
+          <table class="w-full">
+            <thead class="bg-gray-100">
+              <tr>
+                <th class="px-4 py-2 text-left">Event</th>
+                <th class="px-4 py-2 text-left">Name</th>
+                <th class="px-4 py-2 text-left">Time/Mark</th>
+                <th class="hidden px-4 py-2 text-left md:table-cell">Year</th>
               </tr>
-            {/each}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {#each filteredMenRecords as record}
+                <tr class="border-b">
+                  <td class="px-4 py-2">{record.event}</td>
+                  <td class="px-4 py-2">
+                    {#if record.link}
+                      <a
+                        href={record.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-primary-600 hover:underline">{record.name}</a
+                      >
+                    {:else}
+                      {record.name}
+                    {/if}
+                  </td>
+                  <td class="px-4 py-2">{record.time}</td>
+                  <td class="hidden px-4 py-2 md:table-cell">{record.year || 'N/A'}</td>
+                </tr>
+              {/each}
+            </tbody>
+          </table>
+        </div>
+      {:else}
+        <div class="flex flex-col items-center justify-center py-16 text-center">
+          <svg
+            class="h-16 w-16 text-gray-300"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="1.5"
+              d="M5 3h14v4a7 7 0 01-14 0V3z"
+            />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="1.5"
+              d="M5 5H3v2a4 4 0 004 4"
+            />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="1.5"
+              d="M19 5h2v2a4 4 0 01-4 4"
+            />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 14v4" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 21h8" />
+          </svg>
+          <h3 class="mt-4 text-lg font-medium text-gray-900">No records yet</h3>
+          <p class="mt-1 text-gray-500">Check back soon for the latest club records.</p>
+        </div>
+      {/if}
     </div>
   {:else}
     <div transition:slide>
@@ -153,6 +191,8 @@
         <img
           src={data.girlsImage.imageUrl}
           alt={data.girlsImage.alt}
+          loading="lazy"
+          decoding="async"
           class="h-48 w-full rounded-lg object-cover shadow-lg sm:h-64 md:h-80"
         />
         <h2 class="shadow-text absolute bottom-4 left-4 text-3xl font-bold text-white">
@@ -203,39 +243,73 @@
         </button>
       </div>
 
-      <div class="overflow-hidden rounded-lg bg-white shadow-lg">
-        <table class="w-full">
-          <thead class="bg-gray-100">
-            <tr>
-              <th class="px-4 py-2 text-left">Event</th>
-              <th class="px-4 py-2 text-left">Name</th>
-              <th class="px-4 py-2 text-left">Time/Mark</th>
-              <th class="hidden px-4 py-2 text-left md:table-cell">Year</th>
-            </tr>
-          </thead>
-          <tbody>
-            {#each filteredWomenRecords as record}
-              <tr class="border-b">
-                <td class="px-4 py-2">{record.event}</td>
-                <td class="px-4 py-2">
-                  {#if record.link}
-                    <a
-                      href={record.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="text-primary-600 hover:underline">{record.name}</a
-                    >
-                  {:else}
-                    {record.name}
-                  {/if}
-                </td>
-                <td class="px-4 py-2">{record.time}</td>
-                <td class="hidden px-4 py-2 md:table-cell">{record.year || 'N/A'}</td>
+      {#if filteredWomenRecords.length > 0}
+        <div class="overflow-hidden rounded-lg bg-white shadow-lg">
+          <table class="w-full">
+            <thead class="bg-gray-100">
+              <tr>
+                <th class="px-4 py-2 text-left">Event</th>
+                <th class="px-4 py-2 text-left">Name</th>
+                <th class="px-4 py-2 text-left">Time/Mark</th>
+                <th class="hidden px-4 py-2 text-left md:table-cell">Year</th>
               </tr>
-            {/each}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {#each filteredWomenRecords as record}
+                <tr class="border-b">
+                  <td class="px-4 py-2">{record.event}</td>
+                  <td class="px-4 py-2">
+                    {#if record.link}
+                      <a
+                        href={record.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-primary-600 hover:underline">{record.name}</a
+                      >
+                    {:else}
+                      {record.name}
+                    {/if}
+                  </td>
+                  <td class="px-4 py-2">{record.time}</td>
+                  <td class="hidden px-4 py-2 md:table-cell">{record.year || 'N/A'}</td>
+                </tr>
+              {/each}
+            </tbody>
+          </table>
+        </div>
+      {:else}
+        <div class="flex flex-col items-center justify-center py-16 text-center">
+          <svg
+            class="h-16 w-16 text-gray-300"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="1.5"
+              d="M5 3h14v4a7 7 0 01-14 0V3z"
+            />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="1.5"
+              d="M5 5H3v2a4 4 0 004 4"
+            />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="1.5"
+              d="M19 5h2v2a4 4 0 01-4 4"
+            />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 14v4" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 21h8" />
+          </svg>
+          <h3 class="mt-4 text-lg font-medium text-gray-900">No records yet</h3>
+          <p class="mt-1 text-gray-500">Check back soon for the latest club records.</p>
+        </div>
+      {/if}
     </div>
   {/if}
 </div>

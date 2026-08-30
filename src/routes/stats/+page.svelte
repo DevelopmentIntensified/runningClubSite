@@ -34,13 +34,24 @@
     return colorScale(pct(count));
   }
 
+  function getStateLabel(abbr: string): string {
+    const name = stateNames[abbr] || abbr;
+    const total = stats[abbr]?.total || 0;
+    return `${name}: ${total} member${total !== 1 ? 's' : ''}`;
+  }
+
   async function fetchStats() {
-    const params = new URLSearchParams();
-    if (selectedYear !== 'all') params.set('year', selectedYear);
-    const res = await fetch(`/api/stats?${params}`);
-    const json = await res.json();
-    stats = json.data;
-    totalMembers = json.totalMembers;
+    try {
+      const params = new URLSearchParams();
+      if (selectedYear !== 'all') params.set('year', selectedYear);
+      const res = await fetch(`/api/stats?${params}`);
+      if (!res.ok) throw new Error('Failed to load stats');
+      const json = await res.json();
+      stats = json.data;
+      totalMembers = json.totalMembers;
+    } catch (e) {
+      console.error('Failed to load stats', e);
+    }
   }
 
   const stateFipsToAbbr: Record<string, string> = {
@@ -145,7 +156,10 @@
             fill={getColor(path.abbr)}
             stroke="#fff"
             stroke-width="1"
-            class="cursor-pointer transition-opacity hover:opacity-80"
+            role="img"
+            tabindex="0"
+            aria-label={getStateLabel(path.abbr)}
+            class="cursor-pointer transition-opacity hover:opacity-80 focus:opacity-80 focus:outline-none"
             onmouseenter={(e) => {
               const total = stats[path.abbr]?.total || 0;
               const firstYear = stats[path.abbr]?.firstYear || 0;
@@ -160,7 +174,20 @@
             onmouseleave={() => {
               hoveredState = null;
             }}
-          />
+            onfocus={(e) => {
+              const total = stats[path.abbr]?.total || 0;
+              const firstYear = stats[path.abbr]?.firstYear || 0;
+              hoveredState = { abbr: path.abbr, total, pct: pct(total), firstYear };
+              const rect = (e.currentTarget as SVGPathElement).getBoundingClientRect();
+              mouseX = rect.left + rect.width / 2;
+              mouseY = rect.top + rect.height / 2;
+            }}
+            onblur={() => {
+              hoveredState = null;
+            }}
+          >
+            <title>{getStateLabel(path.abbr)}</title>
+          </path>
         {/each}
       </svg>
 

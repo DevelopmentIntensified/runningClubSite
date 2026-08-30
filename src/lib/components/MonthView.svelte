@@ -113,6 +113,11 @@
                     };
                   }}
                   class="opacity-0 transition-opacity group-hover:opacity-100"
+                  onsubmit={(e) => {
+                    if (!confirm('Delete this event? This cannot be undone.')) {
+                      e.preventDefault();
+                    }
+                  }}
                 >
                   <input type="hidden" name="id" value={event.id} />
                   <button
