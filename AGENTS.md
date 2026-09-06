@@ -37,3 +37,24 @@ Guidance for AI coding agents working in this repo.
 - Standing rule: **always push all changes to `test`** (`git add -A; git push origin test`) — but only after `npm run build` succeeds and tests pass.
 - Conventional Commits, terse subject ≤72 chars, body only for non-obvious why/migration notes.
 - `main` is production.
+
+## Communication style
+
+- Unless explaining to me, use caveman mode (terse fragments, no filler). Drop caveman only when explaining/clarifying on request.
+
+## Issue tracking
+
+- Work is tracked in local markdown issues at `docs/issues/` (repo root), not a hosted tracker.
+- Naming: `NNN-short-slug.md`, sequential. Check the highest existing number first.
+- Format: `# NNN — Title`, `Status: open|in-progress|done`, `## Done`, `## Needs doing`.
+- Starting work → set `in-progress`, move specifics under `Needs doing`. Finishing → move to `Done`, flip to `done`, verify with `npm run build`.
+- Keep `docs/STATUS.md` Done/Open lists in sync with every change.
+- Never batch unrelated work into one issue; create a new numbered file.
+
+## Working style
+
+- Delegate to subagents early and often; verify after (read diff, re-run checks). Batch independent work into parallel calls.
+- TDD where a seam exists (red-green-refactor; tests first).
+- Research: breadth-first, skim, file:line evidence — don't over-verify.
+- Unknowns, user driving: ask, never guess. Hands-off ("continue"/AFK): assume from docs and past answers; list assumptions at the end.
+- Correctness: every edit must parse — one region per edit, small enough to eyeball; re-read the region or run the fastest covering check immediately after; never stack edits on unverified ones.
