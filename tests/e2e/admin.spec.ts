@@ -6,6 +6,25 @@ import * as db from '../support/db';
 const canUploadImages = !!process.env.BLOB_READ_WRITE_TOKEN;
 const skipWithoutBlob = canUploadImages ? test : test.skip;
 
+test.describe('Admin Dashboard analytics', () => {
+  test('shows anonymous discovery-source counts', async ({ page }) => {
+    const marker = `e2e-analytics-${Date.now()}`;
+    await db.query(
+      `INSERT INTO discovery_responses (source, details) VALUES ('friend', $1), ('friend', $1), ('flyer', $1)`,
+      [marker]
+    );
+
+    try {
+      await page.goto('/admin');
+      await expect(page.getByRole('heading', { name: 'Discovery Sources' })).toBeVisible();
+      await expect(page.getByTestId('discovery-count-friend')).toContainText('2');
+      await expect(page.getByTestId('discovery-count-flyer')).toContainText('1');
+    } finally {
+      await db.query(`DELETE FROM discovery_responses WHERE details = $1`, [marker]);
+    }
+  });
+});
+
 test.describe('Admin Pages - Full Functionality with Auth', () => {
   test.describe('Leaders CRUD', () => {
     let testLeaderId: number;

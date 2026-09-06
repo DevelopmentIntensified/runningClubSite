@@ -1,10 +1,34 @@
 <script lang="ts">
   import type { PageData } from './$types';
   import { formatChangeDetails } from '$lib/utils/formatChangeDetails';
+  import { DISCOVERY_SOURCES } from '$lib/onboarding/discovery';
 
   let { data }: { data: PageData } = $props();
 
+  const DISCOVERY_LABELS: Record<string, string> = {
+    friend: 'A friend or classmate',
+    'social-media': 'Social media',
+    flyer: 'Flyer or poster',
+    event: 'A campus event',
+    other: 'Other'
+  };
+
   let searchTerm = $state('');
+
+  let discoveryTotal = $derived(data.discoveryCounts.reduce((sum, c) => sum + c.count, 0));
+
+  let discoveryRows = $derived(
+    DISCOVERY_SOURCES.map((source) => {
+      const found = data.discoveryCounts.find((c) => c.source === source);
+      const count = found?.count ?? 0;
+      return {
+        source,
+        label: DISCOVERY_LABELS[source] ?? source,
+        count,
+        pct: discoveryTotal > 0 ? Math.round((count / discoveryTotal) * 100) : 0
+      };
+    }).sort((a, b) => b.count - a.count)
+  );
 
   let filteredLogs = $derived(
     data.logs.filter((log) => {
@@ -28,6 +52,41 @@
 
 <div class="p-4 sm:p-6 lg:p-8">
   <h1 class="mb-6 text-2xl font-bold text-slate-800">Admin Dashboard</h1>
+
+  <div class="mb-6 rounded-2xl border border-slate-200 bg-white shadow-sm">
+    <div class="border-b border-slate-200 bg-slate-50/50 px-6 py-4">
+      <h2 class="text-lg font-semibold text-slate-800">Discovery Sources</h2>
+      <p class="text-xs text-slate-500">
+        Anonymous onboarding answers — how members heard about the club
+      </p>
+    </div>
+    <div class="px-6 py-4">
+      {#if discoveryTotal === 0}
+        <p class="text-sm text-slate-500">No discovery responses yet.</p>
+      {:else}
+        <div class="space-y-3">
+          {#each discoveryRows as row (row.source)}
+            <div class="flex items-center gap-3">
+              <span class="w-48 shrink-0 text-sm text-slate-700">{row.label}</span>
+              <div class="h-2.5 flex-1 overflow-hidden rounded-full bg-slate-100">
+                <div
+                  class="bg-primary-500 h-full rounded-full transition-all"
+                  style="width: {row.pct}%"
+                ></div>
+              </div>
+              <span
+                class="w-20 shrink-0 text-right text-sm text-slate-600 tabular-nums"
+                data-testid="discovery-count-{row.source}"
+              >
+                {row.count} ({row.pct}%)
+              </span>
+            </div>
+          {/each}
+        </div>
+        <p class="mt-3 text-xs text-slate-400">{discoveryTotal} total responses</p>
+      {/if}
+    </div>
+  </div>
 
   <div class="rounded-2xl border border-slate-200 bg-white shadow-sm">
     <div class="border-b border-slate-200 bg-slate-50/50 px-6 py-4">
@@ -87,11 +146,11 @@
                 >Action</th
               >
               <th
-                class="px-6 py-3.5 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase hidden md:table-cell"
+                class="hidden px-6 py-3.5 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase md:table-cell"
                 >Target</th
               >
               <th
-                class="px-6 py-3.5 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase hidden md:table-cell"
+                class="hidden px-6 py-3.5 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase md:table-cell"
                 >Details</th
               >
             </tr>
@@ -117,13 +176,14 @@
                     {log.action}
                   </span>
                 </td>
-                <td class="px-6 py-3 text-sm whitespace-nowrap text-slate-600 hidden md:table-cell"
+                <td class="hidden px-6 py-3 text-sm whitespace-nowrap text-slate-600 md:table-cell"
                   >{log.targetName || log.targetType || '—'}{log.targetId && !log.targetName
                     ? ` #${log.targetId}`
                     : ''}</td
                 >
-                <td class="max-w-md px-6 py-3 text-sm text-slate-600 hidden md:table-cell" title={log.details || ''}
-                  >{formatChangeDetails(log.parsedDetails, log.action)}</td
+                <td
+                  class="hidden max-w-md px-6 py-3 text-sm text-slate-600 md:table-cell"
+                  title={log.details || ''}>{formatChangeDetails(log.parsedDetails, log.action)}</td
                 >
               </tr>
             {/each}

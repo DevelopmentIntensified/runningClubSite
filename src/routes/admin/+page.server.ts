@@ -1,5 +1,6 @@
 import type { PageServerLoad } from './$types';
 import { db } from '$lib/server/db';
+import { getDiscoveryCounts } from '$lib/server/db/discoveryRepo';
 import {
   adminAuditLog,
   alumni,
@@ -74,7 +75,10 @@ export const load: PageServerLoad = async () => {
       .from(alumniNewsletter)
       .where(inArray(alumniNewsletter.id, alumniNewsletterIds));
     for (const row of rows) {
-      newsletterNames.set(row.id, [row.firstName, row.lastName].filter(Boolean).join(' ') || row.email);
+      newsletterNames.set(
+        row.id,
+        [row.firstName, row.lastName].filter(Boolean).join(' ') || row.email
+      );
     }
   }
 
@@ -86,7 +90,8 @@ export const load: PageServerLoad = async () => {
     return {
       ...log,
       parsedDetails,
-      adminName: [admin?.firstName, admin?.lastName].filter(Boolean).join(' ') || admin?.email || null,
+      adminName:
+        [admin?.firstName, admin?.lastName].filter(Boolean).join(' ') || admin?.email || null,
       targetName: log.targetId
         ? log.targetType === 'alumni_newsletter'
           ? newsletterNames.get(log.targetId) || null
@@ -95,5 +100,7 @@ export const load: PageServerLoad = async () => {
     };
   });
 
-  return { logs };
+  const discoveryCounts = await getDiscoveryCounts();
+
+  return { logs, discoveryCounts };
 };
