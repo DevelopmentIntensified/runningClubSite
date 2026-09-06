@@ -58,4 +58,32 @@
       </a>
     </div>
   </div>
+
+  <div class="mt-8 rounded-2xl bg-white p-6 shadow-xl">
+    <h2 class="mb-4 text-2xl font-bold">A Message from the Directors of Training</h2>
+    <ul class="mb-6 list-disc pl-8 text-base sm:text-lg">
+      <li>
+        <strong>Conditioned athletes</strong> = runners who averaged at least 20 mpw over the summer
+        and ran at least 5 days per week.
+      </li>
+      <li>
+        <strong>Developing athletes</strong> = runners who did not run over the summer, ran less than
+        20 mpw, or didn't run at least 5 days per week.
+      </li>
+    </ul>
+    <p class="mb-4 text-base sm:text-lg">
+      This is an average. Talk to George, Jill, or Evan to find out specifics. We suggest talking to
+      a training director to find out exactly what volume you should be doing for easy runs
+      throughout the week and long runs.
+    </p>
+    <p class="mb-4 text-base sm:text-lg">
+      If you filled out the form for individualized training, someone will reach out to you and help
+      you interpret the training sheet. The sheet is linked here and pinned in the GroupMe for ease
+      of access.
+    </p>
+    <p class="text-base sm:text-lg">
+      All workouts are subject to change at any time. What is written down may be modified by the
+      time Tuesday night comes around.
+    </p>
+  </div>
 </div>
