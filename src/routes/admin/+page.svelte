@@ -8,6 +8,7 @@
   const DISCOVERY_LABELS: Record<string, string> = {
     friend: 'A friend or classmate',
     'social-media': 'Social media',
+    website: 'Website or Google search',
     flyer: 'Flyer or poster',
     event: 'A campus event',
     other: 'Other'

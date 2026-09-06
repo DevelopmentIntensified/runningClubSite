@@ -14,9 +14,9 @@ const input = (
 });
 
 describe('discovery sources', () => {
-  it('exposes exactly the five agreed options', () => {
+  it('exposes exactly the six agreed options', () => {
     expect([...DISCOVERY_SOURCES].sort()).toEqual(
-      ['event', 'flyer', 'friend', 'other', 'social-media'].sort()
+      ['event', 'flyer', 'friend', 'other', 'social-media', 'website'].sort()
     );
   });
 });
@@ -41,7 +41,7 @@ describe('normalizeDiscoveryInput', () => {
   });
 
   it('rejects unknown sources', () => {
-    const result = normalizeDiscoveryInput(input('website'));
+    const result = normalizeDiscoveryInput(input('billboard'));
     expect(result.ok).toBe(false);
     expect(result.skip).toBe(false);
   });

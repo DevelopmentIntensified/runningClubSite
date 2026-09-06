@@ -1,4 +1,11 @@
-export const DISCOVERY_SOURCES = ['friend', 'social-media', 'flyer', 'event', 'other'] as const;
+export const DISCOVERY_SOURCES = [
+  'friend',
+  'social-media',
+  'website',
+  'flyer',
+  'event',
+  'other'
+] as const;
 
 export type DiscoverySource = (typeof DISCOVERY_SOURCES)[number];
 
