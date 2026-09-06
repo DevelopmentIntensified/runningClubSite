@@ -85,6 +85,13 @@
       "when": 1787950933692,
       "tag": "0011_fearless_patch",
       "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1788654653757,
+      "tag": "0012_add_discovery_responses",
+      "breakpoints": true
     }
   ]
 }

@@ -1,6 +1,15 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
+  import { DISCOVERY_SOURCES } from '$lib/onboarding/discovery';
+
+  const DISCOVERY_LABELS: Record<string, string> = {
+    friend: 'A friend or classmate',
+    'social-media': 'Social media',
+    flyer: 'Flyer or poster',
+    event: 'A campus event',
+    other: 'Other'
+  };
 
   let firstName = '';
   let lastName = '';
@@ -8,6 +17,9 @@
   let error = '';
   let waiting = false;
   let redirectUrl = '/groupme';
+
+  let discoverySource = '';
+  let discoveryDetails = '';
 
   let stateSearch = '';
   let stateDropdownOpen = false;
@@ -167,6 +179,8 @@
           graduationYear: graduationYear === 'alumni' ? null : Number(graduationYear),
           isAlumni: graduationYear === 'alumni',
           academicLevel,
+          discoverySource,
+          discoveryDetails,
           password,
           redirectUrl
         })
@@ -341,6 +355,41 @@
           <option value="graduate">Graduate</option>
         </select>
       </div>
+
+      <div>
+        <label for="discoverySource" class="block text-sm font-medium text-gray-700"
+          >How did you hear about the club?</label
+        >
+        <p class="mt-1 text-xs text-gray-500">Optional — your answer is collected anonymously.</p>
+        <select
+          id="discoverySource"
+          name="discoverySource"
+          bind:value={discoverySource}
+          class="focus:border-primary-500 focus:ring-primary-500 mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 leading-5 focus:outline-none sm:text-sm"
+        >
+          <option value="">Prefer not to say</option>
+          {#each DISCOVERY_SOURCES as source}
+            <option value={source}>{DISCOVERY_LABELS[source] ?? source}</option>
+          {/each}
+        </select>
+      </div>
+
+      {#if discoverySource === 'other' || discoverySource === 'friend'}
+        <div>
+          <label for="discoveryDetails" class="block text-sm font-medium text-gray-700"
+            >Details (optional)</label
+          >
+          <input
+            id="discoveryDetails"
+            name="discoveryDetails"
+            type="text"
+            maxlength={500}
+            bind:value={discoveryDetails}
+            placeholder="Tell us more (anonymous)"
+            class="focus:border-primary-500 focus:ring-primary-500 mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 leading-5 placeholder-gray-500 focus:outline-none sm:text-sm"
+          />
+        </div>
+      {/if}
 
       <div>
         <label for="password" class="block text-sm font-medium text-gray-700"

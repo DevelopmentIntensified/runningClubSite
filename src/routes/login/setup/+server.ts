@@ -6,6 +6,7 @@ import { sql } from 'drizzle-orm';
 import { eq } from 'drizzle-orm';
 import { hash } from '@node-rs/argon2';
 import { sanitizeRedirectUrl } from '$lib/utils/sanitizeRedirect';
+import { saveDiscoveryResponse } from '$lib/server/db/discoveryRepo';
 
 export const POST: RequestHandler = async ({ request, cookies }) => {
   const body = await request.json();
@@ -19,6 +20,13 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
     redirectUrl
   } = body;
   const isAlumni = body.isAlumni === true;
+
+  // Anonymous, optional onboarding question. Invalid answers are ignored, not
+  // rejected — it must never block account setup.
+  const discoverySave = await saveDiscoveryResponse(body);
+  if (!discoverySave.ok) {
+    console.warn('Ignoring invalid discovery response:', discoverySave.error);
+  }
 
   if (!firstName || !lastName || !stateOfOrigin || !password || (!graduationYear && !isAlumni)) {
     return new Response(JSON.stringify({ success: false, error: 'All fields are required' }), {

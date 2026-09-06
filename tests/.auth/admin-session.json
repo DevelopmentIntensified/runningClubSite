@@ -1,14 +1,14 @@
 {
   "cookies": [
     {
-      "name": "session",
-      "value": "ebc76f9acf313f115e0d8b6b931519f92ea33e6fb8a466543098bad1944ade81",
-      "domain": "test.libertyrunningclub.com",
+      "name": "auth_session",
+      "value": "1b033ea2908a0c9c6c54bfedda81ecfcfa1be20e48f984a9bbc35251362addb2",
+      "domain": "localhost",
       "path": "/",
       "httpOnly": true,
-      "secure": true,
+      "secure": false,
       "sameSite": "Lax",
-      "expires": 1778031440
+      "expires": 1791249523
     }
   ]
 }

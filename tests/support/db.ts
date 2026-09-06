@@ -2,9 +2,9 @@ import pg from 'pg';
 const { Pool } = pg;
 
 const pool = new Pool({
+  // Local test database (docker-compose.yml). Set DATABASE_URL to override.
   connectionString:
-    process.env.DATABASE_URL ||
-    'postgresql://runningclub_owner:VQ2s6GzbfLqH@ep-fancy-river-a81zxdut.eastus2.azure.neon.tech/runningclub?sslmode=require'
+    process.env.DATABASE_URL || 'postgresql://postgres:postgres@127.0.0.1:5434/runningclub'
 });
 
 export async function query(sql: string, params: any[] = []) {
@@ -98,4 +98,15 @@ export async function deleteTestPageImage(id: number) {
 export async function getUserByEmail(email: string) {
   const result = await query(`SELECT id, email, is_admin FROM "user" WHERE email = $1`, [email]);
   return result.rows[0] || null;
+}
+
+/** Create a test user that can log in with a password (no emails involved). */
+export async function createTestUserWithPassword(email: string, password: string, isAdmin = false) {
+  const { hash } = await import('@node-rs/argon2');
+  const hashedPassword = await hash(password);
+  const result = await query(
+    `INSERT INTO "user" (email, is_admin, hashed_password) VALUES ($1, $2, $3) RETURNING id, email`,
+    [email, isAdmin, hashedPassword]
+  );
+  return result.rows[0];
 }

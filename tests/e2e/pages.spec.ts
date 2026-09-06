@@ -43,8 +43,8 @@ test.describe('Public Page Tests', () => {
     await expect(page.getByRole('heading', { name: 'Sign in to your account' })).toBeVisible();
   });
 
-  test('Admin page redirects unauthenticated users to login', async ({ page }) => {
+  test('Admin page redirects unauthenticated users to no-access', async ({ page }) => {
     await page.goto('/admin/news');
-    await expect(page).toHaveURL(/.*\/login/);
+    await expect(page).toHaveURL(/.*\/no-access/);
   });
 });

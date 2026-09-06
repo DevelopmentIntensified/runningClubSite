@@ -4,9 +4,9 @@ const crypto = require('crypto');
 const ADMIN_TEST_EMAIL = 'playwright-admin-setup@liberty.edu';
 
 const pool = new pg.Pool({
+  // Local test database (docker-compose.yml). Set DATABASE_URL to override.
   connectionString:
-    process.env.DATABASE_URL ||
-    'postgresql://runningclub_owner:VQ2s6GzbfLqH@ep-fancy-river-a81zxdut.eastus2.azure.neon.tech/runningclub?sslmode=require'
+    process.env.DATABASE_URL || 'postgresql://postgres:postgres@127.0.0.1:5434/runningclub'
 });
 
 function generateSessionId() {
@@ -37,8 +37,8 @@ async function deleteExistingUser(email) {
 
 async function createAdminUser(email) {
   const result = await query(
-    `INSERT INTO "user" (email, is_admin) VALUES ($1, true) RETURNING id, email, is_admin`,
-    [email]
+    `INSERT INTO "user" (email, is_admin, first_name, last_name, state_of_origin) VALUES ($1, true, $2, $3, $4) RETURNING id, email, is_admin`,
+    [email, 'Playwright', 'Admin', 'VA']
   );
   return result.rows[0];
 }
@@ -78,12 +78,13 @@ async function runSetup() {
   const storageState = {
     cookies: [
       {
-        name: 'session',
+        // Must match lucia.sessionCookieName (default 'auth_session').
+        name: 'auth_session',
         value: sessionId,
-        domain: 'test.libertyrunningclub.com',
+        domain: 'localhost',
         path: '/',
         httpOnly: true,
-        secure: true,
+        secure: false,
         sameSite: 'Lax',
         expires: Math.floor(Date.now() / 1000) + 30 * 24 * 60 * 60
       }

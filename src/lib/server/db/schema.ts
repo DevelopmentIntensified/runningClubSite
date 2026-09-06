@@ -201,6 +201,16 @@ export const featureAccessUsers = pgTable(
   (t) => [uniqueIndex('feature_access_users_feature_user_unique').on(t.featureKey, t.userId)]
 );
 
+// Anonymous "how did you find the club" answers collected once during account
+// onboarding. Deliberately has no reference to users so responses stay
+// anonymous; source ∈ src/lib/onboarding/discovery.ts DISCOVERY_SOURCES.
+export const discoveryResponses = pgTable('discovery_responses', {
+  id: serial('id').primaryKey(),
+  source: text('source').notNull(),
+  details: text('details'),
+  createdAt: timestamp('created_at').defaultNow().notNull()
+});
+
 export type Session = typeof sessions.$inferSelect;
 
 export type Records = typeof records.$inferSelect;
